@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Temperature from '../components/temperature'
 
 
 export default function Home() {
@@ -21,12 +22,28 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+         Global warming and environmental degradation
         </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
+    <section className="home">
+       <div>
+         <h2>Live global temperature rise</h2>
+         <Temperature/>
+       
+       </div>
+       <div>
+         <h2>Tons of CO2 emission</h2>
+         <p></p>
+       </div>
+       
+       <div>
+         <h2>Air quality</h2>
+         <p></p>
+       </div>
+       <div>
+         <h2>Melted polar ice</h2>
+         <p></p>
+       </div>
+       </section>
 
       
       </main>
@@ -59,13 +76,22 @@ export default function Home() {
           align-items: center;
         }
 
+        .home {
+          display: flex;
+          justify-content: space-between;
+          flex-direction: column;
+        }
+
+    
+
         main {
           padding: 5rem 0;
           flex: 1;
           display: flex;
-          flex-direction: column;
+          flex-wrap: wrap;
           justify-content: center;
           align-items: center;
+          flex-direction: column;
         }
 
         footer {
