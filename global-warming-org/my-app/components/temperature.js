@@ -1,17 +1,28 @@
 import React from 'react'
+import fetchJsonp from "fetch-jsonp"
 
 class Temperature extends React.Component {
 constructor(props){
     super(props);
     console.log(props)
-    this.url = 'https://jsonplaceholder.typicode.com/todos/1';
+    this.url = ' http://www.hqcasanova.com/co2';
 }  
 
   componentDidMount() {
     
-    fetch(this.url)
-    .then(res => res.json())
-    .then(data => console.log(data));
+    fetchJsonp(this.url, {
+      jsonpCallbackFunction: null,
+    })
+    .then(function(response) {
+      return response.json()
+    }).then(function(json) {
+      console.log('parsed json', json)
+    }).catch(function(ex) {
+      console.log('parsing failed', ex)
+    })
+    // fetch(this.url)
+    // .then(res => res.json())
+    // .then(data => console.log(data));
     
   }
 
