@@ -1,20 +1,20 @@
 import React from 'react'
 import fetchJsonp from "fetch-jsonp"
+import Axios from 'axios';
 
 class Temperature extends React.Component {
 constructor(props){
     super(props);
-    this.url = ' http://www.hqcasanova.com/co2';
+    this.url = 'localhost/pages/mth-mean-surface-temp.js';
     "test api:  'https://jsonplaceholder.typicode.com/todos/1'   "
 }  
 
   componentDidMount() {
     
-    fetchJsonp(this.url, {
-      jsonpCallbackFunction: null,
-    })
+    axios.get(this.url)
     .then(function(response) {
-      return response.json()
+      console.log(response)
+      return response.text()
     }).then(function(json) {
       console.log('parsed json', json)
     }).catch(function(ex) {
