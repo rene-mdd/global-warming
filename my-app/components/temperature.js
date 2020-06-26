@@ -4,8 +4,8 @@ import fetchJsonp from "fetch-jsonp"
 class Temperature extends React.Component {
 constructor(props){
     super(props);
-    console.log(props)
     this.url = ' http://www.hqcasanova.com/co2';
+    "test api:  'https://jsonplaceholder.typicode.com/todos/1'   "
 }  
 
   componentDidMount() {
