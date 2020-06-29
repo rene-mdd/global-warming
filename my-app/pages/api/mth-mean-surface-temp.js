@@ -11,7 +11,7 @@ const convertToObject = (valueArray2d) =>
     };
   });
 
-export default async function  pepe(req, res) {
+export default async (req, res) => {
   try {
     const { data } = await axios.get(
       "https://data.giss.nasa.gov/gistemp/graphs_v4/graph_data/Monthly_Mean_Global_Surface_Temperature/graph.txt"

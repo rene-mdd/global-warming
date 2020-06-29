@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Temperature from '../components/temperature'
+import Co2 from '../components/co2'
+
 
 
 export default function Home() {
@@ -27,7 +29,9 @@ export default function Home() {
     <section className="home">
        <div>
          <h2>Live global temperature rise</h2>
-         <Temperature/>
+         {/* <Temperature/> */}
+         <Co2 />
+
        
        </div>
        <div>
