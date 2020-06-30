@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Temperature from '../components/temperature'
 import Co2 from '../components/co2'
+import Antarctica from "../components/antarctica"
 
 
 
@@ -43,7 +44,8 @@ export default function Home() {
        
        <div>
          <h2>Air quality</h2>
-         <p></p>
+         <Antarctica />
+         <p>Description</p>
        </div>
        <div>
          <h2>Melted polar ice</h2>

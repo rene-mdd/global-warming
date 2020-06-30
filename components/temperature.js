@@ -1,9 +1,5 @@
-// import useSWR from 'swr'
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-// import axios from "axios"
-
-
 
 class Temperature extends React.Component {
   constructor(props) {
