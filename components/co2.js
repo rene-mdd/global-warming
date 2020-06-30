@@ -10,7 +10,7 @@ class Co2 extends React.Component {
     super(props);
     this.state = { co2Data: [] }
     this.url = 'https://pkgstore.datahub.io/core/co2-ppm-daily/co2-ppm-daily_json/data/3c5ec59370a85880da58d61fa4c47ce3/co2-ppm-daily_json.json';
-    this.url2 = 'https://jsonplaceholder.typicode.com/todos/1';
+    this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
 
@@ -44,15 +44,15 @@ class Co2 extends React.Component {
     async function chart() {
       try {
         var ctx = 'myChart';
-        const globalTemps = await parsedData();
+        const globalCo2 = await parsedData();
         const myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: globalTemps.dateArray,
+            labels: globalCo2.dateArray,
             datasets: [
               {
                 label: 'CO2',
-                data: globalTemps.co2Array,
+                data: globalCo2.co2Array,
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -71,6 +71,7 @@ class Co2 extends React.Component {
   }
 
   render() {
+    console.log(this.state.co2Data)
     return (<div>
       <button onClick={this.displayGraph(this.state.co2Data)}>GET</button>
       <h1>Hello,</h1>
