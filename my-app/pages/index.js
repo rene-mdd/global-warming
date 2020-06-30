@@ -11,6 +11,7 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css"/>
       </Head>
 
       <header>
@@ -29,14 +30,15 @@ export default function Home() {
     <section className="home">
        <div>
          <h2>Live global temperature rise</h2>
-         {/* <Temperature/> */}
-         <Co2 />
+         <Temperature/>
+        <p>Description</p>
 
        
        </div>
        <div>
          <h2>Tons of CO2 emission</h2>
-         <p></p>
+         <Co2 />
+         <p>Description</p>
        </div>
        
        <div>
