@@ -78,6 +78,7 @@ class Antarctica extends React.Component {
     return (<div>
       <button >GET</button>
       <h1>Hello,</h1>
+      <iframe width="670" height="490" frameBorder="0" src="https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03"></iframe>
       <canvas id="tempChart" width="400" height="400"></canvas>
     </div>);
   }
