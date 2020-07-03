@@ -23,62 +23,66 @@ class Arctic extends React.Component {
   }
 
 
-//   displayTempGraph = (tData) => {
-//     function parsedTempData() {
-//       const stateCopy = tData;
-//       const dateArray = [];
-//       const tempArray = [];
-//       const landArray = [];
+  displayArcticGraph = (AData) => {
+    function parsedArcticData() {
+      const stateCopy = AData;
+      const yearArray = [];
+      const extentArray = [];
+      const areaArray = [];
+      stateCopy.forEach(row => {
+        const date = row.year;
+        const extent = row.extent;
+        const area = row.area;
+        yearArray.push(date);
+        extentArray.push(parseFloat(extent));
+        areaArray.push(parseFloat(area));
+      });
+      return { yearArray, extentArray, areaArray }
+    }
 
-//       stateCopy.forEach(row => {
-//         const date = row.time;
-//         const station = row.station;
-//         const land = row.land;
-//         dateArray.push(date);
-//         tempArray.push(parseFloat(station));
-//         landArray.push(parseFloat(land));
-//       });
-//       return { dateArray, tempArray, landArray }
+    async function ArcticChart() {
+      try {
+        var ctx = 'arcticChart';
+        const globalArctics = await parsedArcticData();
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: globalArctics.yearArray,
+            datasets: [
+              {
+                label: '℃',
+                data: globalArctics.extentArray,
+                fill: false,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderWidth: 1
+              },
+              {
+                  data: globalArctics.areaArray,
+                  fill: false,
+                  borderColor: 'rgba(255, 146, 20, 1)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)'
+              }
+            ]
+          },
+          options: {}
+        });
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    ArcticChart()
 
-//     }
-
-//     async function tempChart() {
-//       try {
-//         var ctx = 'tempChart';
-//         const globalTemps = await parsedTempData();
-//         const myChart = new Chart(ctx, {
-//           type: 'line',
-//           data: {
-//             labels: globalTemps.dateArray,
-//             datasets: [
-//               {
-//                 label: '℃',
-//                 data: globalTemps.tempArray,
-//                 fill: false,
-//                 borderColor: 'rgba(255, 99, 132, 1)',
-//                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
-//                 borderWidth: 1
-//               }
-//             ]
-//           },
-//           options: {}
-//         });
-//       } catch (error) {
-//         console.log(error)
-//       }
-//     }
-//     tempChart()
-
-//   }
+  }
 
   render() {
     
     
     console.log(this.state.arcticData)
     return (<div>
-      <button >GET</button>
-      <h1>Hello,</h1>
-      <canvas id="tempChart" width="800" height="800"></canvas>
+      <button onClick={this.displayArcticGraph(this.state.arcticData.result)}>GET</button>
+      <h1>Hello, arctic</h1>
+      <canvas id="arcticChart" width="800" height="800"></canvas>
     </div>);
   }
 }

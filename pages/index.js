@@ -32,30 +32,26 @@ export default function Home() {
         <section className="home">
           <div>
             <h2>Live global temperature rise</h2>
-            <Temperature/>
+            {/* <Temperature/> */}
             <p>Description</p>
-
-
           </div>
           <div>
             <h2>Tons of CO2 emission</h2>
-            <Co2 />
+            {/* <Co2 /> */}
             <p>Description</p>
           </div>
-
           <div>
             <h2>Air quality</h2>
-         
             <p>Description</p>
           </div>
           <div>
             <h2>Deforestation</h2>
-            <Deforestation/>
+            {/* <Deforestation/> */}
             <p>Description</p>
           </div>
           <div>
             <h2>Melted polar ice</h2>
-            {/* <Arctic /> */}
+            <Arctic />
             <p>Description</p>
           </div>
         </section>
