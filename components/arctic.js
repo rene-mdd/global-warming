@@ -1,24 +1,22 @@
-// import useSWR from 'swr'
+// 'https://climate.nasa.gov/system/internal_resources/details/original/1929_Arctic_data_1979-2019.txt'
+
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-import axios from "axios"
 
-
-
-class Antarctica extends React.Component {
+class Arctic extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { antarcticaData: "" }
-    this.url = 'https://podaac-tools.jpl.nasa.gov/drive/files/allData/tellus/L4/ice_mass/RL06/v02/mascon_CRI/antarctica_mass_200204_202004.txt';
+    this.state = { arcticData: [] }
+    this.url = 'http://localhost:3000/api/anual-mean-artic-loss';
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
 
   async componentDidMount() {
     try {
-      const response = await axios.get(this.url)
-      const data = await response.text();
-      this.setState({ antarcticaData: response })
+      const response = await fetch(this.url)
+      const data = await response.json();
+      this.setState({ arcticData: data })
     } catch (error) {
       console.log(error)
     }
@@ -74,34 +72,15 @@ class Antarctica extends React.Component {
 //   }
 
   render() {
-    console.log(this.state.antarcticaData)
+    
+    
+    console.log(this.state.arcticData)
     return (<div>
       <button >GET</button>
       <h1>Hello,</h1>
-      <iframe width="670" height="490" frameBorder="0" src="https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03"></iframe>
-      <canvas id="tempChart" width="400" height="400"></canvas>
+      <canvas id="tempChart" width="800" height="800"></canvas>
     </div>);
   }
 }
 
-export default Antarctica;
-
-
-
-
-// import fetch from 'unfetch'
-
-
-// const fetcher = url => fetch(url).then(r => r.json());
-
-
-// export default function Temperature() {
-//   const { data, error } = fetch('http://localhost:3000/api/mth-mean-surface-temp', fetcher);
-//     console.log(data)
-//   if (error) return <div>failed to load</div>
-//   if (!data) return <div>loading...</div>
-
-//   return <div>hello !</div>
-// }
-
-// "test api:  'https://jsonplaceholder.typicode.com/todos/1'"
+export default Arctic;
