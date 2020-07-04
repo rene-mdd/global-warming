@@ -2,7 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Temperature from '../components/temperature'
 import Co2 from '../components/co2'
-import Antarctica from "../components/antarctica"
+import Arctic from "../components/arctic"
+import Deforestation from "../components/deforestation"
 
 
 
@@ -12,7 +13,7 @@ export default function Home() {
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css"/>
+        <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
       </Head>
 
       <header>
@@ -26,34 +27,36 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-         Global warming and environmental degradation
+          Global warming and environmental degradation
         </h1>
-    <section className="home">
-       <div>
-         <h2>Live global temperature rise</h2>
-         {/* <Temperature/> */}
-        <p>Description</p>
+        <section className="home">
+          <div>
+            <h2>Live global temperature rise</h2>
+            <Temperature/>
+            <p>Description</p>
+          </div>
+          <div>
+            <h2>Tons of CO2 emission</h2>
+            <Co2 />
+            <p>Description</p>
+          </div>
+          <div>
+            <h2>Air quality</h2>
+            <p>Description</p>
+          </div>
+          <div>
+            <h2>Deforestation</h2>
+            <Deforestation/>
+            <p>Description</p>
+          </div>
+          <div>
+            <h2>Melted polar ice</h2>
+            <Arctic />
+            <p>Description</p>
+          </div>
+        </section>
 
-       
-       </div>
-       <div>
-         <h2>Tons of CO2 emission</h2>
-         {/* <Co2 /> */}
-         <p>Description</p>
-       </div>
-       
-       <div>
-         <h2>Air quality</h2>
-         <Antarctica />
-         <p>Description</p>
-       </div>
-       <div>
-         <h2>Melted polar ice</h2>
-         <p></p>
-       </div>
-       </section>
 
-      
       </main>
 
       <footer>
@@ -68,6 +71,8 @@ export default function Home() {
       </footer>
 
       <style jsx>{`
+      .embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} 
+      .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}
 
       ul {
         display: flex;

@@ -75,7 +75,7 @@ class Co2 extends React.Component {
     return (<div>
       <button onClick={this.displayGraph(this.state.co2Data)}>GET</button>
       <h1>Hello,</h1>
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <canvas id="myChart" width="800" height="800"></canvas>
     </div>);
   }
 }

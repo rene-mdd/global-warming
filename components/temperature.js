@@ -51,7 +51,7 @@ class Temperature extends React.Component {
             datasets: [
               {
                 label: '℃',
-                data: globalTemps.tempArray,
+                data: globalTemps.landArray,
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -74,7 +74,7 @@ class Temperature extends React.Component {
     return (<div>
       <button onClick={this.displayTempGraph(this.state.temperatureData.result)}>GET</button>
       <h1>Hello,</h1>
-      <canvas id="tempChart" width="400" height="400"></canvas>
+      <canvas id="tempChart" width="800" height="800"></canvas>
     </div>);
   }
 }
