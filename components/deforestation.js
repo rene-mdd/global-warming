@@ -78,12 +78,12 @@ class Deforestation extends React.Component {
     return (<div>
       <button >GET</button>
       <h1>Hello,</h1>
-      {/* <div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginHeight="0" marginWidth="0" title="Forest loss copy" src="//www.arcgis.com/apps/Embed/index.html?webmap=ed33972acffc4e7c9b260c753f1a6bd4&extent=-157.4447,-41.8564,177.9459,71.6&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light"></iframe></div> */}
-      <iframe width="870"
-        height="690"
+      <div class="embed-container"><iframe width="800" height="800" frameborder="0" scrolling="no" marginHeight="0" marginWidth="0" title="Forest loss copy" src="//www.arcgis.com/apps/Embed/index.html?webmap=ed33972acffc4e7c9b260c753f1a6bd4&extent=-157.4447,-41.8564,177.9459,71.6&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light"></iframe></div>
+      <div><iframe width="800"
+        height="800"
         frameBorder="0"
-        src="https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03"></iframe>
-      <canvas id="tempChart" width="800" height="800"></canvas>
+        src="https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03"></iframe></div>
+      {/* <canvas id="tempChart" width="800" height="800"></canvas> */}
     </div>);
   }
 }

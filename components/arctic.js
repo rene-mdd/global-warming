@@ -50,7 +50,7 @@ class Arctic extends React.Component {
             labels: globalArctics.yearArray,
             datasets: [
               {
-                label: '℃',
+                label: 'Extent',
                 data: globalArctics.extentArray,
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
@@ -58,6 +58,7 @@ class Arctic extends React.Component {
                 borderWidth: 1
               },
               {
+                  label: 'Area',
                   data: globalArctics.areaArray,
                   fill: false,
                   borderColor: 'rgba(255, 146, 20, 1)',
