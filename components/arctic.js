@@ -83,8 +83,9 @@ class Arctic extends React.Component {
     return (<div>
       <button onClick={this.displayArcticGraph(this.state.arcticData.result)}>GET</button>
       <h1>Hello, arctic</h1>
-      <canvas id="arcticChart" width="800" height="800"></canvas>
-    </div>);
+      {/* <canvas id="arcticChart" width="800" height="800"></canvas> */}
+      {/* <iframe src="http://energyatlas.iea.org/embed.jsp?subject=1378539487&lang=en" frameborder="0" height="800" scrolling="no" width="800"></iframe>     */}
+      </div>);
   }
 }
 

@@ -4,6 +4,7 @@ import Temperature from '../components/temperature'
 import Co2 from '../components/co2'
 import Arctic from "../components/arctic"
 import Deforestation from "../components/deforestation"
+import Countries from '../components/countries'
 
 
 
@@ -15,7 +16,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
       </Head>
-
       <header>
         <ul>
           <Link href="/"><a><li>Home</li></a></Link>
@@ -37,7 +37,7 @@ export default function Home() {
           </div>
           <div>
             <h2>Tons of CO2 emission</h2>
-            <Co2 />
+            {/* <Co2 /> */}
             <p>Description</p>
           </div>
           <div>
@@ -46,13 +46,22 @@ export default function Home() {
           </div>
           <div>
             <h2>Deforestation</h2>
-            <Deforestation/>
+            {/* <Deforestation/> */}
             <p>Description</p>
           </div>
           <div>
             <h2>Melted polar ice</h2>
             <Arctic />
             <p>Description</p>
+          </div>
+          <div>
+            <h2>
+              Emissions by country
+            </h2>
+            <Countries />
+            <p>
+              Description
+            </p>
           </div>
         </section>
 

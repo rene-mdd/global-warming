@@ -1,5 +1,6 @@
 import fetch from 'unfetch';
 import Chart from 'chart.js';
+// import textFile from '../data/nhtemp-moberg2005.txt';
 
 class Temperature extends React.Component {
   constructor(props) {
@@ -11,70 +12,73 @@ class Temperature extends React.Component {
   }
 
   async componentDidMount() {
-    try {
-      const response = await fetch(this.url)
-      const data = await response.json();
-      this.setState({ temperatureData: data })
-    } catch (error) {
-      console.log(error)
-    }
+
+    // console.log(textFile)
+
+    // try {
+    //   const response = await fetch(this.url)
+    //   const data = await response.json();
+    //   this.setState({ temperatureData: data })
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
 
 
-  displayTempGraph = (tData) => {
-    function parsedTempData() {
-      const stateCopy = tData;
-      const dateArray = [];
-      const tempArray = [];
-      const landArray = [];
+  // displayTempGraph = (tData) => {
+  //   function parsedTempData() {
+  //     const stateCopy = tData;
+  //     const dateArray = [];
+  //     const tempArray = [];
+  //     const landArray = [];
 
-      stateCopy.forEach(row => {
-        const date = row.time;
-        const station = row.station;
-        const land = row.land;
-        dateArray.push(date);
-        tempArray.push(parseFloat(station));
-        landArray.push(parseFloat(land));
-      });
-      return { dateArray, tempArray, landArray }
+  //     stateCopy.forEach(row => {
+  //       const date = row.time;
+  //       const station = row.station;
+  //       const land = row.land;
+  //       dateArray.push(date);
+  //       tempArray.push(parseFloat(station));
+  //       landArray.push(parseFloat(land));
+  //     });
+  //     return { dateArray, tempArray, landArray }
 
-    }
+  //   }
 
-    async function tempChart() {
-      try {
-        var ctx = 'tempChart';
-        const globalTemps = await parsedTempData();
-        const myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: globalTemps.dateArray,
-            datasets: [
-              {
-                label: '℃',
-                data: globalTemps.landArray,
-                fill: false,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                borderWidth: 1
-              }
-            ]
-          },
-          options: {}
-        });
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    tempChart()
+  //   async function tempChart() {
+  //     try {
+  //       var ctx = 'tempChart';
+  //       const globalTemps = await parsedTempData();
+  //       const myChart = new Chart(ctx, {
+  //         type: 'line',
+  //         data: {
+  //           labels: globalTemps.dateArray,
+  //           datasets: [
+  //             {
+  //               label: '℃',
+  //               data: globalTemps.landArray,
+  //               fill: false,
+  //               borderColor: 'rgba(255, 99, 132, 1)',
+  //               backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  //               borderWidth: 1
+  //             }
+  //           ]
+  //         },
+  //         options: {}
+  //       });
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   tempChart()
 
-  }
+  // }
 
   render() {
     console.log(this.state.temperatureData)
     return (<div>
-      <button onClick={this.displayTempGraph(this.state.temperatureData.result)}>GET</button>
+      {/* <button onClick={this.displayTempGraph(this.state.temperatureData.result)}>GET</button> */}
       <h1>Hello,</h1>
-      <canvas id="tempChart" width="800" height="800"></canvas>
+      {/* <canvas id="tempChart" width="800" height="800"></canvas> */}
     </div>);
   }
 }
