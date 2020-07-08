@@ -1,11 +1,14 @@
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-// import textFile from '../data/nhtemp-moberg2005.txt';
+// import warming from "../pages/api/parse-data"
+
+
 
 class Temperature extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { temperatureData: [] }
+    this.state = { temperatureData: [],
+    aWarmingData: [] }
     this.url = 'http://localhost:3000/api/mth-mean-surface-temp';
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
@@ -13,8 +16,8 @@ class Temperature extends React.Component {
 
   async componentDidMount() {
 
-    // console.log(textFile)
-
+    
+  
     // try {
     //   const response = await fetch(this.url)
     //   const data = await response.json();
@@ -74,6 +77,8 @@ class Temperature extends React.Component {
   // }
 
   render() {
+    console.log(this.aWarmingData)
+    console.log(this.props)
     console.log(this.state.temperatureData)
     return (<div>
       {/* <button onClick={this.displayTempGraph(this.state.temperatureData.result)}>GET</button> */}
@@ -83,24 +88,21 @@ class Temperature extends React.Component {
   }
 }
 
+
+// export async function getStaticProps() {
+//   const joinedData = path.join(process.cwd(), '../data/clear-data-1979')
+//   const filenames = fs.readdirSync(joinedData)
+
+ 
+//   // By returning { props: posts }, the Blog component
+//   // will receive `posts` as a prop at build time
+//   return {
+//     props: {
+//       filenames,
+//     },
+//   }
+// }
+  
+
 export default Temperature;
 
-
-
-
-// import fetch from 'unfetch'
-
-
-// const fetcher = url => fetch(url).then(r => r.json());
-
-
-// export default function Temperature() {
-//   const { data, error } = fetch('http://localhost:3000/api/mth-mean-surface-temp', fetcher);
-//     console.log(data)
-//   if (error) return <div>failed to load</div>
-//   if (!data) return <div>loading...</div>
-
-//   return <div>hello !</div>
-// }
-
-// "test api:  'https://jsonplaceholder.typicode.com/todos/1'"

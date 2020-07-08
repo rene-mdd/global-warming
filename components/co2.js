@@ -1,9 +1,8 @@
 // import useSWR from 'swr'
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-
-
 // import axios from "axios"
+
 
 
 // const fetcher = url => fetch(url).then(r => r.json());
@@ -19,6 +18,9 @@ class Co2 extends React.Component {
   async componentDidMount() {
     console.log('rene')
   
+
+
+
     // try {
     //   const response = await fetch(this.url)
     //   const data = await response.json();

@@ -7,7 +7,6 @@ import Deforestation from "../components/deforestation"
 import Countries from '../components/countries'
 
 
-
 export default function Home() {
   return (
     <div className="container">
@@ -51,14 +50,14 @@ export default function Home() {
           </div>
           <div>
             <h2>Melted polar ice</h2>
-            <Arctic />
+            {/* <Arctic /> */}
             <p>Description</p>
           </div>
           <div>
             <h2>
               Emissions by country
             </h2>
-            <Countries />
+            {/* <Countries /> */}
             <p>
               Description
             </p>
