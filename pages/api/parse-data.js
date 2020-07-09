@@ -1,10 +1,10 @@
 var fs = require('fs'),
     path = require('path'),
-    filePath = path.join(__dirname, 'data/clear-data-1979.json');
+    filePath = path.join(__dirname, 'public/data/clear-data-1979.json');
 
-export default function(req, response) {
- fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
-
+export default function (req, response) {
+    fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
+       
         if (!err) {
             const parsedData = JSON.parse(data)
             delete parsedData[0];
@@ -19,16 +19,14 @@ export default function(req, response) {
                 console.log(array[i])
 
             }
-
-            console.log(array)
+            const obj = { test: "object" }
             response.setHeader('Cache-control', "s-maxage=86400");
-            response.status(200).json(array);
+            response.status(200).json(obj);
+        
         } else {
             console.log(err);
 
         }
-     
     });
-    
-}
 
+}
