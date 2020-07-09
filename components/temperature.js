@@ -10,21 +10,20 @@ class Temperature extends React.Component {
     this.state = { temperatureData: [],
     aWarmingData: [] }
     this.url = 'http://localhost:3000/api/mth-mean-surface-temp';
+    this.antiqueUrl = 'http://localhost:3000/api/parse-data'
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
 
   async componentDidMount() {
 
-    
-  
-    // try {
-    //   const response = await fetch(this.url)
-    //   const data = await response.json();
-    //   this.setState({ temperatureData: data })
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      const response = await fetch(this.antiqueUrl)
+      const data = await response.json();
+      this.setState({ temperatureData: data })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -77,8 +76,7 @@ class Temperature extends React.Component {
   // }
 
   render() {
-    console.log(this.aWarmingData)
-    console.log(this.props)
+   
     console.log(this.state.temperatureData)
     return (<div>
       {/* <button onClick={this.displayTempGraph(this.state.temperatureData.result)}>GET</button> */}
