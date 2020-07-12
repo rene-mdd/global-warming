@@ -12,7 +12,7 @@ class Co2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = { co2Data: [],
-    newData: [] }
+    prehistoric: [] }
     this.url = "http://localhost:3000/api/ftp";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
@@ -36,7 +36,7 @@ class Co2 extends React.Component {
   }
 
 
-  displayGraph = (co2Data) => {
+  liveData = (co2Data) => {
     const oldKey = "# --------------------------------------------------------------------";
     let co2DataCopy = co2Data;
     console.log(co2DataCopy);
@@ -91,14 +91,17 @@ class Co2 extends React.Component {
       }
     }
    
-   
+  //  prehistoricData = () => {
+
+  //  }
 
   }
 
   render() {
   
     return (<div>
-      <button onClick={this.displayGraph(this.state.co2Data)}>GET</button>
+      <button onClick={this.liveData(this.state.co2Data)}>GET</button>
+      {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
       <h1>Hello,</h1>
       <canvas id="myChart" width="800" height="800"></canvas>
       
