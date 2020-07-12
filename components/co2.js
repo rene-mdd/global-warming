@@ -1,6 +1,8 @@
 // import useSWR from 'swr'
 import fetch from 'unfetch';
 import Chart from 'chart.js';
+const csv=require('csvtojson')
+
 // import axios from "axios"
 
 
@@ -9,80 +11,96 @@ import Chart from 'chart.js';
 class Co2 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { co2Data: [] }
-    this.url = 'https://pkgstore.datahub.io/core/co2-ppm-daily/co2-ppm-daily_json/data/3c5ec59370a85880da58d61fa4c47ce3/co2-ppm-daily_json.json';
+    this.state = { co2Data: [],
+    newData: [] }
+    this.url = "http://localhost:3000/api/ftp";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
 
   async componentDidMount() {
-    console.log('rene')
   
-
-
-
-    // try {
-    //   const response = await fetch(this.url)
-    //   const data = await response.json();
-    //   this.setState({ co2Data: data })
-    // } catch (error) {
-    //   console.log(error)
-    // }
-   
+    try {
+      const response = await fetch(this.url)
+      const data = await response.text();
+      csv()
+      .fromString(data)
+      .then((jsonObj) => {
+        this.setState({ co2Data: jsonObj })
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  
+  
   }
 
 
-  // displayGraph = (cdata) => {
-  //   function parsedData() {
-  //     const stateCopy = cdata;
-  //     const dateArray = [];
-  //     const co2Array = [];
+  displayGraph = (co2Data) => {
+    const oldKey = "# --------------------------------------------------------------------";
+    let co2DataCopy = co2Data;
+    console.log(co2DataCopy);
+    let parsedCopy = JSON.parse(JSON.stringify(co2DataCopy));
+    console.log(parsedCopy);
+    let sliced = parsedCopy.slice(60);
+    console.log(sliced);
+    const date = [];
+    const co2 = [];
+   
+    sliced.forEach((obj) => {
+      if (oldKey !== "year") {
+        Object.defineProperty(obj, ["year"],
+            Object.getOwnPropertyDescriptor(obj, oldKey));
+        delete obj[oldKey];
+        
+    }
+     date.push(`${obj.year}.${obj.field2}.${obj.field3}`);
+     co2.push(obj.field4)
+    })
+    console.log(date)
+    console.log(co2);
+    console.log(sliced);
 
-  //     stateCopy.forEach(row => {
-  //       const date = row.date;
-  //       const value = row.value;
-  //       dateArray.push(date)
-  //       co2Array.push(parseFloat(value))
-  //     });
-  //     return { dateArray, co2Array }
+    return parsedData({date, co2});
 
-  //   }
+ 
 
-  //   async function chart() {
-  //     try {
-  //       var ctx = 'myChart';
-  //       const globalCo2 = await parsedData();
-  //       const myChart = new Chart(ctx, {
-  //         type: 'line',
-  //         data: {
-  //           labels: globalCo2.dateArray,
-  //           datasets: [
-  //             {
-  //               label: 'CO2',
-  //               data: globalCo2.co2Array,
-  //               fill: false,
-  //               borderColor: 'rgba(255, 99, 132, 1)',
-  //               backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  //               borderWidth: 1
-  //             }
-  //           ]
-  //         },
-  //         options: {}
-  //       });
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   chart()
+   function parsedData(cleanCo2Data){
+   
+      try {
+        var ctx = 'myChart';
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: cleanCo2Data.date,
+            datasets: [
+              {
+                label: 'CO2',
+                data: cleanCo2Data.co2,
+                fill: false,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {}
+        });
+      } catch (error) {
+        console.log(error)
+      }
+    }
+   
+   
 
-  // }
+  }
 
   render() {
-    console.log(this.state.co2Data)
+  
     return (<div>
-      {/* <button onClick={this.displayGraph(this.state.co2Data)}>GET</button> */}
+      <button onClick={this.displayGraph(this.state.co2Data)}>GET</button>
       <h1>Hello,</h1>
-      {/* <canvas id="myChart" width="800" height="800"></canvas> */}
+      <canvas id="myChart" width="800" height="800"></canvas>
       
     </div>);
   }

@@ -1,10 +1,9 @@
-import fs from 'fs'
-import path from 'path'
+var fs = require('fs'),
+    path = require('path'),
+    //in next js we use process.cwd() and not __dirname
+    filePath = path.join(process.cwd(), '../public/data/clear-data-1979.json');
     
-export async function getStaticProps() {
-
-    const warmingAntiqueFile = path.join(process.cwd(), '../public/data/clear-data-1979.json')
-   fs.readdirSync(warmingAntiqueFile, { encoding: 'utf-8' }, function(err, data){
+    fs.readFile(filePath, { encoding: 'utf-8' }, function(err, data) {
         var array = [];
         if (!err) {
            const parsedData = JSON.parse(data)
@@ -19,16 +18,17 @@ export async function getStaticProps() {
                 array[i] = { time, land }
             }
             array.splice(0, 1);
-            return {props: array}
+            return warmingFunc(array)
          
         } else {
             console.log(err);
         }
+    });
 
-    })
-    //     response.setHeader('Content-Type', 'application/json');
+export  default async function warmingFunc(data) {
+    
+//     response.setHeader('Content-Type', 'application/json');
 //     response.status(200).json({error: null, newArray});
-        
-    return {props: array}
+    return data
 }
 

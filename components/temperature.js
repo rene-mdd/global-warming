@@ -1,7 +1,7 @@
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-// import warming from "../pages/api/parse-data"
-
+// import fs from 'fs'
+// import path from 'path'
 
 
 class Temperature extends React.Component {
@@ -10,20 +10,15 @@ class Temperature extends React.Component {
     this.state = { temperatureData: [],
     aWarmingData: [] }
     this.url = 'http://localhost:3000/api/mth-mean-surface-temp';
-    this.antiqueUrl = 'http://localhost:3000/api/parse-data'
+    this.antiqueUrl = 'http://localhost:3000/pages/api/parse-data'
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
+  
   }
-
+ 
   async componentDidMount() {
 
-    try {
-      const response = await fetch(this.antiqueUrl)
-      const data = await response.json();
-      this.setState({ temperatureData: data })
-    } catch (error) {
-      console.log(error)
-    }
+  
   }
 
 
@@ -76,7 +71,7 @@ class Temperature extends React.Component {
   // }
 
   render() {
-   
+    console.log(this.props)
     console.log(this.state.temperatureData)
     return (<div>
       {/* <button onClick={this.displayTempGraph(this.state.temperatureData.result)}>GET</button> */}
@@ -88,19 +83,34 @@ class Temperature extends React.Component {
 
 
 // export async function getStaticProps() {
-//   const joinedData = path.join(process.cwd(), '../data/clear-data-1979')
-//   const filenames = fs.readdirSync(joinedData)
 
- 
-//   // By returning { props: posts }, the Blog component
-//   // will receive `posts` as a prop at build time
-//   return {
-//     props: {
-//       filenames,
-//     },
-//   }
+//   const warmingAntiqueFile = path.join(process.cwd(), '../public/data/clear-data-1979.json')
+//  fs.readdirSync(warmingAntiqueFile, { encoding: 'utf-8' }, function(err, data){
+//       var array = [];
+//       if (!err) {
+//          const parsedData = JSON.parse(data)
+//          console.log(parsedData)
+          
+//           for (var i = 0; i < 1979; i++) {
+//               const time = parsedData[i].split(" ")[0];
+//               const temperature = parsedData[i].split(" ")[3] ? parsedData[i].split(" ")[3] : parsedData[i].split(" ")[4];
+//               console.log(temperature)
+//               const land = temperature.slice(0, 5);
+            
+//               array[i] = { time, land }
+//           }
+//           array.splice(0, 1);
+//           return {props: array}
+       
+//       } else {
+//           console.log(err);
+//       }
+
+//   })
+      
+//   return {props: array}
 // }
-  
+
 
 export default Temperature;
 
