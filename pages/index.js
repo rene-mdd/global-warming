@@ -5,6 +5,8 @@ import Co2 from '../components/co2'
 import Arctic from "../components/arctic"
 import Deforestation from "../components/deforestation"
 import Countries from '../components/countries'
+import Methane from '../components/methane'
+import Nitrous from '../components/nitrous'
 
 
 export default function Home() {
@@ -36,11 +38,17 @@ export default function Home() {
           </div>
           <div>
             <h2>Tons of CO2 emission</h2>
-            <Co2 />
+            {/* <Co2 /> */}
             <p>Description</p>
           </div>
           <div>
-            <h2>Air quality</h2>
+            <h2>Methane</h2>
+            {/* <Methane /> */}
+            <p>Description</p>
+          </div>
+          <div>
+            <h2>Nitrous Oxide</h2>
+            <Nitrous />
             <p>Description</p>
           </div>
           <div>

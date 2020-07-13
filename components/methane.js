@@ -7,12 +7,12 @@ const csv=require('csvtojson')
 
 
 // const fetcher = url => fetch(url).then(r => r.json());
-class Co2 extends React.Component {
+class Methane extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { co2Data: [],
-    prehistoric: [] }
-    this.url = "http://localhost:3000/api/ftp";
+    this.state = { methaneData: [],
+    prehistoricMethane: [] }
+    this.url = "http://localhost:3000/api/ftp-methane";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
@@ -25,7 +25,7 @@ class Co2 extends React.Component {
       csv()
       .fromString(data)
       .then((jsonObj) => {
-        this.setState({ co2Data: jsonObj })
+        this.setState({ methaneData: jsonObj })
       })
     } catch (error) {
       console.log(error)
@@ -33,47 +33,52 @@ class Co2 extends React.Component {
   }
 
 
-  liveData = (co2Data) => {
+  methaneData = (mData) => {
     const oldKey = "# --------------------------------------------------------------------";
-    let co2DataCopy = co2Data;
-    console.log(co2DataCopy);
-    let parsedCopy = JSON.parse(JSON.stringify(co2DataCopy));
+    let mDataCopy = mData;
+    console.log(mDataCopy);
+    let parsedCopy = JSON.parse(JSON.stringify(mDataCopy));
     console.log(parsedCopy);
-    let sliced = parsedCopy.slice(60);
+    let sliced = parsedCopy.slice(62);
     console.log(sliced);
-    const date = [];
-    const co2 = [];
+    const mDate = [];
+    const methane = [];
    
     sliced.forEach((obj) => {
       if (oldKey !== "year") {
         Object.defineProperty(obj, ["year"],
             Object.getOwnPropertyDescriptor(obj, oldKey));
         delete obj[oldKey];
-        
     }
-     date.push(`${obj.year}.${obj.field2}.${obj.field3}`);
-     co2.push(obj.field4)
-    })
-    console.log(date)
-    console.log(co2);
-    console.log(sliced);
+    mDate.push(` ${obj.year.split(' ').filter(f => f)[0]}.${obj.year.split(' ').filter(f => f)[1]}`);
+    methane.push(obj.year.split(' ').filter(f => f)[3]);
+  })
+  console.log(sliced)
+  console.log(mDate)
+  console.log(methane)
+  
+    //  date.push(`${obj.year}.${obj.field2}.${obj.field3}`);
+    //  co2.push(obj.field4)
+    // })
+    // console.log(date)
+    // console.log(co2);
+    // console.log(sliced);
 
-    return parsedData({date, co2});
-
+    return parsedData({mDate, methane});
  
 
-   function parsedData(cleanCo2Data){
+   function parsedData(cleanMethData){
    
       try {
-        var ctx = 'myChart';
+        var ctx = 'myMethChart';
         const myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: cleanCo2Data.date,
+            labels: cleanMethData.mDate,
             datasets: [
               {
-                label: 'CO2',
-                data: cleanCo2Data.co2,
+                label: 'Methane',
+                data: cleanMethData.methane,
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -95,18 +100,18 @@ class Co2 extends React.Component {
   }
 
   render() {
-  
+    console.log(this.state.methaneData)
     return (<div>
-      <button onClick={this.liveData(this.state.co2Data)}>GET</button>
+      <button onClick={this.methaneData(this.state.methaneData)}>GET</button>
       {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
       <h1>Hello,</h1>
-      <canvas id="myChart" width="800" height="800"></canvas>
+      <canvas id="myMethChart" width="800" height="800"></canvas>
       
     </div>);
   }
 }
 
 
-export default Co2;
+export default Methane;
 
 
