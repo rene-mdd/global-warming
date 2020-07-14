@@ -12,7 +12,7 @@ class Nitrous extends React.Component {
     super(props);
     this.state = { nitrousData: {},
     prehistoricNitrous: [] }
-    this.url = 'http://localhost:3000/api/nitrous-oxide-api';
+    this.url = "http://localhost:3000/api/ftp-nitrous";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }

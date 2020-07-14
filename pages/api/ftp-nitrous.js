@@ -1,6 +1,6 @@
 const Client = require("ftp");
 
-// `link: ftp://aftp.cmdl.noaa.gov/products/trends/n2o/n2o_mm_gl.txt`
+// `ftp://aftp.cmdl.noaa.gov/products/trends/n2o/n2o_mm_gl.txt`
 
 export default async (req, res) => {
   const connectionConfig = {
@@ -23,8 +23,13 @@ export default async (req, res) => {
     return;
   }
 
+
+  
+
+
   res.statusCode = 200;
-  res.setHeader("Content-Type", ["text/csv", "s-maxage=86400"]);
+  res.setHeader("Content-Type", "text/csv");
+  res.setHeader("Cache-Control", "s-maxage=86400");
   res.end(data);
   return;
 };

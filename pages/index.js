@@ -43,12 +43,12 @@ export default function Home() {
           </div>
           <div>
             <h2>Methane</h2>
-            {/* <Methane /> */}
+            <Methane />
             <p>Description</p>
           </div>
           <div>
             <h2>Nitrous Oxide</h2>
-            <Nitrous />
+            {/* <Nitrous /> */}
             <p>Description</p>
           </div>
           <div>

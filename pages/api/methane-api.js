@@ -1,4 +1,5 @@
 const Client = require("ftp");
+const csv=require('csvtojson')
 
 // `link: ftp://aftp.cmdl.noaa.gov/products/trends/ch4/ch4_mm_gl.txt`
 
@@ -23,10 +24,42 @@ export default async (req, res) => {
     return;
   }
 
-  res.statusCode = 200;
-  res.setHeader("Content-Type", ["text/csv", "s-maxage=86400"]);
-  res.end(data);
-  return;
+  csv()
+  .fromString(data)
+  .then((jsonObj) => {
+    parsedData(jsonObj)
+  })
+
+  function parsedData(csvToJson){
+    const MDate = [];
+    const methaneAverage = [];
+    const methaneTrend = [];
+    const averageUnc = [];
+    const trendUnc = [];
+  const oldKey = "# --------------------------------------------------------------------";
+   const sliced = csvToJson.slice(62);
+    
+    sliced.forEach((obj) => {
+      if (oldKey !== "year") {
+        Object.defineProperty(obj, ["year"],
+            Object.getOwnPropertyDescriptor(obj, oldKey));
+        delete obj[oldKey];
+    }
+    MDate.push(` ${obj.year.split(' ').filter(f => f)[0]}.${obj.year.split(' ').filter(f => f)[1]}`);
+    methaneAverage.push(obj.year.split(' ').filter(f => f)[3]);
+    methaneTrend.push(obj.year.split(' ').filter(f => f)[5]);
+    averageUnc.push(obj.year.split(' ').filter(f => f)[4]);
+    trendUnc.push(obj.year.split(' ').filter(f => f)[6]);
+    })
+    
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "s-maxage=86400");
+    res.json({date: MDate, average: methaneAverage, trend: methaneTrend, averageUnc: averageUnc, trendUnc: trendUnc});
+    return;
+    
+  }
+ 
 };
 
 const getFTPData = (config, path) => {

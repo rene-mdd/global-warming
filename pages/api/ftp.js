@@ -23,7 +23,8 @@ export default async (req, res) => {
   }
 
   res.statusCode = 200;
-  res.setHeader("Content-Type", ["text/csv", "s-maxage=86400"]);
+  res.setHeader("Content-Type", "text/csv");
+  res.setHeader("Cache-Control", "s-maxage=86400");
   res.end(data);
   return;
 };
