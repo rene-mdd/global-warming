@@ -22,12 +22,11 @@ class Nitrous extends React.Component {
     try {
       const response = await fetch(this.url)
       const data = await response.json();
-      this.setState({ nitrousData: data })
-      // csv()
-      // .fromString(data)
-      // .then((jsonObj) => {
-      //   this.setState({ nitrousData: jsonObj })
-      // })
+      csv()
+      .fromString(data)
+      .then((jsonObj) => {
+        this.setState({ nitrousData: jsonObj })
+      })
     } catch (error) {
       console.log(error)
     }
