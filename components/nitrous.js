@@ -1,53 +1,54 @@
-// import useSWR from 'swr'
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-import preCo2Data from '../public/data/csvjson-co2.json'
+import nitrousData from "../public/data/csvjson-nitrous.json"
+const csv=require('csvtojson')
 
-class Co2 extends React.Component {
+class Nitrous extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { co2Data: {},
-    prehistoric: {} }
-    this.url = "api/co2-api";
+    this.state = { nitrousData: {},
+    prehistoricNitrous: {} }
+    this.url = "api/nitrous-oxide-api";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
 
   async componentDidMount() {
-
+  
+    console.log(nitrousData)
     const date = [];
     const amount = [];
-    preCo2Data.forEach((obj) => {
+   
+    nitrousData.forEach((obj) => {
       date.push(obj.year.split(",").filter(x => x)[0]);
       amount.push(parseFloat(obj.year.split(",").filter(x => x)[1]).toFixed(1));
     })
 
-    const co2Object = { date: date, amount: amount }
+    const nitrousObject = { date: date, amount: amount }
 
-    this.setState({ prehistoric: co2Object })
-  
-    try {
+    this.setState({ prehistoricNitrous: nitrousObject })
+
+     try {
       const response = await fetch(this.url)
       const data = await response.json();
-    this.setState({co2Data: data})
+      this.setState({ nitrousData: data })
     } catch (error) {
       console.log(error)
     }
   }
 
-
-  parsedCo2Data = (prehistoricData, currentData) => {
-   
+ parsedNitrousData = (cleanNitrousPrehistoricData, cleanNitrousData) => {
+ 
   try {
-    var ctx = 'myCo2Chart';
+    var ctx = 'myNitrousChart';
     const myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [...prehistoricData.date, ...currentData.date],
+        labels: [...cleanNitrousPrehistoricData.date, ...cleanNitrousData.date],
         datasets: [
           {
-            label: 'Carbon Dioxide',
-            data: [...prehistoricData.amount, ...currentData.trend],
+            label: 'Nitrous Oxide',
+            data: [...cleanNitrousPrehistoricData.amount, ...cleanNitrousData.average],
             fill: false,
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'black',
@@ -64,7 +65,7 @@ class Co2 extends React.Component {
       options: {
         title: {
           display: true,
-          text: 'Carbon dioxide levels from 800,000 years ago to present'
+          text: 'Nitrous oxide levels from 800,000 years ago to present'
         },
         scales: {
           bounds: 'ticks',
@@ -72,7 +73,7 @@ class Co2 extends React.Component {
             suggestedMax: 800000,
             suggestedMin: -800000,
             stepSize: 2
-  },
+},
           yAxes: [{
             stacked: true
         }],
@@ -85,23 +86,23 @@ class Co2 extends React.Component {
   } catch (error) {
     console.log(error)
   }
- 
-  }
+}
+  
 
   render() {
-  console.log(this.state.prehistoric)
-  console.log(this.state.co2Data)
+    console.log(this.state.nitrousData)
+    console.log(this.state.prehistoricNitrous)
     return (<div>
-      <button onClick={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}>GET</button>
-      {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
+      {/* <button onClick={this.nitrousData(this.state.nitrousData)}>GET</button> */}
+      <button  onClick={this.parsedNitrousData(this.state.prehistoricNitrous, this.state.nitrousData)}>Antique GET</button>
       <h1>Hello,</h1>
-      <canvas id="myCo2Chart" width="800" height="800"></canvas>
+      <canvas id="myNitrousChart" width="800" height="800"></canvas>
       
     </div>);
   }
 }
 
 
-export default Co2;
+export default Nitrous;
 
 
