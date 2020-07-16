@@ -33,7 +33,7 @@ export default function Home() {
         <section className="home">
           <div>
             <h2>Live global temperature rise</h2>
-            {/* <Temperature/> */}
+            <Temperature/>
             <span>This graph represents the worldwide temperature rise, beginning on January 1880. GISTEMP Team, 2020: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. Dataset accessed 20YY-MM-DD at https://data.giss.nasa.gov/gistemp/.</span>
             <span>Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in the GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522.</span>
             <span>Source data year 1 – 1979: <a href="https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI">https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI</a></span>
@@ -46,7 +46,7 @@ export default function Home() {
           </div>
           <div>
             <h2>Tons of CO2 emission</h2>
-            {/* <Co2 /> */}
+            <Co2 />
             <span>This graph represents the CO2 concentration level in the atmosphere, beginning in 1958 when Mauna Loa Observatory officially started measuring.
             Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (www.esrl.noaa.gov/gmd/ccgg/trends/)
 </span>
@@ -56,13 +56,13 @@ export default function Home() {
           </div>
           <div>
             <h2>Methane</h2>
-            {/* <Methane /> */}
+            <Methane />
             <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.ttps://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/</span>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
           </div>
           <div>
             <h2>Nitrous Oxide</h2>
-            {/* <Nitrous /> */}
+            <Nitrous />
             <span>Credits: Ed Dlugokencky, NOAA/GML (<a href="www.esrl.noaa.gov/gmd/ccgg/trends_n2o">www.esrl.noaa.gov/gmd/ccgg/trends_n2o/</a>)</span>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
           </div>
