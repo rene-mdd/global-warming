@@ -1,106 +1,101 @@
 // import useSWR from 'swr'
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-const csv=require('csvtojson')
-// import axios from "axios"
+import preCo2Data from '../public/data/csvjson-co2.json'
 
-
-
-// const fetcher = url => fetch(url).then(r => r.json());
 class Co2 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { co2Data: [],
-    prehistoric: [] }
-    this.url = "http://localhost:3000/api/ftp";
+    this.state = { co2Data: {},
+    prehistoric: {} }
+    this.url = "api/co2-api";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
 
   async componentDidMount() {
+
+    const date = [];
+    const amount = [];
+    preCo2Data.forEach((obj) => {
+      date.push(obj.year.split(",").filter(x => x)[0]);
+      amount.push(parseFloat(obj.year.split(",").filter(x => x)[1]).toFixed(1));
+    })
+
+    const co2Object = { date: date, amount: amount }
+
+    this.setState({ prehistoric: co2Object })
   
     try {
       const response = await fetch(this.url)
-      const data = await response.text();
-      csv()
-      .fromString(data)
-      .then((jsonObj) => {
-        this.setState({ co2Data: jsonObj })
-      })
+      const data = await response.json();
+    this.setState({co2Data: data})
     } catch (error) {
       console.log(error)
     }
   }
 
 
-  liveData = (co2Data) => {
-    const oldKey = "# --------------------------------------------------------------------";
-    let co2DataCopy = co2Data;
-    console.log(co2DataCopy);
-    let parsedCopy = JSON.parse(JSON.stringify(co2DataCopy));
-    console.log(parsedCopy);
-    let sliced = parsedCopy.slice(60);
-    console.log(sliced);
-    const date = [];
-    const co2 = [];
+  parsedCo2Data = (prehistoricData, currentData) => {
    
-    sliced.forEach((obj) => {
-      if (oldKey !== "year") {
-        Object.defineProperty(obj, ["year"],
-            Object.getOwnPropertyDescriptor(obj, oldKey));
-        delete obj[oldKey];
-        
-    }
-     date.push(`${obj.year}.${obj.field2}.${obj.field3}`);
-     co2.push(obj.field4)
-    })
-    console.log(date)
-    console.log(co2);
-    console.log(sliced);
-
-    return parsedData({date, co2});
-
- 
-
-   function parsedData(cleanCo2Data){
-   
-      try {
-        var ctx = 'myChart';
-        const myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: cleanCo2Data.date,
-            datasets: [
-              {
-                label: 'CO2',
-                data: cleanCo2Data.co2,
-                fill: false,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                borderWidth: 1
-              }
-            ]
-          },
-          options: {}
-        });
-      } catch (error) {
-        console.log(error)
+  try {
+    var ctx = 'myCo2Chart';
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [...prehistoricData.date, ...currentData.date],
+        datasets: [
+          {
+            label: 'Carbon Dioxide',
+            data: [...prehistoricData.amount, ...currentData.trend],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'black',
+            pointRadius: false,
+            pointHoverBorderWidth: 10,
+            pointBackgroundColor: "rgba(255, 99, 132, 1)",
+            pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
+            pointHoverBorderColor: 'black',
+            borderWidth: 1,
+            pointHoverRadius: 5
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Carbon dioxide levels from 800,000 years ago to present'
+        },
+        scales: {
+          bounds: 'ticks',
+          ticks: {
+            suggestedMax: 800000,
+            suggestedMin: -800000,
+            stepSize: 2
+  },
+          yAxes: [{
+            stacked: true
+        }],
+        xAxes: [{
+          stacked: true
+        }],
       }
-    }
-   
-  //  prehistoricData = () => {
-
-  //  }
-
+      }
+    });
+  } catch (error) {
+    console.log(error)
+  }
+ 
   }
 
   render() {
-  
+  console.log(this.state.prehistoric)
+  console.log(this.state.co2Data)
     return (<div>
-      <button onClick={this.liveData(this.state.co2Data)}>GET</button>
+      <button onClick={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}>GET</button>
       {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
       <h1>Hello,</h1>
-      <canvas id="myChart" width="800" height="800"></canvas>
+      <canvas id="myCo2Chart" width="800" height="800"></canvas>
       
     </div>);
   }

@@ -1,9 +1,9 @@
 // import useSWR from 'swr'
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-const csv = require('csvtojson')
 import methaneData from '../public/data/csvjson-methane.json'
-import nitrousData from "../public/data/csvjson-nitrous.json"
+const csv = require('csvtojson')
+
 // import axios from "axios"
 
 
@@ -35,14 +35,14 @@ class Methane extends React.Component {
     this.setState({ prehistoricMethane: methaneObject })
 
 
-    // try {
+    try {
     
-    //   const response = await fetch(this.url)
-    //   const data = await response.json();
-    //   this.setState({ methaneData: data })
-    // } catch (error) {
-    //   console.log(error)
-    // }
+      const response = await fetch(this.url)
+      const data = await response.json();
+      this.setState({ methaneData: data })
+    } catch (error) {
+      console.log(error)
+    }
 
     
   }
@@ -56,11 +56,11 @@ class Methane extends React.Component {
         const myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: [...methPrehistoricData.date],
+            labels: [...methPrehistoricData.date, ...methaneData.date],
             datasets: [
               {
                 label: 'Methane',
-                data: [...methPrehistoricData.amount],
+                data: [...methPrehistoricData.amount, ...methaneData.average],
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'black',

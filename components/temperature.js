@@ -1,15 +1,14 @@
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-// import fs from 'fs'
-// import path from 'path'
+import temperatureFile from '../public/data/csvjson-temperature.json'
 
 
 class Temperature extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { temperatureData: [],
-    aWarmingData: [] }
-    this.url = 'http://localhost:3000/api/mth-mean-surface-temp';
+    this.state = { temperatureData: {},
+    aWarmingData: {} }
+    this.url = 'api/temperature-api';
     this.antiqueUrl = 'http://localhost:3000/pages/api/parse-data'
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
@@ -18,64 +17,100 @@ class Temperature extends React.Component {
  
   async componentDidMount() {
 
-  
+    console.log(temperatureFile)
+
+    const date = [];
+    const amount = [];
+    temperatureFile.forEach((obj) => {
+      date.push(obj.year.split(" ").filter(x => x)[0]);
+      amount.push(parseFloat(obj.year.split(" ").filter(x => x)[1].slice(0, 5)));
+    })
+
+    const temperatureObject = { date: date, amount: amount };
+
+    this.setState({ aWarmingData: temperatureObject });
+
+    try {
+      const response = await fetch(this.url)
+      const data = await response.json();
+      this.setState({ temperatureData: data })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
-  // displayTempGraph = (tData) => {
-  //   function parsedTempData() {
-  //     const stateCopy = tData;
-  //     const dateArray = [];
-  //     const tempArray = [];
-  //     const landArray = [];
+  displayTempGraph = (aWarmingData, temperatureLiveData) => {
+    console.log(temperatureLiveData)
+    const newArrayCopy = temperatureLiveData;
+    const date = [];
+    const station = [];
+  
+      try {
+        //transform api to arrays
+        newArrayCopy.forEach((obj) => {
+          date.push(obj.time);
+          station.push(obj.station);
+        })
+        //chart js
+        var ctx = 'tempChart';
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: [...aWarmingData.date, ...date],
+            datasets: [
+              {
+                label: 'Temperature',
+                data: [...aWarmingData.amount, ...station],
+                fill: false,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'black',
+                pointRadius: false,
+                pointHoverBorderWidth: 7,
+                pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointHoverBorderColor: 'black',
+                borderWidth: 1,
+                pointHoverRadius: 5
+              }
+            ]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Global temperature anomalies since year 1 to present'
+            },
+            scales: {
+              ticks: {
+                suggestedMax: 800000,
+                suggestedMin: -800000
+      },
+              yAxes: [{
+                stacked: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Hola'
+                },
+            }],
+            xAxes: [{
+              stacked: true
+            }],
+          }
+          }
+        });
+      } catch (error) {
+        console.log(error)
+      }
 
-  //     stateCopy.forEach(row => {
-  //       const date = row.time;
-  //       const station = row.station;
-  //       const land = row.land;
-  //       dateArray.push(date);
-  //       tempArray.push(parseFloat(station));
-  //       landArray.push(parseFloat(land));
-  //     });
-  //     return { dateArray, tempArray, landArray }
-
-  //   }
-
-  //   async function tempChart() {
-  //     try {
-  //       var ctx = 'tempChart';
-  //       const globalTemps = await parsedTempData();
-  //       const myChart = new Chart(ctx, {
-  //         type: 'line',
-  //         data: {
-  //           labels: globalTemps.dateArray,
-  //           datasets: [
-  //             {
-  //               label: '℃',
-  //               data: globalTemps.landArray,
-  //               fill: false,
-  //               borderColor: 'rgba(255, 99, 132, 1)',
-  //               backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  //               borderWidth: 1
-  //             }
-  //           ]
-  //         },
-  //         options: {}
-  //       });
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   tempChart()
-
-  // }
+  }
 
   render() {
     console.log(this.state.temperatureData)
+    console.log(this.state.aWarmingData)
     return (<div>
-      {/* <button onClick={this.displayTempGraph(this.state.temperatureData.result)}>GET</button> */}
+      <button onClick={this.displayTempGraph(this.state.aWarmingData, this.state.temperatureData.result)}>GET</button>
       <h1>Hello,</h1>
-      {/* <canvas id="tempChart" width="800" height="800"></canvas> */}
+      <canvas id="tempChart" width="800" height="800"></canvas>
     </div>);
   }
 }

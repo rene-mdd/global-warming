@@ -1,8 +1,8 @@
 const Client = require("ftp");
-
-// `ftp://aftp.cmdl.noaa.gov/products/trends/n2o/n2o_mm_gl.txt`
+const csv=require('csvtojson')
 
 export default async (req, res) => {
+  // "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_trend_gl.txt"
   const connectionConfig = {
     host: "aftp.cmdl.noaa.gov",
     connTimeout: 30000,
@@ -13,7 +13,7 @@ export default async (req, res) => {
 
   const { data, error } = await getFTPData(
     connectionConfig,
-    "products/trends/n2o/n2o_mm_gl.txt"
+    "products/trends/co2/co2_trend_gl.csv"
   );
 
   if (error) {
@@ -22,18 +22,39 @@ export default async (req, res) => {
     res.end("Internal Server Error");
     return;
   }
+  csv()
+  .fromString(data)
+  .then((jsonObj) => {
+    parsedData(jsonObj)
+  })
 
+  function parsedData(csvToJson) {
+    const oldKey = "# --------------------------------------------------------------------";
+    let co2DataCopy = csvToJson;
+    let parsedCopy = JSON.parse(JSON.stringify(co2DataCopy));
+    let sliced = parsedCopy.slice(60);
+    console.log(sliced);
+    const date = [];
+    const co2 = [];
+   
+    sliced.forEach((obj) => {
+      if (oldKey !== "year") {
+        Object.defineProperty(obj, ["year"],
+            Object.getOwnPropertyDescriptor(obj, oldKey));
+        delete obj[oldKey];
+        
+    }
+     date.push(`${obj.year}.${obj.field2}.${obj.field3}`);
+     co2.push(parseFloat(obj.field4))
+    })
 
-  
-
-
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/csv");
-  res.setHeader("Cache-Control", "s-maxage=86400");
-  res.end(data);
-  return;
-};
-
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "s-maxage=86400");
+    res.json({date: date, trend: co2});
+    return;
+}
+}
 const getFTPData = (config, path) => {
   // Creating FTP Client
   const ftp = new Client();

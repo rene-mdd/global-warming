@@ -1,7 +1,8 @@
 const Client = require("ftp");
+const csv=require('csvtojson')
+// `ftp://aftp.cmdl.noaa.gov/products/trends/n2o/n2o_mm_gl.txt`
 
 export default async (req, res) => {
-  // "ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_trend_gl.txt"
   const connectionConfig = {
     host: "aftp.cmdl.noaa.gov",
     connTimeout: 30000,
@@ -12,7 +13,7 @@ export default async (req, res) => {
 
   const { data, error } = await getFTPData(
     connectionConfig,
-    "products/trends/co2/co2_trend_gl.csv"
+    "products/trends/n2o/n2o_mm_gl.txt"
   );
 
   if (error) {
@@ -22,12 +23,41 @@ export default async (req, res) => {
     return;
   }
 
+  csv()
+  .fromString(data)
+  .then((jsonObj) => {
+    parsedNitrousData(jsonObj)
+  })
+  
+  function parsedNitrousData(csvToJson){
+    const NDate = [];
+    const nitrousAverage = [];
+    const nitrousTrend = [];
+    const averageUnc = [];
+    const trendUnc = [];
+  const oldKey = "# --------------------------------------------------------------------";
+   const sliced = csvToJson.slice(62);
+    
+    sliced.forEach((obj) => {
+      if (oldKey !== "year") {
+        Object.defineProperty(obj, ["year"],
+            Object.getOwnPropertyDescriptor(obj, oldKey));
+        delete obj[oldKey];
+    }
+    NDate.push(` ${obj.year.split(' ').filter(f => f)[0]}.${obj.year.split(' ').filter(f => f)[1]}`);
+    nitrousAverage.push(obj.year.split(' ').filter(f => f)[3]);
+    nitrousTrend.push(obj.year.split(' ').filter(f => f)[5]);
+    averageUnc.push(obj.year.split(' ').filter(f => f)[4]);
+    trendUnc.push(obj.year.split(' ').filter(f => f)[6]);
+    })
+    
   res.statusCode = 200;
   res.setHeader("Content-Type", "text/csv");
   res.setHeader("Cache-Control", "s-maxage=86400");
-  res.end(data);
+  res.json({date: NDate, average: nitrousAverage, trend: nitrousTrend, averageUnc: averageUnc, trendUnc: trendUnc});
   return;
 };
+}
 
 const getFTPData = (config, path) => {
   // Creating FTP Client
