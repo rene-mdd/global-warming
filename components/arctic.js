@@ -24,20 +24,21 @@ class Arctic extends React.Component {
 
 
   displayArcticGraph = (AData) => {
-  
-      const stateCopy = AData;
+  console.log(AData)
+      
       const yearArray = [];
       const extentArray = [];
       const areaArray = [];
       try {
-        stateCopy.forEach(row => {
+        if(AData) {
+        AData.forEach(row => {
           const date = row.year;
           const extent = row.extent;
           const area = row.area;
           yearArray.push(date);
           extentArray.push(parseFloat(extent));
           areaArray.push(parseFloat(area));
-        });
+        })}
         var ctx = 'arcticChart';
         const myChart = new Chart(ctx, {
           type: 'line',
@@ -60,13 +61,34 @@ class Arctic extends React.Component {
               }
             ]
           },
-          options: {}
+          options: {
+            responsive: true,
+            maintainAspectRatio : false,
+            title: {
+              display: true,
+              text: 'Global temperature anomalies since year 1 to present'
+            },
+            scales: {
+              yAxes: [{
+                stacked: false,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Million square km'
+                },
+            }],
+            xAxes: [{
+              stacked: false,
+              scaleLabel: {
+                display: true,
+                labelString: 'Year'
+              },
+            }],
+          }
+          }
         });
       } catch (error) {
         console.log(error)
       }
-
-   
 
   }
 
@@ -75,8 +97,9 @@ class Arctic extends React.Component {
     return (<div>
       <button onClick={this.displayArcticGraph(this.state.arcticData.result)}>GET</button>
       <h1>Hello, arctic</h1>
-      <canvas id="arcticChart" width="800" height="800"></canvas>
-      {/* <iframe src="http://energyatlas.iea.org/embed.jsp?subject=1378539487&lang=en" frameborder="0" height="800" scrolling="no" width="800"></iframe>     */}
+      <div className="chart-container" style={{ position: 'relative', height:'80vh', width:'80vw'}}>
+      <canvas id="arcticChart"></canvas>
+      </div>
       </div>);
   }
 }

@@ -17,8 +17,6 @@ class Temperature extends React.Component {
  
   async componentDidMount() {
 
-    console.log(temperatureFile)
-
     const date = [];
     const amount = [];
     temperatureFile.forEach((obj) => {
@@ -41,14 +39,14 @@ class Temperature extends React.Component {
 
 
   displayTempGraph = (aWarmingData, temperatureLiveData) => {
-    console.log(temperatureLiveData)
-    const newArrayCopy = temperatureLiveData;
+
     const date = [];
     const station = [];
   
       try {
+        if (temperatureLiveData) {
         //transform api to arrays
-        newArrayCopy.forEach((obj) => {
+        temperatureLiveData.forEach((obj) => {
           date.push(obj.time);
           station.push(obj.station);
         })
@@ -57,11 +55,11 @@ class Temperature extends React.Component {
         const myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: [...aWarmingData.date, ...date],
+            labels: aWarmingData.date.concat(date),
             datasets: [
               {
                 label: 'Temperature',
-                data: [...aWarmingData.amount, ...station],
+                data: aWarmingData.amount.concat(station),
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'black',
@@ -97,7 +95,8 @@ class Temperature extends React.Component {
             }],
           }
           }
-        });
+        })
+      }
       } catch (error) {
         console.log(error)
       }
@@ -108,9 +107,12 @@ class Temperature extends React.Component {
     console.log(this.state.temperatureData)
     console.log(this.state.aWarmingData)
     return (<div>
+      {!this.state.temperatureData ? <p>loading...</p> : 
+      <div className="chart-container" style={{ position: 'relative', width:'80vw'}}>
+      <canvas id="tempChart" ></canvas> </div>}
+       <h1>Global Warming</h1>
       <button onClick={this.displayTempGraph(this.state.aWarmingData, this.state.temperatureData.result)}>GET</button>
-      <h1>Hello,</h1>
-      <canvas id="tempChart" width="800" height="800"></canvas>
+     
     </div>);
   }
 }
