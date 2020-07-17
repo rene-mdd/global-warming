@@ -28,7 +28,7 @@ class Methane extends React.Component {
    
     methaneData.forEach((obj) => {
       date.push(obj.year.split(",").filter(x => x)[0]);
-      amount.push(parseFloat(obj.year.split(",").filter(x => x)[1]).toFixed(1));
+      amount.push(Number(parseFloat(obj.year.split(",").filter(x => x)[1]).toFixed(1)));
     })
     const methaneObject = { date: date, amount: amount }
 
@@ -49,18 +49,17 @@ class Methane extends React.Component {
 
 
    parsedData = (methPrehistoricData, methaneData) => {
-    
-    
       try {
+        if (methPrehistoricData.date) {
         var ctx = 'myMethChart';
         const myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: [...methPrehistoricData.date, ...methaneData.date],
+            labels: methPrehistoricData.date.concat(methaneData.date),
             datasets: [
               {
                 label: 'Methane',
-                data: [...methPrehistoricData.amount, ...methaneData.average],
+                data: methPrehistoricData.amount.concat(methaneData.average),
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'black',
@@ -94,7 +93,8 @@ class Methane extends React.Component {
             }],
           }
           }
-        });
+        })
+      }
       } catch (error) {
         console.log(error)
       }
@@ -110,7 +110,7 @@ class Methane extends React.Component {
       <button onClick={this.parsedData(this.state.prehistoricMethane, this.state.methaneData)}>GET</button>
       {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
       <h1>Hello,</h1>
-      <div>
+      <div className="chart-container" style={{ position: 'relative', width:'80vw'}}>
       <canvas id="myMethChart" width="800" height="800"></canvas>
       </div>
     </div>);

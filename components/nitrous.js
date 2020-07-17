@@ -38,27 +38,27 @@ class Nitrous extends React.Component {
   }
 
  parsedNitrousData = (cleanNitrousPrehistoricData, cleanNitrousData) => {
- 
   try {
+    if (cleanNitrousData.nitrous) {
     var ctx = 'myNitrousChart';
     const myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [...cleanNitrousPrehistoricData.date, ...cleanNitrousData.date],
+        labels: cleanNitrousPrehistoricData.date.concat(cleanNitrousData.date),
         datasets: [
           {
             label: 'Nitrous Oxide',
-            data: [...cleanNitrousPrehistoricData.amount, ...cleanNitrousData.average],
+            data: cleanNitrousPrehistoricData.amount.concat(cleanNitrousData.average),
             fill: false,
             borderColor: 'rgba(255, 99, 132, 1)',
-            backgroundColor: 'black',
-            pointRadius: false,
-            pointHoverBorderWidth: 10,
-            pointBackgroundColor: "rgba(255, 99, 132, 1)",
-            pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
-            pointHoverBorderColor: 'black',
+            backgroundColor: 'rgba(255, 0, 0, 0.1);',
+            pointRadius: 1.5,
+            pointHoverBorderWidth: 1,
+            pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
+            pointHoverBackgroundColor: 'white',
+            pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
-            pointHoverRadius: 5
+            pointHoverRadius: 10
           }
         ]
       },
@@ -71,23 +71,30 @@ class Nitrous extends React.Component {
           bounds: 'ticks',
           ticks: {
             suggestedMax: 800000,
-            suggestedMin: -800000,
-            stepSize: 2
+            suggestedMin: -800000
 },
           yAxes: [{
-            stacked: true
+            stacked: false,
+            scaleLabel: {
+              display: true,
+              labelString: 'Nitrous Oxide mole fraction (ppb)'
+            },
         }],
         xAxes: [{
-          stacked: true
+          stacked: false,
+          scaleLabel: {
+            display: true,
+            labelString: 'Year'
+          },
         }],
       }
       }
-    });
+    })
+  }
   } catch (error) {
     console.log(error)
   }
 }
-  
 
   render() {
     console.log(this.state.nitrousData)
@@ -96,8 +103,9 @@ class Nitrous extends React.Component {
       {/* <button onClick={this.nitrousData(this.state.nitrousData)}>GET</button> */}
       <button  onClick={this.parsedNitrousData(this.state.prehistoricNitrous, this.state.nitrousData)}>Antique GET</button>
       <h1>Hello,</h1>
-      <canvas id="myNitrousChart" width="800" height="800"></canvas>
-      
+      {!this.state.nitrousData ? <p>Loading...</p> :  <div className="chart-container" style={{ position: 'relative', width:'80vw'}}>
+      <canvas id="myNitrousChart" ></canvas>
+      </div> }
     </div>);
   }
 }

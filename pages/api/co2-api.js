@@ -33,25 +33,22 @@ export default async (req, res) => {
     let co2DataCopy = csvToJson;
     let parsedCopy = JSON.parse(JSON.stringify(co2DataCopy));
     let sliced = parsedCopy.slice(60);
-    console.log(sliced);
-    const date = [];
     const co2 = [];
-   
     sliced.forEach((obj) => {
       if (oldKey !== "year") {
         Object.defineProperty(obj, ["year"],
             Object.getOwnPropertyDescriptor(obj, oldKey));
         delete obj[oldKey];
-        
+       
     }
-     date.push(`${obj.year}.${obj.field2}.${obj.field3}`);
-     co2.push(parseFloat(obj.field4))
+     co2.push({year: obj.year, month: obj.field2, day: obj.field3, cycle: obj.field4, trend: obj.field5})
+    //  date.push(`${obj.year}.${obj.field2}.${obj.field3}`);
+    //  co2.push(parseFloat(obj.field4))
     })
 
     res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
     res.setHeader("Cache-Control", "s-maxage=86400");
-    res.json({date: date, trend: co2});
+    res.json({co2});
     return;
 }
 }
