@@ -38,17 +38,23 @@ class Nitrous extends React.Component {
   }
 
  parsedNitrousData = (cleanNitrousPrehistoricData, cleanNitrousData) => {
+ const date = [];
+ const average = []
   try {
     if (cleanNitrousData.nitrous) {
-    var ctx = 'myNitrousChart';
+      cleanNitrousData.nitrous.forEach((obj) => {
+        date.push(obj.date);
+        average.push(obj.average);
+      })
+      var ctx = 'myNitrousChart';
     const myChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: cleanNitrousPrehistoricData.date.concat(cleanNitrousData.date),
+        labels: cleanNitrousPrehistoricData.date.concat(date),
         datasets: [
           {
             label: 'Nitrous Oxide',
-            data: cleanNitrousPrehistoricData.amount.concat(cleanNitrousData.average),
+            data: cleanNitrousPrehistoricData.amount.concat(average),
             fill: false,
             borderColor: 'rgba(255, 99, 132, 1)',
             backgroundColor: 'rgba(255, 0, 0, 0.1);',
@@ -103,7 +109,7 @@ class Nitrous extends React.Component {
       {/* <button onClick={this.nitrousData(this.state.nitrousData)}>GET</button> */}
       <button  onClick={this.parsedNitrousData(this.state.prehistoricNitrous, this.state.nitrousData)}>Antique GET</button>
       <h1>Hello,</h1>
-      {!this.state.nitrousData ? <p>Loading...</p> :  <div className="chart-container" style={{ position: 'relative', width:'80vw'}}>
+      {!this.state.nitrousData ? <p>Loading...</p> :  <div className="chart-container" >
       <canvas id="myNitrousChart" ></canvas>
       </div> }
     </div>);

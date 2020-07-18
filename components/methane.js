@@ -1,8 +1,7 @@
 // import useSWR from 'swr'
 import fetch from 'unfetch';
 import Chart from 'chart.js';
-import methaneData from '../public/data/csvjson-methane.json'
-const csv = require('csvtojson')
+import methaneDataFile from '../public/data/csvjson-methane.json'
 
 // import axios from "axios"
 
@@ -26,7 +25,7 @@ class Methane extends React.Component {
     const date = [];
     const amount = [];
    
-    methaneData.forEach((obj) => {
+    methaneDataFile.forEach((obj) => {
       date.push(obj.year.split(",").filter(x => x)[0]);
       amount.push(Number(parseFloat(obj.year.split(",").filter(x => x)[1]).toFixed(1)));
     })
@@ -36,30 +35,33 @@ class Methane extends React.Component {
 
 
     try {
-    
       const response = await fetch(this.url)
       const data = await response.json();
       this.setState({ methaneData: data })
     } catch (error) {
       console.log(error)
     }
-
-    
   }
 
 
    parsedData = (methPrehistoricData, methaneData) => {
+     const date = [];
+     const average = [];
       try {
-        if (methPrehistoricData.date) {
+        if (methaneData.methane) {
+        methaneData.methane.forEach((obj) => {
+        date.push(obj.date);
+        average.push(obj.average)
+        })
         var ctx = 'myMethChart';
         const myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: methPrehistoricData.date.concat(methaneData.date),
+            labels: methPrehistoricData.date.concat(date),
             datasets: [
               {
                 label: 'Methane',
-                data: methPrehistoricData.amount.concat(methaneData.average),
+                data: methPrehistoricData.amount.concat(average),
                 fill: false,
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'black',
@@ -110,8 +112,8 @@ class Methane extends React.Component {
       <button onClick={this.parsedData(this.state.prehistoricMethane, this.state.methaneData)}>GET</button>
       {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
       <h1>Hello,</h1>
-      <div className="chart-container" style={{ position: 'relative', width:'80vw'}}>
-      <canvas id="myMethChart" width="800" height="800"></canvas>
+      <div className="chart-container" >
+      <canvas id="myMethChart" ></canvas>
       </div>
     </div>);
   }

@@ -31,11 +31,7 @@ export default async (req, res) => {
     })
 
   function parsedData(csvToJson) {
-    const MDate = [];
-    const methaneAverage = [];
-    const methaneTrend = [];
-    const averageUnc = [];
-    const trendUnc = [];
+    const methaneData = [];
     const oldKey = "# --------------------------------------------------------------------";
     const sliced = csvToJson.slice(62);
     sliced.forEach((obj) => {
@@ -44,16 +40,15 @@ export default async (req, res) => {
           Object.getOwnPropertyDescriptor(obj, oldKey));
         delete obj[oldKey];
       }
-      MDate.push(`${obj.year.split(' ').filter(f => f)[0]}.${obj.year.split(' ').filter(f => f)[1]}`);
-      methaneAverage.push(obj.year.split(' ').filter(f => f)[3]);
-      methaneTrend.push(obj.year.split(' ').filter(f => f)[5]);
-      averageUnc.push(obj.year.split(' ').filter(f => f)[4]);
-      trendUnc.push(obj.year.split(' ').filter(f => f)[6]);
+      methaneData.push({date: `${obj.year.split(' ').filter(f => f)[0]}.${obj.year.split(' ').filter(f => f)[1]}`,
+      average: `${obj.year.split(' ').filter(f => f)[3]}`,
+      trend: `${obj.year.split(' ').filter(f => f)[5]}`,
+      averageUnc: `${obj.year.split(' ').filter(f => f)[4]}`,
+      trendUnc: `${obj.year.split(' ').filter(f => f)[6]}`});
     })
     res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
     res.setHeader("Cache-Control", "s-maxage=86400");
-    res.json({ date: MDate, average: methaneAverage, trend: methaneTrend, averageUnc: averageUnc, trendUnc: trendUnc });
+    res.json({ methane: methaneData});
     return;
   }
 };

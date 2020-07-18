@@ -97,7 +97,7 @@ class Arctic extends React.Component {
     return (<div>
       <button onClick={this.displayArcticGraph(this.state.arcticData.result)}>GET</button>
       <h1>Hello, arctic</h1>
-      <div className="chart-container" style={{ position: 'relative', height:'80vh', width:'80vw'}}>
+      <div className="chart-container" >
       <canvas id="arcticChart"></canvas>
       </div>
       </div>);
