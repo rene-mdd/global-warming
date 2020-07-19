@@ -19,24 +19,21 @@ export default function Home() {
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
       </Head>
-      <header class="ui stackable menu large">
-      <div class="item"><img src="/logo.png" /></div>
-          <Link href="/"><a class="item">Home</a></Link>
-          <Link href="/news"><a class="item">News</a></Link>
-          <Link href="blog"><a class="item">Blog</a></Link>
-          <Link href="organizations"><a class="item">Organizations</a></Link>
-          <Link href="login"><div class="right menu"><a class="item">Login</a></div></Link>
+      <header className="ui stackable menu large">
+      <div className="item"><img src="/logo.png" /></div>
+          <Link href="/" passHref><a className="item">Home</a></Link>
+          <Link href="/news" passHref><a className="item">News</a></Link>
+          <Link href="blog" passHref><a className="item">Blog</a></Link>
+          <Link href="organizations" passHref><a className="item">Organizations</a></Link>
+          <Link href="login" passHref><div className="right menu"><a className="item">Login</a></div></Link>
         
       </header>
-
-      <main>
-     
-      <div class="ui centered three column grid temperature-div">
-        <h1 class="column">
+      <div className="ui centered three column grid temperature-div">
+        <h1 className="column">
           Global Warming live data and API
         </h1>
       </div>
-          <div class="ui container move-temperature">
+          <div className="ui container move-down">
             <div className="ui centered three column grid">
             <h2>Live global temperature rise</h2>
 
@@ -109,9 +106,6 @@ export default function Home() {
             <p>There are several factors which can help explain the overall CO2 emissions level in a country: the size of its population, its energy mix, its GDP etc. In this respect, the detailed CO2 emissions indicators maps on the IEA Energy Atlas are very informative. These maps include total CO2 emissions from fuel combustion, CO2 per GDP,  and per GDP PPP – as well as CO2 per TPES and per population.</p>
             <p>For instance, when looking at the map of CO2 emissions per capita, one can see that countries from the Middle East have the highest  emissions levels, while countries in Africa, using large quantities of fuel wood (considered as non-emitting) show the lowest levels of emissions. Similarly, when looking at the map of emissions per TPES, it will be no surprise to see that countries with large shares of coal and oil in their energy mix have the highest levels of emissions, while countries with a large share of renewables and nuclear show the lowest levels.</p>
           </div>
-     
-
-      </main>
 
       <footer>
         <a

@@ -112,7 +112,6 @@ class Temperature extends React.Component {
       <canvas id="tempChart" ></canvas> </div>}
        <h1>Global Warming</h1>
       <button onClick={this.displayTempGraph(this.state.aWarmingData, this.state.temperatureData.result)}>GET</button>
-     
     </div>);
   }
 }
