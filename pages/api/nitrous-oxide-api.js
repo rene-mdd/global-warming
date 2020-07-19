@@ -30,11 +30,6 @@ export default async (req, res) => {
     })
 
   function parsedNitrousData(csvToJson) {
-    const NDate = [];
-    const nitrousAverage = [];
-    const nitrousTrend = [];
-    const averageUnc = [];
-    const trendUnc = [];
     const oldKey = "# --------------------------------------------------------------------";
     const sliced = csvToJson.slice(62);
     const nitrous = []

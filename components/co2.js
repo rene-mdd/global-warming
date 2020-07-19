@@ -39,17 +39,23 @@ class Co2 extends React.Component {
 
 
   parsedCo2Data = (prehistoricData, currentData) => {
+    const date = [];
+    const trend = [];
     try {
       if (currentData.co2) {
+        currentData.co2.forEach((obj) => {
+          date.push(`${obj.year}.${obj.month}.${obj.day}`);
+          trend.push(obj.trend);
+        })
       var ctx = 'myCo2Chart';
       const myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: prehistoricData.date.concat(currentData.date),
+          labels: prehistoricData.date.concat(date),
           datasets: [
             {
               label: 'Carbon Dioxide',
-              data: prehistoricData.amount.concat(currentData.trend),
+              data: prehistoricData.amount.concat(trend),
               fill: false,
               borderColor: 'rgba(255, 99, 132, 1)',
               backgroundColor: 'black',
@@ -98,8 +104,8 @@ class Co2 extends React.Component {
       <button onClick={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}>GET</button>
       {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
       <h1>Hello,</h1>
-      <div className="chart-container" style={{ position: 'relative', width:'80vw'}}>
-      <canvas id="myCo2Chart" width="800" height="800"></canvas>
+      <div className="chart-container" >
+      <canvas id="myCo2Chart" ></canvas>
       </div>
 
     </div>);

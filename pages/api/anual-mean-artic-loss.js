@@ -25,7 +25,6 @@ export default async function(req, res) {
      return target
     } 
     const result = cleanFunc(dataAs2dArray)
-    res.setHeader("Content-Type", "application/json");
     res.setHeader("Cache-Control", "s-maxage=86400");
     res.status(200).json({error: null, result })
 
