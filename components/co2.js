@@ -8,14 +8,17 @@ class Co2 extends React.Component {
     super(props);
     this.state = {
       co2Data: [],
-      prehistoric: {}
+      prehistoric: {},
+      isLoading: true
     }
     this.url = "api/co2-api";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
+    console.log(this.state.co2Data)
   }
 
   async componentDidMount() {
+    this.props.callBackProp(this.state.isLoading)
 
     const date = [];
     const amount = [];
@@ -31,12 +34,19 @@ class Co2 extends React.Component {
     try {
       const response = await fetch(this.url)
       const data = await response.json();
-    this.setState({co2Data: data})
+      if (data){
+    this.setState({co2Data: data, isLoading: false})
+    this.props.callBackProp(false)
+    }
     } catch (error) {
       console.log(error)
     }
   }
 
+  go = (isLoading) => {
+    this.props.callBackProp(isLoading)
+  } 
+  
 
   parsedCo2Data = (prehistoricData, currentData) => {
     const date = [];
@@ -100,15 +110,13 @@ class Co2 extends React.Component {
   render() {
     console.log(this.state.prehistoric)
     console.log(this.state.co2Data)
-    return (<div>
-      <button onClick={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}>GET</button>
-      {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
-      <h1>Hello,</h1>
-      <div className="chart-container" >
+    return (<>
+      <div onLoad={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}></div>
+      <div onLoad={() => {this.go(this.state.isLoading)}}></div>
+      <div className="chart-container ui row">
       <canvas id="myCo2Chart" ></canvas>
       </div>
-
-    </div>);
+    </>);
   }
 }
 

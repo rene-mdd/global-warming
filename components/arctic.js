@@ -94,13 +94,13 @@ class Arctic extends React.Component {
 
   render() {
     console.log(this.state.arcticData)
-    return (<div>
+    return (<>
       <button onClick={this.displayArcticGraph(this.state.arcticData.result)}>GET</button>
       <h1>Hello, arctic</h1>
       <div className="chart-container" >
       <canvas id="arcticChart"></canvas>
       </div>
-      </div>);
+      </>);
   }
 }
 

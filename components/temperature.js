@@ -106,13 +106,12 @@ class Temperature extends React.Component {
   render() {
     console.log(this.state.temperatureData)
     console.log(this.state.aWarmingData)
-    return (<div>
+    return (<>
       {!this.state.temperatureData ? <p>loading...</p> : 
-      <div className="chart-container" >
+      <div className="chart-container ui row" >
       <canvas id="tempChart" ></canvas> </div>}
-       <h1>Global Warming</h1>
-      <button onClick={this.displayTempGraph(this.state.aWarmingData, this.state.temperatureData.result)}>GET</button>
-    </div>);
+      <div onLoad={this.displayTempGraph(this.state.aWarmingData, this.state.temperatureData.result)}></div>
+    </>);
   }
 }
 
