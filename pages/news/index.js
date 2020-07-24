@@ -5,15 +5,12 @@ let search_term = 'global warming'
 const NewsSearchAPIClient = require('azure-cognitiveservices-newssearch');
 let client = new NewsSearchAPIClient(credentials);
 
-
-
 class News extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       gNews: []
     }
-   
   }
 
   componentDidMount() {
@@ -27,7 +24,6 @@ class News extends React.Component {
       }).catch(error => { console.error(error) });
     }
   
-
   render() {
     console.log(this.state.gNews)
     console.log(this.props.data.value)
@@ -77,7 +73,7 @@ class News extends React.Component {
                 {/* <img className="ui small middle aligned image" src={obj.image || obj.image.thumbnail ? obj.image.thumbnail.contentUrl : obj.provider || obj.provider.image.thumbnail ? obj.provider.image.thumbnail.contentUrl : "/images/breaking-news.png"} /> */}
                 <div className="content">
                   <a href={obj.url} className="header">{obj.name}</a>
-                  <div className="meta">Source: {obj.provider.name} </div>
+                  <div className="meta">{obj.provider.name} </div>
                   <div className="description">
                     <p>{obj.description}</p>
                   </div>
