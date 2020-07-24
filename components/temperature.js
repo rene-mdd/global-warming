@@ -61,14 +61,14 @@ class Temperature extends React.Component {
                 label: 'Temperature',
                 data: aWarmingData.amount.concat(station),
                 fill: false,
-                borderColor: 'rgba(255, 99, 132, 1)',
+                borderColor: '#D5174E',
                 backgroundColor: 'black',
                 pointRadius: false,
                 pointHoverBorderWidth: 7,
                 pointBackgroundColor: "rgba(255, 99, 132, 1)",
                 pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
                 pointHoverBorderColor: 'black',
-                borderWidth: 1,
+                borderWidth: 0.5,
                 pointHoverRadius: 5
               }
             ]
@@ -76,7 +76,7 @@ class Temperature extends React.Component {
           options: {
             title: {
               display: true,
-              text: 'Global temperature anomalies since year 1 to present'
+              text: 'Global temperature anomalies from year 1 (CE) to present'
             },
             scales: {
               ticks: {
@@ -87,11 +87,15 @@ class Temperature extends React.Component {
                 stacked: true,
                 scaleLabel: {
                   display: true,
-                  labelString: 'Hola'
+                  labelString: 'Celsius'
                 },
             }],
             xAxes: [{
-              stacked: true
+              stacked: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Year'
+              }
             }],
           }
           }

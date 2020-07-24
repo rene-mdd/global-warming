@@ -41,6 +41,7 @@ class News extends React.Component {
         t.description === thing.description
       ))
     )
+
     return (<>
     
       <div className="ui container move-down">
@@ -54,7 +55,7 @@ class News extends React.Component {
                   <img className="ui small middle aligned image" src={obj.image} />
                   <div className="content">
                     <a href={obj.url} className="header">{obj.title}</a>
-                    <div className="meta">Author: {obj.author}</div>
+                    <div className="meta">{obj.author}</div>
                     <div className="description">
                       <p>{obj.description}</p>
                     </div>
@@ -66,11 +67,11 @@ class News extends React.Component {
                 </div>)
             })}
           {duplicateRemovalBing.map((obj) => {
-          
+          console.log(obj.image)
             return (
               
               <div className="item">
-                {/* <img className="ui small middle aligned image" src={obj.image || obj.image.thumbnail ? obj.image.thumbnail.contentUrl : obj.provider || obj.provider.image.thumbnail ? obj.provider.image.thumbnail.contentUrl : "/images/breaking-news.png"} /> */}
+                <img className="ui small middle aligned image" src={obj?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
                 <div className="content">
                   <a href={obj.url} className="header">{obj.name}</a>
                   <div className="meta">{obj.provider.name} </div>
@@ -78,8 +79,8 @@ class News extends React.Component {
                     <p>{obj.description}</p>
                   </div>
                   <div className="extra">Date: {obj.datePublished}<div className="ui bottom right attached label">
-                    {/* <img className="mini-icon" src={obj.provider.image.thumbnail.contentUrl}/> */}
-                    {obj.provider.name}
+                  <i aria-hidden="true" className="newspaper outline icon"/>
+                    {obj?.provider[0]?.name ?? "News"}
                   </div></div>
 
                 </div>

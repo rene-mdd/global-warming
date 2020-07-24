@@ -7,7 +7,8 @@ import Deforestation from "../components/deforestation"
 import Countries from '../components/countries'
 import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
-import {Sticky} from "semantic-ui-react";
+import { Sticky } from "semantic-ui-react";
+import * as Scroll from 'react-scroll';
 
 
 class Home extends React.Component {
@@ -18,20 +19,20 @@ class Home extends React.Component {
       ready: '',
       co2Loading: ""
     };
-  
+
   }
 
   toggleNitrous = () => {
     this.setState({ nitrous: !this.state.nitrous })
-  
   }
 
   handleClick = (isLoading) => {
-    if(isLoading){
-    this.setState({co2Loading: "loading"})
-  } else {
-  this.setState({co2Loading: ""})}
-  } 
+    if (isLoading) {
+      this.setState({ co2Loading: "loading" })
+    } else {
+      this.setState({ co2Loading: "" })
+    }
+  }
 
   render() {
     console.log(this.state.co2Loading)
@@ -41,7 +42,10 @@ class Home extends React.Component {
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
+        <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
       </Head>
+
       <Sticky>
         <header className="ui stackable huge menu">
           <div className="item">
@@ -58,19 +62,38 @@ class Home extends React.Component {
         </header>
       </Sticky>
       <div className="ui container">
-        <h1 className="ui center aligned container">
-          Global Warming live graphs and API
+        <div className="ui container" id="landing-page">
+          <h1 className="ui center aligned header" id="h1-id">
+            Global Warming live graphs and API
         </h1>
-        <div className="ui equal width grid">
-          {/* <Temperature /> */}
-          <div className="ui row">
-            <div class="ui center aligned column"><button className="ui basic button">Deploy graph</button></div>
+          <h2 className='ui center aligned header' id="h2-id">
+            Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who
+        </h2>
+        <div className="ui equal width grid" id="down-icon">
+          <div className="row">
+            <div className="ui center aligned column">
+            <Scroll.Link spy={true} smooth={true}  duration={1000}  to="firstInsideContainer" >
+          <button class="ui button basic center aligned">
+            <img src="/images/icons-double-down.png" />
+          </button>
+          </Scroll.Link>
+          </div>
+          </div>
           </div>
         </div>
-        <div className="ui justify container">
-          <p>Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. Dataset accessed 20YY-MM-DD at https://data.giss.nasa.gov/gistemp/.</p>
-          <p>Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in the GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522.</p>
-          <p>Source data year 1 – 1979: <a href="https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI">https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI</a></p>
+
+        <div className="ui divider" />
+        <Temperature />
+        <div className="row" id="description">
+          <footer className="ui fourteen wide centered column">
+            <p>Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. Dataset accessed 20YY-MM-DD at <a href="https://data.giss.nasa.gov/gistemp/" target="_blank">https://data.giss.nasa.gov/gistemp/</a>.</p>
+            <p>Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in the GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522.</p>
+            <p>Source data year 1 – 1979:  <a href="https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI" target="_blank">https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI</a></p>
+          </footer>
+        </div>
+      </div>
+      <div className="ui equal width grid" style={{ marginTop: "5vh" }} >
+        <div className="ui justify container" >
           <p>The current global warming rate is not natural. From 1880 to 1981 was (0.07°C / 0.13°F) per decade. Since 1981 this rate has increased to (0.18°C / 0.32°F) <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-global-temperature" target="_blank">source</a>.
         Some of the past sudden increase on global temperature, correspond to the Roman Warm Period and the Medieval Warm Period. These events were at regional and not global scale. <a href="https://www.ipcc.ch/report/ar4/wg1/" target="_blank">source</a>.
         For more information about prehistoric temperature records please visit: <a href="https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter05_FINAL.pdf" target="_blank">source</a>,<a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php">source</a>.
@@ -78,18 +101,18 @@ class Home extends React.Component {
         Earth temperature and the proportion of gases such as Co2, methane, and nitrous oxide in the atmosphere is strictly correlated. For more information about this topic and prehistoric data please visit: <a href="https://www.nature.com/articles/srep21691" target="_blank">source</a>, <a href="https://environmentcounts.org/ec-perspective-accounting-for-800000-years-of-climate-change/" target="_blank">source</a>, <a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php" target="_blank">source</a>.
             </p>
           <div className="ui equal width grid">
-            <div class="column"><div class="ui segment">1</div></div>
-            <div class="column"><div class="ui segment">2</div></div>
+            <div className="column"><div className="ui segment">1</div></div>
+            <div className="column"><div className="ui segment">2</div></div>
           </div>
         </div>
-
       </div>
-      <div className="ui divider"></div>
-      <div className="ui container">
-        <h2 className="ui center aligned container">Tons of CO2 emission</h2>
-        <div className="ui equal width grid">
+
+      <div className="ui divider" />
+      <div className="ui container" >
+        <h2 className="ui center aligned container" >Tons of CO2 emission</h2>
+        <div className="ui equal width grid" name="firstInsideContainer">
           {/* <Co2 /> */}
-          {this.state.nitrous ? <Co2 callBackProp={(l) => {this.handleClick(l)}} /> : null}
+          {this.state.nitrous ? <Co2 callBackProp={(l) => { this.handleClick(l) }} name="firstInsideContainer" /> : null}
 
           <div className="ui row">
             <div className="ui center aligned column"><button onClick={this.toggleNitrous} className={`ui basic ${this.state.co2Loading} button`}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
@@ -102,8 +125,8 @@ class Home extends React.Component {
       For more information about prehistoric CO2 concentration, current and future consequences please visit <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
             </p>
         <div className="ui equal width grid">
-          <div class="column"><div class="ui segment">1</div></div>
-          <div class="column"><div class="ui segment">2</div></div>
+          <div className="column"><div className="ui segment">1</div></div>
+          <div className="column"><div className="ui segment">2</div></div>
         </div>
       </div>
 
