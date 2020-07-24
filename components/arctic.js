@@ -7,7 +7,7 @@ class Arctic extends React.Component {
   constructor(props) {
     super(props);
     this.state = { arcticData: [] }
-    this.url = 'http://localhost:3000/api/anual-mean-artic-loss';
+    this.url = 'api/anual-mean-artic-loss';
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }

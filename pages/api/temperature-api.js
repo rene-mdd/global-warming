@@ -26,7 +26,7 @@ export default async (req, res) => {
 
     const result = convertToObject(dataAs2dArray);
     // caching the response for one day (just max one slow request per day)
-    res.setHeader("Cache-Control", "s-maxage=86400");
+    res.setHeader("Cache-Control", "s-maxage=43200");
     res.status(200).json({ error: null, result });
   } catch (error) {
     res.status(500).send({ result: null, error });
