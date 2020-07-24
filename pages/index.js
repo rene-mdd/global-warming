@@ -7,9 +7,7 @@ import Deforestation from "../components/deforestation"
 import Countries from '../components/countries'
 import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
-import {
-  Menu, Breadcrumb, Header, Sticky
-} from "semantic-ui-react";
+import {Sticky} from "semantic-ui-react";
 
 
 class Home extends React.Component {
@@ -31,7 +29,7 @@ class Home extends React.Component {
   handleClick = (isLoading) => {
     if(isLoading){
     this.setState({co2Loading: "loading"})
-  } if (isLoading == false) {
+  } else {
   this.setState({co2Loading: ""})}
   } 
 
@@ -52,11 +50,10 @@ class Home extends React.Component {
           <div className="menu right">
             <Link href="/" passHref><a className="item">Home</a></Link>
             <Link href="/news" passHref><a className="item">News</a></Link>
-            <Link href="blog" passHref><a className="item">Blog</a></Link>
             <Link href="organizations" passHref><a className="item">Organizations</a></Link>
           </div>
           <div className="item right">
-            <Link href="login" passHref><a >Login</a></Link>
+            <Link href="login" passHref><a >Contact</a></Link>
           </div>
         </header>
       </Sticky>

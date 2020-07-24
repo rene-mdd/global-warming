@@ -47,7 +47,7 @@ export default async (req, res) => {
     })
 
     res.statusCode = 200;
-    res.setHeader("Cache-Control", "s-maxage=86400");
+    res.setHeader("Cache-Control", "s-maxage=43200");
     res.json({co2});
     return;
 }
