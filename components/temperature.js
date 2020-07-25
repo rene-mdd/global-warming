@@ -61,23 +61,19 @@ class Temperature extends React.Component {
                 label: 'Temperature',
                 data: aWarmingData.amount.concat(station),
                 fill: false,
-                borderColor: 'rgba(255, 99, 132, 1)',
+                borderColor: '#D5174E',
                 backgroundColor: 'black',
                 pointRadius: false,
                 pointHoverBorderWidth: 7,
                 pointBackgroundColor: "rgba(255, 99, 132, 1)",
                 pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
                 pointHoverBorderColor: 'black',
-                borderWidth: 1,
+                borderWidth: 0.5,
                 pointHoverRadius: 5
               }
             ]
           },
           options: {
-            title: {
-              display: true,
-              text: 'Global temperature anomalies since year 1 to present'
-            },
             scales: {
               ticks: {
                 suggestedMax: 800000,
@@ -87,11 +83,15 @@ class Temperature extends React.Component {
                 stacked: true,
                 scaleLabel: {
                   display: true,
-                  labelString: 'Hola'
+                  labelString: 'Celsius'
                 },
             }],
             xAxes: [{
-              stacked: true
+              stacked: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Year'
+              }
             }],
           }
           }
@@ -111,6 +111,13 @@ class Temperature extends React.Component {
       <div className="chart-container ui row" >
       <canvas id="tempChart" ></canvas> </div>}
       <div onLoad={this.displayTempGraph(this.state.aWarmingData, this.state.temperatureData.result)}></div>
+        <div className="row" style={{ marginTop: "-25px" }}>
+            <footer className="ui fourteen wide centered column">
+              <p>Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. Dataset accessed 20YY-MM-DD at <a href="https://data.giss.nasa.gov/gistemp/" target="_blank">https://data.giss.nasa.gov/gistemp/</a>.</p>
+              <p>Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in the GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522.</p>
+              <p>Source data year 1 – 1979:  <a href="https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI" target="_blank">https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI</a></p>
+            </footer>
+          </div>
     </>);
   }
 }

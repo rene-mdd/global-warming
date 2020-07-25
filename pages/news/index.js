@@ -1,4 +1,8 @@
 import React from "react"
+import * as Scroll from 'react-scroll';
+import Head from 'next/head'
+import StickyMenu from "../../helpers/sticky"
+
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 let credentials = new CognitiveServicesCredentials('feaf1751d8b142c68ca34b339e04dfbc');
 let search_term = 'global warming'
@@ -41,8 +45,40 @@ class News extends React.Component {
         t.description === thing.description
       ))
     )
+
     return (<>
-    
+        <Head>
+        <title>Global Warming</title>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
+        <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
+      </Head>
+      <StickyMenu/>
+       <div className="ui fluid container" id="landing-page-news">
+        <div className="ui container" >
+          <h1 className="ui center aligned header" id="h1-news">
+            World News
+        </h1>
+          <h2 className='ui center aligned header' id="h2-news">
+            Up to date worldwide news about Global Warming and Climate Change. This section includes information from small and mainstream firms. 
+        </h2>
+          <div className="ui equal width grid icon-style" >
+            <div className="row">
+              <div className="ui center aligned column">
+                <Scroll.Link spy={true} smooth={true} duration={1000} to="jump-news" >
+                  <button class="ui button basic center aligned">
+                    <img src="/images/icons-double-down.png" />
+                  </button>
+                </Scroll.Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div className="ui divider" name="jump-news"/>
       <div className="ui container move-down">
         <div className="ui items">
           {
@@ -54,23 +90,23 @@ class News extends React.Component {
                   <img className="ui small middle aligned image" src={obj.image} />
                   <div className="content">
                     <a href={obj.url} className="header">{obj.title}</a>
-                    <div className="meta">Author: {obj.author}</div>
+                    <div className="meta">{obj.author}</div>
                     <div className="description">
                       <p>{obj.description}</p>
                     </div>
                     <div className="extra">Date: {obj.publishedAt}<div className="ui bottom right attached label">
-                      <i aria-hidden="true" className="newspaper outline icon"></i>
+                      <i aria-hidden="true" className="newspaper outline icon"/>
                       {obj.source.name}
                     </div></div>
                   </div>
                 </div>)
             })}
           {duplicateRemovalBing.map((obj) => {
-          
+          console.log(obj.image)
             return (
               
               <div className="item">
-                {/* <img className="ui small middle aligned image" src={obj.image || obj.image.thumbnail ? obj.image.thumbnail.contentUrl : obj.provider || obj.provider.image.thumbnail ? obj.provider.image.thumbnail.contentUrl : "/images/breaking-news.png"} /> */}
+                <img className="ui small middle aligned image" src={obj?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
                 <div className="content">
                   <a href={obj.url} className="header">{obj.name}</a>
                   <div className="meta">{obj.provider.name} </div>
@@ -78,8 +114,8 @@ class News extends React.Component {
                     <p>{obj.description}</p>
                   </div>
                   <div className="extra">Date: {obj.datePublished}<div className="ui bottom right attached label">
-                    {/* <img className="mini-icon" src={obj.provider.image.thumbnail.contentUrl}/> */}
-                    {obj.provider.name}
+                  <i aria-hidden="true" className="newspaper outline icon"/>
+                    {obj?.provider[0]?.name ?? "News"}
                   </div></div>
 
                 </div>
