@@ -7,26 +7,36 @@ import Deforestation from "../components/deforestation"
 import Countries from '../components/countries'
 import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
-import { Sticky } from "semantic-ui-react";
+// import { Sticky, Accordion, Label, Message } from "semantic-ui-react";
 import * as Scroll from 'react-scroll';
+import {AccordionTem, AccordionCo2 }from "../helpers/accordion"
+import StickyMenu from "../helpers/sticky"
+
 
 
 class Home extends React.Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       nitrous: false,
+      methane: false,
       ready: '',
-      co2Loading: ""
+      co2Loading: "",
+      methaneLoading: ""
     };
 
   }
 
-  toggleNitrous = () => {
+  toggleCo2 = () => {
     this.setState({ nitrous: !this.state.nitrous })
   }
 
-  handleClick = (isLoading) => {
+  toggleMethane = () => {
+    this.setState({ methane: !this.state.methane })
+  }
+
+  handleClickCo2 = (isLoading) => {
     if (isLoading) {
       this.setState({ co2Loading: "loading" })
     } else {
@@ -34,8 +44,17 @@ class Home extends React.Component {
     }
   }
 
+  handleClickMethane = (isLoading) => {
+    if (isLoading) {
+      this.setState({ methaneLoading: "loading" })
+    } else {
+      this.setState({ methaneLoading: "" })
+    }
+  }
+
   render() {
     console.log(this.state.co2Loading)
+   
     return (<>
       <Head>
         <title>Global Warming</title>
@@ -45,8 +64,10 @@ class Home extends React.Component {
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
         <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
       </Head>
+     
+      <StickyMenu/>
 
-      <Sticky>
+      {/* <Sticky context={this.contextRef}>
         <header className="ui stackable huge menu">
           <div className="item">
             <Link href="/" passHref><a><img src="/logo.png" /></a></Link>
@@ -60,85 +81,105 @@ class Home extends React.Component {
             <Link href="login" passHref><a >Contact</a></Link>
           </div>
         </header>
-      </Sticky>
-      <div className="ui container">
-        <div className="ui container" id="landing-page">
+      </Sticky> */}
+
+      <div className="ui fluid container" id="landing-page">
+        <div className="ui container">
           <h1 className="ui center aligned header" id="h1-id">
             Global Warming live graphs and API
         </h1>
           <h2 className='ui center aligned header' id="h2-id">
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who
         </h2>
-        <div className="ui equal width grid" id="down-icon">
-          <div className="row">
-            <div className="ui center aligned column">
-            <Scroll.Link spy={true} smooth={true}  duration={1000}  to="firstInsideContainer" >
-          <button class="ui button basic center aligned">
-            <img src="/images/icons-double-down.png" />
-          </button>
-          </Scroll.Link>
-          </div>
-          </div>
+          <div className="ui equal width grid icon-style">
+            <div className="row" >
+              <div className="ui center aligned column">
+                <Scroll.Link spy={true} smooth={true} duration={1000} to="jump-to-temperature" >
+                  <button className="ui button basic center aligned">
+                    <img src="/images/icons-double-down.png" />
+                  </button>
+                </Scroll.Link>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="ui divider" />
-        <Temperature />
-        <div className="row" id="description">
-          <footer className="ui fourteen wide centered column">
-            <p>Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. Dataset accessed 20YY-MM-DD at <a href="https://data.giss.nasa.gov/gistemp/" target="_blank">https://data.giss.nasa.gov/gistemp/</a>.</p>
-            <p>Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in the GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522.</p>
-            <p>Source data year 1 – 1979:  <a href="https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI" target="_blank">https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI</a></p>
-          </footer>
-        </div>
       </div>
-      <div className="ui equal width grid" style={{ marginTop: "5vh" }} >
-        <div className="ui justify container" >
-          <p>The current global warming rate is not natural. From 1880 to 1981 was (0.07°C / 0.13°F) per decade. Since 1981 this rate has increased to (0.18°C / 0.32°F) <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-global-temperature" target="_blank">source</a>.
+      <div className="ui divider" name="jump-to-temperature"/>
+      <div className="ui container">
+      <h2 className='ui center aligned header title-h2'>Global temperature anomalies from year 1 to present</h2>
+        <div className="ui equal width grid">
+        <div className="row">
+          {<Temperature /> && <div className="ui very padded center aligned segment column" style={{ margin: "35px 0 35px 0"}}>The graph is not available right now. Please try again later.</div>}
+          </div>
+        
+         
+        </div>
+        <div className="ui equal width grid" style={{ marginTop: "7vh" }} >
+          <div className="ui justify container" >
+            <p>The current global warming rate is not natural. From 1880 to 1981 was (0.07°C / 0.13°F) per decade. Since 1981 this rate has increased to (0.18°C / 0.32°F) <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-global-temperature" target="_blank">source</a>.
         Some of the past sudden increase on global temperature, correspond to the Roman Warm Period and the Medieval Warm Period. These events were at regional and not global scale. <a href="https://www.ipcc.ch/report/ar4/wg1/" target="_blank">source</a>.
         For more information about prehistoric temperature records please visit: <a href="https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter05_FINAL.pdf" target="_blank">source</a>,<a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php">source</a>.
         The total average global temperature rise since the industrial revolution is around (1.0 °C / 1.8 °F). Earth northern hemisphere is warming faster. The arctic has warmed between (2 °C / 3.6 °F) and (4 °C / 7.2 °F). Please visit these scientific publications for more details: <a href="https://www.igsoc.org/annals/46/a46a005.pdf" target="_blank">source</a>, <a href="https://web.archive.org/web/20130628144322/http:/www.acia.uaf.edu/pages/scientific.html" target="_blank">source</a>,<a href="https://www.climatecentral.org/news/in-global-warming-northern-hemisphere-is-outpacing-the-south-15850#:~:text=Berkeley%20and%20the%20University%20of,and%20oceans%20warm%20relatively%20slowly." target="_blank">source</a>, <a href="https://iopscience.iop.org/article/10.1088/1748-9326/aafc1b/pdf" target="_blank">source</a>,<a href="https://nsidc.org/cryosphere/arctic-meteorology/climate_change.html" target="_blank">source</a>,  <a href="https://www.nature.com/articles/s41467-019-09622-y" target="_blank">source</a>.
         Earth temperature and the proportion of gases such as Co2, methane, and nitrous oxide in the atmosphere is strictly correlated. For more information about this topic and prehistoric data please visit: <a href="https://www.nature.com/articles/srep21691" target="_blank">source</a>, <a href="https://environmentcounts.org/ec-perspective-accounting-for-800000-years-of-climate-change/" target="_blank">source</a>, <a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php" target="_blank">source</a>.
             </p>
-          <div className="ui equal width grid">
-            <div className="column"><div className="ui segment">1</div></div>
-            <div className="column"><div className="ui segment">2</div></div>
+            <div className="ui equal width grid api-segment">
+              <div className="column"><AccordionTem/></div>
+              <div className="column"><AccordionCo2 /></div>
+            </div>
           </div>
         </div>
       </div>
-
       <div className="ui divider" />
       <div className="ui container" >
-        <h2 className="ui center aligned container" >Tons of CO2 emission</h2>
-        <div className="ui equal width grid" name="firstInsideContainer">
+        <h2 className="ui center aligned container title-h2" >Tons of CO2 emission</h2>
+        <div className="ui equal width grid">
           {/* <Co2 /> */}
-          {this.state.nitrous ? <Co2 callBackProp={(l) => { this.handleClick(l) }} name="firstInsideContainer" /> : null}
-
+          {this.state.nitrous ? <Co2 callBackProp={(l) => { this.handleClickCo2(l) }}/> : null}
           <div className="ui row">
-            <div className="ui center aligned column"><button onClick={this.toggleNitrous} className={`ui basic ${this.state.co2Loading} button`}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
+            <div className="ui center aligned column"><button onClick={this.toggleCo2} className={`ui basic ${this.state.co2Loading} button`}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
           </div>
         </div>
-        <span>This graph represents the Co2 concentration levels in the atmosphere. Beginning in 1958 Mauna Loa Observatory officially started measuring.
-        Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (www.esrl.noaa.gov/gmd/ccgg/trends/)
-            </span>
+      
+            <div className="ui equal width grid" style={{ marginTop: "7vh" }} >
+          <div className="ui justify container" >
         <p>For thousands of years, the natural concentration of CO2 in earth atmosphere was around 280 ppm. From the beginning of the industrial revolution, human activities like the burning of fossil fuels, deforestation, and livestock have increased this amount by more than 30%.
       For more information about prehistoric CO2 concentration, current and future consequences please visit <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
             </p>
-        <div className="ui equal width grid">
+        <div className="ui equal width grid api-segment">
           <div className="column"><div className="ui segment">1</div></div>
           <div className="column"><div className="ui segment">2</div></div>
         </div>
       </div>
-
-      <div>
-        <h2>Methane</h2>
-        <div className="methane-div" >
-          {/* <Methane /> */}
-        </div>
-        <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.ttps://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/</span>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
       </div>
-      <div>
+      </div>
+
+      <div className="ui divider" />
+      <div className="ui container" >
+        <h2 className="ui center aligned container title-h2" >Methane</h2>
+        <div className="ui equal width grid">
+          {/* {<Methane />} */}
+          {this.state.methane ? <Methane callBackPropMethane={(l) => { this.handleClickMethane(l) }}/> : null}
+          <div className="ui row">
+            <div className="ui center aligned column"><button onClick={this.toggleMethane} className={`ui basic ${this.state.methaneLoading
+            } button`}>{this.state.methane ? "Hide graph" : "Deploy graph"}</button></div>
+          </div>
+        </div>
+            <div className="ui equal width grid" style={{ marginTop: "7vh" }} >
+          <div className="ui justify container" >
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
+            </p>
+        <div className="ui equal width grid api-segment">
+          <div className="column"><div className="ui segment">1</div></div>
+          <div className="column"><div className="ui segment">2</div></div>
+        </div>
+      </div>
+      </div>
+      </div>  
+<div>
+
+<div className="ui divider" />
+
         <h2>Nitrous Oxide</h2>
         <div className="nitrous-div">
           {/* <Nitrous /> */}
@@ -173,7 +214,7 @@ class Home extends React.Component {
         <p>There are several factors which can help explain the overall CO2 emissions level in a country: the size of its population, its energy mix, its GDP etc. In this respect, the detailed CO2 emissions indicators maps on the IEA Energy Atlas are very informative. These maps include total CO2 emissions from fuel combustion, CO2 per GDP,  and per GDP PPP – as well as CO2 per TPES and per population.</p>
         <p>For instance, when looking at the map of CO2 emissions per capita, one can see that countries from the Middle East have the highest  emissions levels, while countries in Africa, using large quantities of fuel wood (considered as non-emitting) show the lowest levels of emissions. Similarly, when looking at the map of emissions per TPES, it will be no surprise to see that countries with large shares of coal and oil in their energy mix have the highest levels of emissions, while countries with a large share of renewables and nuclear show the lowest levels.</p>
       </div>
-
+     
       <footer>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"

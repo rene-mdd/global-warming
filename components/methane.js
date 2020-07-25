@@ -13,7 +13,8 @@ class Methane extends React.Component {
     super(props);
     this.state = {
       methaneData: {},
-      prehistoricMethane: {}
+      prehistoricMethane: {},
+      isLoading: true
     }
     this.url = "api/methane-api";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
@@ -21,6 +22,7 @@ class Methane extends React.Component {
   }
 
   async componentDidMount() {
+    this.props.callBackPropMethane(this.state.isLoading)
     // processing of json file
     const date = [];
     const amount = [];
@@ -37,12 +39,17 @@ class Methane extends React.Component {
     try {
       const response = await fetch(this.url)
       const data = await response.json();
-      this.setState({ methaneData: data })
+      if (data){
+      this.setState({ methaneData: data, isLoading: false })
+      this.props.callBackPropMethane(false)}
     } catch (error) {
       console.log(error)
     }
   }
 
+  go = (isLoading) => {
+    this.props.callBackPropMethane(isLoading)
+  } 
 
    parsedData = (methPrehistoricData, methaneData) => {
      const date = [];
@@ -63,7 +70,7 @@ class Methane extends React.Component {
                 label: 'Methane',
                 data: methPrehistoricData.amount.concat(average),
                 fill: false,
-                borderColor: 'rgba(255, 99, 132, 1)',
+                borderColor: '#A75E09',
                 backgroundColor: 'black',
                 pointRadius: false,
                 pointHoverBorderWidth: 10,
@@ -108,14 +115,17 @@ class Methane extends React.Component {
   render() {
     console.log(this.state.methaneData)
     console.log(this.state.prehistoricMethane)
-    return (<div>
-      <button onClick={this.parsedData(this.state.prehistoricMethane, this.state.methaneData)}>GET</button>
-      {/* <button  onClick={this.prehistoricData(this.state.prehistoric)}>Antique GET</button> */}
-      <h1>Hello,</h1>
-      <div className="chart-container" >
+    return (<>
+      <div onLoad={this.parsedData(this.state.prehistoricMethane, this.state.methaneData)}/>
+      <div onLoad={() => {this.go(this.state.isLoading)}}/>
+      <div className="chart-container ui row">
       <canvas id="myMethChart" ></canvas>
+      <footer className="ui center aligned column" style={{ marginTop: "-5px" }}>
+      {!this.state.isLoading &&  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              </p>}
+              </footer>
       </div>
-    </div>);
+    </>);
   }
 }
 

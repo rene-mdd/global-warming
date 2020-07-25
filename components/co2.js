@@ -111,10 +111,15 @@ class Co2 extends React.Component {
     console.log(this.state.prehistoric)
     console.log(this.state.co2Data)
     return (<>
-      <div onLoad={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}></div>
-      <div onLoad={() => {this.go(this.state.isLoading)}}></div>
+      <div onLoad={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}/>
+      <div onLoad={() => {this.go(this.state.isLoading)}}/>
       <div className="chart-container ui row">
       <canvas id="myCo2Chart" ></canvas>
+      <footer className="ui center aligned column" style={{ marginTop: "-25px" }}>
+      {!this.state.isLoading &&  <p>This graph represents the Co2 concentration levels in the atmosphere. From 1958 the measurements are done on a quasi daily basis by Mauna Loa Observatory.
+          Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (www.esrl.noaa.gov/gmd/ccgg/trends/)
+              </p>}
+              </footer>
       </div>
     </>);
   }
