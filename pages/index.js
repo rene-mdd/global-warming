@@ -9,8 +9,9 @@ import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
 // import { Sticky, Accordion, Label, Message } from "semantic-ui-react";
 import * as Scroll from 'react-scroll';
-import {AccordionTem, AccordionCo2 }from "../helpers/accordion"
+import {AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic } from "../helpers/accordion"
 import StickyMenu from "../helpers/sticky"
+import Sidebar from "../helpers/vertical-menu"
 
 
 
@@ -19,28 +20,40 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nitrous: false,
+      co2: false,
       methane: false,
+      nitrous: false,
+      arctic: false,
       ready: '',
-      co2Loading: "",
-      methaneLoading: ""
+      co2Loading: "co2Btn",
+      methaneLoading: "methaneBtn",
+      nitrousLoading: "nitrousBtn",
+      arcticLoading: "arcticBtn"
     };
 
   }
 
   toggleCo2 = () => {
-    this.setState({ nitrous: !this.state.nitrous })
+    this.setState({ co2: !this.state.co2 })
   }
 
   toggleMethane = () => {
     this.setState({ methane: !this.state.methane })
   }
+  toggleNitrous = () => {
+    this.setState({ nitrous: !this.state.nitrous })
+  }
+
+  toggleArctic = () => {
+    this.setState({ arctic: !this.state.arctic })
+  }
+
 
   handleClickCo2 = (isLoading) => {
     if (isLoading) {
       this.setState({ co2Loading: "loading" })
     } else {
-      this.setState({ co2Loading: "" })
+      this.setState({ co2Loading: "co2Btn" })
     }
   }
 
@@ -48,12 +61,27 @@ class Home extends React.Component {
     if (isLoading) {
       this.setState({ methaneLoading: "loading" })
     } else {
-      this.setState({ methaneLoading: "" })
+      this.setState({ methaneLoading: "methaneBtn" })
+    }
+  }
+
+  handleClickNitrous = (isLoading) => {
+    if (isLoading) {
+      this.setState({ nitrous: "loading" })
+    } else {
+      this.setState({ nitrous: "nitrousBtn" })
+    }
+  }
+
+  handleClickArctic = (isLoading) => {
+    if (isLoading) {
+      this.setState({ nitrous: "loading" })
+    } else {
+      this.setState({ arctic: "arcticBtn" })
     }
   }
 
   render() {
-    console.log(this.state.co2Loading)
    
     return (<>
       <Head>
@@ -66,28 +94,16 @@ class Home extends React.Component {
       </Head>
      
       <StickyMenu/>
+      <Sidebar />
 
-      {/* <Sticky context={this.contextRef}>
-        <header className="ui stackable huge menu">
-          <div className="item">
-            <Link href="/" passHref><a><img src="/logo.png" /></a></Link>
-          </div>
-          <div className="menu right">
-            <Link href="/" passHref><a className="item">Home</a></Link>
-            <Link href="/news" passHref><a className="item">News</a></Link>
-            <Link href="organizations" passHref><a className="item">Organizations</a></Link>
-          </div>
-          <div className="item right">
-            <Link href="login" passHref><a >Contact</a></Link>
-          </div>
-        </header>
-      </Sticky> */}
-
-      <div className="ui fluid container" id="landing-page">
+      <div className="ui fluid container landing-page">
         <div className="ui container">
           <h1 className="ui center aligned header" id="h1-id">
             Global Warming live graphs and API
         </h1>
+        <div className="ui row">
+            <img src="images/icons8-stocks-64.png" className='ui tiny image centered ' />
+          </div>
           <h2 className='ui center aligned header' id="h2-id">
             Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who
         </h2>
@@ -103,41 +119,42 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-
       </div>
-      <div className="ui divider" name="jump-to-temperature"/>
-      <div className="ui container">
+
+      
+      <div className="ui fluid container temperature-background" name="jump-to-temperature">
+        <div className="ui container">
       <h2 className='ui center aligned header title-h2'>Global temperature anomalies from year 1 to present</h2>
         <div className="ui equal width grid">
-        <div className="row">
-          {<Temperature /> && <div className="ui very padded center aligned segment column" style={{ margin: "35px 0 35px 0"}}>The graph is not available right now. Please try again later.</div>}
-          </div>
-        
+      
+          <Temperature />
          
-        </div>
         <div className="ui equal width grid" style={{ marginTop: "7vh" }} >
-          <div className="ui justify container" >
+          <div className="ui justify container column" >
             <p>The current global warming rate is not natural. From 1880 to 1981 was (0.07°C / 0.13°F) per decade. Since 1981 this rate has increased to (0.18°C / 0.32°F) <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-global-temperature" target="_blank">source</a>.
         Some of the past sudden increase on global temperature, correspond to the Roman Warm Period and the Medieval Warm Period. These events were at regional and not global scale. <a href="https://www.ipcc.ch/report/ar4/wg1/" target="_blank">source</a>.
-        For more information about prehistoric temperature records please visit: <a href="https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter05_FINAL.pdf" target="_blank">source</a>,<a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php">source</a>.
+        For more information about prehistoric temperature records please visit: <a href="https://www.ipcc.ch/site/assets/uploads/2018/02/WG1AR5_Chapter05_FINAL.pdf" target="_blank">source</a>,<a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php" target="_blank">source</a>.
         The total average global temperature rise since the industrial revolution is around (1.0 °C / 1.8 °F). Earth northern hemisphere is warming faster. The arctic has warmed between (2 °C / 3.6 °F) and (4 °C / 7.2 °F). Please visit these scientific publications for more details: <a href="https://www.igsoc.org/annals/46/a46a005.pdf" target="_blank">source</a>, <a href="https://web.archive.org/web/20130628144322/http:/www.acia.uaf.edu/pages/scientific.html" target="_blank">source</a>,<a href="https://www.climatecentral.org/news/in-global-warming-northern-hemisphere-is-outpacing-the-south-15850#:~:text=Berkeley%20and%20the%20University%20of,and%20oceans%20warm%20relatively%20slowly." target="_blank">source</a>, <a href="https://iopscience.iop.org/article/10.1088/1748-9326/aafc1b/pdf" target="_blank">source</a>,<a href="https://nsidc.org/cryosphere/arctic-meteorology/climate_change.html" target="_blank">source</a>,  <a href="https://www.nature.com/articles/s41467-019-09622-y" target="_blank">source</a>.
         Earth temperature and the proportion of gases such as Co2, methane, and nitrous oxide in the atmosphere is strictly correlated. For more information about this topic and prehistoric data please visit: <a href="https://www.nature.com/articles/srep21691" target="_blank">source</a>, <a href="https://environmentcounts.org/ec-perspective-accounting-for-800000-years-of-climate-change/" target="_blank">source</a>, <a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php" target="_blank">source</a>.
             </p>
             <div className="ui equal width grid api-segment">
               <div className="column"><AccordionTem/></div>
-              <div className="column"><AccordionCo2 /></div>
+              <div className="ui column segment">Share</div>
             </div>
           </div>
         </div>
       </div>
-      <div className="ui divider" />
-      <div className="ui container" >
-        <h2 className="ui center aligned container title-h2" >Tons of CO2 emission</h2>
+      </div>
+      </div>
+
+      <div className="ui fluid container" >
+        <div className="ui container">
+        <h2 className="ui center aligned container title-h2" >Carbon Dioxide levels from 800,000 years ago to present</h2>
         <div className="ui equal width grid">
-          {/* <Co2 /> */}
-          {this.state.nitrous ? <Co2 callBackProp={(l) => { this.handleClickCo2(l) }}/> : null}
+         
+          {this.state.nitrous ? <Co2 callBackProp={() => { this.handleClickCo2() }}/> : null}
           <div className="ui row">
-            <div className="ui center aligned column"><button onClick={this.toggleCo2} className={`ui basic ${this.state.co2Loading} button`}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
+            <div className="ui center aligned column"><button onClick={this.toggleCo2} className={`ui basic ${this.state.co2Loading} button`} id={this.state.co2Loading}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
           </div>
         </div>
       
@@ -147,22 +164,23 @@ class Home extends React.Component {
       For more information about prehistoric CO2 concentration, current and future consequences please visit <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
             </p>
         <div className="ui equal width grid api-segment">
-          <div className="column"><div className="ui segment">1</div></div>
-          <div className="column"><div className="ui segment">2</div></div>
+          <div className="column"><AccordionCo2 /></div>
+          <div className="column"><div className="ui segment">Share</div></div>
         </div>
       </div>
       </div>
       </div>
+      </div>
 
-      <div className="ui divider" />
-      <div className="ui container" >
-        <h2 className="ui center aligned container title-h2" >Methane</h2>
+      <div className="ui fluid container methane-background" >
+        <div className="ui container">
+        <h2 className="ui center aligned container title-h2" >Methane levels from 800,000 years ago to present</h2>
         <div className="ui equal width grid">
-          {/* {<Methane />} */}
-          {this.state.methane ? <Methane callBackPropMethane={(l) => { this.handleClickMethane(l) }}/> : null}
+         
+          {this.state.methane ? <Methane callBackPropMethane={() => { this.handleClickMethane() }}/> : null}
           <div className="ui row">
             <div className="ui center aligned column"><button onClick={this.toggleMethane} className={`ui basic ${this.state.methaneLoading
-            } button`}>{this.state.methane ? "Hide graph" : "Deploy graph"}</button></div>
+            } button`} id={this.state.methaneLoading}>{this.state.methane ? "Hide graph" : "Deploy graph"}</button></div>
           </div>
         </div>
             <div className="ui equal width grid" style={{ marginTop: "7vh" }} >
@@ -170,51 +188,64 @@ class Home extends React.Component {
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
             </p>
         <div className="ui equal width grid api-segment">
-          <div className="column"><div className="ui segment">1</div></div>
-          <div className="column"><div className="ui segment">2</div></div>
+          <div className="column"><AccordionMethane /></div>
+          <div className="column"><div className="ui segment">Share</div></div>
         </div>
+      </div>
       </div>
       </div>
       </div>  
-<div>
 
-<div className="ui divider" />
 
-        <h2>Nitrous Oxide</h2>
-        <div className="nitrous-div">
-          {/* <Nitrous /> */}
+      <div className="ui fluid container" >
+        <div className="ui container">
+        <h2 className="ui center aligned container title-h2" >Nitrous Oxide levels from 800,000 years ago to present</h2>
+        <div className="ui equal width grid">
+       
+          {this.state.nitrous ? <Nitrous callBackPropNitrous={() => { this.handleClickNitrous() }}/> : null}
+          <div className="ui row">
+            <div className="ui center aligned column"><button onClick={this.toggleNitrous} className={`ui basic ${this.state.nitrousLoading} button`} id={this.state.nitrousLoading}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
+          </div>
         </div>
-        <span>Credits: Ed Dlugokencky, NOAA/GML (<a href="www.esrl.noaa.gov/gmd/ccgg/trends_n2o">www.esrl.noaa.gov/gmd/ccgg/trends_n2o/</a>)</span>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-      </div>
-      <div>
-        <h2>Deforestation</h2>
-        {/* <Deforestation /> */}
-        <span>Credits: Hansen, UMD, Google, USGS, NASA</span>
-        <p>This data set, a collaboration between the GLAD (Global Land Analysis and Discovery) lab at the University of Maryland, Google, USGS, and NASA, measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) at approximately 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the Landsat 5 thematic mapper (TM), the Landsat 7 thematic mapper plus (ETM+), and the Landsat 8 Operational Land Imager (OLI) sensors. Over 1 million satellite images were processed and analyzed, including over 600,000 Landsat 7 images for the 2000-2012 interval, and approximately 400,000 Landsat 5, 7, and 8 images for updates for the 2011-2019 interval. The clear land surface observations in the satellite images were assembled and a supervised learning algorithm was applied to identify per pixel tree cover loss. In this data set, “tree cover” is defined as all vegetation greater than 5 meters in height, and may take the form of natural forests or plantations across a range of canopy densities. Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may be the result of human activities, including forestry practices such as timber harvesting or deforestation (the conversion of natural forest to other land uses), as well as natural causes such as disease or storm damage. Fire is another widespread cause of tree cover loss, and can be either natural or human-induced.</p>
-        <p> This data set has been updated annually since its creation, and now includes loss up to 2019 (Version 1.7). The analysis method has been modified in numerous ways, including new data for the target year, re-processed data for the previous two years (2011 and 2012 for the Version 1.1 update, 2012 and 2013 for the Version 1.2 update), and improved modelling and calibration. These modifications improve change detection for 2011-2014, including better detection of boreal loss due to fire, smallholder rotation agriculture in tropical forests, selective losing, and short cycle plantations. Eventually, a future “Version 2.0” will include reprocessing for 2000-2010 data, but in the meantime integrated use of the original data and Version 1.2 should be performed with caution. Read more about the Version 1.7 update here. When zoomed out, pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13). The tree cover canopy density of the displayed data varies according to the selection - use the legend on the map to change the minimum tree cover canopy density threshold.</p>
-      </div>
-      <div>
-        <h2>Melted polar ice</h2>
-        <div className="arctic-div">
-          {/* <Arctic /> */}
-        </div>
-        <span> Credit: <a href="https://nsidc.org/">NSIDC/NASA</a></span>
-        <p>Arctic sea ice reaches its minimum each September. September Arctic sea ice is now declining at a rate of 12.85 percent per decade, relative to the 1981 to 2010 average. This graph shows the average monthly Arctic sea ice extent each September since 1979, derived from satellite observations. </p>
-      </div>
-      <div>
-        <h2>
-          Emissions by country
-            </h2>
-        {/* <Countries /> */}
-        <span>Credits: IEA Atlas of Energy</span>
-        <p>
-          After three years of stability, global carbon dioxide emissions from fuel combustion restarted growing in 2017, reaching 32.8 billion tons of CO2, and provisional data show they grew even faster in 2018. The major countries and regions responsible for emissions were: China (the People’s Republic of China and Hong Kong, China)  (28%), the United States (14%), the European Union as a whole (10%), India (7%), the Russian Federation (5%), Japan (3%), Korea (2%), Canada (2%), Indonesia (2%) and Iran (2%).
+            <div className="ui equal width grid" style={{ marginTop: "7vh" }} >
+          <div className="ui justify container" >
+        <p>Nitrous ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
             </p>
-        <p>There are several factors which can help explain the overall CO2 emissions level in a country: the size of its population, its energy mix, its GDP etc. In this respect, the detailed CO2 emissions indicators maps on the IEA Energy Atlas are very informative. These maps include total CO2 emissions from fuel combustion, CO2 per GDP,  and per GDP PPP – as well as CO2 per TPES and per population.</p>
-        <p>For instance, when looking at the map of CO2 emissions per capita, one can see that countries from the Middle East have the highest  emissions levels, while countries in Africa, using large quantities of fuel wood (considered as non-emitting) show the lowest levels of emissions. Similarly, when looking at the map of emissions per TPES, it will be no surprise to see that countries with large shares of coal and oil in their energy mix have the highest levels of emissions, while countries with a large share of renewables and nuclear show the lowest levels.</p>
+        <div className="ui equal width grid api-segment">
+          <div className="column"><AccordionNitrous /></div>
+          <div className="column"><div className="ui segment">Share</div></div>
+        </div>
       </div>
-     
+      </div>
+      </div>
+      </div>  
+      
+      <div className="ui divider" />
+
+      <div className="ui fluid container" >
+        <div className="ui container">
+        <h2 className="ui center aligned container title-h2" >Melted Polar Ice Cap</h2>
+        <div className="ui equal width grid">
+       
+          {this.state.arctic ? <Arctic callBackPropArctic={() => { this.handleClickArctic() }}/> : null}
+          <div className="ui row">
+            <div className="ui center aligned column"><button onClick={this.toggleArctic} className={`ui basic ${this.state.arcticLoading} button`} id={this.state.arcticLoading}>{this.state.arctic ? "Hide graph" : "Deploy graph"}</button></div>
+          </div>
+        </div>
+            <div className="ui equal width grid" style={{ marginTop: "7vh" }} >
+          <div className="ui justify container" >
+        <p>Nitrous ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
+            </p>
+        <div className="ui equal width grid api-segment">
+          <div className="column"><AccordionArctic /></div>
+          <div className="column"><div className="ui segment">Share</div></div>
+        </div>
+      </div>
+      </div>
+      </div>
+      </div>  
+      
+      <div>
       <footer>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -225,6 +256,7 @@ class Home extends React.Component {
           <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
+      </div>
     </>
     )
   }

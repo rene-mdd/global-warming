@@ -83,10 +83,7 @@ class Methane extends React.Component {
             ]
           },
           options: {
-            title: {
-              display: true,
-              text: 'Methane levels from 800,000 years ago to present'
-            },
+         
             scales: {
               bounds: 'ticks',
               ticks: {

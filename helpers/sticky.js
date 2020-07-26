@@ -26,8 +26,8 @@ export default class StickyExampleAdjacentContext extends Component {
     return (
         <Menu
               fixed='top'
-             
               size='huge'
+              stackable={true}
             >
               <Container>
               <Link href="/" passHref><Menu.Item as='a' position='left' active>
@@ -41,9 +41,6 @@ export default class StickyExampleAdjacentContext extends Component {
                 </Menu.Item>
               </Container>
             </Menu>
-        
-          
-     
     )
   }
 }

@@ -26,8 +26,8 @@ class News extends React.Component {
       .then((data) => {
         return this.setState({ gNews: data.articles })
       }).catch(error => { console.error(error) });
-    }
-  
+  }
+
   render() {
     console.log(this.state.gNews)
     console.log(this.props.data.value)
@@ -35,10 +35,10 @@ class News extends React.Component {
     const parsedBingNews = JSON.parse(JSON.stringify(this.props.data.value))
 
     const duplicateRemovalBing = parsedBingNews.filter((thing, index, self) =>
-    index === self.findIndex((t) => (
-      t.description === thing.description
-    ))
-  )
+      index === self.findIndex((t) => (
+        t.description === thing.description
+      ))
+    )
 
     const duplicateRemovalGNews = parsedGNews.filter((thing, index, self) =>
       index === self.findIndex((t) => (
@@ -47,7 +47,7 @@ class News extends React.Component {
     )
 
     return (<>
-        <Head>
+      <Head>
         <title>Global Warming</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
@@ -55,14 +55,17 @@ class News extends React.Component {
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
         <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
       </Head>
-      <StickyMenu/>
-       <div className="ui fluid container" id="landing-page-news">
+      <StickyMenu />
+      <div className="ui fluid container" id="landing-page-news">
         <div className="ui container" >
           <h1 className="ui center aligned header" id="h1-news">
             World News
         </h1>
+          <div class="ui row">
+            <img src="images/icons8-news-256.png" className='ui tiny image centered ' />
+          </div>
           <h2 className='ui center aligned header' id="h2-news">
-            Up to date worldwide news about Global Warming and Climate Change. This section includes information from small and mainstream firms. 
+            Up to date worldwide news about Global Warming and Climate Change. This section includes information from small and mainstream firms.
         </h2>
           <div className="ui equal width grid icon-style" >
             <div className="row">
@@ -78,8 +81,11 @@ class News extends React.Component {
         </div>
       </div>
 
-    <div className="ui divider" name="jump-news"/>
+      <div className="ui divider" name="jump-news" />
       <div className="ui container move-down">
+      <h3 className="ui center aligned header" id="list-news">List</h3>
+    <h4 className="ui center aligned header">Live: <span id='news-date'>{new Date().toString()}</span></h4>
+    <div className="ui divider" name="jump-news" />
         <div className="ui items">
           {
             duplicateRemovalGNews.map((obj) => {
@@ -87,7 +93,7 @@ class News extends React.Component {
 
               return (
                 <div className="item">
-                  <img className="ui small middle aligned image" src={obj.image} />
+                  <img className="ui medium middle aligned image" src={obj?.image ?? "/images/breaking-news.png"} />
                   <div className="content">
                     <a href={obj.url} className="header">{obj.title}</a>
                     <div className="meta">{obj.author}</div>
@@ -95,16 +101,16 @@ class News extends React.Component {
                       <p>{obj.description}</p>
                     </div>
                     <div className="extra">Date: {obj.publishedAt}<div className="ui bottom right attached label">
-                      <i aria-hidden="true" className="newspaper outline icon"/>
+                      <i aria-hidden="true" className="newspaper outline icon" />
                       {obj.source.name}
                     </div></div>
                   </div>
                 </div>)
             })}
           {duplicateRemovalBing.map((obj) => {
-          console.log(obj.image)
+            console.log(obj.image)
             return (
-              
+
               <div className="item">
                 <img className="ui small middle aligned image" src={obj?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
                 <div className="content">
@@ -114,7 +120,7 @@ class News extends React.Component {
                     <p>{obj.description}</p>
                   </div>
                   <div className="extra">Date: {obj.datePublished}<div className="ui bottom right attached label">
-                  <i aria-hidden="true" className="newspaper outline icon"/>
+                    <i aria-hidden="true" className="newspaper outline icon" />
                     {obj?.provider[0]?.name ?? "News"}
                   </div></div>
 
@@ -135,7 +141,7 @@ export async function getServerSideProps() {
   });
   const json = JSON.parse(JSON.stringify(resp));
   const data = await json;
-  return {props: {data}}
+  return { props: { data } }
 }
 
 export default News;
