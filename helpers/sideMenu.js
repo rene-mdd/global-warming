@@ -18,10 +18,21 @@ import {   Button,
     
     constructor(props) {
       super(props);
-      this.state = {activeItem: "Temperature",
+      this.state = {activeItem: "",
     menuVisible: true,
     rotate: false
 };
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log(this.props)
+        console.log(prevProps)
+        // const result = prevProps
+        // if(this.props.props == prevProps.props){
+            
+        // this.setState({activeItem: result})}
+        // else {return null}
+ 
     }
 
     handleItemClick = (e, { name }) => this.setState({activeItem: name })
@@ -55,16 +66,7 @@ import {   Button,
           onClick={this.handleItemClick}
         />    
         </Sidebar>
-         {/* <Sidebar.Pusher>
-              <Segment basic>
-                <Header as="h3">Application Content</Header>
-                  <p></p>
-                  <p></p>
-                  <p></p>
-                  <p></p>
-                  <p></p>
-              </Segment>
-         </Sidebar.Pusher> */}
+     
       </Sidebar.Pushable>
       </Grid.Column>
     </Grid>

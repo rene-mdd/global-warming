@@ -3,17 +3,14 @@ import Link from 'next/link'
 import Temperature from '../components/temperature'
 import Co2 from '../components/co2'
 import Arctic from "../components/arctic"
-import Deforestation from "../components/deforestation"
 import Countries from '../components/countries'
 import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
 import * as Scroll from 'react-scroll';
 import {AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic } from "../helpers/accordion"
 import StickyMenu from "../helpers/sticky"
-// import SideMenu from "../helpers/vertical-menu"
 import SideMenu from "../helpers/sideMenu"
 import Observer from '@researchgate/react-intersection-observer';
-import { Sticky } from 'semantic-ui-react'
 
 
 class Home extends React.Component {
@@ -26,7 +23,7 @@ class Home extends React.Component {
       nitrous: false,
       arctic: false,
       co2View: false,
-      tempView: false,
+      siteView: "",
       ready: '',
       co2Loading: "co2Btn",
       methaneLoading: "methaneBtn",
@@ -88,8 +85,10 @@ class Home extends React.Component {
   }
 
   handleIntersection = (event) => {
-    const viewPort = event.isIntersecting;
-    this.setState({tempView: viewPort})
+   if (event.isIntersecting) {
+    this.setState({siteView: "temperature"})
+    }
+    
   }
 
  
@@ -100,7 +99,7 @@ class Home extends React.Component {
       rootMargin: '0% 0% -25%',
     };
 
-    console.log(this.state.tempView)
+    console.log(this.state.siteView)
     return (<>
       <Head>
         <title>Global Warming</title>
@@ -113,7 +112,7 @@ class Home extends React.Component {
      
       <StickyMenu/>
      
-      <SideMenu />
+      <SideMenu props={this.state.siteView}/>
       
       <div className="ui fluid container landing-page">
       
