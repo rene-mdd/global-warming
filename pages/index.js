@@ -10,8 +10,10 @@ import Nitrous from '../components/nitrous'
 import * as Scroll from 'react-scroll';
 import {AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic } from "../helpers/accordion"
 import StickyMenu from "../helpers/sticky"
-import SideMenu from "../helpers/vertical-menu"
-// import Observer from '@researchgate/react-intersection-observer';
+// import SideMenu from "../helpers/vertical-menu"
+import SideMenu from "../helpers/sideMenu"
+import Observer from '@researchgate/react-intersection-observer';
+import { Sticky } from 'semantic-ui-react'
 
 
 class Home extends React.Component {
@@ -31,7 +33,10 @@ class Home extends React.Component {
       nitrousLoading: "nitrousBtn",
       arcticLoading: "arcticBtn"
     };
+ 
   }
+
+
 
   toggleCo2 = () => {
     this.setState({ co2: !this.state.co2 })
@@ -82,20 +87,20 @@ class Home extends React.Component {
     }
   }
 
-  // handleIntersection = (event) => {
-  //   const viewPort = event.isIntersecting;
-  //   this.setState({tempView: viewPort})
-  // }
+  handleIntersection = (event) => {
+    const viewPort = event.isIntersecting;
+    this.setState({tempView: viewPort})
+  }
 
  
   render() {
-    // const options = {
-    //   onChange: this.handleIntersection,
-    //   root: '#scrolling-container',
-    //   rootMargin: '0% 0% -25%',
-    // };
+    const options = {
+      onChange: this.handleIntersection,
+      root: '#scrolling-container',
+      rootMargin: '0% 0% -25%',
+    };
 
-    console.log(this.state.ready)
+    console.log(this.state.tempView)
     return (<>
       <Head>
         <title>Global Warming</title>
@@ -107,10 +112,11 @@ class Home extends React.Component {
       </Head>
      
       <StickyMenu/>
-
+     
       <SideMenu />
-
+      
       <div className="ui fluid container landing-page">
+      
         <div className="ui container">
           <h1 className="ui center aligned header" id="h1-id">
             Global Warming live graphs and API
@@ -136,7 +142,7 @@ class Home extends React.Component {
       </div>
 
       
-        {/* <Observer {...options}> */}
+        <Observer {...options}>
       <div className="ui fluid container temperature-background" name="jump-to-temperature">
         <div className="ui container">
       <h2 className='ui center aligned header title-h2'>Global temperature anomalies from year 1 to present</h2>
@@ -161,7 +167,7 @@ class Home extends React.Component {
       </div>
       </div>
       </div>
-      {/* </Observer> */}
+      </Observer>
 
       <div className="ui fluid container" >
         <div className="ui container">
@@ -212,7 +218,7 @@ class Home extends React.Component {
       </div>
       </div>
       </div>  
-
+      
 
       <div className="ui fluid container" >
         <div className="ui container">

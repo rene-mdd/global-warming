@@ -93,7 +93,7 @@ class News extends React.Component {
 
               return (
                 <div className="item">
-                  <img className="ui medium middle aligned image" src={obj?.image ?? "/images/breaking-news.png"} />
+                  <img className="ui medium middle aligned image" src={obj?.image ?? this.forceUpdate()} />
                   <div className="content">
                     <a href={obj.url} className="header" target="_blank">{obj.title}</a>
                     <div className="meta">{obj.author}</div>
