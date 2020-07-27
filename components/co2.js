@@ -18,7 +18,7 @@ class Co2 extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.callBackProp(this.state.isLoading)
+    this.props.callBackPropCo2(this.state.isLoading)
 
     const date = [];
     const amount = [];
@@ -36,15 +36,15 @@ class Co2 extends React.Component {
       const data = await response.json();
       if (data){
     this.setState({co2Data: data, isLoading: false})
-    this.props.callBackProp(false)
+    this.props.callBackPropCo2(this.state.isLoading)
     }
     } catch (error) {
       console.log(error)
     }
   }
 
-  go = (isLoading) => {
-    this.props.callBackProp(isLoading)
+  goCo2 = (isLoading) => {
+    this.props.callBackPropCo2(isLoading)
   } 
   
 
@@ -108,7 +108,7 @@ class Co2 extends React.Component {
     console.log(this.state.co2Data)
     return (<>
       <div onLoad={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}/>
-      <div onLoad={() => {this.go(this.state.isLoading)}}/>
+      <div onLoad={() => {this.goCo2(this.state.isLoading)}}/>
       <div className="chart-container">
       <canvas id="myCo2Chart" ></canvas>
       <footer className="ui center aligned column" style={{ marginTop: "-25px" }}>

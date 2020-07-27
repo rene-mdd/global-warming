@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
 
-export default class Sidebar extends Component {
+export default class SideMenu extends Component {
   state = { activeItem: 'home' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -10,7 +10,7 @@ export default class Sidebar extends Component {
     const { activeItem } = this.state
 
     return (
-      <Menu pointing secondary vertical>
+      <Menu pointing secondary vertical fixed={"left"} className="sideMenu">
         <Menu.Item
           name='home'
           active={activeItem === 'home'}

@@ -7,12 +7,11 @@ import Deforestation from "../components/deforestation"
 import Countries from '../components/countries'
 import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
-// import { Sticky, Accordion, Label, Message } from "semantic-ui-react";
 import * as Scroll from 'react-scroll';
 import {AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic } from "../helpers/accordion"
 import StickyMenu from "../helpers/sticky"
-import Sidebar from "../helpers/vertical-menu"
-
+import SideMenu from "../helpers/vertical-menu"
+// import Observer from '@researchgate/react-intersection-observer';
 
 
 class Home extends React.Component {
@@ -24,13 +23,14 @@ class Home extends React.Component {
       methane: false,
       nitrous: false,
       arctic: false,
+      co2View: false,
+      tempView: false,
       ready: '',
       co2Loading: "co2Btn",
       methaneLoading: "methaneBtn",
       nitrousLoading: "nitrousBtn",
       arcticLoading: "arcticBtn"
     };
-
   }
 
   toggleCo2 = () => {
@@ -48,8 +48,8 @@ class Home extends React.Component {
     this.setState({ arctic: !this.state.arctic })
   }
 
-
   handleClickCo2 = (isLoading) => {
+   
     if (isLoading) {
       this.setState({ co2Loading: "loading" })
     } else {
@@ -66,23 +66,36 @@ class Home extends React.Component {
   }
 
   handleClickNitrous = (isLoading) => {
+    
     if (isLoading) {
-      this.setState({ nitrous: "loading" })
+      this.setState({ nitrousLoading: "loading" })
     } else {
-      this.setState({ nitrous: "nitrousBtn" })
+      this.setState({ nitrousLoading: "nitrousBtn" })
     }
   }
 
   handleClickArctic = (isLoading) => {
     if (isLoading) {
-      this.setState({ nitrous: "loading" })
+      this.setState({ arcticLoading: "loading" })
     } else {
-      this.setState({ arctic: "arcticBtn" })
+      this.setState({ arcticLoading: "arcticBtn" })
     }
   }
 
+  // handleIntersection = (event) => {
+  //   const viewPort = event.isIntersecting;
+  //   this.setState({tempView: viewPort})
+  // }
+
+ 
   render() {
-   
+    // const options = {
+    //   onChange: this.handleIntersection,
+    //   root: '#scrolling-container',
+    //   rootMargin: '0% 0% -25%',
+    // };
+
+    console.log(this.state.ready)
     return (<>
       <Head>
         <title>Global Warming</title>
@@ -94,7 +107,8 @@ class Home extends React.Component {
       </Head>
      
       <StickyMenu/>
-      <Sidebar />
+
+      <SideMenu />
 
       <div className="ui fluid container landing-page">
         <div className="ui container">
@@ -122,6 +136,7 @@ class Home extends React.Component {
       </div>
 
       
+        {/* <Observer {...options}> */}
       <div className="ui fluid container temperature-background" name="jump-to-temperature">
         <div className="ui container">
       <h2 className='ui center aligned header title-h2'>Global temperature anomalies from year 1 to present</h2>
@@ -146,15 +161,17 @@ class Home extends React.Component {
       </div>
       </div>
       </div>
+      {/* </Observer> */}
 
       <div className="ui fluid container" >
         <div className="ui container">
         <h2 className="ui center aligned container title-h2" >Carbon Dioxide levels from 800,000 years ago to present</h2>
         <div className="ui equal width grid">
          
-          {this.state.nitrous ? <Co2 callBackProp={() => { this.handleClickCo2() }}/> : null}
+          {this.state.co2 ? <Co2 callBackPropCo2={(c) => { this.handleClickCo2(c) }}/> : null}
           <div className="ui row">
-            <div className="ui center aligned column"><button onClick={this.toggleCo2} className={`ui basic ${this.state.co2Loading} button`} id={this.state.co2Loading}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
+            <div className="ui center aligned column"><button onClick={this.toggleCo2} className={`ui basic ${this.state.co2Loading} button`} 
+            id={this.state.co2Loading}>{this.state.co2 ? "Hide graph" : "Deploy graph"}</button></div>
           </div>
         </div>
       
@@ -177,7 +194,7 @@ class Home extends React.Component {
         <h2 className="ui center aligned container title-h2" >Methane levels from 800,000 years ago to present</h2>
         <div className="ui equal width grid">
          
-          {this.state.methane ? <Methane callBackPropMethane={() => { this.handleClickMethane() }}/> : null}
+          {this.state.methane ? <Methane callBackPropMethane={(m) => { this.handleClickMethane(m) }}/> : null}
           <div className="ui row">
             <div className="ui center aligned column"><button onClick={this.toggleMethane} className={`ui basic ${this.state.methaneLoading
             } button`} id={this.state.methaneLoading}>{this.state.methane ? "Hide graph" : "Deploy graph"}</button></div>
@@ -202,7 +219,7 @@ class Home extends React.Component {
         <h2 className="ui center aligned container title-h2" >Nitrous Oxide levels from 800,000 years ago to present</h2>
         <div className="ui equal width grid">
        
-          {this.state.nitrous ? <Nitrous callBackPropNitrous={() => { this.handleClickNitrous() }}/> : null}
+          {this.state.nitrous ? <Nitrous callBackPropNitrous={(n) => { this.handleClickNitrous(n) }}/> : null}
           <div className="ui row">
             <div className="ui center aligned column"><button onClick={this.toggleNitrous} className={`ui basic ${this.state.nitrousLoading} button`} id={this.state.nitrousLoading}>{this.state.nitrous ? "Hide graph" : "Deploy graph"}</button></div>
           </div>
@@ -226,8 +243,7 @@ class Home extends React.Component {
         <div className="ui container">
         <h2 className="ui center aligned container title-h2" >Melted Polar Ice Cap</h2>
         <div className="ui equal width grid">
-       
-          {this.state.arctic ? <Arctic callBackPropArctic={() => { this.handleClickArctic() }}/> : null}
+          {this.state.arctic ? <Arctic callBackPropArctic={(a) => { this.handleClickArctic(a) }}/> : null}
           <div className="ui row">
             <div className="ui center aligned column"><button onClick={this.toggleArctic} className={`ui basic ${this.state.arcticLoading} button`} id={this.state.arcticLoading}>{this.state.arctic ? "Hide graph" : "Deploy graph"}</button></div>
           </div>

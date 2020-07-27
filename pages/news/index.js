@@ -48,7 +48,7 @@ class News extends React.Component {
 
     return (<>
       <Head>
-        <title>Global Warming</title>
+        <title>Global Warming News</title>
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
@@ -95,7 +95,7 @@ class News extends React.Component {
                 <div className="item">
                   <img className="ui medium middle aligned image" src={obj?.image ?? "/images/breaking-news.png"} />
                   <div className="content">
-                    <a href={obj.url} className="header">{obj.title}</a>
+                    <a href={obj.url} className="header" target="_blank">{obj.title}</a>
                     <div className="meta">{obj.author}</div>
                     <div className="description">
                       <p>{obj.description}</p>
@@ -114,7 +114,7 @@ class News extends React.Component {
               <div className="item">
                 <img className="ui small middle aligned image" src={obj?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
                 <div className="content">
-                  <a href={obj.url} className="header">{obj.name}</a>
+                  <a href={obj.url} className="header" target="_blank">{obj.name}</a>
                   <div className="meta">{obj.provider.name} </div>
                   <div className="description">
                     <p>{obj.description}</p>

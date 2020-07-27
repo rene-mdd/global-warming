@@ -1,4 +1,3 @@
-// 'https://climate.nasa.gov/system/internal_resources/details/original/1929_Arctic_data_1979-2019.txt'
 
 import fetch from 'unfetch';
 import Chart from 'chart.js';
@@ -99,15 +98,15 @@ class Arctic extends React.Component {
   render() {
     console.log(this.state.arcticData)
     return (<>
-      <div onLoad={this.displayArcticGraph(this.state.arcticData.result)}>GET</div>
+      <div onLoad={this.displayArcticGraph(this.state.arcticData.result)}/>
       <div onLoad={() => {this.goArc(this.state.isLoading)}}/>
-      <div className="chart-container ui row" >
+      {!this.state.isLoading && <div className="chart-container ui row" >
       <canvas id="arcticChart"></canvas>
       <footer className="ui center aligned column" style={{ marginTop: "-5px" }}>
-      {!this.state.isLoading &&  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              </p>}
+       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              </p>
               </footer>
-      </div>
+      </div>}
       </>);
   }
 }

@@ -34,13 +34,13 @@ class Nitrous extends React.Component {
       const data = await response.json();
       if(data){
       this.setState({ nitrousData: data, isLoading: false })
-      this.props.callBackPropNitrous(false)}
+      this.props.callBackPropNitrous(this.state.isLoading)}
     } catch (error) {
       console.log(error)
     }
   }
 
-  go = (isLoading) => {
+  goNitrous = (isLoading) => {
     this.props.callBackPropNitrous(isLoading)
   } 
 
@@ -109,8 +109,8 @@ class Nitrous extends React.Component {
     console.log(this.state.nitrousData)
     console.log(this.state.prehistoricNitrous)
     return (<>
-      <div  onLoad={this.parsedNitrousData(this.state.prehistoricNitrous, this.state.nitrousData)}/>
-      <div onLoad={() => {this.go(this.state.isLoading)}}/>
+      <div onLoad={this.parsedNitrousData(this.state.prehistoricNitrous, this.state.nitrousData)}/>
+      <div onLoad={() => {this.goNitrous(this.state.isLoading)}}/>
       
      <div className="chart-container ui row" >
       <canvas id="myNitrousChart" ></canvas>
