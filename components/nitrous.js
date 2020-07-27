@@ -7,14 +7,15 @@ class Nitrous extends React.Component {
   constructor(props) {
     super(props);
     this.state = { nitrousData: {},
-    prehistoricNitrous: {} }
+    prehistoricNitrous: {},
+  isLoading: true }
     this.url = "api/nitrous-oxide-api";
     this.testUrl = 'https://jsonplaceholder.typicode.com/todos/1';
     this.url3 = "http://localhost:3001/data";
   }
 
   async componentDidMount() {
-  
+    this.props.callBackPropNitrous(this.state.isLoading)
     console.log(nitrousData)
     const date = [];
     const amount = [];
@@ -31,11 +32,17 @@ class Nitrous extends React.Component {
      try {
       const response = await fetch(this.url)
       const data = await response.json();
-      this.setState({ nitrousData: data })
+      if(data){
+      this.setState({ nitrousData: data, isLoading: false })
+      this.props.callBackPropNitrous(this.state.isLoading)}
     } catch (error) {
       console.log(error)
     }
   }
+
+  goNitrous = (isLoading) => {
+    this.props.callBackPropNitrous(isLoading)
+  } 
 
  parsedNitrousData = (cleanNitrousPrehistoricData, cleanNitrousData) => {
  const date = [];
@@ -56,7 +63,7 @@ class Nitrous extends React.Component {
             label: 'Nitrous Oxide',
             data: cleanNitrousPrehistoricData.amount.concat(average),
             fill: false,
-            borderColor: 'rgba(255, 99, 132, 1)',
+            borderColor: '#FDB147',
             backgroundColor: 'rgba(255, 0, 0, 0.1);',
             pointRadius: 1.5,
             pointHoverBorderWidth: 1,
@@ -69,10 +76,6 @@ class Nitrous extends React.Component {
         ]
       },
       options: {
-        title: {
-          display: true,
-          text: 'Nitrous oxide levels from 800,000 years ago to present'
-        },
         scales: {
           bounds: 'ticks',
           ticks: {
@@ -105,14 +108,18 @@ class Nitrous extends React.Component {
   render() {
     console.log(this.state.nitrousData)
     console.log(this.state.prehistoricNitrous)
-    return (<div>
-      {/* <button onClick={this.nitrousData(this.state.nitrousData)}>GET</button> */}
-      <button  onClick={this.parsedNitrousData(this.state.prehistoricNitrous, this.state.nitrousData)}>Antique GET</button>
-      <h1>Hello,</h1>
-      {!this.state.nitrousData ? <p>Loading...</p> :  <div className="chart-container" >
+    return (<>
+      <div onLoad={this.parsedNitrousData(this.state.prehistoricNitrous, this.state.nitrousData)}/>
+      <div onLoad={() => {this.goNitrous(this.state.isLoading)}}/>
+      
+     <div className="chart-container ui row" >
       <canvas id="myNitrousChart" ></canvas>
-      </div> }
-    </div>);
+      <footer className="ui center aligned column" style={{ marginTop: "-5px" }}>
+      {!this.state.isLoading &&  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              </p>}
+              </footer>
+      </div> 
+    </>);
   }
 }
 

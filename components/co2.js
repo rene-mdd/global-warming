@@ -18,7 +18,7 @@ class Co2 extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.callBackProp(this.state.isLoading)
+    this.props.callBackPropCo2(this.state.isLoading)
 
     const date = [];
     const amount = [];
@@ -36,15 +36,15 @@ class Co2 extends React.Component {
       const data = await response.json();
       if (data){
     this.setState({co2Data: data, isLoading: false})
-    this.props.callBackProp(false)
+    this.props.callBackPropCo2(this.state.isLoading)
     }
     } catch (error) {
       console.log(error)
     }
   }
 
-  go = (isLoading) => {
-    this.props.callBackProp(isLoading)
+  goCo2 = (isLoading) => {
+    this.props.callBackPropCo2(isLoading)
   } 
   
 
@@ -67,7 +67,7 @@ class Co2 extends React.Component {
               label: 'Carbon Dioxide',
               data: prehistoricData.amount.concat(trend),
               fill: false,
-              borderColor: 'rgba(255, 99, 132, 1)',
+              borderColor: '#4984B8',
               backgroundColor: 'black',
               pointRadius: false,
               pointHoverBorderWidth: 10,
@@ -80,10 +80,6 @@ class Co2 extends React.Component {
           ]
         },
         options: {
-          title: {
-            display: true,
-            text: 'Carbon dioxide levels from 800,000 years ago to present'
-          },
           scales: {
             bounds: 'ticks',
             ticks: {
@@ -112,12 +108,12 @@ class Co2 extends React.Component {
     console.log(this.state.co2Data)
     return (<>
       <div onLoad={this.parsedCo2Data(this.state.prehistoric, this.state.co2Data)}/>
-      <div onLoad={() => {this.go(this.state.isLoading)}}/>
-      <div className="chart-container ui row">
+      <div onLoad={() => {this.goCo2(this.state.isLoading)}}/>
+      <div className="chart-container">
       <canvas id="myCo2Chart" ></canvas>
       <footer className="ui center aligned column" style={{ marginTop: "-25px" }}>
-      {!this.state.isLoading &&  <p>This graph represents the Co2 concentration levels in the atmosphere. From 1958 the measurements are done on a quasi daily basis by Mauna Loa Observatory.
-          Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (www.esrl.noaa.gov/gmd/ccgg/trends/)
+      {!this.state.isLoading &&  <p>This graph represents the Co2 concentration levels in the atmosphere. From 1958, the measurements are done on a quasi daily basis by Mauna Loa Observatory.
+          Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (<a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/" target="_blank">https://www.esrl.noaa.gov/gmd/ccgg/trends/</a>)
               </p>}
               </footer>
       </div>
