@@ -196,7 +196,10 @@ export async function getServerSideProps({ res }) {
   const json = JSON.parse(JSON.stringify(resp));
   const data = await json;
 
-  res.setHeader("Cache-Control", "s-maxage=43200, stale-while-revalidate");
+  res.setHeader(
+    "Cache-Control",
+    "maxage=43200, s-maxage=43200, stale-while-revalidate"
+  ); // Vercel Cache (Network)
 
   return { props: { data } };
 }
