@@ -7,7 +7,7 @@ import Countries from '../components/countries'
 import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
 import * as Scroll from 'react-scroll';
-import {AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic } from "../helpers/accordion"
+import {AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic, AccordionShare } from "../helpers/accordion"
 import StickyMenu from "../helpers/sticky"
 import SideMenu from "../helpers/sideMenu"
 import Observer from '@researchgate/react-intersection-observer';
@@ -32,8 +32,6 @@ class Home extends React.Component {
     };
  
   }
-
-
 
   toggleCo2 = () => {
     this.setState({ co2: !this.state.co2 })
@@ -187,13 +185,12 @@ class Home extends React.Component {
             </p>
         <div className="ui equal width grid api-segment">
           <div className="column"><AccordionCo2 /></div>
-          <div className="column"><div className="ui segment">Share</div></div>
+          <div className="column"><AccordionShare /></div>
         </div>
       </div>
       </div>
       </div>
       </div>
-
       <div className="ui fluid container methane-background" >
         <div className="ui container">
         <h2 className="ui center aligned container title-h2" >Methane levels from 800,000 years ago to present</h2>

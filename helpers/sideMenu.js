@@ -44,7 +44,7 @@ import {   Button,
           <Grid columns={1} >
           <Grid.Column className="close-button" width="1" >
         <Menu secondary attached="top" className="sidebar-button" >
-          <Menu.Item style={{margin: "62px 0 15px 0"}} onClick={() => this.setState({ menuVisible: !this.state.menuVisible, rotate: !this.state.rotate })} >
+          <Menu.Item style={{margin: "42px 0 -20px 0"}} onClick={() => this.setState({ menuVisible: !this.state.menuVisible, rotate: !this.state.rotate })} >
           <img src="images/icons8-more-than-60.png" id={this.state.rotate ? "rotate-right" : "rotate-left"}/>
           </Menu.Item>          
         </Menu>
