@@ -188,13 +188,16 @@ class News extends React.Component {
   }
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ res }) {
   const resp = await client.newsOperations.search(search_term, {
     market: "en-XA",
     count: 100,
   });
   const json = JSON.parse(JSON.stringify(resp));
   const data = await json;
+
+  res.setHeader("Cache-Control", "s-maxage=43200, stale-while-revalidate");
+
   return { props: { data } };
 }
 
