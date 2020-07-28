@@ -36,7 +36,7 @@ const SCREENSHOT_REMOVE_ELEMENT_CLASS = `chart-img--remove`;
 const imageTypes = ["png", "jpeg"];
 
 module.exports = async (req, res) => {
-  let image, browser;
+  let image, browser, page;
   const [selectorName, imageType] = req.query.elementID.split(".");
   const regionSelector = `#${selectorName}`;
 
@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
     const type = validImageType(imageType);
 
     // Visit URL TODO: env production url
-    const page = await createVirtualBrowserPage(URL);
+    [browser, page] = await createVirtualBrowserPage(URL);
 
     // Remove all elements that have the class chart-img--remove
     await page.$$eval(`.${SCREENSHOT_REMOVE_ELEMENT_CLASS}`, (divs) =>
@@ -80,7 +80,7 @@ const validImageType = (type) => {
 
 const createVirtualBrowserPage = async (url) => {
   // Create headless browser (virtual)
-  browser = await chromium.puppeteer.launch({
+  const browser = await chromium.puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath,
@@ -89,5 +89,6 @@ const createVirtualBrowserPage = async (url) => {
 
   // create a new browser page
   const page = await browser.newPage();
-  return page.goto(url);
+  await page.goto(url);
+  return [browser, page];
 };
