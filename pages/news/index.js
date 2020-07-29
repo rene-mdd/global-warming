@@ -5,7 +5,7 @@ import StickyMenu from "../../semantic/sticky"
 import { Container, Header, Grid, Image, Button, Segment, Divider, Item, Label } from 'semantic-ui-react'
 
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
-let credentials = new CognitiveServicesCredentials('feaf1751d8b142c68ca34b339e04dfbc');
+let credentials = new CognitiveServicesCredentials('3058a5d1d023401b9fcc6336eb9ee58d');
 let search_term = 'global warming'
 const NewsSearchAPIClient = require('azure-cognitiveservices-newssearch');
 let client = new NewsSearchAPIClient(credentials);
@@ -37,7 +37,7 @@ class News extends React.Component {
     console.log(this.state.gNews)
     console.log(this.props)
     const parsedGNews = JSON.parse(JSON.stringify(this.state.gNews))
-    const parsedBingNews = this.props.data;
+    const parsedBingNews = this.props.data.value;
 
     const duplicateRemovalBing = parsedBingNews.filter((thing, index, self) =>
       index === self.findIndex((t) => (
@@ -63,7 +63,7 @@ class News extends React.Component {
 
       <Container fluid={true} id="landing-page-news">
       <Container >
-          <Header as="h1" textAlign="center"  id="h1-news">
+          <Header as="h1" textAlign="center"  className="h1-news">
           Global Warming & Climate Change World News
           </Header>
     <Grid columns="equal">
@@ -81,7 +81,7 @@ class News extends React.Component {
         <Grid.Row centered>
             <Grid.Column width="4" textAlign="center">
             <Scroll.Link spy={true} smooth={true} duration={1000} to="jump-to-news" >
-                <Button basic>
+                <Button className="icon-style" basic>
                   <Image src="/images/icons-double-down.png" />
                 </Button>
               </Scroll.Link>
@@ -92,7 +92,7 @@ class News extends React.Component {
   </Container>
   </Container>
 
-      <Divider name="jump-news" />
+      <Divider name="jump-to-news" />
 
       < Container >
       <Header as="h3" id="list-news" textAlign="center">
@@ -106,7 +106,7 @@ class News extends React.Component {
         {duplicateRemovalGNews.map((obj) => {
           return (
           <Item>
-          <Item.Image src={obj?.image ?? "/images/breaking-news.png"} />
+          <Item.Image src={obj?.image ?? this.forceUpdate() ?? "/images/breaking-news.png"} />
           <Item.Content>
           <Item.Header src={obj.url} target="_blank">
           <a href={obj.url} target="_blank">
@@ -129,7 +129,7 @@ class News extends React.Component {
         {duplicateRemovalBing.map((obj) => {
           return (
             <Item>
-            <Item.Image src={obj?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
+            <Item.Image style={{width:"100px"}} src={obj?.image?.thumbnail?.contentUrl ?? obj?.provider[0]?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
             <Item.Content>
             <Item.Header src={obj.url} target="_blank">
             <a href={obj.url} target="_blank">
@@ -142,85 +142,14 @@ class News extends React.Component {
             </Item.Description>
             <Item.Extra style={{paddingTop: "45px"}}>
             <Label >Date: {obj.datePublished}</Label>
-            <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small" compact={true} floated="right"> <img src="images/white-megaphone-102.png" style={{marginRight: "10px",marginBottom: "-5px", width: "15%"}} />{obj.source.name}</Button></a>
+            <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small" compact={true} floated="right"> <img src="images/white-megaphone-102.png" style={{marginRight: "10px",marginBottom: "-5px", width: "15%"}} />{obj?.provider[0]?.name ?? "News"}</Button></a>
             </Item.Extra>
           </Item.Content>
           </Item>)
         })}
       </Item.Group>
       </Container>
-      {/* <div className="ui fluid container" id="landing-page-news">
-        <div className="ui container" >
-          <h1 className="ui center aligned header" id="h1-news">
-            World News
-        </h1>
-          <div className="ui row">
-            <img src="images/icons8-news-256.png" className='ui tiny image centered ' />
-          </div>
-          <h2 className='ui center aligned header' id="h2-news">
-            Up to date worldwide news about Global Warming and Climate Change. This section includes information from small and mainstream firms.
-        </h2>
-          <div className="ui equal width grid icon-style" >
-            <div className="row">
-              <div className="ui center aligned column">
-                <Scroll.Link spy={true} smooth={true} duration={1000} to="jump-news" >
-                  <button className="ui button basic center aligned">
-                    <img src="/images/icons-double-down.png" />
-                  </button>
-                </Scroll.Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="ui divider" name="jump-news" />
-      <div className="ui container move-down">
-      <h3 className="ui center aligned header" id="list-news">List</h3>
-    <h4 className="ui center aligned header">Live: <span id='news-date'>{new Date().toString()}</span></h4>
-    <div className="ui divider" name="jump-news" />
-        <div className="ui items">
-          {
-            duplicateRemovalGNews.map((obj, index) => {
-              return (
-                <div className="item" key={"google" + index}>
-                  <img className="ui medium middle aligned image" src={obj?.image ?? "/images/breaking-news.png"} />
-                  <div className="content">
-                    <a href={obj.url} className="header" target="_blank">
-                      {obj.title}
-                    </a>
-                    <div className="meta">{obj.author}</div>
-                    <div className="description">
-                      <p>{obj.description}</p>
-                    </div>
-                    <div className="extra">Date: {obj.publishedAt}<div className="ui bottom right attached label">
-                      <img src="images/icons8-megaphone-100.png" style={{marginRight: "10px"}} />
-                      {obj.source.name}
-                    </div></div>
-                  </div>
-                </div>
-              );
-            })}
-            <div className="ui divider"/>
-          {duplicateRemovalBing.map((obj, index) => {
-            return (
-              <div className="item" key={"bing:" + index}>
-                <img className="ui small middle aligned image" src={obj?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
-                <div className="content">
-                  <a href={obj.url} className="header" target="_blank">{obj.name}</a>
-                  <div className="meta">{obj.provider.name} </div>
-                  <div className="description">
-                    <p>{obj.description}</p>
-                  </div>
-                  <div className="extra">Date: {obj.datePublished}<div className="ui bottom right attached label">
-                  <img src="images/icons8-megaphone-100.png" style={{marginRight: "10px"}} />
-                    {obj?.provider[0]?.name ?? "News"}
-                  </div></div>
-                </div>
-              );
-            })}
-          </div>0
-        </div> */}
+     
       </>
     );
   }
