@@ -27,16 +27,17 @@ import {   Button,
     componentDidUpdate(prevProps, prevState) {
         console.log(this.props)
         console.log(prevProps)
-        // const result = prevProps
-        // if(this.props.props == prevProps.props){
+        const result = prevProps.props
+        if(this.props.props !== this.state.activeItem){
             
-        // this.setState({activeItem: result})}
-        // else {return null}
+        this.setState({activeItem: result})}
+        else {return null}
  
     }
 
     handleItemClick = (e, { name }) => this.setState({activeItem: name })
     render() {
+      console.log(this.state.activeItem)
       return <>
       
          <Sticky className="chart-img--remove">
@@ -52,13 +53,13 @@ import {   Button,
         <Grid.Column >
       <Sidebar.Pushable as={Segment} className={this.state.rotate ? "sidebar-config-out" : "sidebar-config-in"} >
         <Sidebar as={Menu} animation="slide along" width='thin' className="sideBar"  visible={this.state.menuVisible} vertical inverted>
-          <Menu.Item name='Temperature'  active={this.state.activeItem === 'Temperature'}
+          <Menu.Item name='Temperature'  active={this.state.activeItem === 'temperature'}
           onClick={this.handleItemClick}>Temperature</Menu.Item>
-          <Menu.Item name='Carbon Dioxide' active={this.state.activeItem === 'Carbon Dioxide'}
+          <Menu.Item name='Carbon Dioxide' active={this.state.activeItem === 'carbon Dioxide'}
           onClick={this.handleItemClick}>Carbon Dioxide</Menu.Item>
-          <Menu.Item name='Methane' active={this.state.activeItem === 'Methane'}
+          <Menu.Item name='Methane' active={this.state.activeItem === 'methane'}
           onClick={this.handleItemClick}>Methane</Menu.Item>
-          <Menu.Item name='Nitrous Oxide'  active={this.state.activeItem === 'Nitrous Oxide'}
+          <Menu.Item name='Nitrous Oxide'  active={this.state.activeItem === 'nitrous Oxide'}
           onClick={this.handleItemClick}>Nitrous Oxide</Menu.Item>
            <Menu.Item
           name='Polar Ice'

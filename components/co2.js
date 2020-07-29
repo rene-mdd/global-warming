@@ -2,6 +2,7 @@
 import fetch from 'unfetch';
 import Chart from 'chart.js';
 import preCo2Data from '../public/data/csvjson-co2.json'
+import {Container} from 'semantic-ui-react';
 
 class Co2 extends React.Component {
   constructor(props) {
@@ -111,11 +112,11 @@ class Co2 extends React.Component {
       <div onLoad={() => {this.goCo2(this.state.isLoading)}}/>
       <div className="chart-container">
       <canvas id="myCo2Chart" ></canvas>
-      <footer className="ui center aligned column" style={{ marginTop: "-25px" }}>
+      <Container as="footer" className="ui center aligned column" style={{ marginTop: "-25px" }}>
       {!this.state.isLoading &&  <p>This graph represents the Co2 concentration levels in the atmosphere. From 1958, the measurements are done on a quasi daily basis by Mauna Loa Observatory.
           Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (<a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/" target="_blank">https://www.esrl.noaa.gov/gmd/ccgg/trends/</a>)
               </p>}
-              </footer>
+              </Container>
       </div>
     </>);
   }

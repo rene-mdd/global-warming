@@ -46,8 +46,8 @@ import {
 } from "react-share";
 
 const share = ([
-  <FacebookShareButton children={<FacebookIcon />} url="https://global-warming-azure.vercel.app/" />,
-  <EmailShareButton children={<EmailIcon />} url="https://global-warming-azure.vercel.app/" />]
+  <FacebookShareButton children={<FacebookIcon />} url="https://global-warming-azure.vercel.app/" key="facebook"/>,
+  <EmailShareButton children={<EmailIcon />} url="https://global-warming-azure.vercel.app/" key="email"/>]
 )
 
 const panelTemp = _.times(1, (i) => ({
