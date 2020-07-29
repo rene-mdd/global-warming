@@ -28,6 +28,7 @@ export default class StickyExampleAdjacentContext extends Component {
               fixed='top'
               size='huge'
               stackable={true}
+              className="chart-img--remove"
             >
               <Container>
               <Link href="/" passHref><Menu.Item as='a' position='left' active>
