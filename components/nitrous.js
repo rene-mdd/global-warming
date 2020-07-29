@@ -2,6 +2,8 @@ import fetch from 'unfetch';
 import Chart from 'chart.js';
 import nitrousData from "../public/data/csvjson-nitrous.json"
 const csv=require('csvtojson')
+import {Container} from 'semantic-ui-react';
+
 
 class Nitrous extends React.Component {
   constructor(props) {
@@ -114,10 +116,10 @@ class Nitrous extends React.Component {
       
      <div className="chart-container ui row" >
       <canvas id="myNitrousChart" ></canvas>
-      <footer className="ui center aligned column" style={{ marginTop: "-5px" }}>
+      <Container as="footer" className="ui center aligned column" style={{ marginTop: "-5px" }}>
       {!this.state.isLoading &&  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               </p>}
-              </footer>
+              </Container>
       </div> 
     </>);
   }

@@ -1,6 +1,7 @@
-
 import fetch from 'unfetch';
 import Chart from 'chart.js';
+import {Container} from 'semantic-ui-react';
+
 
 class Arctic extends React.Component {
   constructor(props) {
@@ -102,10 +103,10 @@ class Arctic extends React.Component {
       <div onLoad={() => {this.goArc(this.state.isLoading)}}/>
       {!this.state.isLoading && <div className="chart-container ui row" >
       <canvas id="arcticChart"></canvas>
-      <footer className="ui center aligned column" style={{ marginTop: "-5px" }}>
+      <Container as="footer" className="ui center aligned column" style={{ marginTop: "-5px" }}>
        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
               </p>
-              </footer>
+              </Container>
       </div>}
       </>);
   }

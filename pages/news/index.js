@@ -1,7 +1,7 @@
-import React from "react"
+
 import * as Scroll from 'react-scroll';
 import Head from 'next/head'
-import StickyMenu from "../../helpers/sticky"
+import StickyMenu from "../../semantic/sticky"
 
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 let credentials = new CognitiveServicesCredentials('feaf1751d8b142c68ca34b339e04dfbc');
@@ -29,23 +29,21 @@ class News extends React.Component {
   }
 
   render() {
-    console.log(this.state.gNews)
-    console.log(this.props.data.value)
+    // console.log(this.state.gNews)
+    // console.log(this.props.data.value)
     const parsedGNews = JSON.parse(JSON.stringify(this.state.gNews))
-    const parsedBingNews = JSON.parse(JSON.stringify(this.props.data.value))
+    const parsedBingNews = this.props.data.value;
 
     const duplicateRemovalBing = parsedBingNews.filter((thing, index, self) =>
       index === self.findIndex((t) => (
-        t.description === thing.description
+        t.description === thing.description || t.name === thing.name
       ))
     )
-
     const duplicateRemovalGNews = parsedGNews.filter((thing, index, self) =>
       index === self.findIndex((t) => (
-        t.description === thing.description
+        t.description === thing.description || t.title === thing.title
       ))
     )
-
     return (<>
       <Head>
         <title>Global Warming News</title>
@@ -53,6 +51,7 @@ class News extends React.Component {
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
         <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
       </Head>
       <StickyMenu />
@@ -61,7 +60,7 @@ class News extends React.Component {
           <h1 className="ui center aligned header" id="h1-news">
             World News
         </h1>
-          <div class="ui row">
+          <div className="ui row">
             <img src="images/icons8-news-256.png" className='ui tiny image centered ' />
           </div>
           <h2 className='ui center aligned header' id="h2-news">
@@ -71,7 +70,7 @@ class News extends React.Component {
             <div className="row">
               <div className="ui center aligned column">
                 <Scroll.Link spy={true} smooth={true} duration={1000} to="jump-news" >
-                  <button class="ui button basic center aligned">
+                  <button className="ui button basic center aligned">
                     <img src="/images/icons-double-down.png" />
                   </button>
                 </Scroll.Link>
@@ -88,12 +87,10 @@ class News extends React.Component {
     <div className="ui divider" name="jump-news" />
         <div className="ui items">
           {
-            duplicateRemovalGNews.map((obj) => {
-
-
+            duplicateRemovalGNews.map((obj, index) => {
               return (
-                <div className="item">
-                  <img className="ui medium middle aligned image" src={obj?.image ?? this.forceUpdate()} />
+                <div className="item" key={"google" + index}>
+                  <img className="ui medium middle aligned image" src={obj?.image ?? "/images/breaking-news.png"} />
                   <div className="content">
                     <a href={obj.url} className="header" target="_blank">{obj.title}</a>
                     <div className="meta">{obj.author}</div>
@@ -101,17 +98,16 @@ class News extends React.Component {
                       <p>{obj.description}</p>
                     </div>
                     <div className="extra">Date: {obj.publishedAt}<div className="ui bottom right attached label">
-                      <i aria-hidden="true" className="newspaper outline icon" />
+                      <img src="images/icons8-megaphone-100.png" style={{marginRight: "10px"}} />
                       {obj.source.name}
                     </div></div>
                   </div>
                 </div>)
             })}
-          {duplicateRemovalBing.map((obj) => {
-            console.log(obj.image)
+            <div className="ui divider"/>
+          {duplicateRemovalBing.map((obj, index) => {
             return (
-
-              <div className="item">
+              <div className="item" key={"bing:" + index}>
                 <img className="ui small middle aligned image" src={obj?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
                 <div className="content">
                   <a href={obj.url} className="header" target="_blank">{obj.name}</a>
@@ -120,10 +116,9 @@ class News extends React.Component {
                     <p>{obj.description}</p>
                   </div>
                   <div className="extra">Date: {obj.datePublished}<div className="ui bottom right attached label">
-                    <i aria-hidden="true" className="newspaper outline icon" />
+                  <img src="images/icons8-megaphone-100.png" style={{marginRight: "10px"}} />
                     {obj?.provider[0]?.name ?? "News"}
                   </div></div>
-
                 </div>
               </div>)
           })

@@ -6,18 +6,17 @@ font-size: 100%;
   }
  body {background: #FDFDFE !important;}
 
-  .chart-container {position: relative;  width:100%; height: 800}
+.hide {visibility: hidden !important}
   .mini-icon {width: 20px; height: 20px}
   .icon-style {margin-top: 10vh !important}
-  div {text-align: justify};
   #temperature-description {padding-top: -30px !important};
   #temp-error {margin: 35px 0 35px 0 !important}
   p {font-size: 22px}
-  #h1-id {padding:  40vh 0 0 0; font-size: 2.5em; color: #343837}
-  #h2-id {font-size: 1.5em; color: #343837; font-weight: 400}
+  .h1-id {padding:  40vh 0 0 0 !important; font-size: 2.5em !important; color: #343837 !important}
+  div h2 {margin: 20vh 0 10vh 0 !important; line-height: 1 !important; color: #343837 !important}
+  div h2 span { border-bottom: 1px solid #343837; display: inline-block; line-height: 0.85;}
   footer p {margin: 0; font-size: 0.7em; text-align: center !important}
-  #down-icon {margin-top: 6rem !important}
-  .title-h2 {padding:  15vh 0 10vh 0 !important; text-decoration: underline;}
+  #down-icon {padding-top: 6rem !important}
   .api-segment {margin:  8vh 0 8vh 0 !important}
   .accordion-co2 {width: 90%; font-size: 150% !important; background-color: #4984B8 !important; color: white !important}
   .accordion-temp {width: 90%; font-size: 150% !important; background-color: #FF073A !important; color: white !important}
@@ -49,3 +48,4 @@ h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
 
 #rotate-left {transform: rotate(180deg); transition-duration: 1s }
 #rotate-right {transform: rotate(1deg); transition-duration: 1s }
+
