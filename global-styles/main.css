@@ -12,8 +12,9 @@ font-size: 100%;
   #temperature-description {padding-top: -30px !important};
   #temp-error {margin: 35px 0 35px 0 !important}
   p {font-size: 22px}
-  .h1-id {padding:  40vh 0 0 0 !important; font-size: 2.5em !important; color: #343837 !important}
-  div h2 {line-height: 1 !important; color: #343837 !important}
+  .h1-id {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: #343837 !important}
+  .h1-news {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: white !important}
+  .h2-general  {margin:  20vh 0 10vh 0 !important; font-size: 2em !important; color: #343837 !important}
   div h2 span { border-bottom: 1px solid #343837; display: inline-block; line-height: 0.85;}
   footer p {margin: 0; font-size: 0.7em; text-align: center !important}
   #down-icon {padding-top: 6rem !important}
@@ -23,14 +24,14 @@ font-size: 100%;
   .accordion-methane {width: 90%; font-size: 150% !important; background-color: #A75E09 !important; color: white !important}
   .accordion-nitrous {width: 90%; font-size: 150% !important; background-color: #FDB147 !important; color: white !important}
   .accordion-arctic {width: 90%; font-size: 150% !important; background-color: #7BC8F6 !important; color: white !important}
-.news-button {background-color: #0E87CC !important}
+  .news-button {background-color: #0E87CC !important}
 
   @media only screen and (max-width: 600px) {
   i {display: none !important}
 }
 .api-segment i::before {position: relative ;content: url(circle-right.png) !important; margin-left: -15px; bottom: -7px !important}
 #landing-page-news { background-color: #1F3B4D}
-#h1-news {font-size: 2.5em; color: white !important; padding: 40vh 0 0vh 0}
+#h1-deforestation {font-size: 2.5em; color: white !important; padding:  40vh 0 10vh 0}
 #h2-news {font-size: 1.5em; color: white !important; font-weight: 400}
 #list-news {font-size: 2.2em !important; padding: 10vh !important}
 #news-date {font-weight: 300; text-decoration: underline; padding: 10px !important}

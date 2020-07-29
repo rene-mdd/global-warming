@@ -1,5 +1,6 @@
 import { Container, Header, Grid, Image, Button, Segment } from 'semantic-ui-react'
 import Arctic from "../components/arctic"
+import { AccordionArctic, AccordionShare } from "../semantic/accordion"
 
 
 class SemanticArctic extends React.Component {
@@ -24,7 +25,7 @@ class SemanticArctic extends React.Component {
   <Container fluid={true} >
  
       <Container >
-          <Header as="h2" textAlign="center" >
+          <Header as="h2" textAlign="center" className="h2-general" >
           <span className="underline">Melted Polar Ice Cap</span>
           </Header>
         <Grid container={true}>
@@ -44,8 +45,8 @@ class SemanticArctic extends React.Component {
        <p>Nitrous ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
             </p>
             <Grid columns="equal" className="api-segment">
-                <Grid.Column><Segment>accordion</Segment></Grid.Column>
-                <Grid.Column><Segment>accordion</Segment></Grid.Column>
+                <Grid.Column><AccordionArctic /></Grid.Column>
+                <Grid.Column><AccordionShare /></Grid.Column>
             </Grid>
        </Container>
    </Grid>

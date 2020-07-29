@@ -1,6 +1,7 @@
 import { Container, Header, Grid, Image, Button, Segment } from 'semantic-ui-react'
 import Temperature from "../components/temperature"
 import Observer from '@researchgate/react-intersection-observer';
+import {AccordionTem, AccordionShare } from "../semantic/accordion"
 
 class SemanticTemperature extends React.Component {
 state = { siteView: ""}
@@ -19,12 +20,12 @@ state = { siteView: ""}
           };
           console.log(this.state.siteView)
     return (
-       
-  <Container fluid={true} className="temperature-background">
+      
+  <Container fluid={true} className="temperature-background"  >
  
       
       <Container >
-          <Header as="h2" textAlign="center" name="jump-to-temperature">
+          <Header as="h2" textAlign="center"className="h2-general">
           <span className="underline"> Global temperature anomalies from year 1 to present</span>
           </Header>
         <Grid container={true}>
@@ -43,12 +44,11 @@ state = { siteView: ""}
         Earth temperature and the proportion of gases such as Co2, methane, and nitrous oxide in the atmosphere is strictly correlated. For more information about this topic and prehistoric data please visit: <a href="https://www.nature.com/articles/srep21691" target="_blank">source</a>, <a href="https://environmentcounts.org/ec-perspective-accounting-for-800000-years-of-climate-change/" target="_blank">source</a>, <a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php" target="_blank">source</a>.
             </p></Observer>
             <Grid columns="equal" className="api-segment">
-                <Grid.Column><Segment>accordion</Segment></Grid.Column>
-                <Grid.Column><Segment>accordion</Segment></Grid.Column>
+                <Grid.Column><AccordionTem /></Grid.Column>
+                <Grid.Column><AccordionShare /></Grid.Column>
             </Grid>
        </Container>
    </Grid>
-   
   </Container>
   </Container>
  

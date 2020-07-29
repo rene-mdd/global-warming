@@ -10,7 +10,7 @@ import * as Scroll from 'react-scroll';
 import {AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic, AccordionShare } from "../semantic/accordion"
 import StickyMenu from "../semantic/sticky"
 import SideMenu from "../semantic/sideMenu"
-
+import { Divider } from 'semantic-ui-react'
 import LandingPage from "../semantic/LandingPage"
 import SemanticTemperature from "../semantic/semanticTemperature"
 import SemanticCo2 from '../semantic/semanticCo2'
@@ -110,32 +110,21 @@ class Home extends React.Component {
       <SideMenu props={this.state.siteView}/>
 
       <LandingPage />
-     
+     <Divider name="jump-to-temperature"/>
       <SemanticTemperature />
-      
+      <Divider />
       <SemanticCo2 />
-
+      <Divider />
       <SemanticMethane />
-
+      <Divider />
       <SemanticNitrous />
-
+      <Divider />
       <SemanticArctic />
 
     
       
 
-      <div>
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-      </div>
+     
      
     </>
     )
