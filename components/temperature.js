@@ -76,6 +76,11 @@ class Temperature extends React.Component {
             ]
           },
           options: {
+            animation: {
+              onComplete: function ({ chart }) {
+                console.log(chart.canvas.classList.add("animation-complete"));
+              },
+            },
             scales: {
               ticks: {
                 suggestedMax: 800000,

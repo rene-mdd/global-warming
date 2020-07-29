@@ -40,7 +40,7 @@ import {   Button,
       console.log(this.state.activeItem)
       return <>
       
-         <Sticky>
+         <Sticky className="chart-img--remove">
          <Rail  className="fix" >
           <Grid columns={1} >
           <Grid.Column className="close-button" width="1" >

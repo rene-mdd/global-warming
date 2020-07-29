@@ -20,7 +20,7 @@ const LandingPage = () => (
         <Grid.Row centered>
             <Grid.Column width="4" textAlign="center">
             <Scroll.Link spy={true} smooth={true} duration={1000} to="jump-to-temperature" >
-                <Button >
+                <Button basic>
                   <Image src="/images/icons-double-down.png" />
                 </Button>
               </Scroll.Link>
