@@ -98,7 +98,10 @@ class Temperature extends React.Component {
                 scaleLabel: {
                   display: true,
                   labelString: 'Year'
-                }
+                },
+                ticks: {
+                  maxRotation: 90,
+                },
               }],
             }
           }
