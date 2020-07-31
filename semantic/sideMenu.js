@@ -60,7 +60,7 @@ export default class SideBar extends React.Component {
             </Grid.Column>
             <Grid.Column >
               <Sidebar.Pushable as={Segment} className={this.state.rotate ? "sidebar-config-out" : "sidebar-config-in"} >
-                <Sidebar as={Menu} animation="slide along" width='thin' className="sideBar" visible={this.state.menuVisible} vertical inverted>
+                <Sidebar as={Menu} position="left" animation="slide along" width='thin' className="sideBar" visible={this.state.menuVisible} vertical inverted>
                   <Menu.Item name='temperature' active={this.state.activeItem === 'temperature'}
                     onClick={this.handleItemClick}>Temperature</Menu.Item>
                   <Menu.Item name='co2' active={this.state.activeItem === 'co2'}
