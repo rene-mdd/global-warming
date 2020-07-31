@@ -2,7 +2,7 @@
 import * as Scroll from 'react-scroll';
 import Head from 'next/head'
 import StickyMenu from "../../semantic/sticky"
-import { Container, Header, Grid, Image, Button, Segment, Divider, Item, Label } from 'semantic-ui-react'
+import { Container, Header, Grid, Image, Button, Divider, Item, Label } from 'semantic-ui-react'
 
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 let credentials = new CognitiveServicesCredentials('3058a5d1d023401b9fcc6336eb9ee58d');
@@ -57,9 +57,10 @@ class News extends React.Component {
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
-        <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
+        <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
       </Head>
       <StickyMenu />
+      
 
       <Container fluid={true} id="landing-page-news">
       <Container >
@@ -91,9 +92,7 @@ class News extends React.Component {
     
   </Container>
   </Container>
-
       <Divider name="jump-to-news" />
-
       < Container >
       <Header as="h3" id="list-news" textAlign="center">
         List
@@ -103,10 +102,10 @@ class News extends React.Component {
       </Header>
       <Divider />
       <Item.Group divided>
-        {duplicateRemovalGNews.map((obj) => {
+        {duplicateRemovalGNews.map((obj, index) => {
           return (
-          <Item>
-          <Item.Image src={obj?.image ?? this.forceUpdate() ?? "/images/breaking-news.png"} />
+          <Item key={'gNews:' + index}>
+          <Item.Image src={obj?.image && obj.image || this.forceUpdate()} />
           <Item.Content>
           <Item.Header src={obj.url} target="_blank">
           <a href={obj.url} target="_blank">
@@ -119,16 +118,17 @@ class News extends React.Component {
           </Item.Description>
           <Item.Extra style={{paddingTop: "45px"}}>
           <Label >Date: {obj.publishedAt}</Label>
-          <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small" compact={true} floated="right"> <img src="images/white-megaphone-102.png" style={{marginRight: "10px",marginBottom: "-5px", width: "15%"}} />{obj.source.name}</Button></a>
+     
+          <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small"  floated="right"> <Image centered size="mini" className="news-icon" src="images/icons8-location-96.png"  />{obj.source.name ?? "News"}</Button></a>
           </Item.Extra>
         </Item.Content>
         </Item>)
         })
         }
         <Divider />
-        {duplicateRemovalBing.map((obj) => {
+        {duplicateRemovalBing.map((obj, index) => {
           return (
-            <Item>
+            <Item key={'bing:' + index}>
             <Item.Image style={{width:"100px"}} src={obj?.image?.thumbnail?.contentUrl ?? obj?.provider[0]?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
             <Item.Content>
             <Item.Header src={obj.url} target="_blank">
@@ -142,7 +142,7 @@ class News extends React.Component {
             </Item.Description>
             <Item.Extra style={{paddingTop: "45px"}}>
             <Label >Date: {obj.datePublished}</Label>
-            <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small" compact={true} floated="right"> <img src="images/white-megaphone-102.png" style={{marginRight: "10px",marginBottom: "-5px", width: "15%"}} />{obj?.provider[0]?.name ?? "News"}</Button></a>
+            <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small"  floated="right"> <Image centered size="mini" className="news-icon" src="images/icons8-location-96.png"  />{obj?.provider[0]?.name ?? "News"}</Button></a>
             </Item.Extra>
           </Item.Content>
           </Item>)

@@ -91,10 +91,7 @@ class Home extends React.Component {
  
   render() {
    
-    console.log(this.state.siteView)
-
-
-    console.log(this.state.siteView)
+    
     return (<>
       <Head>
         <title>Global Warming</title>
@@ -102,12 +99,12 @@ class Home extends React.Component {
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
-        <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
+        <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
       </Head>
       
       <StickyMenu/>
      
-      <SideMenu props={this.state.siteView}/>
+      <SideMenu />
 
       <LandingPage />
      <Divider name="jump-to-temperature"/>
@@ -120,11 +117,6 @@ class Home extends React.Component {
       <SemanticNitrous />
       <Divider />
       <SemanticArctic />
-
-    
-      
-
-     
      
     </>
     )

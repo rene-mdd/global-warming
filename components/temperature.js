@@ -119,7 +119,7 @@ class Temperature extends React.Component {
     return (<>
       <div className="hide" onLoad={this.displayTempGraph(this.state.aWarmingData, this.state.temperatureData.result)}></div>
 
-     <Grid.Column width="fourteen">        <Container className="chart-container" style={{position: "relative",  width: "80vw"}} >
+     <Grid.Column width="fourteen"><Container className="chart-container" style={{position: "relative",  width: "80vw"}} >
           <canvas id="tempChart" /> </Container>
           <Container as="footer">
             <p>Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis (GISTEMP), version 4. NASA Goddard Institute for Space Studies. Dataset accessed 20YY-MM-DD at <a href="https://data.giss.nasa.gov/gistemp/" target="_blank">https://data.giss.nasa.gov/gistemp/</a>.</p>
