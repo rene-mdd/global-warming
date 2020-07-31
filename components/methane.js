@@ -84,7 +84,7 @@ class Methane extends React.Component {
             ]
           },
           options: {
-         
+           
             scales: {
               bounds: 'ticks',
               ticks: {

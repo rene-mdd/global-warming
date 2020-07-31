@@ -44,7 +44,7 @@ class SemanticArctic extends React.Component {
            {this.state.arctic ? <Arctic callBackPropArctic={(c) => { this.handleClickArctic(c)}} /> : null }
         </Grid.Row>
         <Grid.Row centered={true}>
-            <Grid.Column width="three" textAlign="center">
+            <Grid.Column width="eight" textAlign="center">
     <Button onClick={this.toggleArctic} className={this.state.arcticLoading} id={this.state.arcticLoading}>
         {this.state.arctic ? "Hide graph" : "Deploy graph"}
     </Button>
@@ -57,10 +57,10 @@ class SemanticArctic extends React.Component {
        <p>Nitrous ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide" target="_blank">source</a> and <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/" target="_blank">source</a>.
             </p>
            
-            <Grid columns="equal" className="api-segment">
-                <Grid.Column><AccordionArctic /></Grid.Column>
-                <Grid.Column><AccordionShare /></Grid.Column>
-            </Grid>
+            <Grid className="api-segment" columns="equal" centered stackable>
+                <Grid.Column><AccordionArctic/></Grid.Column>
+                <Grid.Column><AccordionShare/></Grid.Column>
+                </Grid>
        </Container>
    </Grid>
   </Container>

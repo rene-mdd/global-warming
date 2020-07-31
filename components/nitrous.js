@@ -78,6 +78,7 @@ class Nitrous extends React.Component {
         ]
       },
       options: {
+       
         scales: {
           bounds: 'ticks',
           ticks: {

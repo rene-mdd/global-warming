@@ -134,7 +134,7 @@ const panelArctic = _.times(1, (i) => ({
 const panelShare = _.times(1, (i) => ({
   key: `panel-${i}`,
   title: {
-    content: <Label content={"Get API"} className="accordion-arctic" />,
+    content: <Label content={"Share"} className="accordion-arctic" />,
   },
   content: {
     content: (
@@ -143,7 +143,7 @@ const panelShare = _.times(1, (i) => ({
   },
 }))
 
-const AccordionTem = () => (
+const AccordionTemp = () => (
   <Accordion defaultActiveIndex={1} panels={panelTemp} />
 );
 
@@ -170,4 +170,4 @@ const AccordionShare = () => (
 
 
 
-export { AccordionTem, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic, AccordionShare }
+export { AccordionTemp, AccordionCo2, AccordionMethane, AccordionNitrous, AccordionArctic, AccordionShare }

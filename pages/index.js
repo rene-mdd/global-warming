@@ -99,6 +99,7 @@ class Home extends React.Component {
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
+        <meta property="og:image" content="/api/chart-img/tempChart.jpeg" />
         <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
       </Head>
       
