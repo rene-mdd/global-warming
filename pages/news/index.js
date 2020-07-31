@@ -57,7 +57,7 @@ class News extends React.Component {
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
-        <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
+        <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
       </Head>
       <StickyMenu />
       
@@ -92,9 +92,7 @@ class News extends React.Component {
     
   </Container>
   </Container>
-
       <Divider name="jump-to-news" />
-
       < Container >
       <Header as="h3" id="list-news" textAlign="center">
         List
@@ -120,7 +118,8 @@ class News extends React.Component {
           </Item.Description>
           <Item.Extra style={{paddingTop: "45px"}}>
           <Label >Date: {obj.publishedAt}</Label>
-          <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small" compact={true} floated="right"> <img src="images/white-megaphone-102.png" style={{marginRight: "10px",marginBottom: "-5px", width: "15%"}} />{obj.source.name}</Button></a>
+     
+          <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small"  floated="right"> <Image centered size="mini" className="news-icon" src="images/icons8-location-96.png"  />{obj.source.name ?? "News"}</Button></a>
           </Item.Extra>
         </Item.Content>
         </Item>)
@@ -143,7 +142,7 @@ class News extends React.Component {
             </Item.Description>
             <Item.Extra style={{paddingTop: "45px"}}>
             <Label >Date: {obj.datePublished}</Label>
-            <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small" compact={true} floated="right"> <img src="images/white-megaphone-102.png" style={{marginRight: "10px",marginBottom: "-5px", width: "15%"}} />{obj?.provider[0]?.name ?? "News"}</Button></a>
+            <a href={obj.url} target="_blank"><Button inverted={true} className="news-button" size="small"  floated="right"> <Image centered size="mini" className="news-icon" src="images/icons8-location-96.png"  />{obj?.provider[0]?.name ?? "News"}</Button></a>
             </Item.Extra>
           </Item.Content>
           </Item>)

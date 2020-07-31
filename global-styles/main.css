@@ -24,7 +24,7 @@ font-size: 100%;
   .accordion-methane {width: 90%; font-size: 150% !important; background-color: #A75E09 !important; color: white !important}
   .accordion-nitrous {width: 90%; font-size: 150% !important; background-color: #FDB147 !important; color: white !important}
   .accordion-arctic {width: 90%; font-size: 150% !important; background-color: #7BC8F6 !important; color: white !important}
-  .news-button {background-color: #0E87CC !important}
+  .news-button {background-color: #0E87CC !important;}
 
   @media only screen and (max-width: 600px) {
   i {display: none !important}
@@ -46,8 +46,7 @@ h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
 .sidebar-config-out {transform: translateX(-150px) !important; transition-duration: 1s; ; background: rgb(104, 104, 104) !important}
 .sidebar-config-in {transition-duration: 1s; ; background: rgb(104, 104, 104) !important}
 .fix {position: fixed !important; width: 10em !important; margin-top: 30vh !important; padding: 0; opacity: 1 !important}
-
 #rotate-left {transform: rotate(180deg); transition-duration: 1s }
 #rotate-right {transform: rotate(1deg); transition-duration: 1s }
-#deforestation-text {padding-top: 50px !important}
+#deforestation-text {padding-top: 50px !important; text-align: justify !important;}
 .display-none {display: none !important}
