@@ -3,7 +3,6 @@ import Link from 'next/link'
 import Temperature from '../components/temperature'
 import Co2 from '../components/co2'
 import Arctic from "../components/arctic"
-import Countries from '../components/countries'
 import Methane from '../components/methane'
 import Nitrous from '../components/nitrous'
 import * as Scroll from 'react-scroll';
