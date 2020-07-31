@@ -14,7 +14,7 @@ font-size: 100%;
   p {font-size: 22px}
   .h1-id {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: #343837 !important}
   .h1-news {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: white !important}
-  .h2-general  {margin:  20vh 0 10vh 0 !important; font-size: 2em !important; color: #343837 !important}
+  .h2-general  {padding:  20vh 0 10vh 0 !important; font-size: 2em !important; color: #343837 !important}
   div h2 span { border-bottom: 1px solid #343837; display: inline-block; line-height: 0.85;}
   footer p {margin: 0; font-size: 0.7em; text-align: center !important}
   #down-icon {padding-top: 6rem !important}
@@ -49,4 +49,5 @@ h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
 
 #rotate-left {transform: rotate(180deg); transition-duration: 1s }
 #rotate-right {transform: rotate(1deg); transition-duration: 1s }
-
+#deforestation-text {padding-top: 50px !important}
+.display-none {display: none !important}

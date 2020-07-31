@@ -2,7 +2,7 @@
 import * as Scroll from 'react-scroll';
 import Head from 'next/head'
 import StickyMenu from "../../semantic/sticky"
-import { Container, Header, Grid, Image, Button, Segment, Divider, Item, Label } from 'semantic-ui-react'
+import { Container, Header, Grid, Image, Button, Divider, Item, Label } from 'semantic-ui-react'
 
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 let credentials = new CognitiveServicesCredentials('3058a5d1d023401b9fcc6336eb9ee58d');
@@ -60,6 +60,7 @@ class News extends React.Component {
         <meta name="description" content="Global Warming and Climate Change live API, graphs, news, and information." />
       </Head>
       <StickyMenu />
+      
 
       <Container fluid={true} id="landing-page-news">
       <Container >
@@ -103,10 +104,10 @@ class News extends React.Component {
       </Header>
       <Divider />
       <Item.Group divided>
-        {duplicateRemovalGNews.map((obj) => {
+        {duplicateRemovalGNews.map((obj, index) => {
           return (
-          <Item>
-          <Item.Image src={obj?.image ?? this.forceUpdate() ?? "/images/breaking-news.png"} />
+          <Item key={'gNews:' + index}>
+          <Item.Image src={obj?.image && obj.image || this.forceUpdate()} />
           <Item.Content>
           <Item.Header src={obj.url} target="_blank">
           <a href={obj.url} target="_blank">
@@ -126,9 +127,9 @@ class News extends React.Component {
         })
         }
         <Divider />
-        {duplicateRemovalBing.map((obj) => {
+        {duplicateRemovalBing.map((obj, index) => {
           return (
-            <Item>
+            <Item key={'bing:' + index}>
             <Item.Image style={{width:"100px"}} src={obj?.image?.thumbnail?.contentUrl ?? obj?.provider[0]?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
             <Item.Content>
             <Item.Header src={obj.url} target="_blank">

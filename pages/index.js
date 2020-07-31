@@ -91,10 +91,7 @@ class Home extends React.Component {
  
   render() {
    
-    console.log(this.state.siteView)
-
-
-    console.log(this.state.siteView)
+    
     return (<>
       <Head>
         <title>Global Warming</title>
@@ -107,7 +104,7 @@ class Home extends React.Component {
       
       <StickyMenu/>
      
-      <SideMenu props={this.state.siteView}/>
+      <SideMenu />
 
       <LandingPage />
      <Divider name="jump-to-temperature"/>
@@ -120,11 +117,6 @@ class Home extends React.Component {
       <SemanticNitrous />
       <Divider />
       <SemanticArctic />
-
-    
-      
-
-     
      
     </>
     )

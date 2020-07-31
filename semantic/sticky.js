@@ -31,15 +31,17 @@ export default class StickyExampleAdjacentContext extends Component {
               className="chart-img--remove"
             >
               <Container>
-              <Link href="/" passHref><Menu.Item as='a' position='left' active>
-                <img src="/logo.png" />
+              <Link href="/" passHref><Menu.Item as='a' position='left' >
+                <Image size='mini'  src="images/planet-warming.png" />
                 </Menu.Item></Link>
+                <Menu.Item />
                 <Link href="/" passHref><Menu.Item as='a'>Home</Menu.Item></Link>
                 <Link href="/news" passHref><Menu.Item as='a'>News</Menu.Item></Link>
                 <Link href="/deforestation" passHref><Menu.Item as='a'>Deforestation</Menu.Item></Link>
                 <Menu.Item position='right'>
                  Contact
                 </Menu.Item>
+                <Menu.Item />
               </Container>
             </Menu>
     )

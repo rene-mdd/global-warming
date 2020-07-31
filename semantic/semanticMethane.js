@@ -2,9 +2,8 @@ import { Container, Header, Grid, Image, Button, Segment } from 'semantic-ui-rea
 import Methane from "../components/methane"
 import {AccordionMethane,  AccordionShare } from "../semantic/accordion"
 
-
 class SemanticMethane extends React.Component {
-    state = {methane: false, methaneLoading: "methaneBtn"}
+    state = {methane: false, methaneLoading: "methaneBtn", siteView: ''}
 
     toggleMethane = () => {
         this.setState({ methane: !this.state.methane })
@@ -18,12 +17,19 @@ class SemanticMethane extends React.Component {
     }
   }
 
+  handleIntersection = (event) => {
+    console.log(event)
+    const intersectingCo2Result = event.isIntersecting
+    if(intersectingCo2Result) {
+        this.setState({siteView: "methane"})
+        
+      } 
+     
+  }
+
     render(){
-
  return (
-
   <Container fluid={true} >
- 
       <Container >
           <Header as="h2" textAlign="center" className="h2-general" >
           <span className="underline">Methane levels from 800,000 years ago to present</span>

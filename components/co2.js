@@ -33,8 +33,8 @@ class Co2 extends React.Component {
     this.setState({ prehistoric: co2Object })
 
     try {
-      const response = await fetch(this.url)
-      const data = await response.json();
+    const response = await fetch(this.url)
+    const data = await response.json();
       if (data){
     this.setState({co2Data: data, isLoading: false})
     this.props.callBackPropCo2(this.state.isLoading)
