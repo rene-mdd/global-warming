@@ -16,7 +16,6 @@ import SemanticCo2 from '../semantic/semanticCo2'
 import SemanticMethane from '../semantic/semanticMethane'
 import SemanticNitrous from "../semantic/semanticNitrous"
 import SemanticArctic from '../semantic/semanticArctic'
-import { Helmet } from "react-helmet";
 
 
 class Home extends React.Component {
@@ -90,29 +89,29 @@ class Home extends React.Component {
  
  
   render() {
-   
+  console.log(this.props)
     return (<>
-     <Helmet htmlAttributes>    
-     <html xmlns="http://www.w3.org/1999/xhtml"/>
-    
+        
+       
       <Head>
-        <title>Global Warming</title>
+      <title>Global Warming</title>  
+      <meta property="og:url" content={"https://global-warming-azure.vercel.app/"} />
+      <meta property="og:title" content={"global Warming data"} />
+      <meta property="og:description" content={"this site contains data about gw"} />
+      <meta property="og:image" content="/api/chart-img/tempChart.jpeg" />
+      <meta property="og:image:width" content="200px" />
+      <meta property="og:image:height" content="200px" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
-        <meta property="og:image" content="/api/chart-img/tempChart.jpeg" />
-        <meta property="og:description" 
-  content="Sean Connery found fame and fortune as the
-           suave, sophisticated British agent, James Bond." />
-        <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
       </Head>
-      </Helmet>
-
+      
+      
       <StickyMenu/>
-     
       <SideMenu />
-
       <LandingPage />
      <Divider name="jump-to-temperature"/>
       <SemanticTemperature />
@@ -129,4 +128,7 @@ class Home extends React.Component {
     )
   }
 }
+
+
+
 export default Home;
