@@ -95,13 +95,13 @@ class Home extends React.Component {
        
       <Head>
       <title>Global Warming</title>  
-      {/* <meta property="og:url" content={"https://global-warming-azure.vercel.app/"} />
+      <meta property="og:url" content={"https://global-warming-azure.vercel.app/"} />
       <meta property="og:title" content={"global Warming data"} />
       <meta property="og:description" content={"this site contains data about gw"} />
       <meta property="og:image" content="/api/chart-img/tempChart.jpeg" />
       <meta property="og:image:width" content="200px" />
       <meta property="og:image:height" content="200px" />
-        <meta property="og:image:type" content="image/jpeg" /> */}
+        <meta property="og:image:type" content="image/jpeg" />
         <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
