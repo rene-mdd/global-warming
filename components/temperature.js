@@ -130,7 +130,6 @@ class Temperature extends React.Component {
     </>);
   }
 }
-{/* <Container  style={{ margin: "35px 0 35px 0" }}>The graph is not available right now. Please try again later.</Container> */}
 
 export default Temperature;
 

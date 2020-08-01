@@ -2,6 +2,8 @@ import Head from 'next/head'
 import StickyMenu from "../../semantic/sticky"
 import * as Scroll from 'react-scroll';
 import { Container, Header, Grid, Image, Button, Segment, Divider, Item, Label } from 'semantic-ui-react'
+import axios from "axios";
+
 const CognitiveServicesCredentials = require('ms-rest-azure').CognitiveServicesCredentials;
 let credentials = new CognitiveServicesCredentials('3058a5d1d023401b9fcc6336eb9ee58d');
 let search_term = 'deforestation'
@@ -14,26 +16,13 @@ class SemanticDeforestation extends React.Component {
     this.setState({ toggle: !this.state.toggle })
   }
 
-  componentDidMount() {
-    fetch(
-      'https://gnews.io/api/v3/search?q="deforestation"&lang=en&image=required&token=a6e3927e03b68f9e1b73d16124863e92'
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        return this.setState({ gNews: data.articles });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+ 
 
   render() {
 
     console.log(this.state.gNews)
     console.log(this.props)
-    const parsedGNews = JSON.parse(JSON.stringify(this.state.gNews))
+    const parsedGNews = this.props.gData.articles;
     const parsedBingNews = this.props.data.value;
 
     const duplicateRemovalBing = parsedBingNews.filter((thing, index, self) =>
@@ -160,7 +149,7 @@ class SemanticDeforestation extends React.Component {
         {duplicateRemovalBing.map((obj, index) => {
           return (
             <Item key={'bing:' + index}>
-            <Item.Image src={obj?.image?.thumbnail?.contentUrl ?? obj?.provider[0]?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
+            <Item.Image size="tiny" src={obj?.image?.thumbnail?.contentUrl ?? obj?.provider[0]?.image?.thumbnail?.contentUrl ?? "/images/breaking-news.png"} />
             <Item.Content>
             <Item.Header src={obj.url} target="_blank">
             <a href={obj.url} target="_blank">
@@ -191,6 +180,10 @@ export async function getServerSideProps({ res }) {
     market: "en-XA",
     count: 100,
   });
+  const gNewsResp = await axios.get('https://gnews.io/api/v3/search?q="deforestation"&lang=en&image=required&token=a6e3927e03b68f9e1b73d16124863e92');
+  
+  const gJson = JSON.parse(JSON.stringify(gNewsResp.data));
+  const gData = await gJson;
   const json = JSON.parse(JSON.stringify(resp));
   const data = await json;
 
@@ -199,7 +192,7 @@ export async function getServerSideProps({ res }) {
     "maxage=43200, s-maxage=43200, stale-while-revalidate"
   ); // Vercel Cache (Network)
 
-  return { props: { data } };
+  return { props: { data, gData } };
 }
 export default SemanticDeforestation;
 
