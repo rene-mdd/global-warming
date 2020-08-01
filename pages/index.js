@@ -95,8 +95,8 @@ class Home extends React.Component {
        
       <Head>
       <title>Global Warming</title>  
-      <html prefix="og: https://ogp.me/ns#"></html>
-      <meta property="og:url" content={"https://global-warming-azure.vercel.app"} />
+      {/* <html prefix="og: https://ogp.me/ns#"></html> */}
+      <meta property="og:url" content={"https://global-warming-azure.vercel.app/"} />
       <meta property="og:title" content={"global Warming data"} />
       <meta property="og:description" content={"this site contains data about gw"} />
       <meta property="og:image" content={`${process.env.VERCEL_URL}/api/chart-img/tempChart.jpeg`} />
