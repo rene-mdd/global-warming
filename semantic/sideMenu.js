@@ -49,7 +49,7 @@ export default class SideBar extends React.Component {
     return <>
 
       <Sticky className="chart-img--remove">
-        <Rail className="fix" >
+        <Rail className="fix">
           <Grid columns={1} >
             <Grid.Column className="close-button" width="1" >
               <Menu secondary attached="top" className="sidebar-button" >
