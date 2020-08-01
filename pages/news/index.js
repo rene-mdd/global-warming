@@ -19,20 +19,6 @@ class News extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   fetch(
-  //     'https://gnews.io/api/v3/search?q="climate change"&lang=en&image=required&token=a6e3927e03b68f9e1b73d16124863e92'
-  //   )
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       return this.setState({ gNews: data.articles });
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }
 
   render() {
    
@@ -57,7 +43,7 @@ class News extends React.Component {
         <link rel="stylesheet" type="text/css" href="path/to/chartjs/dist/Chart.min.css" />
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <link href="https://fonts.googleapis.com/css2?family=Play&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+        {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" /> */}
         <meta name="description" content="Global Warming and Climate Change live API, data, graphs, and news." />
       </Head>
       <StickyMenu />
