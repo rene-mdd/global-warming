@@ -28,7 +28,7 @@ IDs from our charts
 const URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : process.env.VERCEL_URL;
+    : "https://" + process.env.VERCEL_URL;
 
 const ANIMATION_COMPLETE_CLASS = `animation-complete`;
 const SCREENSHOT_REMOVE_ELEMENT_CLASS = `chart-img--remove`;
@@ -62,7 +62,7 @@ module.exports = async (req, res) => {
   } catch (e) {
     return res.status(500).send("Internal Server Error");
   } finally {
-    browser.close();
+    browser && browser.close();
   }
 
   res.writeHead(200, {
@@ -86,7 +86,6 @@ const createVirtualBrowserPage = async (url) => {
     executablePath: await chromium.executablePath,
     headless: true,
   });
-
   // create a new browser page
   const page = await browser.newPage();
   await page.goto(url);
