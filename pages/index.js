@@ -89,7 +89,8 @@ class Home extends React.Component {
  
  
   render() {
-  console.log(this.props)
+    console.log(process.env.VERCEL_URL)
+    console.log(process.env)
     return (<>
         
        
@@ -99,7 +100,7 @@ class Home extends React.Component {
       <meta property="og:url" content={"https://global-warming-azure.vercel.app/"} />
       <meta property="og:title" content={"global Warming data"} />
       <meta property="og:description" content={"this site contains data about gw"} />
-      <meta property="og:image" content={`${process.env.VERCEL_URL}/api/chart-img/tempChart.jpeg`} />
+      <meta property="og:image" content={`/api/chart-img/tempChart.jpeg`} />
       <meta property="og:image:width" content="200px" />
       <meta property="og:image:height" content="200px" />
         <meta property="og:image:type" content="image/jpeg" />
