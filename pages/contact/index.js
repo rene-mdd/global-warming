@@ -1,4 +1,4 @@
-import StickyMenu from '../../semantic/sticky'
+import StickyMenu from '../../components/semantic/sticky'
 import {
   Button,
   Form,

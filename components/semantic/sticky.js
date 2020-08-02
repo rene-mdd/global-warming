@@ -3,17 +3,16 @@ import React, { Component } from 'react'
 import { Container, Image, Menu } from 'semantic-ui-react'
 import Link from 'next/link'
 
-export default class StickyExampleAdjacentContext extends Component {
+export default class StickySideBar extends Component {
   render () {
     return (
       <Menu
-        as='nav'
         fixed='top'
         size='huge'
         stackable={true}
         className='chart-img--remove'
       >
-        <Container>
+        <Container as='nav'>
           <Link href='/' passHref>
             <Menu.Item as='a' position='left'>
               <Image size='mini' src='images/contact-image.png' />

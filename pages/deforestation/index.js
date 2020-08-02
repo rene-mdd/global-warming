@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import StickyMenu from '../../semantic/sticky'
+import StickyMenu from '../../components/semantic/sticky'
 import * as Scroll from 'react-scroll'
 import {
   Container,
@@ -161,7 +161,7 @@ class SemanticDeforestation extends React.Component {
                     {this.state.toggle ? (
                       <p>
                         This is a custom map builder, where you can check on
-                        different features, like tree cover loss and gain,
+                        different features like tree cover loss and gain,
                         Deforestation alert system that monitors forest cover
                         loss and forest degradation in the Brazilian Amazon,
                         areas of likely tree cover loss in near-real time and

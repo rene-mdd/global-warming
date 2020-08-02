@@ -1,6 +1,6 @@
 import * as Scroll from 'react-scroll'
 import Head from 'next/head'
-import StickyMenu from '../../semantic/sticky'
+import StickyMenu from '../../components/semantic/sticky'
 import {
   Container,
   Header,
