@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default class StickySideBar extends Component {
   render () {
     return (
-      <Menu
+      <Menu as='header'
         fixed='top'
         size='huge'
         stackable={true}

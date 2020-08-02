@@ -137,12 +137,14 @@ const panelTemp = _.times(1, i => ({
   content: {
     content: (
       <Message
-        info
-        header={'Global Monthly Mean Surface Temperature Change'}
-        content={
-          'This API provide on a monthly basis, the global mean surface temperature anomaly from 1880.04 to present (in celsius). Fetch this endpoint https://www.global-warming.org/temperature-api and you will get the info in JSON format.'
-        }
-      />
+      info>
+      <Message.Header as='header'>
+<p>Global Monthly Mean Surface Temperature Change</p>
+      </Message.Header>
+      <Message.Content className='api-content'>
+<p>This API provide on a monthly basis, the global mean surface temperature anomaly from 1880.04 to present (in celsius). Fetch this endpoint <b>https://www.global-warming.org/temperature-api</b> and you will get the info in JSON format.</p>
+      </Message.Content>
+    </Message>
     )
   }
 }))
@@ -155,12 +157,14 @@ const panelCo2 = _.times(1, i => ({
   content: {
     content: (
       <Message
-        info
-        header={'Daily global seasonal cycle and trend value'}
-        content={
-          'This APi provide on a quasi-daily basis, the amount of carbon dioxide in the atmosphere from 2010.01.01. CO2 is expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint https://www.global-warming.org/co2-api and you will get the info in JSON format'
-        }
-      />
+      info>
+      <Message.Header as='header'>
+<p>Daily global seasonal cycle and trend value</p>
+      </Message.Header>
+      <Message.Content className='api-content'>
+<p>This APi provide on a quasi-daily basis, the amount of carbon dioxide in the atmosphere from 2010.01.01. CO2 is expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint <b>https://www.global-warming.org/co2-api</b> and you will get the info in JSON format</p>
+      </Message.Content>
+    </Message>
     )
   }
 }))
@@ -173,12 +177,14 @@ const panelMethane = _.times(1, i => ({
   content: {
     content: (
       <Message
-        info
-        header={'Globally averaged marine surface monthly mean data'}
-        content={
-          'This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint https://www.global-warming.org/methane-api and you will get the info in JSON format.'
-        }
-      />
+      info>
+      <Message.Header as='header'>
+<p>Globally averaged marine surface monthly mean data</p>
+      </Message.Header>
+      <Message.Content className='api-content'>
+<p>This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint <b>https://www.global-warming.org/methane-api</b> and you will get the info in JSON format.</p>
+      </Message.Content>
+    </Message>
     )
   }
 }))
@@ -191,12 +197,15 @@ const panelNitrous = _.times(1, i => ({
   content: {
     content: (
       <Message
-        info
-        header={'Nitrous averaged marine surface monthly mean data'}
-        content={
-          'This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint https://www.global-warming.org/methane-api and you will get the info in JSON format.'
-        }
-      />
+      info>
+      <Message.Header as='header'>
+<p>Nitrous averaged marine surface monthly mean data</p>
+      </Message.Header>
+      <Message.Content className='api-content'>
+<p>This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint <b>https://www.global-warming.org/methane-api</b> and you will get the info in JSON format.</p>
+      </Message.Content>
+    </Message>
+      
     )
   }
 }))
@@ -209,12 +218,14 @@ const panelArctic = _.times(1, i => ({
   content: {
     content: (
       <Message
-        info
-        header={'Arctic averaged marine surface monthly mean data'}
-        content={
-          'This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint https://www.global-warming.org/methane-api and you will get the info in JSON format.'
-        }
-      />
+        info>
+        <Message.Header as='header'>
+<p>Arctic averaged marine surface monthly mean data</p>
+        </Message.Header>
+        <Message.Content className='api-content'>
+<p>This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint <b>https://www.global-warming.org/methane-api</b> and you will get the info in JSON format.</p>
+        </Message.Content>
+      </Message>
     )
   }
 }))
