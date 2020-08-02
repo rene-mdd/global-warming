@@ -12,9 +12,8 @@ import {
   Sticky,
   Rail,
   Grid
-} from 'semantic-ui-react'
-
-
+} from 'semantic-ui-react';
+import { Link, animateScroll as scroll } from "react-scroll";
 
 export default class SideBar extends React.Component {
 
@@ -27,21 +26,6 @@ export default class SideBar extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log(prevState)
-    console.log(prevProps)
-    console.log(this.props)
-    
-   
-    if(prevProps?.callBacksideTemp?.observer){
-      const viewResult = prevProps.callBacksideTemp.observer;
-    if (this.props.callBacksideTemp.observer !== this.state.activeItem) {
-     
-      this.setState({activeItem: viewResult})
-    }
-    }
-  }
-
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
@@ -49,7 +33,7 @@ export default class SideBar extends React.Component {
     return <>
 
       <Sticky className="chart-img--remove">
-        <Rail className="fix">
+        <Rail className="fix" >
           <Grid columns={1} >
             <Grid.Column className="close-button" width="1" >
               <Menu secondary attached="top" className="sidebar-button" >
@@ -60,19 +44,28 @@ export default class SideBar extends React.Component {
             </Grid.Column>
             <Grid.Column >
               <Sidebar.Pushable as={Segment} className={this.state.rotate ? "sidebar-config-out" : "sidebar-config-in"} >
-                <Sidebar as={Menu} position="left" animation="slide along" width='thin' className="sideBar" visible={this.state.menuVisible} vertical inverted>
-                  <Menu.Item name='temperature' active={this.state.activeItem === 'temperature'}
+                <Sidebar style={{cursor: "pointer"}} as={Menu} position="left" animation="slide along" width='thin' className="sideBar" visible={this.state.menuVisible} vertical inverted>
+                <Link to="jump-to-temperature" spy={true} smooth={true} offset={0} duration= {1000}>
+                  <Menu.Item as="div" name='temperature' active={this.state.activeItem === 'temperature'}
                     onClick={this.handleItemClick}>Temperature</Menu.Item>
-                  <Menu.Item name='co2' active={this.state.activeItem === 'co2'}
+                    </Link>
+                  <Link  to="jump-to-co2" spy={true} smooth={true} offset={0} duration= {1000}>
+                  <Menu.Item as="div"  name='co2' active={this.state.activeItem === 'co2'}
                     onClick={this.handleItemClick}>Carbon Dioxide</Menu.Item>
-                  <Menu.Item name='methane' active={this.state.activeItem === 'methane'}
+                    </Link>
+                    <Link to="jump-to-methane" spy={true} smooth={true} offset={0} duration= {1000}>
+                  <Menu.Item as="div" name='methane' active={this.state.activeItem === 'methane'}
                     onClick={this.handleItemClick}>Methane</Menu.Item>
-                  <Menu.Item name='Nitrous Oxide' active={this.state.activeItem === 'nitrous'}
+                    </Link>
+                    <Link to="jump-to-nitrous" spy={true} smooth={true} offset={0} duration= {1000}>
+                  <Menu.Item as="div" name='nitrous' active={this.state.activeItem === 'nitrous'}
                     onClick={this.handleItemClick}>Nitrous Oxide</Menu.Item>
-                  <Menu.Item name='Polar Ice' active={this.state.activeItem === 'arctic'}
+                    </Link>
+                    <Link to="jump-to-arctic" spy={true} smooth={true} offset={0} duration= {1000}>
+                  <Menu.Item as="div" name='arctic' active={this.state.activeItem === 'arctic'}
                     onClick={this.handleItemClick}>Polar Ice</Menu.Item>
+                    </Link>
                 </Sidebar>
-
               </Sidebar.Pushable>
             </Grid.Column>
           </Grid>

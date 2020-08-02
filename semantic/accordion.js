@@ -46,8 +46,23 @@ import {
 } from "react-share";
 
 const share = ([
-  <FacebookShareButton as="div" children={<FacebookIcon />} url="https://global-warming-azure.vercel.app/" key="facebook"/>,
-  <EmailShareButton as="div" children={<EmailIcon />} url="https://global-warming-azure.vercel.app/" key="email"/>]
+  <FacebookShareButton children={<FacebookIcon size={50} borderRadius={5}  />} url="https://global-warming-azure.vercel.app/" key="facebook"/>,
+  <EmailShareButton  children={<EmailIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="email"/>,
+<InstapaperShareButton  children={<InstapaperIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="instagram"/>,
+<LineShareButton  children={<LineIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="line"/>,
+<LinkedinShareButton  children={<LinkedinIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="linkedin"/>,
+<LivejournalShareButton  children={<LivejournalIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="liveJournal"/>,
+<MailruShareButton  children={<MailruIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="mailRu"/>,
+<OKShareButton  children={<OKIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="ok"/>,
+<PinterestShareButton media="https://global-warming-azure.vercel.app/api/chart-img/tempChart.jpeg"  children={<PinterestIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="pinterest"/>,
+<PocketShareButton  children={<PocketIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="pocket"/>,
+<RedditShareButton  children={<RedditIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="reddit"/>,
+<TumblrShareButton  children={<TumblrIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="tumblr"/>,
+<TwitterShareButton  children={<TwitterIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="twitter"/>,
+<ViberShareButton  children={<ViberIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="viber"/>,
+<VKShareButton  children={<VKIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="vk"/>,
+<WhatsappShareButton  children={<WhatsappIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="whatsapp"/>,
+<TelegramShareButton  children={<TelegramIcon size={50} borderRadius={5} />} url="https://global-warming-azure.vercel.app/" key="telegram"/>]
 )
 
 const panelTemp = _.times(1, (i) => ({
@@ -138,7 +153,7 @@ const panelShare = _.times(1, (i) => ({
   },
   content: {
     content: (
-      <EmailShareButton children={share} />
+      share
     )
   },
 }))
@@ -164,7 +179,7 @@ const AccordionArctic = () => (
 );
 
 const AccordionShare = () => (
-  <Accordion defaultActiveIndex={1} panels={panelShare} />
+  <Accordion as='div' defaultActiveIndex={1} panels={panelShare} />
 );
 
 

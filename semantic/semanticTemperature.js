@@ -23,7 +23,7 @@ state = { siteView: ""};
           <span className="underline"> Global temperature anomalies from year 1 to present</span>
           </Header>
         <Grid container={true}>
-        <Grid.Row centered={true} stretched>
+        <Grid.Row centered stretched>
             <Temperature/>
         </Grid.Row>
         </Grid>
