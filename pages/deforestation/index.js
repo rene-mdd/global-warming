@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import StickyMenu from '../../components/semantic/sticky'
 import * as Scroll from 'react-scroll'
 import {
@@ -12,6 +11,7 @@ import {
   Label
 } from 'semantic-ui-react'
 import axios from 'axios'
+import SiteHeader from "../../components/siteHeader"
 
 const CognitiveServicesCredentials = require('ms-rest-azure')
   .CognitiveServicesCredentials
@@ -49,31 +49,7 @@ class SemanticDeforestation extends React.Component {
 
     return (
       <>
-        <Head>
-          <title>Global Warming News</title>
-          <link rel='icon' href='/favicon.ico' />
-          <link
-            rel='stylesheet'
-            type='text/css'
-            href='path/to/chartjs/dist/Chart.min.css'
-          />
-          <link
-            rel='stylesheet'
-            href='//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css'
-          />
-          <link
-            href='https://fonts.googleapis.com/css2?family=Play&display=swap'
-            rel='stylesheet'
-          />
-          <link
-            rel='stylesheet'
-            href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css'
-          />
-          <meta
-            name='description'
-            content='Global Warming and Climate Change live API, data, graphs, and news.'
-          />
-        </Head>
+       <SiteHeader />
         <StickyMenu />
 
         <Container fluid={true} id='landing-page-deforestation'>

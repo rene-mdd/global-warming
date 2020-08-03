@@ -1,4 +1,4 @@
-import { Segment, Menu, Sidebar, Sticky, Rail, Grid } from 'semantic-ui-react'
+import { Menu, Sidebar, Sticky, Rail, Grid } from 'semantic-ui-react'
 import { Link, animateScroll as scroll } from 'react-scroll'
 
 export default class SideBar extends React.Component {
