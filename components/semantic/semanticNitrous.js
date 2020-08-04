@@ -26,9 +26,7 @@ class SemanticNitrous extends React.Component {
       <Container as='section' fluid={true}>
         <Container>
           <Header as='h2' textAlign='center' className='h2-general'>
-            <span className='underline'>
-              Nitrous Oxide levels from 800,000 years ago to present
-            </span>
+            Nitrous Oxide levels from 800,000 years ago to present
           </Header>
           <Grid container={true}>
             <Grid.Row centered={true} stretched>
@@ -47,36 +45,21 @@ class SemanticNitrous extends React.Component {
                   className={this.state.nitrousLoading}
                   id={this.state.nitrousLoading}
                 >
-                  {this.state.nitrous ? 'Hide graph' : 'Deploy graph'}
+                  {this.state.nitrous ? 'Hide graph' : 'Display graph'}
                 </Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Grid columns='equal'>
-            <Container textAlign='justified'>
+            <Container>
               <p>
-                Nitrous ipsum dolor sit amet, consectetur adipiscing elit, sed
-                do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est
-                laborum.{' '}
-                <a
-                  href='https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide'
-                  target='_blank'
-                >
-                  source
-                </a>{' '}
-                and{' '}
-                <a
-                  href='https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/'
-                  target='_blank'
-                >
-                  source
-                </a>
-                .
+                Nitrous oxide is a gas that is produced by the combustion of
+                fossil fuel and solid waste, nitrogen-base fertilizers, sewage
+                treatment plants, natural processes, and other agricultural and
+                industrial activities.</p><p> It is the third largest heat-trapping gas in
+                the atmosphere and the biggest ozone-destroying compound
+                emitted by human activities.</p> <p>For more detailed information
+                please visit: <a href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3306630/' target='_blank'>source</a>, <a href='https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide' target='_blank'>source</a>.
               </p>
 
               <Grid className='api-segment' columns='equal' centered stackable>

@@ -202,7 +202,7 @@ const panelNitrous = _.times(1, i => ({
 <p>Nitrous averaged marine surface monthly mean data</p>
       </Message.Header>
       <Message.Content className='api-content'>
-<p>This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint <b>https://www.global-warming.org/methane-api</b> and you will get the info in JSON format.</p>
+<p>This API provide on a monthly basis, the amount of nitrous oxide in the atmosphere from 2001. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint <b>https://www.global-warming.org/nitrous-oxide-api</b> and you will get the info in JSON format.</p>
       </Message.Content>
     </Message>
       
@@ -220,10 +220,10 @@ const panelArctic = _.times(1, i => ({
       <Message
         info>
         <Message.Header as='header'>
-<p>Arctic averaged marine surface monthly mean data</p>
+<p>Arctic averaged marine surface yearly mean data</p>
         </Message.Header>
         <Message.Content className='api-content'>
-<p>This API provide on a monthly basis, the amount of methane in the atmosphere from 1983. Expressed as a mole fraction in dry air, parts per million (ppm). Fetch this endpoint <b>https://www.global-warming.org/methane-api</b> and you will get the info in JSON format.</p>
+<p>This API provide the average monthly Arctic sea ice extent each September since 1979, derived from satellite observations. Fetch this endpoint <b>https://www.global-warming.org/arctic-api</b> and you will get the info in JSON format. </p>
         </Message.Content>
       </Message>
     )

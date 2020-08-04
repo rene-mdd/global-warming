@@ -64,7 +64,7 @@ class SemanticDeforestation extends React.Component {
             </Header>
             <Grid columns='equal'>
               <Grid.Row centered={true}>
-                <Image src='images/icons8-forest-64.png' size='tiny' />
+                <Image src='images/forest.png' size='tiny' />
                 <Header as='h2' id='h2-news'>
                   This section is meant to gather data about the current
                   worldwide forests situation. This is done through APIs,

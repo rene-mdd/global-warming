@@ -16,10 +16,9 @@ class SemanticTemperature extends React.Component {
       <Container as='section' fluid={true} className='temperature-background'>
         <Container>
           <Header as='h2' textAlign='center' className='h2-general'>
-            <span className='underline'>
-              {' '}
+         
               Global temperature anomalies from year 1 to present
-            </span>
+          
           </Header>
           <Grid container={true}>
             <Grid.Row centered stretched>
@@ -27,7 +26,7 @@ class SemanticTemperature extends React.Component {
             </Grid.Row>
           </Grid>
           <Grid columns='equal' style={{ marginTop: '7vh' }}>
-            <Container textAlign='justified'>
+            <Container >
               <p>
                 The current global warming rate is not natural. From 1880 to
                 1981 was (0.07°C / 0.13°F) per decade. Since 1981 this rate has
@@ -108,7 +107,7 @@ class SemanticTemperature extends React.Component {
                 . Earth temperature and the proportion of gases such as Co2,
                 methane, and nitrous oxide in the atmosphere is strictly
                 correlated. For more information about this topic and
-                prehistoric data please visit:{' '}
+                prehistoric data, please visit:{' '}
                 <a
                   href='https://www.nature.com/articles/srep21691'
                   target='_blank'

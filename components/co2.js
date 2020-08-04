@@ -1,7 +1,7 @@
 import fetch from 'unfetch'
 import Chart from 'chart.js'
 import preCo2Data from '../public/data/csvjson-co2.json'
-import { Container } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 class Co2 extends React.Component {
   constructor (props) {
@@ -75,12 +75,15 @@ class Co2 extends React.Component {
               bounds: 'ticks',
               ticks: {
                 suggestedMax: 800000,
-                suggestedMin: -800000,
-                stepSize: 2
+                suggestedMin: -800000
               },
               yAxes: [
                 {
-                  stacked: true
+                  stacked: true,
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Part Per million (ppm)'
+                  }
                 }
               ],
               xAxes: [
@@ -110,38 +113,35 @@ class Co2 extends React.Component {
             this.goCo2(this.state.isLoading)
           }}
         />
-        <div className='chart-container'>
+        <Container className='chart-container'>
           <canvas id='myCo2Chart'></canvas>
-          <Container
-            as='footer'
-            className='ui center aligned column'
-            style={{ marginTop: '-25px' }}
-          >
-            {!this.state.isLoading && (
-              <Container as='footer'>
-                <p>
-                  This graph represents the Co2 concentration levels in the
-                  atmosphere. From 1958, the measurements are done on a quasi
-                  daily basis by Mauna Loa Observatory. Source: Ed Dlugokencky
-                  and Pieter Tans, NOAA/GML (
-                  <a
-                    href='https://www.esrl.noaa.gov/gmd/ccgg/trends/'
-                    target='_blank'
-                  >
-                    https://www.esrl.noaa.gov/gmd/ccgg/trends/
-                  </a>
-                  )
-                </p>
-                <p>
-                  <b>
-                    (From 2010.01.01 the data is measured on a quasi DAILY
-                    basis)
-                  </b>
-                </p>
-              </Container>
-            )}
-          </Container>
-        </div>
+          <Grid centered columns='equal'>
+            <Grid.Column width='14' fluid>
+              {!this.state.isLoading && (
+                <Container as='footer' style={{ marginTop: '-40px' }}>
+                  <p>
+                    From 1958, the measurements of carbon dioxide concentrations are done by Mauna Loa Observatory. Source: Ed Dlugokencky
+                    and Pieter Tans, NOAA/GML (
+                    <a
+                      href='https://www.esrl.noaa.gov/gmd/ccgg/trends/'
+                      target='_blank'
+                    >
+                      https://www.esrl.noaa.gov/gmd/ccgg/trends/
+                    </a>
+                    )
+                  </p>
+                  <p>Data source: 800,000 years ago to 1958 <a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases' target='_blank'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a> </p>
+                  <p>
+                    <b>
+                    From 2010.01.01 the data is measured on a quasi daily
+                      basis
+                    </b>
+                  </p>
+                </Container>
+              )}
+            </Grid.Column>
+          </Grid>
+        </Container>
       </>
     )
   }

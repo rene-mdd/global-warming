@@ -32,10 +32,9 @@ class SemanticCo2 extends React.Component {
         {/* <SideMenu visible={false} callBacksideTemp={{observer: this.state.siteView}}/> */}
         <Container>
           <Header as='h2' textAlign='center' className='h2-general'>
-            <span className='underline'>
-              {' '}
+          
               Carbon Dioxide levels from 800,000 years ago to present
-            </span>
+           
           </Header>
           <Grid container={true}>
             <Grid.Row centered={true} stretched>
@@ -54,20 +53,20 @@ class SemanticCo2 extends React.Component {
                   className={this.state.co2Loading}
                   id={this.state.co2Loading}
                 >
-                  {this.state.co2 ? 'Hide graph' : 'Deploy graph'}
+                  {this.state.co2 ? 'Hide graph' : 'Display graph'}
                 </Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Grid columns='equal'>
-            <Container textAlign='justified'>
+            <Container >
               {/* <Observer {...options}> */}
               <p>
                 For thousands of years, the natural concentration of CO2 in
                 earth atmosphere was around 280 ppm. From the beginning of the
                 industrial revolution, human activities like the burning of
                 fossil fuels, deforestation, and livestock have increased this
-                amount by more than 30%. For more information about prehistoric
+                amount by more than 30%.</p><p> For more information about prehistoric
                 CO2 concentration, current and future consequences please visit{' '}
                 <a
                   href='https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide'
@@ -82,8 +81,8 @@ class SemanticCo2 extends React.Component {
                 >
                   source
                 </a>
-                .
-              </p>
+                .</p>
+              
               {/* </Observer> */}
               <Grid className='api-segment' columns='equal' centered stackable>
                 <Grid.Column>
