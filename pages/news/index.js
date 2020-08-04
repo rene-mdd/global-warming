@@ -71,7 +71,7 @@ class News extends React.Component {
             </Grid>
             <Grid centered>
               <Grid.Row centered>
-                <Grid.Column width='4' textAlign='center'>
+               
                   <Scroll.Link
                     spy={true}
                     smooth={true}
@@ -82,7 +82,7 @@ class News extends React.Component {
                       <Image src='/images/icons-double-down.png' />
                     </Button>
                   </Scroll.Link>
-                </Grid.Column>
+               
               </Grid.Row>
             </Grid>
           </Container>
@@ -90,7 +90,7 @@ class News extends React.Component {
         <Divider name='jump-to-news' />
         <Container>
           <Header as='h3' id='list-news' textAlign='center'>
-            List
+            News List
           </Header>
           <Header as='h4' textAlign='center'>
             Live: <span id='news-date'>{new Date().toString()}</span>

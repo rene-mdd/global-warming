@@ -25,7 +25,6 @@ font-size: 100%;
   .h1-news {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: white !important}
   .h2-general  {padding:  20vh 0 10vh 0 !important; font-size: 2em !important; color: #343837 !important}
   footer p {margin: 0; font-size: 0.8em}
-  .footer-black-test {text-align: center !important;}
   #down-icon {padding-top: 6rem !important}
   .api-segment {margin:  8vh 0 8vh 0 !important}
   .accordion-co2 {width: 90%; font-size: 150% !important; background-color: #12d3cf !important; color: white !important}
@@ -44,7 +43,6 @@ font-size: 100%;
 #list-news {font-size: 2.2em !important; padding: 10vh !important}
 #news-date {font-weight: 300; text-decoration: underline; padding: 10px !important}
 h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
-/* .temperature-background, .methane-background {background: #F8F8FF !important} */
 #co2Btn {background-color: #1687a7 !important ; color: white !important}
 #methaneBtn {background-color: #1687a7 !important ; color: white !important}
 #nitrousBtn {background-color: #1687a7 !important ; color: white !important}
