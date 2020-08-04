@@ -3,11 +3,7 @@ import Chart from 'chart.js'
 import temperatureFile from '../public/data/csvjson-temperature.json'
 import {
   Container,
-  Header,
-  Grid,
-  Image,
-  Button,
-  Segment
+  Grid
 } from 'semantic-ui-react'
 
 class Temperature extends React.Component {
@@ -56,7 +52,35 @@ class Temperature extends React.Component {
       if (temperatureLiveData) {
         //transform api to arrays
         temperatureLiveData.forEach(obj => {
-          date.push(obj.time)
+          date.push(
+          
+              obj.time.split('.')[1] === '04'
+                ? `${obj.time.slice(0, 4)} Jan`
+                : obj.time.split('.')[1] === '13'
+                ? `${obj.time.slice(0, 4)} Feb`
+                : obj.time.split('.')[1] === '21'
+                ? `${obj.time.slice(0, 4)} Mar`
+                : obj.time.split('.')[1] === '29'
+                ? `${obj.time.slice(0, 4)} Apr`
+                : obj.time.split('.')[1] === '38'
+                ? `${obj.time.slice(0, 4)} May`
+                : obj.time.split('.')[1] === '46'
+                ? `${obj.time.slice(0, 4)} Jun`
+                : obj.time.split('.')[1] === '54'
+                ? `${obj.time.slice(0, 4)} Jul`
+                : obj.time.split('.')[1] === '63'
+                ? `${obj.time.slice(0, 4)} Aug`
+                : obj.time.split('.')[1] === '71'
+                ? `${obj.time.slice(0, 4)} Sept`
+                : obj.time.split('.')[1] === '79'
+                ? `${obj.time.slice(0, 4)} Oct`
+                : obj.time.split('.')[1] === '88'
+                ? `${obj.time.slice(0, 4)} Nov`
+                : obj.time.split('.')[1] === '96'
+                ? `${obj.time.slice(0, 4)} Dec`
+                : obj.time
+           
+          )
           station.push(obj.station)
         })
         //chart js
@@ -72,13 +96,13 @@ class Temperature extends React.Component {
                 fill: false,
                 borderColor: '#FF073A',
                 backgroundColor: 'black',
-                pointRadius: false,
-                pointHoverBorderWidth: 7,
-                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-                pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
-                pointHoverBorderColor: 'black',
+               pointRadius: 1,
+                pointHoverBorderWidth: 1,
+                pointBackgroundColor: 'rgba(255, 0, 0, 0.1);',
+                pointHoverBackgroundColor: 'white',
+                pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 0.5,
-                pointHoverRadius: 5
+                pointHoverRadius: 10
               }
             ]
           },
@@ -109,10 +133,9 @@ class Temperature extends React.Component {
                     display: true,
                     labelString: 'Year'
                   },
-                  ticks: {
-                    maxRotation: 90
-                  }
-                }
+                  ticks:{
+                  maxRotation: 90}
+              }
               ]
             }
           }
@@ -132,44 +155,43 @@ class Temperature extends React.Component {
             this.state.aWarmingData,
             this.state.temperatureData.result
           )}
-        ></div>
-        <Grid.Column width='fourteen'>
-          <Container
-            className='chart-container'
-            style={{ position: 'relative', width: '80vw' }}
-          >
-            <canvas id='tempChart' />{' '}
-          </Container>
-          <Container as='footer'>
-            <p>
-              Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis
-              (GISTEMP), version 4. NASA Goddard Institute for Space Studies.
-              Dataset accessed 20YY-MM-DD at{' '}
-              <a href='https://data.giss.nasa.gov/gistemp/' target='_blank'>
-                https://data.giss.nasa.gov/gistemp/
-              </a>
-              .
-            </p>
-            <p>
-              Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen, M.
-              Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in the
-              GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no. 12,
-              6307-6326, doi:10.1029/2018JD029522.
-            </p>
-            <p>
-              Source data year 1 – 1979:{' '}
-              <a
-                href='https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI'
-                target='_blank'
-              >
-                https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI
-              </a>
-            </p>
-            <p>
-              <b>(From 1880.04 the data is measured on a monthly basis)</b>
-            </p>
-          </Container>
-        </Grid.Column>
+        />
+        
+        <Container
+          className='chart-container'
+          style={{ position: 'relative', width: '80vw' }}
+        >
+          <canvas id='tempChart' />
+        </Container>
+        <Grid centered columns='equal'>
+          <Grid.Column width='14' fluid>
+            <Container as='footer'>
+              <p>
+                Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis
+                (GISTEMP), version 4. NASA Goddard Institute for Space Studies.
+                Dataset accessed 20YY-MM-DD at{' '}
+                <a href='https://data.giss.nasa.gov/gistemp/' target='_blank'>
+                  https://data.giss.nasa.gov/gistemp/
+                </a>
+                . Source data 1880 - present: Lenssen, N., G. Schmidt, J.
+                Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019:
+                Improvements in the GISTEMP uncertainty model. J. Geophys. Res.
+                Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522. Source
+                data year 1 – 1979:{' '}
+                <a
+                  href='https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI'
+                  target='_blank'
+                >
+                  https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI
+                </a>
+              </p>
+
+              <p>
+                <b>From 1880.04 the data is measured on a monthly basis</b>
+              </p>
+            </Container>
+          </Grid.Column>
+        </Grid>
       </>
     )
   }

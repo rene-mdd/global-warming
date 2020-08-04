@@ -77,7 +77,8 @@ class Nitrous extends React.Component {
               bounds: 'ticks',
               ticks: {
                 suggestedMax: 800000,
-                suggestedMin: -800000
+                suggestedMin: -800000,
+                maxRotation: 90
               },
               yAxes: [
                 {
@@ -121,28 +122,28 @@ class Nitrous extends React.Component {
           }}
         />
 
-        <Grid.Column width='fourteen'>
+        
           <Container
             className='chart-container'
             style={{ position: 'relative', width: '80vw' }}
           >
             <canvas id='myNitrousChart'></canvas>
           </Container>
-
+          <Grid width='equal' centered>
+            <Grid.Column width='14'>
           {!this.state.isLoading && (
-            <Container as='footer' className='ui center aligned column'>
+            <Container as='footer'>
+              <p>Data 800,000 ago to 2001 source: United States, Environmental Protection Agency (EPA), (<a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases' target='_blank'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a>) </p>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo
-              </p>
+              Ed Dlugokencky, NOAA/GML (<a href='www.esrl.noaa.gov/gmd/ccgg/trends_n2o/' target='_blank'>www.esrl.noaa.gov/gmd/ccgg/trends_n2o/</a>)</p>
               <p>
-                <b>(From 2001.01 the data is measured on a monthly basis)</b>
+                <b> From 2001.01 the data is measured on a monthly basis</b>
               </p>
+            
             </Container>
           )}
-        </Grid.Column>
+          </Grid.Column>
+        </Grid>
       </>
     )
   }

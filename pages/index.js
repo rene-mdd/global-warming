@@ -19,7 +19,7 @@ class Home extends React.Component {
         <StickyMenu />
         <SideMenu />
         <LandingPage />
-        <Divider name='jump-to-temperature' />
+        <Divider name='jump-to-temperature' hidden/>
         <SemanticTemperature />
         <Divider name='jump-to-co2' />
         <SemanticCo2 />

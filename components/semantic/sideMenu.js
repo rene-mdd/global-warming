@@ -37,7 +37,7 @@ export default class SideBar extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <Sidebar.Pushable
-                  as={'nav'}
+                 as='nav'
                   className={
                     this.state.rotate
                       ? 'sidebar-config-out'
@@ -45,7 +45,7 @@ export default class SideBar extends React.Component {
                   }
                 >
                   <Sidebar
-                    as='nav'
+                    
                     style={{ cursor: 'pointer' }}
                     as={Menu}
                     position='left'

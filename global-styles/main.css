@@ -4,29 +4,36 @@ font-family: 'Play', sans-serif !important;
 font-size: 100%;
 
   }
- body {background: #FDFDFE !important;}
-
+  /* body {  background-color: #f6f6f6 !important;
+    background-image: linear-gradient(90deg, #f6f6f6 0%, #e9e9e9 74%) !important;} */
+    /* body {  background-image: linear-gradient(90deg, #dfe9f3 0%, white 100%) !important} */
+ body {background: linear-gradient(90deg, hsla(120, 100%, 99%, 1) 0%, hsla(0, 0%, 100%, 1)) 100% !important;}
 .hide {visibility: hidden !important}
   .mini-icon {width: 20px; height: 20px}
   .icon-style {margin-top: 10vh !important}
   #temperature-description {padding-top: -30px !important};
   #temp-error {margin: 35px 0 35px 0 !important}
   p {font-size: 22px}
-
-  .h1-id {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: #343837 !important}
+  .landing-background {  height:100vh !important;
+    background-image: linear-gradient(
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0.6)
+    ),url('/images/background-global-warming.png') !important;
+    background-size: cover !important;}
+  .h1-id {padding:  40vh 0 0 0 !important; font-size: 2.5em !important; color: white !important}
+  .h2-id {color: white !important; font-size: 1.5em !important; text-shadow: 1px 1px 1px #000 !important; }
   .h1-news {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: white !important}
   .h2-general  {padding:  20vh 0 10vh 0 !important; font-size: 2em !important; color: #343837 !important}
-  div h2 span { border-bottom: 1px solid #343837; display: inline-block; line-height: 0.85;}
-  footer p {margin: 0; font-size: 0.8em; text-align: center !important}
+  footer p {margin: 0; font-size: 0.8em}
+  .footer-black-test {text-align: center !important;}
   #down-icon {padding-top: 6rem !important}
   .api-segment {margin:  8vh 0 8vh 0 !important}
-  .accordion-co2 {width: 90%; font-size: 150% !important; background-color: #4984B8 !important; color: white !important}
-  .accordion-temp {width: 90%; font-size: 150% !important; background-color: #FF073A !important; color: white !important}
-  .accordion-methane {width: 90%; font-size: 150% !important; background-color: #A75E09 !important; color: white !important}
-  .accordion-nitrous {width: 90%; font-size: 150% !important; background-color: #FDB147 !important; color: white !important}
-  .accordion-arctic {width: 90%; font-size: 150% !important; background-color: #7BC8F6 !important; color: white !important}
+  .accordion-co2 {width: 90%; font-size: 150% !important; background-color: #12d3cf !important; color: white !important}
+  .accordion-temp {width: 90%; font-size: 150% !important; background-color: #12d3cf !important; color: white !important}
+  .accordion-methane {width: 90%; font-size: 150% !important; background-color: #12d3cf !important; color: white !important}
+  .accordion-nitrous {width: 90%; font-size: 150% !important; background-color: #12d3cf !important; color: white !important}
+  .accordion-arctic {width: 90%; font-size: 150% !important; background-color: #12d3cf !important; color: white !important}
   .news-button {background-color: #0E87CC !important; }
-
   @media only screen and (max-width: 600px) {
   i {display: none !important}
 }
@@ -37,11 +44,11 @@ font-size: 100%;
 #list-news {font-size: 2.2em !important; padding: 10vh !important}
 #news-date {font-weight: 300; text-decoration: underline; padding: 10px !important}
 h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
-.temperature-background, .methane-background {background: #F8F8FF !important}
-#co2Btn {background-color: #4984B8 !important ; color: white !important}
-#methaneBtn {background-color: #A75E09 !important ; color: white !important}
-#nitrousBtn {background-color: #FDB147 !important ; color: white !important}
-#arcticBtn {background-color: #7BC8F6 !important ; color: white !important}
+/* .temperature-background, .methane-background {background: #F8F8FF !important} */
+#co2Btn {background-color: #1687a7 !important ; color: white !important}
+#methaneBtn {background-color: #1687a7 !important ; color: white !important}
+#nitrousBtn {background-color: #1687a7 !important ; color: white !important}
+#arcticBtn {background-color: #1687a7 !important ; color: white !important}
 .sideBar { position: relative !important}
 #landing-page-deforestation { background-color: #048243}
 .sidebar-config-out {transform: translateX(-150px) !important; transition-duration: 1s; ; background: rgb(104, 104, 104) !important}
@@ -49,7 +56,7 @@ h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
 .fix {position: fixed !important; width: 10em !important; margin-top: 30vh !important; padding: 0; opacity: 1 !important; height: 50px !important}
 #rotate-left {transform: rotate(180deg); transition-duration: 1s }
 #rotate-right {transform: rotate(1deg); transition-duration: 1s }
-#deforestation-text {padding-top: 50px !important; text-align: justify !important;}
+#deforestation-text {padding-top: 50px !important;}
 .display-none {display: none !important}
 .contact-title {font-size: 3em !important}
 .news-icon {margin-right: 10px !important; width: 25px !important}
@@ -57,3 +64,4 @@ h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
 .header p {font-size: 1.3em !important}
 .api-content p {font-size: 1.1em !important}
 .submit-button {background-color: #47C072 !important;}
+nav a:hover {background-color: #6db629 !important}

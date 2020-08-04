@@ -32,7 +32,6 @@ class News extends React.Component {
   }
 
   render () {
-    console.log(this.props)
     const parsedGNews = this.props.gData.articles
     const parsedBingNews = this.props.data.value
 

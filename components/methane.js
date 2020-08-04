@@ -66,14 +66,14 @@ class Methane extends React.Component {
                 data: methPrehistoricData.amount.concat(average),
                 fill: false,
                 borderColor: '#A75E09',
-                backgroundColor: 'black',
-                pointRadius: false,
-                pointHoverBorderWidth: 10,
-                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-                pointHoverBackgroundColor: 'rgba(255, 99, 132, 1)',
-                pointHoverBorderColor: 'black',
+                backgroundColor: 'rgba(255, 0, 0, 0.1);',
+                pointRadius: 0.5,
+                pointHoverBorderWidth: 1,
+                pointBackgroundColor: 'rgba(255, 0, 0, 0.1);',
+                pointHoverBackgroundColor: 'white',
+                pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
-                pointHoverRadius: 5
+                pointHoverRadius: 10
               }
             ]
           },
@@ -82,8 +82,7 @@ class Methane extends React.Component {
               bounds: 'ticks',
               ticks: {
                 suggestedMax: 800000,
-                suggestedMin: -800000,
-                stepSize: 2
+                suggestedMin: -800000
               },
               yAxes: [
                 {
@@ -138,13 +137,11 @@ class Methane extends React.Component {
             <Container as='footer' centered>
               {' '}
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo
+              Year 1983 to present data source: Global Monitoring Division of NOAA’s Earth System Research Laboratory Ed Dlugokencky, NOAA/GML (<a href='www.esrl.noaa.gov/gmd/ccgg/trends_ch4/' target='_blank'>www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</a>).
               </p>
-              <p>
-                <b>(From 1983 the data is measured on a monthly basis)</b>
+              <p>Data 800,000 years ago to 1983 source: United States, Environmental Protection Agency (EPA), (<a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases' target='_blank'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a>)</p>
+              <p >
+                <b>From 1983.07 this data is measured on a monthly basis</b>
               </p>
             </Container>
           )}

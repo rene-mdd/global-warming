@@ -103,29 +103,27 @@ class Arctic extends React.Component {
             this.goArc(this.state.isLoading)
           }}
         />
-        <Grid.Column width='fourteen'>
+      
           <Container
             className='chart-container'
             style={{ position: 'relative', width: '80vw' }}
           >
             <canvas id='arcticChart'></canvas>
           </Container>
-
+          <Grid width='equal' centered>
+            <Grid.Column fluid width='14'>
           {!this.state.isLoading && (
             <Container
               as='footer'
-              className='ui center aligned column'
               style={{ marginTop: '-5px' }}
             >
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo
+              Data source: Satellite observations. Credit: <a href='https://nsidc.org/' target='_blank'>NSIDC</a>/NASA.
               </p>
             </Container>
           )}
-        </Grid.Column>
+          </Grid.Column>
+     </Grid>
       </>
     )
   }
