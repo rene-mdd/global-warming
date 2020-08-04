@@ -74,7 +74,7 @@ class SemanticDeforestation extends React.Component {
             </Grid>
             <Grid centered className='icon-style'>
               <Grid.Row centered>
-                <Grid.Column width='4' textAlign='center'>
+                
                   <Scroll.Link
                     spy={true}
                     smooth={true}
@@ -85,7 +85,7 @@ class SemanticDeforestation extends React.Component {
                       <Image src='/images/icons-double-down.png' />
                     </Button>
                   </Scroll.Link>
-                </Grid.Column>
+             
               </Grid.Row>
             </Grid>
           </Container>
@@ -93,14 +93,13 @@ class SemanticDeforestation extends React.Component {
         <Divider name='jump-news' />
         <Container>
           <Grid fluid className='temperature-background'>
-            <Container textAlign='justified'>
+            <Container >
               <Header as='h2' className='h2-general' textAlign='center'>
-                <span className='underline'>
                   Global forest loss from 2000 to 2014
-                </span>
               </Header>
               <Grid column='equal'>
-                <Grid.Row centered>
+                <Grid.Row centered >
+                 
                   <Button
                     onClick={this.handleForest}
                     style={{ marginBottom: '20px' }}
@@ -109,6 +108,7 @@ class SemanticDeforestation extends React.Component {
                       ? 'Show 2001 - 2014 deforestation'
                       : 'Use Global Forest Watch map'}
                   </Button>
+                  
                   {this.state.toggle ? (
                     <Container as='div'>
                       <iframe
@@ -132,8 +132,9 @@ class SemanticDeforestation extends React.Component {
                       ></iframe>
                     </Container>
                   )}
+             
                   <span>Credits: Hansen, UMD, Google, USGS, NASA</span>
-                  <Container id='deforestation-text'>
+                  <Container id='deforestation-text'  textAlign='left'>
                     {this.state.toggle ? (
                       <p>
                         This is a custom map builder, where you can check on
@@ -145,7 +146,6 @@ class SemanticDeforestation extends React.Component {
                       </p>
                     ) : (
                       <p>
-                        {' '}
                         This data set provides a disaggregation of total forest
                         loss to annual time scales. Encoded as either 0 (no
                         loss) or else a value in the range 1–14, representing
@@ -197,7 +197,7 @@ class SemanticDeforestation extends React.Component {
         </Container>
         <Container>
           <Header as='h3' id='list-news' textAlign='center'>
-            List
+            News List
           </Header>
           <Header as='h4' textAlign='center'>
             Live: <span id='news-date'>{new Date().toString()}</span>
