@@ -10,18 +10,19 @@ import {
   Message
 } from 'semantic-ui-react'
 import SiteHeader from '../../components/siteHeader'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Contact = () => {
   const [contact, setContact] = useState({
     name: '',
     email: '',
     subject: 'StaticForms - Contact Form',
-    honeypot: '', 
+    honeypot: '',
     message: '',
-    replyTo: 'info@rene-rodriguez.com', 
+    replyTo: 'info@rene-rodriguez.com',
     accessKey: '21b96b01-5e41-419f-a493-cd3f5327a645'
   })
+
 
   const [response, setResponse] = useState({
     type: '',
@@ -32,17 +33,25 @@ const Contact = () => {
     setContact({ ...contact, [e.target.name]: e.target.value })
 
   const handleSubmit = async e => {
+    console.log(contact)
     e.preventDefault()
+           
+    setContact({
+      ...contact, 
+      name: '',
+      email: '',
+      message: ''
+    })
     try {
       const res = await fetch('https://api.staticforms.xyz/submit', {
         method: 'POST',
         body: JSON.stringify(contact),
         headers: { 'Content-Type': 'application/json' }
       })
-      
 
-      const json = await res.json() 
-      
+
+      const json = await res.json()
+
       if (json.success) {
 
         setResponse({
@@ -62,8 +71,9 @@ const Contact = () => {
         message: 'An error occurred while submitting the form'
       })
     }
-
   }
+
+
 
   return (
     <>
@@ -101,21 +111,21 @@ const Contact = () => {
                   <label>Name</label>
                   <input
                     placeholder='Name'
-                    type='text'
+              
                     name='name'
+                    value={contact.name}
                     onChange={handleChange}
                   />
-
                 </Form.Field>
                 <Form.Field required>
                   <label>Email</label>
                   <input
                     placeholder='Your email address'
-                    type='email'
-                    name='mail'
+                   
+                    name='email'
+                    value={contact.email}
                     onChange={handleChange}
                   />
-
                 </Form.Field>
                 <Form.Field style={{ display: 'none' }}>
                   <label>Subject</label>
@@ -125,7 +135,7 @@ const Contact = () => {
                     onChange={handleChange}
                   ></input>
                   <input
-                    type='text'
+                   
                     name='honeypot'
                     style={{ display: 'none' }}
                     onChange={handleChange}
@@ -136,11 +146,12 @@ const Contact = () => {
                   name='message'
                   label='Message'
                   placeholder='What are you thinking about?'
+                  value={contact.message}
                   onChange={handleChange}
                   required
                 />
                 <Button
-                className="submit-button"
+                  className='submit-button'
                   type='submit'
                   value='Submit'
                   onChange={handleChange}
@@ -150,11 +161,23 @@ const Contact = () => {
                 </Button>
               </Form>
               <Message
-              hidden={response.type !== 'success'}
-               warning={response.type === "error"}
+                hidden={response.type !== 'success'}
+                warning={response.type === 'error'}
                 success={response.type === 'success'}
-                header={response.type === 'success' ? "Your email was sent." : response.type === 'error' ? "Sorry there was an error" : null}
-                content={response.type === 'success' ? "Thank you!" : response.type === 'error' ? "Try again or send an email" : null}
+                header={
+                  response.type === 'success'
+                    ? 'Your email was sent.'
+                    : response.type === 'error'
+                    ? 'Sorry there was an error'
+                    : null
+                }
+                content={
+                  response.type === 'success'
+                    ? 'Thank you!'
+                    : response.type === 'error'
+                    ? 'Try again or send an email'
+                    : null
+                }
               />
             </Grid.Column>
           </Grid.Row>
