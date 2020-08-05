@@ -103,8 +103,8 @@ class News extends React.Component {
                   <Item.Image
                     src={(obj?.image && obj.image) || this.forceUpdate()}
                   />
-                  <Item.Content>
-                    <Item.Header src={obj.url} target='_blank'>
+                  <Item.Content style={{borderLeft: '1px solid #C8C8C8'}}>
+                    <Item.Header as='header' src={obj.url} target='_blank'>
                       <a href={obj.url} target='_blank'>
                         {obj.title}
                       </a>
@@ -114,8 +114,11 @@ class News extends React.Component {
                       <p>{obj.description}</p>
                     </Item.Description>
                     <Item.Extra style={{ paddingTop: '45px' }}>
+                      <Grid columns='equal' centered stackable>
+                        <Grid.Column textAlign='center' verticalAlign='middle'>
                       <Label>Date: {obj.publishedAt}</Label>
-
+                      </Grid.Column>
+                      <Grid.Column textAlign='center'>
                       <Button
                         as='a'
                         href={obj.url}
@@ -123,7 +126,6 @@ class News extends React.Component {
                         inverted={true}
                         className='news-button'
                         size='small'
-                        floated='right'
                       >
                         {' '}
                         <Image
@@ -134,6 +136,8 @@ class News extends React.Component {
                         />
                         {obj.source.name ?? 'News'}
                       </Button>
+                      </Grid.Column>
+                      </Grid>
                     </Item.Extra>
                   </Item.Content>
                 </Item>
@@ -151,7 +155,7 @@ class News extends React.Component {
                       '/images/breaking-news.png'
                     }
                   />
-                  <Item.Content>
+                  <Item.Content style={{borderLeft: '1px solid #C8C8C8'}}>
                     <Item.Header src={obj.url} target='_blank'>
                       <a href={obj.url} target='_blank'>
                         {obj.name}
@@ -162,7 +166,11 @@ class News extends React.Component {
                       <p>{obj.description}</p>
                     </Item.Description>
                     <Item.Extra style={{ paddingTop: '45px' }}>
+                    <Grid columns='equal' centered stackable>
+                        <Grid.Column textAlign='center' verticalAlign='middle'>
                       <Label>Date: {obj.datePublished}</Label>
+                      </Grid.Column>
+                      <Grid.Column textAlign='center'>
                       <Button
                         as='a'
                         href={obj.url}
@@ -181,6 +189,8 @@ class News extends React.Component {
                         />
                         {obj?.provider[0]?.name ?? 'News'}
                       </Button>
+                      </Grid.Column>
+                      </Grid>
                     </Item.Extra>
                   </Item.Content>
                 </Item>
