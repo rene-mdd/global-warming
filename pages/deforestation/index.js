@@ -8,10 +8,11 @@ import {
   Button,
   Divider,
   Item,
-  Label
+  Label,
+  Embed
 } from 'semantic-ui-react'
 import axios from 'axios'
-import SiteHeader from "../../components/siteHeader"
+import SiteHeader from '../../components/siteHeader'
 
 const CognitiveServicesCredentials = require('ms-rest-azure')
   .CognitiveServicesCredentials
@@ -49,7 +50,7 @@ class SemanticDeforestation extends React.Component {
 
     return (
       <>
-       <SiteHeader />
+        <SiteHeader />
         <StickyMenu />
 
         <Container fluid={true} id='landing-page-deforestation'>
@@ -74,75 +75,72 @@ class SemanticDeforestation extends React.Component {
             </Grid>
             <Grid centered className='icon-style'>
               <Grid.Row centered>
-                
-                  <Scroll.Link
-                    spy={true}
-                    smooth={true}
-                    duration={1000}
-                    to='jump-news'
-                  >
-                    <Button basic>
-                      <Image src='/images/icons-double-down.png' />
-                    </Button>
-                  </Scroll.Link>
-             
+                <Scroll.Link
+                  spy={true}
+                  smooth={true}
+                  duration={1000}
+                  to='jump-news'
+                >
+                  <Button basic>
+                    <Image src='/images/icons-double-down.png' />
+                  </Button>
+                </Scroll.Link>
               </Grid.Row>
             </Grid>
           </Container>
         </Container>
         <Divider name='jump-news' />
         <Container>
-          <Grid fluid className='temperature-background'>
-            <Container >
+          <Grid fluid='true' className='temperature-background'>
+            <Container>
               <Header as='h2' className='h2-general' textAlign='center'>
-                  Global forest loss from 2000 to 2014
+                Global forest loss from 2000 to 2014
               </Header>
-              <Grid column='equal'>
-                <Grid.Row centered >
-                 
-                  <Button
-                    onClick={this.handleForest}
-                    style={{ marginBottom: '20px' }}
-                  >
-                    {this.state.toggle
-                      ? 'Show 2001 - 2014 deforestation'
-                      : 'Use Global Forest Watch map'}
-                  </Button>
+              <Grid column='equal' centered>
+                <Button
+                  onClick={this.handleForest}
+                  style={{ marginBottom: '20px' }}
+                >
+                  {this.state.toggle
+                    ? 'Show 2001 - 2014 deforestation'
+                    : 'Use Global Forest Watch map'}
+                </Button>
+                <Grid.Row centered>
                   
-                  {this.state.toggle ? (
-                    <Container as='div'>
-                      <iframe
-                        width='800'
-                        height='800'
+                  <Container>
+                    {this.state.toggle ? (
+                      <Embed
+                        as='iframe'
+                        style={{ width: '800px', height: '800px', padding: 0  }}
                         frameBorder='0'
                         src='https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03'
-                      ></iframe>
-                    </Container>
-                  ) : (
-                    <Container>
-                      <iframe
-                        width='800'
-                        height='800'
+                      />
+                    ) : (
+                      <Embed
+                        as='iframe'
+                        style={{ width: '800px', height: '800px', padding: 0 }}
                         frameBorder='0'
                         scrolling='no'
                         marginHeight='0'
                         marginWidth='0'
                         title='Forest loss copy'
                         src='//www.arcgis.com/apps/Embed/index.html?webmap=ed33972acffc4e7c9b260c753f1a6bd4&extent=-157.4447,-41.8564,177.9459,71.6&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light'
-                      ></iframe>
-                    </Container>
-                  )}
-             
-                  <span>Credits: Hansen, UMD, Google, USGS, NASA</span>
-                  <Container id='deforestation-text'  textAlign='left'>
+                      />
+                    )}
+                  </Container>
+
+                  <Container>
+                    <span>Credits: Hansen, UMD, Google, USGS, NASA</span>
+                  </Container>
+                  <Container id='deforestation-text' textAlign='left'>
                     {this.state.toggle ? (
                       <p>
                         This is a custom map builder, where you can check on
-                        different features like tree cover loss and gain, 
-                        <b> deforestation alert system</b> that monitors forest cover
-                        loss and forest degradation in the Brazilian Amazon and the globe,
-                        areas of likely tree cover loss in near-real time, and
-                        more...
+                        different features like tree cover loss and gain,
+                        <b> deforestation alert system</b> that monitors forest
+                        cover loss and forest degradation in the Brazilian
+                        Amazon and the globe, areas of likely tree cover loss in
+                        near-real time, and more...
                       </p>
                     ) : (
                       <p>
@@ -174,18 +172,14 @@ class SemanticDeforestation extends React.Component {
                         time-series analysis of 654,178 Landsat 7 ETM+ images in
                         characterizing global forest extent and change from 2000
                         through 2012. For additional information about these
-                        results, please see the associated journal article
-                        (http://www.sciencemag.org/content/342/6160/850) (Hansen
-                        et al., Science 2013). Reference composite imagery are
-                        median observations from a set of quality assessed
-                        growing season observations in four spectral bands,
-                        specifically Landsat bands 3, 4, 5, and 7. Normalized
-                        top-of-atmosphere (TOA) reflectance values (ρ) have been
-                        scaled to an 8-bit data range using a scale factor (g):
-                        DN = ρ • g + 1. The g factor was chosen independently
-                        for each band to preserve the band-specific dynamic
-                        range: Landsat Band: g, Band 3 (red): 508, Band 4 (NIR):
-                        254, Band 5 (SWIR): 363, and Band 7 (SWIR): 423.{' '}
+                        results, please see the associated journal article (
+                        <a
+                          href='http://www.sciencemag.org/content/342/6160/850'
+                          target='_blank'
+                        >
+                          http://www.sciencemag.org/content/342/6160/850
+                        </a>
+                        ) (Hansen et al., Science 2013).{' '}
                       </p>
                     )}
                   </Container>
@@ -214,7 +208,7 @@ class SemanticDeforestation extends React.Component {
                         : this.forceUpdate() && '/images/breaking-news.png'
                     }
                   />
-                  <Item.Content>
+                  <Item.Content style={{ borderLeft: '1px solid #C8C8C8' }}>
                     <Item.Header src={obj.url} target='_blank'>
                       <a href={obj.url} target='_blank'>
                         {obj.title}
@@ -225,25 +219,30 @@ class SemanticDeforestation extends React.Component {
                       <p>{obj.description}</p>
                     </Item.Description>
                     <Item.Extra style={{ paddingTop: '45px' }}>
-                      <Label>Date: {obj.publishedAt}</Label>
-                      <Button
-                        as='a'
-                        href={obj.url}
-                        target='_blank'
-                        inverted={true}
-                        className='news-button'
-                        size='small'
-                        floated='right'
-                      >
-                        {' '}
-                        <Image
-                          inline={true}
-                          size='mini'
-                          className='news-icon'
-                          src='images/icons8-location-96.png'
-                        />
-                        {obj.source.name ?? 'News'}
-                      </Button>
+                      <Grid columns='equal' centered stackable>
+                        <Grid.Column textAlign='center' verticalAlign='middle'>
+                          <Label>Date: {obj.publishedAt}</Label>
+                        </Grid.Column>
+                        <Grid.Column textAlign='center'>
+                          <Button
+                            as='a'
+                            href={obj.url}
+                            target='_blank'
+                            inverted={true}
+                            className='news-button'
+                            size='small'
+                          >
+                            {' '}
+                            <Image
+                              inline={true}
+                              size='mini'
+                              className='news-icon'
+                              src='images/icons8-location-96.png'
+                            />
+                            {obj.source.name ?? 'News'}
+                          </Button>
+                        </Grid.Column>
+                      </Grid>
                     </Item.Extra>
                   </Item.Content>
                 </Item>
@@ -261,7 +260,7 @@ class SemanticDeforestation extends React.Component {
                       '/images/breaking-news.png'
                     }
                   />
-                  <Item.Content>
+                  <Item.Content style={{ borderLeft: '1px solid #C8C8C8' }}>
                     <Item.Header src={obj.url} target='_blank'>
                       <a href={obj.url} target='_blank'>
                         {obj.name}
@@ -272,25 +271,30 @@ class SemanticDeforestation extends React.Component {
                       <p>{obj.description}</p>
                     </Item.Description>
                     <Item.Extra style={{ paddingTop: '45px' }}>
-                      <Label>Date: {obj.datePublished}</Label>
-                      <Button
-                        as='a'
-                        href={obj.url}
-                        target='_blank'
-                        inverted={true}
-                        className='news-button'
-                        size='small'
-                        floated='right'
-                      >
-                        {' '}
-                        <Image
-                          inline={true}
-                          size='mini'
-                          className='news-icon'
-                          src='images/icons8-location-96.png'
-                        />
-                        {obj?.provider[0]?.name ?? 'News'}
-                      </Button>
+                      <Grid columns='equal' centered stackable>
+                        <Grid.Column textAlign='center' verticalAlign='middle'>
+                          <Label>Date: {obj.datePublished}</Label>
+                        </Grid.Column>
+                        <Grid.Column textAlign='center'>
+                          <Button
+                            as='a'
+                            href={obj.url}
+                            target='_blank'
+                            inverted={true}
+                            className='news-button'
+                            size='small'
+                          >
+                            {' '}
+                            <Image
+                              inline={true}
+                              size='mini'
+                              className='news-icon'
+                              src='images/icons8-location-96.png'
+                            />
+                            {obj?.provider[0]?.name ?? 'News'}
+                          </Button>
+                        </Grid.Column>
+                      </Grid>
                     </Item.Extra>
                   </Item.Content>
                 </Item>
