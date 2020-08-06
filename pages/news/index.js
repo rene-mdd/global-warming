@@ -1,5 +1,4 @@
 import * as Scroll from 'react-scroll'
-import Head from 'next/head'
 import StickyMenu from '../../components/semantic/sticky'
 import {
   Container,
@@ -34,7 +33,7 @@ class News extends React.Component {
   render () {
     const parsedGNews = this.props.gData.articles
     const parsedBingNews = this.props.data.value
-
+    console.log(this.state.gNews)
     const duplicateRemovalBing = parsedBingNews.filter(
       (thing, index, self) =>
         index ===
@@ -210,7 +209,7 @@ export async function getServerSideProps ({ res }) {
   })
 
   const gNewsResp = await axios.get(
-    'https://gnews.io/api/v3/search?q="climate change"&lang=en&image=required&token=a6e3927e03b68f9e1b73d16124863e92'
+    'https://gnews.io/api/v3/search?q="climate change"&lang=en&image=required&token=92fa89362f9a3f42f2c5a9081d4ea196'
   )
   const gJson = JSON.parse(JSON.stringify(gNewsResp.data))
   const gData = await gJson
