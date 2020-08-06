@@ -4,21 +4,6 @@ export default function SiteHeader() {
    
         return (<>
      <Head>
-     <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=[Tracking ID]"
-  />
-
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-174660681-1');
-        `,
-    }}
-  />
           <title>Global Warming</title>
           <meta
             property='og:url'
