@@ -30,6 +30,7 @@ class SemanticDeforestation extends React.Component {
   }
 
   render () {
+    console.log(this.props.gData)
     const parsedGNews = this.props.gData.articles
     const parsedBingNews = this.props.data.value
 
@@ -106,12 +107,11 @@ class SemanticDeforestation extends React.Component {
                     : 'Use Global Forest Watch map'}
                 </Button>
                 <Grid.Row centered>
-                  
                   <Container>
                     {this.state.toggle ? (
                       <Embed
                         as='iframe'
-                        style={{ width: '800px', height: '800px', padding: 0  }}
+                        style={{ width: '800px', height: '800px', padding: 0 }}
                         frameBorder='0'
                         src='https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03'
                       />
@@ -134,53 +134,59 @@ class SemanticDeforestation extends React.Component {
                   </Container>
                   <Container id='deforestation-text' textAlign='left'>
                     {this.state.toggle ? (
-                      <p>
-                        This is a custom map builder, where you can check on
-                        different features like tree cover loss and gain,
-                        <b> deforestation alert system</b> that monitors forest
-                        cover loss and forest degradation in the Brazilian
-                        Amazon and the globe, areas of likely tree cover loss in
-                        near-real time, and more...
-                      </p>
+                      <Container>
+                        <p>
+                          This is a custom map builder, where you can check on
+                          different features like tree cover loss and gain,
+                          <b> deforestation alert system</b> that monitors
+                          forest cover loss and forest degradation in the
+                          Brazilian Amazon and the globe, areas of likely tree
+                          cover loss in near-real time, and more...
+                        </p>
+                      </Container>
                     ) : (
-                      <p>
-                        This data set provides a disaggregation of total forest
-                        loss to annual time scales. Encoded as either 0 (no
-                        loss) or else a value in the range 1–14, representing
-                        loss detected primarily in the year 2001–2014,
-                        respectively. This global dataset contain unsigned 8-bit
-                        values and have a spatial resolution of 1 arc-second per
-                        pixel, or approximately 30 meters per pixel at the
-                        equator. Quantification of global forest change has been
-                        lacking despite the recognized importance of forest
-                        ecosystem services. In this data, Earth observation
-                        satellite data were used to map global forest loss (2.3
-                        million square kilometers) and gain (0.8 million square
-                        kilometers) from 2000 to 2012 at a spatial resolution of
-                        30 meters. The tropics were the only climate domain to
-                        exhibit a trend, with forest loss increasing by 2101
-                        square kilometers per year. Brazil’s well-documented
-                        reduction in deforestation was offset by increasing
-                        forest loss in Indonesia, Malaysia, Paraguay, Bolivia,
-                        Zambia, Angola, and elsewhere. Intensive forestry
-                        practiced within subtropical forests resulted in the
-                        highest rates of forest change globally. Boreal forest
-                        loss due largely to fire and forestry was second to that
-                        in the tropics in absolute and proportional terms. These
-                        results depict a globally consistent and locally
-                        relevant record of forest change. Results from
-                        time-series analysis of 654,178 Landsat 7 ETM+ images in
-                        characterizing global forest extent and change from 2000
-                        through 2012. For additional information about these
-                        results, please see the associated journal article (
-                        <a
-                          href='http://www.sciencemag.org/content/342/6160/850'
-                          target='_blank'
-                        >
-                          http://www.sciencemag.org/content/342/6160/850
-                        </a>
-                        ) (Hansen et al., Science 2013).{' '}
-                      </p>
+                      <Container>
+                        <p>
+                          This data set provides a disaggregation of total
+                          forest loss to annual time scales. Encoded as either 0
+                          (no loss) or else a value in the range 1–14,
+                          representing loss detected primarily in the year
+                          2001–2014, respectively. This global dataset contain
+                          unsigned 8-bit values and have a spatial resolution of
+                          1 arc-second per pixel, or approximately 30 meters per
+                          pixel at the equator. Quantification of global forest
+                          change has been lacking despite the recognized
+                          importance of forest ecosystem services. In this data,
+                          Earth observation satellite data were used to map
+                          global forest loss (2.3 million square kilometers) and
+                          gain (0.8 million square kilometers) from 2000 to 2012
+                          at a spatial resolution of 30 meters. The tropics were
+                          the only climate domain to exhibit a trend, with
+                          forest loss increasing by 2101 square kilometers per
+                          year. Brazil’s well-documented reduction in
+                          deforestation was offset by increasing forest loss in
+                          Indonesia, Malaysia, Paraguay, Bolivia, Zambia,
+                          Angola, and elsewhere. Intensive forestry practiced
+                          within subtropical forests resulted in the highest
+                          rates of forest change globally. Boreal forest loss
+                          due largely to fire and forestry was second to that in
+                          the tropics in absolute and proportional terms. These
+                          results depict a globally consistent and locally
+                          relevant record of forest change. Results from
+                          time-series analysis of 654,178 Landsat 7 ETM+ images
+                          in characterizing global forest extent and change from
+                          2000 through 2012. For additional information about
+                          these results, please see the associated journal
+                          article:{' '}
+                          <a
+                            href='https://science.sciencemag.org/content/342/6160/850'
+                            target='_blank'
+                          >
+                            source
+                          </a>
+                          (Hansen et al., Science 2013).{' '}
+                        </p>
+                      </Container>
                     )}
                   </Container>
                 </Grid.Row>
@@ -328,4 +334,5 @@ export async function getServerSideProps ({ res }) {
 
   return { props: { data, gData} }
 }
+
 export default SemanticDeforestation
