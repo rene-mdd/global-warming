@@ -6,7 +6,7 @@ export default function SiteHeader() {
      <Head>
      <script
     async
-    src="https://www.googletagmanager.com/gtag/js?id='UA-174660681-1'"
+    src="https://www.googletagmanager.com/gtag/js?id=[Tracking ID]"
   />
 
   <script
