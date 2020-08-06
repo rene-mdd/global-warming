@@ -48,7 +48,7 @@ export default class SideBar extends React.Component {
                     
                     style={{ cursor: 'pointer' }}
                     as={Menu}
-                    position='left'
+                    direction='left'
                     animation='slide along'
                     width='thin'
                     className='sideBar'

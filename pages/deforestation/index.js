@@ -91,7 +91,7 @@ class SemanticDeforestation extends React.Component {
         </Container>
         <Divider name='jump-news' />
         <Container>
-          <Grid fluid='true' className='temperature-background'>
+          <Grid fluid={true.toString()} className='temperature-background'>
             <Container>
               <Header as='h2' className='h2-general' textAlign='center'>
                 Global forest loss from 2000 to 2014

@@ -88,7 +88,11 @@ class Co2 extends React.Component {
               ],
               xAxes: [
                 {
-                  stacked: true
+                  stacked: true,
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Year'
+                  }
                 }
               ]
             }
@@ -118,7 +122,7 @@ class Co2 extends React.Component {
           <Grid centered columns='equal'>
             <Grid.Column width='14' fluid>
               {!this.state.isLoading && (
-                <Container as='footer' style={{ marginTop: '-40px' }}>
+                <Container as='footer' >
                   <p>
                     From 1958, the measurements of carbon dioxide concentrations are done by Mauna Loa Observatory. Source: Ed Dlugokencky
                     and Pieter Tans, NOAA/GML (
