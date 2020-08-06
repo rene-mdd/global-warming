@@ -164,7 +164,7 @@ class Temperature extends React.Component {
           <canvas id='tempChart' />
         </Container>
         <Grid centered columns='equal'>
-          <Grid.Column width='14' fluid>
+          <Grid.Column width='14'>
             <Container as='footer'>
               <p>
                 Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis

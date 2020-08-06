@@ -23,7 +23,6 @@ const Contact = () => {
     accessKey: '21b96b01-5e41-419f-a493-cd3f5327a645'
   })
 
-
   const [response, setResponse] = useState({
     type: '',
     message: ''
@@ -35,9 +34,9 @@ const Contact = () => {
   const handleSubmit = async e => {
     console.log(contact)
     e.preventDefault()
-           
+
     setContact({
-      ...contact, 
+      ...contact,
       name: '',
       email: '',
       message: ''
@@ -49,11 +48,9 @@ const Contact = () => {
         headers: { 'Content-Type': 'application/json' }
       })
 
-
       const json = await res.json()
 
       if (json.success) {
-
         setResponse({
           type: 'success',
           message: 'Thank you for reaching out to us.'
@@ -72,8 +69,6 @@ const Contact = () => {
       })
     }
   }
-
-
 
   return (
     <>
@@ -96,11 +91,11 @@ const Contact = () => {
           <Grid.Row>
             <Grid.Column width='10'>
               <Segment>
-                Hello! My name is René Rodríguez, I'm the developer of this
-                site. I'm currently living in Berlin. If you want to contact me
-                for suggestions about this site, or project ideas related to
-                this kind of environmental issues. Please send me a message or
-                write me at <b>info@rene-rodriguez.com</b>{' '}
+                Hello! My name is René Rodríguez and I'm the developer of this
+                site. I'm currently living in Berlin. For suggestions about this
+                project, or if you want to discuss ideas related to this kind of environmental
+                issues, please send me a message or write me at{' '}
+                <b>info@rene-rodriguez.com</b>{' '}
               </Segment>
               <Form
                 action='https://api.staticforms.xyz/submit'
@@ -111,7 +106,6 @@ const Contact = () => {
                   <label>Name</label>
                   <input
                     placeholder='Name'
-              
                     name='name'
                     value={contact.name}
                     onChange={handleChange}
@@ -121,7 +115,6 @@ const Contact = () => {
                   <label>Email</label>
                   <input
                     placeholder='Your email address'
-                   
                     name='email'
                     value={contact.email}
                     onChange={handleChange}
@@ -135,7 +128,6 @@ const Contact = () => {
                     onChange={handleChange}
                   ></input>
                   <input
-                   
                     name='honeypot'
                     style={{ display: 'none' }}
                     onChange={handleChange}
