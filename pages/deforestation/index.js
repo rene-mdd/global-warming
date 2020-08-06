@@ -30,7 +30,6 @@ class SemanticDeforestation extends React.Component {
   }
 
   render () {
-    console.log(this.props.gData)
     const parsedGNews = this.props.gData.articles
     const parsedBingNews = this.props.data.value
 
@@ -177,14 +176,14 @@ class SemanticDeforestation extends React.Component {
                           in characterizing global forest extent and change from
                           2000 through 2012. For additional information about
                           these results, please see the associated journal
-                          article:{' '}
+                          article: {' '}
                           <a
                             href='https://science.sciencemag.org/content/342/6160/850'
                             target='_blank'
                           >
-                            source
+                             source
                           </a>
-                          (Hansen et al., Science 2013).{' '}
+                           (Hansen et al., Science 2013).{' '}
                         </p>
                       </Container>
                     )}
