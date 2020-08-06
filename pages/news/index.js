@@ -31,9 +31,9 @@ class News extends React.Component {
   }
 
   render () {
-    const parsedGNews = this.props.gData.articles
+    // const parsedGNews = this.props.gData.articles
     const parsedBingNews = this.props.data.value
-    console.log(this.state.gNews)
+    // console.log(this.state.gNews)
     const duplicateRemovalBing = parsedBingNews.filter(
       (thing, index, self) =>
         index ===
@@ -41,13 +41,13 @@ class News extends React.Component {
           t => t.description === thing.description || t.name === thing.name
         )
     )
-    const duplicateRemovalGNews = parsedGNews.filter(
-      (thing, index, self) =>
-        index ===
-        self.findIndex(
-          t => t.description === thing.description || t.title === thing.title
-        )
-    )
+    // const duplicateRemovalGNews = parsedGNews.filter(
+    //   (thing, index, self) =>
+    //     index ===
+    //     self.findIndex(
+    //       t => t.description === thing.description || t.title === thing.title
+    //     )
+    // )
     return (
       <>
       <SiteHeader />
@@ -96,7 +96,7 @@ class News extends React.Component {
           </Header>
           <Divider />
           <Item.Group divided>
-            {duplicateRemovalGNews.map((obj, index) => {
+            {/* {duplicateRemovalGNews.map((obj, index) => {
               return (
                 <Item key={'gNews:' + index}>
                   <Item.Image
@@ -141,7 +141,7 @@ class News extends React.Component {
                   </Item.Content>
                 </Item>
               )
-            })}
+            })} */}
             <Divider />
             {duplicateRemovalBing.map((obj, index) => {
               return (
@@ -208,11 +208,11 @@ export async function getServerSideProps ({ res }) {
     count: 100
   })
 
-  const gNewsResp = await axios.get(
-    'https://gnews.io/api/v3/search?q="climate change"&lang=en&image=required&token=92fa89362f9a3f42f2c5a9081d4ea196'
-  )
-  const gJson = JSON.parse(JSON.stringify(gNewsResp.data))
-  const gData = await gJson
+  // const gNewsResp = await axios.get(
+  //   'https://gnews.io/api/v3/search?q="climate change"&lang=en&image=required&token=92fa89362f9a3f42f2c5a9081d4ea196'
+  // )
+  // const gJson = JSON.parse(JSON.stringify(gNewsResp.data))
+  // const gData = await gJson
 
   const json = JSON.parse(JSON.stringify(resp))
   const data = await json
@@ -222,7 +222,7 @@ export async function getServerSideProps ({ res }) {
     'maxage=43200, s-maxage=43200, stale-while-revalidate'
   ) // Vercel Cache (Network)
 
-  return { props: { data, gData } }
+  return { props: { data } }
 }
 
 export default News
