@@ -23,6 +23,7 @@
     "puppeteer-core": "^2.1.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-scripts": "^3.4.1",
     "react-scroll": "^1.8.0",
     "react-share": "^4.2.1",
     "sass": "^1.26.10",

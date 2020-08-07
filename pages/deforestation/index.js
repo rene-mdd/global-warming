@@ -172,14 +172,12 @@ class SemanticDeforestation extends React.Component {
                         time-series analysis of 654,178 Landsat 7 ETM+ images in
                         characterizing global forest extent and change from 2000
                         through 2012. For additional information about these
-                        results, please see the associated journal article (
-                        <a
-                          href='http://www.sciencemag.org/content/342/6160/850'
-                          target='_blank'
-                        >
-                          http://www.sciencemag.org/content/342/6160/850
-                        </a>
-                        ) (Hansen et al., Science 2013).{' '}
+                        results, please see the associated journal article: <a
+                            href='https://science.sciencemag.org/content/342/6160/850'
+                            target='_blank'
+                          >
+                              source
+                          </a> (Hansen et al., Science 2013).{' '}
                       </p>
                     )}
                   </Container>
@@ -328,4 +326,4 @@ export async function getServerSideProps ({ res }) {
 
   return { props: { data, gData} }
 }
-export default SemanticDeforestation
+export default SemanticDeforestation;

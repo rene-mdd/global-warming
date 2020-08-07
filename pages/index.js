@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import StickyMenu from '../components/semantic/sticky'
 import SideMenu from '../components/semantic/sideMenu'
 import { Divider } from 'semantic-ui-react'
