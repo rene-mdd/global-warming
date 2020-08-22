@@ -16,7 +16,6 @@ import SiteHeader from '../../components/siteHeader'
 const CognitiveServicesCredentials = require('ms-rest-azure')
   .CognitiveServicesCredentials;
   let azureEnvKey = process.env.API_KEY_AZURE;
-  console.log(azureEnvKey)
 let credentials = new CognitiveServicesCredentials(
   `${azureEnvKey}`
 )
