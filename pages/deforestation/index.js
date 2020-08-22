@@ -81,7 +81,7 @@ class SemanticDeforestation extends React.Component {
                   duration={1000}
                   to='jump-news'
                 >
-                  <Button basic>
+                  <Button basic className="icon-style">
                     <Image src='/images/icons-double-down.png' />
                   </Button>
                 </Scroll.Link>
