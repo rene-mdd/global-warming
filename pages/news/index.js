@@ -14,9 +14,11 @@ import axios from 'axios'
 import SiteHeader from '../../components/siteHeader'
 
 const CognitiveServicesCredentials = require('ms-rest-azure')
-  .CognitiveServicesCredentials
+  .CognitiveServicesCredentials;
+  let azureEnvKey = process.env.API_KEY_AZURE;
+  console.log(azureEnvKey)
 let credentials = new CognitiveServicesCredentials(
-  '3058a5d1d023401b9fcc6336eb9ee58d'
+  `${azureEnvKey}`
 )
 let search_term = 'global warming'
 const NewsSearchAPIClient = require('azure-cognitiveservices-newssearch')
@@ -207,9 +209,9 @@ export async function getServerSideProps ({ res }) {
     market: 'en-XA',
     count: 100
   })
-
+  const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
-    'https://gnews.io/api/v3/search?q=%22climate%20change%22&lang=en&image=required&token=92fa89362f9a3f42f2c5a9081d4ea196'
+    `https://gnews.io/api/v3/search?q=%22climate%20change%22&lang=en&image=required&token=${gNewsVariable}`
   )
   const gJson = JSON.parse(JSON.stringify(gNewsResp.data))
   const gData = await gJson

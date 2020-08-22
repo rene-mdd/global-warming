@@ -1,4 +1,4 @@
-import { Container, Header, Grid, Button } from 'semantic-ui-react'
+import { Container, Header, Grid, Button, Menu } from 'semantic-ui-react'
 import Arctic from '../arctic'
 import { AccordionArctic, AccordionShare } from '../semantic/accordion'
 
@@ -71,6 +71,11 @@ class SemanticArctic extends React.Component {
               </Grid>
             </Container>
           </Grid>
+        </Container>
+        <Container as="footer" textAlign="center">
+            <Menu.Item>
+    <p>Copyright © {new Date().getFullYear()} René Rodríguez. All Rights Reserved</p>
+        </Menu.Item>
         </Container>
       </Container>
     )

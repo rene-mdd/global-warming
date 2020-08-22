@@ -182,7 +182,7 @@ class Temperature extends React.Component {
                   href='https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI'
                   target='_blank'
                 >
-                  https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI
+                  Earh Data - Nasa
                 </a>
               </p>
 

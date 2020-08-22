@@ -144,7 +144,7 @@ const panelTemp = _.times(1, i => ({
           <p>
             This API provide on a monthly basis, the global mean surface
             temperature anomaly from 1880.04 to present (in celsius). Fetch this
-            endpoint <b>https://www.global-warming.org/temperature-api</b> and
+            endpoint <b>https://global-warming.org/api/temperature-api</b> and
             you will get the info in JSON format.
           </p>
         </Message.Content>
@@ -169,7 +169,7 @@ const panelCo2 = _.times(1, i => ({
             This APi provide on a quasi-daily basis, the amount of carbon
             dioxide in the atmosphere from 2010.01.01. CO2 is expressed as a
             mole fraction in dry air, parts per million (ppm). Fetch this
-            endpoint <b>https://www.global-warming.org/co2-api</b> and you will
+            endpoint <b>https://global-warming.org/api/co2-api</b> and you will
             get the info in JSON format
           </p>
         </Message.Content>
@@ -194,7 +194,7 @@ const panelMethane = _.times(1, i => ({
             This API provide on a monthly basis, the amount of methane in the
             atmosphere from 1983. Expressed as a mole fraction in dry air, parts
             per million (ppm). Fetch this endpoint{' '}
-            <b>https://www.global-warming.org/methane-api</b> and you will get
+            <b>https://global-warming.org/api/methane-api</b> and you will get
             the info in JSON format.
           </p>
         </Message.Content>
@@ -219,7 +219,7 @@ const panelNitrous = _.times(1, i => ({
             This API provide on a monthly basis, the amount of nitrous oxide in
             the atmosphere from 2001. Expressed as a mole fraction in dry air,
             parts per million (ppm). Fetch this endpoint{' '}
-            <b>https://www.global-warming.org/nitrous-oxide-api</b> and you will
+            <b>https://global-warming.org/api/nitrous-oxide-api</b> and you will
             get the info in JSON format.
           </p>
         </Message.Content>
@@ -243,7 +243,7 @@ const panelArctic = _.times(1, i => ({
           <p>
             This API provide the average monthly Arctic sea ice extent each
             September since 1979, derived from satellite observations. Fetch
-            this endpoint <b>https://www.global-warming.org/arctic-api</b> and
+            this endpoint <b>https://global-warming.org/api/arctic-api</b> and
             you will get the info in JSON format.{' '}
           </p>
         </Message.Content>

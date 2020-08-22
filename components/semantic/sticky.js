@@ -11,11 +11,12 @@ export default class StickySideBar extends Component {
         size='huge'
         stackable={true}
         className='chart-img--remove'
+        
       >
         <Container as='nav'>
           <Link href='/' passHref>
             <Menu.Item as='a' position='left'>
-              <Image size='mini' src='images/contact-image.png' />
+              <Image size='mini' src='images/logo-planet-image.png' />
             </Menu.Item>
           </Link>
           <Link href='/' passHref>
