@@ -12,6 +12,9 @@ import {
 } from 'semantic-ui-react'
 import axios from 'axios'
 import SiteHeader from '../../components/siteHeader'
+import Observer from '@researchgate/react-intersection-observer';
+
+
 
 const CognitiveServicesCredentials = require('ms-rest-azure')
   .CognitiveServicesCredentials;
@@ -24,16 +27,31 @@ const NewsSearchAPIClient = require('azure-cognitiveservices-newssearch')
 let client = new NewsSearchAPIClient(credentials)
 
 class News extends React.Component {
+  
   constructor (props) {
     super(props)
     this.state = {
-      gNews: []
+      gNews: [],
+      intersecting: false
     }
   }
 
+ 
+  handleIntersection = (event) => {
+    if(event.isIntersecting){
+      this.setState({intersecting: true})
+    }
+}
+
+
   render () {
-    const parsedGNews = this.props.gData.articles
-    const parsedBingNews = this.props.data.value
+    const options = {
+      onChange: this.handleIntersection
+        };
+  
+    const parsedGNews = this.props.gData.articles;
+  
+    const parsedBingNews = this.props.data.value;
     const duplicateRemovalBing = parsedBingNews.filter(
       (thing, index, self) =>
         index ===
@@ -48,10 +66,12 @@ class News extends React.Component {
           t => t.description === thing.description || t.title === thing.title
         )
     )
-    console.log(duplicateRemovalGNews)
+    const newsMetaTitle = "Global warming & climate change news."
+    const newsMetaDescription = "Live worldwide news about global warming and climate change."
+    const newsKeywords = "Global warming, climate change, news, environment, green house gases"
     return (
       <>
-      <SiteHeader />
+      <SiteHeader description={newsMetaDescription} title={newsMetaTitle} keywords={newsKeywords} />
         <StickyMenu />
 
         <Container fluid={true} id='landing-page-news'>
@@ -93,7 +113,10 @@ class News extends React.Component {
             News List
           </Header>
           <Header as='h4' textAlign='center'>
-            Live: <span id='news-date'>{new Date().toString()}</span>
+          Live: 
+          <Observer {...options}>
+           <span id='news-date'>Live: {new Date().toString()}</span>
+            </Observer>
           </Header>
           <Divider />
           <Item.Group divided>
@@ -143,8 +166,8 @@ class News extends React.Component {
                 </Item>
               )
             })}
-            <Divider />
-            {duplicateRemovalBing.map((obj, index) => {
+            <Divider/>
+            {this.state.intersecting && duplicateRemovalBing.map((obj, index) => {
               return (
                 <Item key={'bing:' + index}>
                   <Item.Image
@@ -204,19 +227,21 @@ class News extends React.Component {
 }
 
 export async function getServerSideProps ({ res }) {
+
   const resp = await client.newsOperations.search(search_term, {
     market: 'en-XA',
     count: 100
   })
+  
+  const json = JSON.parse(JSON.stringify(resp));
+  const data = await json;
+
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
     `https://gnews.io/api/v3/search?q=%22climate%20change%22&lang=en&image=required&token=${gNewsVariable}`
   )
-  const gJson = JSON.parse(JSON.stringify(gNewsResp.data))
-  const gData = await gJson
-
-  const json = JSON.parse(JSON.stringify(resp))
-  const data = await json
+  const gJson = JSON.parse(JSON.stringify(gNewsResp.data));
+  const gData = await gJson;
 
   res.setHeader(
     'Cache-Control',

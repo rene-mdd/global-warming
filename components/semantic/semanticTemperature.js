@@ -3,15 +3,10 @@ import Temperature from '../temperature'
 import { AccordionTemp, AccordionShare } from '../semantic/accordion'
 
 class SemanticTemperature extends React.Component {
-  state = { siteView: '' }
-  handleIntersection = event => {
-    const intersectingResult = event.isIntersecting
-    if (intersectingResult) {
-      this.setState({ siteView: 'temperature' })
-    }
-  }
-
+  state = { siteView: ''}
+ 
   render () {
+  
     return (
       <Container as='section' fluid={true} className='temperature-background'>
         <Container>
@@ -25,7 +20,7 @@ class SemanticTemperature extends React.Component {
           </Grid>
           <Grid columns='equal' style={{ marginTop: '7vh' }}>
             <Container>
-              <p>
+               <p>
                 The current global warming rate is not natural. From 1880 to
                 1981 was (0.07°C / 0.13°F) per decade. Since 1981 this rate has
                 increased to (0.18°C / 0.32°F){' '}

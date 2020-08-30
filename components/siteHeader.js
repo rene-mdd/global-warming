@@ -1,7 +1,6 @@
 
 import Head from "next/head"
-export default function SiteHeader() {
-   
+export default function SiteHeader(props) {
         return (<>
      <Head>
      <script
@@ -19,7 +18,7 @@ export default function SiteHeader() {
         `,
     }}
   />
-          <title>Global Warming</title>
+          <title>{props.title}</title>
           <meta
             property='og:url'
             content={
@@ -33,8 +32,9 @@ export default function SiteHeader() {
           <meta property='og:image:type' content='image/jpeg' />
           <meta
             name='description'
-            content='Global Warming and Climate Change live API, data, graphs, and news.'
+            content={props.description}
           />
+          <meta name="keywords" content={props.keyword} />
           <link rel='icon' href='/favicon.ico' />
           <link
             rel='stylesheet'

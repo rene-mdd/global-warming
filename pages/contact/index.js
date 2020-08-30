@@ -69,15 +69,18 @@ const Contact = () => {
       })
     }
   }
-
+  const contactMetaDescription =
+    'For suggestions about this global warming project, or if you want to discuss ideas related to this kind of environmental issues, use this contact section.';
+    const contactMetaTitle = "Global warming contact for sharing ideas and solutions."
+    const contactKeywords = "Global warming, climate change, contact"
   return (
     <>
-      <SiteHeader />
+      <SiteHeader description={contactMetaDescription} title={contactMetaTitle} keywords={contactKeywords}/>
       <StickyMenu />
       <Container fluid className='contact-container'>
         <Grid centered columns='equal'>
           <Header as='h2' className='contact-title'>
-            <span>Contact</span>
+            <h1><span>Contact</span></h1>
           </Header>
           <Grid.Row>
             <Grid.Column width='5'>
@@ -91,11 +94,13 @@ const Contact = () => {
           <Grid.Row>
             <Grid.Column width='10'>
               <Segment>
+                <p id="contact-segment">
                 Hello! My name is René Rodríguez and I'm the developer of this
                 site. I'm currently living in Berlin. For suggestions about this
-                project, or if you want to discuss ideas related to this kind of environmental
-                issues, please send me a message or write me at{' '}
-                <b>info@rene-rodriguez.com</b>{' '}
+                project, or if you want to discuss ideas related to this kind of
+                environmental issues, please send me a message or write me at{' '}
+                <b>hello@rene-rodriguez.com</b>{' '}
+                </p>
               </Segment>
               <Form
                 action='https://api.staticforms.xyz/submit'
