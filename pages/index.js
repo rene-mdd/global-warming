@@ -11,11 +11,14 @@ import SiteHeader from "../components/siteHeader"
 
 
 class Home extends React.Component {
-
+  
   render () {
+    const homeTitle = "Global Warming";
+    const homeMetaDescription = "Global Warming and Climate Change live API, data, graphs, and news.";
+    const homeKeywords = "Global warming, climate change, API, graphs"
     return (
       <>
-       <SiteHeader />
+       <SiteHeader description={homeMetaDescription} title={homeTitle} keywords={homeKeywords}/>
         <StickyMenu />
         <SideMenu />
         <LandingPage />

@@ -4,7 +4,7 @@ Web app to find and share updated information about global warming and related e
 Details: 
 
 global-warming.org constantly fetch data from scientific sources, with the aim to serve
-visitors with up to date and trustworthy information about the most urgent environmental issues, specially global warming and deforestation.
+visitors with up to date and trustworthy APIs, information, and news about the most urgent environmental issues: global warming and deforestation.
 
 This is a React-NextJs app.
 

@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react'
 import axios from 'axios'
 import SiteHeader from '../../components/siteHeader'
+import Observer from '@researchgate/react-intersection-observer';
 
 const CognitiveServicesCredentials = require('ms-rest-azure')
   .CognitiveServicesCredentials;
@@ -25,12 +26,23 @@ const NewsSearchAPIClient = require('azure-cognitiveservices-newssearch')
 let client = new NewsSearchAPIClient(credentials)
 
 class SemanticDeforestation extends React.Component {
-  state = { toggle: false, gNews: [] }
+  state = { toggle: false, gNews: [],
+    intersecting: false }
   handleForest = () => {
     this.setState({ toggle: !this.state.toggle })
   }
 
+  handleIntersection = (event) => {
+    if(event.isIntersecting){
+      this.setState({intersecting: true})
+    }
+}
+
   render () {
+    const options = {
+      onChange: this.handleIntersection
+        };
+
     const parsedGNews = this.props.gData.articles
     const parsedBingNews = this.props.data.value
 
@@ -48,10 +60,13 @@ class SemanticDeforestation extends React.Component {
           t => t.description === thing.description || t.title === thing.title
         )
     )
-
+          const deforestationTitle = "Global deforestation news and map."
+          const deforestationMetaDescription = "Live news about worldwide deforestation and map builder to check on global forest loss.";
+          const deforestationKeywords = "Deforestation, global warming, climate change, environment"
+          
     return (
       <>
-        <SiteHeader />
+        <SiteHeader description={deforestationMetaDescription} title={deforestationTitle} keywords={deforestationKeywords}/>
         <StickyMenu />
 
         <Container fluid={true} id='landing-page-deforestation'>
@@ -193,7 +208,9 @@ class SemanticDeforestation extends React.Component {
             News List
           </Header>
           <Header as='h4' textAlign='center'>
-            Live: <span id='news-date'>{new Date().toString()}</span>
+          <Observer {...options}>
+      <span id='news-date'>Live: {new Date().toString()}</span>
+      </Observer>
           </Header>
           <Divider />
           <Item.Group divided>
@@ -248,7 +265,7 @@ class SemanticDeforestation extends React.Component {
               )
             })}
             <Divider />
-            {duplicateRemovalBing.map((obj, index) => {
+            {this.state.intersecting && duplicateRemovalBing.map((obj, index) => {
               return (
                 <Item key={'bing:' + index}>
                   <Item.Image
