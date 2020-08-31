@@ -167,7 +167,7 @@ const panelCo2 = _.times(1, i => ({
         <Message.Content className='api-content'>
           <p>
             This APi provide on a quasi-daily basis, the amount of carbon
-            dioxide in the atmosphere from 2010.01.01. CO2 is expressed as a
+            dioxide (CO2) in the atmosphere from 2010.01.01 to present. It is expressed as a
             mole fraction in dry air, parts per million (ppm). Fetch this
             endpoint <b>https://global-warming.org/api/co2-api</b> and you will
             get the info in JSON format
@@ -191,8 +191,8 @@ const panelMethane = _.times(1, i => ({
         </Message.Header>
         <Message.Content className='api-content'>
           <p>
-            This API provide on a monthly basis, the amount of methane in the
-            atmosphere from 1983. Expressed as a mole fraction in dry air, parts
+            This API provides on a monthly basis, the amount of methane in the
+            atmosphere from 1983 to the present. Expressed as a mole fraction in dry air, parts
             per million (ppm). Fetch this endpoint{' '}
             <b>https://global-warming.org/api/methane-api</b> and you will get
             the info in JSON format.
