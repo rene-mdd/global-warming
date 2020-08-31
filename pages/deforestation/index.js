@@ -220,8 +220,8 @@ class SemanticDeforestation extends React.Component {
                   <Item.Image
                     src={
                       obj?.image
-                        ? obj.image
-                        : this.forceUpdate() && '/images/breaking-news.png'
+                        ?? obj.image
+                        ?? '/images/breaking-news.png'
                     }
                   />
                   <Item.Content style={{ borderLeft: '1px solid #C8C8C8' }}>
