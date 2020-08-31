@@ -60,7 +60,7 @@ class SemanticArctic extends React.Component {
                 this is a process in which large amounts of methane is released
                 to the atmosphere, fueling more the process of global warming.
               </p>
-              <p>For details please visit: <a href='https://www.npolar.no/en/themes/climate-change-in-the-arctic/#toggle-id-8' target='_blank'>source</a>, <a href='https://www.igsoc.org/annals/46/a46a005.pdf' target='_blank'>source</a>.</p>
+              <p>For details please visit: <a href='https://www.npolar.no/en/themes/climate-change-in-the-arctic/#toggle-id-8' target='_blank'>Climate change in the Arctic</a> and <a href='https://www.igsoc.org/annals/46/a46a005.pdf' target='_blank'>Recent air-temperature changes in the Arctic</a>.</p>
               <Grid className='api-segment' columns='equal' centered stackable>
                 <Grid.Column>
                   <AccordionArctic />

@@ -24,12 +24,9 @@ class SemanticCo2 extends React.Component {
     }
   }
   render () {
-    // const options = {
-    //   onChange: this.handleIntersection
-    // };
+
     return (
       <Container as='section' fluid={true}>
-        {/* <SideMenu visible={false} callBacksideTemp={{observer: this.state.siteView}}/> */}
         <Container>
           <Header as='h2' textAlign='center' className='h2-general'>
           
@@ -60,7 +57,6 @@ class SemanticCo2 extends React.Component {
           </Grid>
           <Grid columns='equal'>
             <Container >
-              {/* <Observer {...options}> */}
               <p>
                 For thousands of years, the natural concentration of CO2 in
                 earth atmosphere was around 280 ppm. From the beginning of the
@@ -72,18 +68,17 @@ class SemanticCo2 extends React.Component {
                   href='https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide'
                   target='_blank'
                 >
-                  source
+                  Climate Change: Atmospheric Carbon Dioxide
                 </a>{' '}
                 and{' '}
                 <a
                   href='https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/'
                   target='_blank'
                 >
-                  source
+                  The relentless rise of carbon dioxide
                 </a>
                 .</p>
               
-              {/* </Observer> */}
               <Grid className='api-segment' columns='equal' centered stackable>
                 <Grid.Column>
                   <AccordionCo2 />

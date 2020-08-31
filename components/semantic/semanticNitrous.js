@@ -56,12 +56,32 @@ class SemanticNitrous extends React.Component {
                 Nitrous oxide is a gas that is produced by the combustion of
                 fossil fuel and solid waste, nitrogen-base fertilizers, sewage
                 treatment plants, natural processes, and other agricultural and
-                industrial activities.</p><p> It is the third largest heat-trapping gas in
-                the atmosphere and the biggest ozone-destroying compound
-                emitted by human activities.</p> <p>For more detailed information
-                please visit: <a href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3306630/' target='_blank'>source</a>, <a href='https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide' target='_blank'>source</a>.
+                industrial activities.
               </p>
-
+              <p>
+                {' '}
+                It is the third largest heat-trapping gas in the atmosphere and
+                the biggest ozone-destroying compound emitted by human
+                activities.
+              </p>{' '}
+              <p>
+                For more detailed information please visit:{' '}
+                <a
+                  href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3306630/'
+                  target='_blank'
+                >
+                  Stratospheric ozone depletion due to nitrous oxide: influences
+                  of other gases
+                </a>
+                {' '}and{' '}
+                <a
+                  href='https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide'
+                  target='_blank'
+                >
+                  EPA: Nitrous Oxide Emissions
+                </a>
+                .
+              </p>
               <Grid className='api-segment' columns='equal' centered stackable>
                 <Grid.Column>
                   <AccordionNitrous />
