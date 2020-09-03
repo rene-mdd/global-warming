@@ -99,7 +99,9 @@ class Methane extends React.Component {
                   scaleLabel: {
                     display: true,
                     labelString: 'Year'
-                  }
+                  },
+                  ticks:{
+                  maxRotation: 90}
                 }
               ]
             }
@@ -125,14 +127,15 @@ class Methane extends React.Component {
             this.go(this.state.isLoading)
           }}
         />
-        <Grid.Column width='fourteen'>
+        
           <Container
             className='chart-container'
             style={{ position: 'relative', width: '80vw' }}
           >
             <canvas id='myMethChart'></canvas>
           </Container>
-
+          <Grid width='equal' centered>
+          <Grid.Column width='fourteen'>
           {!this.state.isLoading && (
             <Container as='footer'>
               {' '}
@@ -146,6 +149,7 @@ class Methane extends React.Component {
             </Container>
           )}
         </Grid.Column>
+        </Grid>
       </>
     )
   }

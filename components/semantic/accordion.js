@@ -142,10 +142,10 @@ const panelTemp = _.times(1, i => ({
         </Message.Header>
         <Message.Content className='api-content'>
           <p>
-            This API provide on a monthly basis, the global mean surface
-            temperature anomaly from 1880.04 to present (in celsius). Fetch this
-            endpoint <b>https://global-warming.org/api/temperature-api</b> and
-            you will get the info in JSON format.
+            This API provides on a monthly basis, the global mean surface
+            temperature anomaly from 1880.04 to the present (in celsius). Fetch
+            this endpoint <b>https://global-warming.org/api/temperature-api</b>{' '}
+            and you will get the info in JSON format.
           </p>
         </Message.Content>
       </Message>
@@ -166,11 +166,11 @@ const panelCo2 = _.times(1, i => ({
         </Message.Header>
         <Message.Content className='api-content'>
           <p>
-            This APi provide on a quasi-daily basis, the amount of carbon
-            dioxide (CO2) in the atmosphere from 2010.01.01 to present. It is expressed as a
-            mole fraction in dry air, parts per million (ppm). Fetch this
-            endpoint <b>https://global-warming.org/api/co2-api</b> and you will
-            get the info in JSON format
+            This API provides on a quasi-daily basis, the amount of carbon
+            dioxide (CO2) in the atmosphere from 2010.01.01 to the present. It
+            is expressed as a mole fraction in dry air, parts per million (ppm).
+            Fetch this endpoint <b>https://global-warming.org/api/co2-api</b>{' '}
+            and you will get the info in JSON format
           </p>
         </Message.Content>
       </Message>
@@ -192,8 +192,8 @@ const panelMethane = _.times(1, i => ({
         <Message.Content className='api-content'>
           <p>
             This API provides on a monthly basis, the amount of methane in the
-            atmosphere from 1983 to the present. Expressed as a mole fraction in dry air, parts
-            per million (ppm). Fetch this endpoint{' '}
+            atmosphere from 1983 to the present. Expressed as a mole fraction in
+            dry air, parts per million (ppm). Fetch this endpoint{' '}
             <b>https://global-warming.org/api/methane-api</b> and you will get
             the info in JSON format.
           </p>
@@ -216,8 +216,8 @@ const panelNitrous = _.times(1, i => ({
         </Message.Header>
         <Message.Content className='api-content'>
           <p>
-            This API provide on a monthly basis, the amount of nitrous oxide in
-            the atmosphere from 2001. Expressed as a mole fraction in dry air,
+            This API provides on a monthly basis, the amount of nitrous oxide in
+            the atmosphere from 2001 to the present. Expressed as a mole fraction in dry air,
             parts per million (ppm). Fetch this endpoint{' '}
             <b>https://global-warming.org/api/nitrous-oxide-api</b> and you will
             get the info in JSON format.
@@ -241,7 +241,7 @@ const panelArctic = _.times(1, i => ({
         </Message.Header>
         <Message.Content className='api-content'>
           <p>
-            This API provide the average monthly Arctic sea ice extent each
+            This API provides the average monthly arctic sea ice extent each
             September since 1979, derived from satellite observations. Fetch
             this endpoint <b>https://global-warming.org/api/arctic-api</b> and
             you will get the info in JSON format.{' '}
