@@ -77,8 +77,7 @@ class Nitrous extends React.Component {
               bounds: 'ticks',
               ticks: {
                 suggestedMax: 800000,
-                suggestedMin: -800000,
-                maxRotation: 90
+                suggestedMin: -800000
               },
               yAxes: [
                 {
@@ -95,7 +94,9 @@ class Nitrous extends React.Component {
                   scaleLabel: {
                     display: true,
                     labelString: 'Year'
-                  }
+                  },
+                  ticks:{
+                  maxRotation: 90}
                 }
               ]
             }
