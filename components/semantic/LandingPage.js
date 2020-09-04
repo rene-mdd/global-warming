@@ -13,7 +13,7 @@ const LandingPage = () => (
         </Grid.Row>
       </Grid>
       <Header textAlign='center' className='h2-id'>
-        This site delivers up to date information about the earth's current,
+        This site delivers up to date information and APIs about the earth's current
         temperature, the concentration of greenhouse gases in the atmosphere,
         and worldwide news about global warming and deforestation.
       </Header>
