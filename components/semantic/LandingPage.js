@@ -2,7 +2,7 @@ import { Container, Header, Grid, Image, Button } from 'semantic-ui-react'
 import * as Scroll from 'react-scroll'
 
 const LandingPage = () => (
-  <Container as='main' fluid className="landing-background">
+  <Container as='main' fluid className='landing-background'>
     <Container>
       <Header as='h1' textAlign='center' className='h1-id'>
         Global Warming live graphs and API
@@ -13,8 +13,9 @@ const LandingPage = () => (
         </Grid.Row>
       </Grid>
       <Header textAlign='center' className='h2-id'>
-        This site delivers up to date information about earth's current
-        temperature, and concentration of green house gases in the atmosphere.
+        This site delivers up to date information and APIs about the earth's current
+        temperature, the concentration of greenhouse gases in the atmosphere,
+        and worldwide news about global warming and deforestation.
       </Header>
       <Grid centered>
         <Grid.Row centered>
