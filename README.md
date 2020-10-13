@@ -14,4 +14,6 @@ Don't forget to install the node modules: npm install
 
 You need to get a microsoft azure and Gnews API key, in order to fetch the news.
 
+Site: www.global-warming.org
+
 Thank you!
