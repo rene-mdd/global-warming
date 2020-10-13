@@ -107,7 +107,7 @@ class News extends React.Component {
             </Grid>
           </Container>
         </Container>
-        <Divider name='jump-to-news' />
+        <Divider name='jump-to-news' id='hidde-divider'/>
         <Container>
           <Header as='h3' id='list-news' textAlign='center'>
             News List

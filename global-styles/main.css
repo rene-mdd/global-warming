@@ -8,9 +8,8 @@ font-size: 100%;
     background-image: linear-gradient(90deg, #f6f6f6 0%, #e9e9e9 74%) !important;} */
     /* body {  background-image: linear-gradient(90deg, #dfe9f3 0%, white 100%) !important} */
  body {background: linear-gradient(90deg, hsla(120, 100%, 99%, 1) 0%, hsla(0, 0%, 100%, 1)) 100% !important;}
-.hide {visibility: hidden !important}
+
   .mini-icon {width: 20px; height: 20px}
-  .icon-style {margin-top: 10vh !important}
   #temperature-description {padding-top: -30px !important};
   #temp-error {margin: 35px 0 35px 0 !important}
   p {font-size: 22px}
@@ -22,7 +21,7 @@ font-size: 100%;
     background-size: cover !important;}
   .h1-id {padding:  40vh 0 0 0 !important;  color: white !important}
   .h2-id {color: white !important; font-size: 1.5em !important; text-shadow: 1px 1px 1px #000 !important; }
-  .h1-news {padding:  40vh 0 10vh 0 !important; font-size: 2.5em !important; color: white !important}
+  .h1-news {padding:  40vh 0 0vh 0 !important; font-size: 2.5em !important; color: white !important}
   .h2-general  {padding:  20vh 0 10vh 0 !important; font-size: 2em !important; color: #343837 !important}
   footer p {margin: 0; font-size: 0.8em}
   #down-icon {padding-top: 6rem !important}
@@ -64,3 +63,4 @@ h4 {font-size: 1.5em !important; margin-bottom: 5vh !important}
 .submit-button {background-color: #47C072 !important;}
 nav a:hover {background-color: #6db629 !important}
 #contact-segment {font-size: 1.2em !important}
+#hide-divider { opacity: 0}
