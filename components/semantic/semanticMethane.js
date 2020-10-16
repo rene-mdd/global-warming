@@ -45,7 +45,7 @@ class SemanticMethane extends React.Component {
                   className={this.state.methaneLoading}
                   id={this.state.methaneLoading}
                 >
-                  {this.state.methane ? 'Hide graph' : 'Display graph'}
+                  {this.state.methane ? 'Hide graph' : 'Load graph'}
                 </Button>
               </Grid.Column>
             </Grid.Row>

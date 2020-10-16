@@ -45,7 +45,7 @@ class SemanticNitrous extends React.Component {
                   className={this.state.nitrousLoading}
                   id={this.state.nitrousLoading}
                 >
-                  {this.state.nitrous ? 'Hide graph' : 'Display graph'}
+                  {this.state.nitrous ? 'Hide graph' : 'Load graph'}
                 </Button>
               </Grid.Column>
             </Grid.Row>

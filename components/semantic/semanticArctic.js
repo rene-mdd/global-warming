@@ -44,7 +44,7 @@ class SemanticArctic extends React.Component {
                   className={this.state.arcticLoading}
                   id={this.state.arcticLoading}
                 >
-                  {this.state.arctic ? 'Hide graph' : 'Display graph'}
+                  {this.state.arctic ? 'Hide graph' : 'Load graph'}
                 </Button>
               </Grid.Column>
             </Grid.Row>

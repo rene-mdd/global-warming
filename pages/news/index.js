@@ -74,7 +74,7 @@ class News extends React.Component {
       <SiteHeader description={newsMetaDescription} title={newsMetaTitle} keywords={newsKeywords} />
         <StickyMenu />
 
-        <Container fluid={true} id='landing-page-news'>
+        <Container fluid={true} className='landing-page-news'>
           <Container>
             <Header as='h1' textAlign='center' className='h1-news'>
               Global Warming & Climate Change World News

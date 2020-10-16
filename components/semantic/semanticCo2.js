@@ -50,7 +50,7 @@ class SemanticCo2 extends React.Component {
                   className={this.state.co2Loading}
                   id={this.state.co2Loading}
                 >
-                  {this.state.co2 ? 'Hide graph' : 'Display graph'}
+                  {this.state.co2 ? 'Hide graph' : 'Load graph'}
                 </Button>
               </Grid.Column>
             </Grid.Row>
