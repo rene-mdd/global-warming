@@ -26,7 +26,7 @@ const NewsSearchAPIClient = require('azure-cognitiveservices-newssearch')
 let client = new NewsSearchAPIClient(credentials)
 
 class SemanticDeforestation extends React.Component {
-  state = { toggle: false, gNews: [],
+  state = { toggle: true, gNews: [],
     intersecting: false }
   handleForest = () => {
     this.setState({ toggle: !this.state.toggle })
