@@ -3,8 +3,8 @@ import * as Scroll from 'react-scroll'
 
 const LandingPage = () => (
   <Container as='main' fluid className='landing-background'>
-    <Container>
-      <Header as='h1' textAlign='center' className='h1-id'>
+    <Container className="home-text-container">
+      <Header as='h1' textAlign='center' className='h1-class'>
         Global Warming live graphs and API
       </Header>
       <Grid columns='equal'>
@@ -19,7 +19,7 @@ const LandingPage = () => (
       </Header>
       <Grid centered>
         <Grid.Row centered>
-          <Grid.Column width='4' textAlign='center'>
+          
             <Scroll.Link
               spy={true}
               smooth={true}
@@ -30,7 +30,7 @@ const LandingPage = () => (
                 <Image src='/images/icons-double-down.png' />
               </Button>
             </Scroll.Link>
-          </Grid.Column>
+        
         </Grid.Row>
       </Grid>
     </Container>
