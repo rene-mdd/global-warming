@@ -32,8 +32,8 @@ p {
         rgba(0, 0, 0, 0.6)
       ),url('/public/images/newspaper-background.jpg') !important;
       background-size: cover !important;} */
-.h1-id {
-    padding: 40vh 0 0 !important;
+.h1-class {
+    padding: 35vh 0 0 !important;
     color: white !important
 }
 .h2-id {
@@ -42,7 +42,7 @@ p {
     text-shadow: 1px 1px 1px #000 !important;
 }
 .h1-news {
-    padding: 40vh 0 0 !important;
+    padding: 35vh 0 0 !important;
     font-size: 2.5em !important;
     color: white !important
 }
@@ -94,9 +94,23 @@ footer p {
 .news-button {
     background-color: #0E87CC !important;
 }
-@media only screen and(max-width: 600px) {
+@media only screen and (max-width: 600px) {
     i {
         display: none !important
+    }
+    .h1-class {
+        padding: 15vh 0 0 !important;
+        color: white !important
+    }
+    .h1-news {
+        padding: 15vh 0 0 !important;
+        font-size: 2.5em !important;
+        color: white !important
+    }
+    #h1-deforestation {
+        padding: 15vh 0 0 !important;
+        font-size: 2.5em;
+        color: white !important;
     }
 }
 .api-segment i::before {
@@ -113,7 +127,7 @@ footer p {
 #h1-deforestation {
     font-size: 2.5em;
     color: white !important;
-    padding: 40vh 0 10vh
+    padding: 35vh 0 0vh
 }
 #h2-news {
     font-size: 1.5em;
@@ -168,7 +182,7 @@ h4 {
 .fix {
     position: fixed !important;
     width: 10em !important;
-    margin-top: 30vh !important;
+    margin-top: 35vh !important;
     padding: 0;
     opacity: 1 !important;
     height: 50px !important
@@ -195,7 +209,7 @@ h4 {
     width: 25px !important
 }
 .contact-container {
-    margin-top: 40vh !important
+    margin-top: 35vh !important
 }
 .header p {
     font-size: 1.3em !important

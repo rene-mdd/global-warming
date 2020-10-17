@@ -15,7 +15,7 @@ class SemanticTemperature extends React.Component {
           </Header>
           <Grid container={true}>
             <Grid.Row centered stretched>
-              <Temperature />
+              {/* <Temperature /> */}
             </Grid.Row>
           </Grid>
           <Grid columns='equal' style={{ marginTop: '7vh' }}>
