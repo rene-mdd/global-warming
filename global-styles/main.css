@@ -2,39 +2,39 @@ html * {
     padding: 0;
     font-family: 'Play', sans-serif !important;
     font-size: 100%;
-
 }
 
 body {
     background: linear-gradient(90deg, hsla(120, 100%, 99%, 1) 0%, hsla(0, 0%, 100%, 1)) 100% !important;
 }
+
 .mini-icon {
     width: 20px;
     height: 20px
 }
+
 #temperature-description {
     padding-top: -30px !important
 };
+
 #temp-error {
     margin: 35px 0 !important
 }
+
 p {
     font-size: 22px
 }
+
 .landing-background {
     height: 100vh !important;
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/background-global-warming.png') !important;
     background-size: cover !important;
 }
-/* .news-background {  height:100vh !important;
-      background-image: linear-gradient(
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.6)
-      ),url('/public/images/newspaper-background.jpg') !important;
-      background-size: cover !important;} */
+
 .h1-class {
     padding: 35vh 0 0 !important;
-    color: white !important
+    color: white !important;
+    font-size: 2.5em !important;
 }
 .h2-id {
     color: white !important;
@@ -100,17 +100,28 @@ footer p {
     }
     .h1-class {
         padding: 15vh 0 0 !important;
-        color: white !important
+        color: white !important;
+        font-size: 2em !important;
     }
     .h1-news {
         padding: 15vh 0 0 !important;
-        font-size: 2.5em !important;
+        font-size: 2em !important;
         color: white !important
     }
     #h1-deforestation {
         padding: 15vh 0 0 !important;
-        font-size: 2.5em;
+        font-size: 2em;
         color: white !important;
+    }
+    .h2-id {
+        color: white !important;
+        font-size: 1.2em !important;
+        text-shadow: 1px 1px 1px #000 !important;
+    }
+    #h2-news {
+        font-size: 1.2em !important;
+        color: white !important;
+        font-weight: 400 !important;
     }
 }
 .api-segment i::before {
