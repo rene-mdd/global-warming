@@ -22,7 +22,7 @@ export default function SiteHeader(props) {
           <meta
             property='og:url'
             content={
-              'https://global-warming-azure.vercel.app/api/chart-img/tempChart.jpeg'
+              'https://global-warming.org/'
             }
           />
           {/* link to live chart api/chart-img/tempChart.jpeg */}
