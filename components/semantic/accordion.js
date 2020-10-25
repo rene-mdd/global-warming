@@ -43,88 +43,88 @@ import {
 const share = [
   <FacebookShareButton
     children={<FacebookIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='facebook'
   />,
   <EmailShareButton
     children={<EmailIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='email'
   />,
   <InstapaperShareButton
     children={<InstapaperIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='instagram'
   />,
   <LineShareButton
     children={<LineIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='line'
   />,
   <LinkedinShareButton
     children={<LinkedinIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='linkedin'
   />,
   <LivejournalShareButton
     children={<LivejournalIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='liveJournal'
   />,
   <MailruShareButton
     children={<MailruIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='mailRu'
   />,
   <OKShareButton
     children={<OKIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='ok'
   />,
   <PinterestShareButton
-    media='https://global-warming-azure.vercel.app/api/chart-img/tempChart.jpeg'
+    media='https://global-warming.org/api/chart-img/tempChart.jpeg'
     children={<PinterestIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='pinterest'
   />,
   <PocketShareButton
     children={<PocketIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='pocket'
   />,
   <RedditShareButton
     children={<RedditIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='reddit'
   />,
   <TumblrShareButton
     children={<TumblrIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='tumblr'
   />,
   <TwitterShareButton
     children={<TwitterIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='twitter'
   />,
   <ViberShareButton
     children={<ViberIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='viber'
   />,
   <VKShareButton
     children={<VKIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='vk'
   />,
   <WhatsappShareButton
     children={<WhatsappIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='whatsapp'
   />,
   <TelegramShareButton
     children={<TelegramIcon size={50} borderRadius={5} />}
-    url='https://global-warming-azure.vercel.app/'
+    url='https://global-warming.org/'
     key='telegram'
   />
 ]
