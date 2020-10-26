@@ -28,8 +28,8 @@ export default function SiteHeader(props) {
           {/* link to live chart api/chart-img/tempChart.jpeg */}
           <meta property='og:title' content={'Global Warming Data'} />
           <meta property='og:image' content={`images/share-image.png`} />
-          <meta property='og:image:width' content='400' />
-          <meta property='og:image:height' content='300' />
+          <meta property='og:image:width' content='75' />
+          <meta property='og:image:height' content='75' />
           <meta property='og:image:type' content='image/png' />
           <meta
             name='description'
