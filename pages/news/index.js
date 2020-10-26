@@ -37,6 +37,11 @@ class News extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this.forceUpdate()
+        console.log("force updated")
+    }
+
     render() {
         const options = {
             onChange: this.handleIntersection
