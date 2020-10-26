@@ -6,8 +6,8 @@ export default class SideBar extends React.Component {
     super(props)
     this.state = {
       activeItem: '',
-      menuVisible: false,
-      rotate: true
+      menuVisible: true,
+      rotate: false
     }
   }
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })

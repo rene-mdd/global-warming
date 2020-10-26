@@ -123,6 +123,9 @@ footer p {
         color: white !important;
         font-weight: 400 !important;
     }
+    .fix {
+        display: none !important
+    }
 }
 .api-segment i::before {
     position: relative;

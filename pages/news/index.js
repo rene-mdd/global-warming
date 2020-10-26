@@ -39,7 +39,6 @@ class News extends React.Component {
 
     componentWillUnmount() {
         this.forceUpdate()
-        console.log("force updated")
     }
 
     render() {
