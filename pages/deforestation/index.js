@@ -1,5 +1,5 @@
-import StickyMenu from '../../components/semantic/sticky'
-import * as Scroll from 'react-scroll'
+import StickyMenu from "../../components/semantic/sticky";
+import * as Scroll from "react-scroll";
 import {
   Container,
   Header,
@@ -9,197 +9,181 @@ import {
   Divider,
   Item,
   Label,
-  Embed
-} from 'semantic-ui-react'
-import axios from 'axios'
-import SiteHeader from '../../components/siteHeader'
-import Observer from '@researchgate/react-intersection-observer';
+  Embed,
+} from "semantic-ui-react";
+import axios from "axios";
+import SiteHeader from "../../components/siteHeader";
+import Observer from "@researchgate/react-intersection-observer";
+import PropTypes from "prop-types";
 
-const CognitiveServicesCredentials = require('ms-rest-azure')
+const CognitiveServicesCredentials = require("ms-rest-azure")
   .CognitiveServicesCredentials;
-  let azureEnvKey = process.env.API_KEY_AZURE;
-let credentials = new CognitiveServicesCredentials(
-  `${azureEnvKey}`
-)
-let search_term = 'deforestation'
-const NewsSearchAPIClient = require('azure-cognitiveservices-newssearch')
-let client = new NewsSearchAPIClient(credentials)
+let azureEnvKey = process.env.API_KEY_AZURE;
+let credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
+let search_term = "deforestation";
+const NewsSearchAPIClient = require("azure-cognitiveservices-newssearch");
+let client = new NewsSearchAPIClient(credentials);
 
 class SemanticDeforestation extends React.Component {
-  state = { toggle: true, gNews: [],
-    intersecting: false }
+  state = {
+    toggle: true,
+    gNews: [],
+    intersecting: false,
+  };
+
   handleForest = () => {
-    this.setState({ toggle: !this.state.toggle })
-  }
+    this.setState({
+      toggle: !this.state.toggle,
+    });
+  };
 
   handleIntersection = (event) => {
-    if(event.isIntersecting){
-      this.setState({intersecting: true})
+    if (event.isIntersecting) {
+      this.setState({ intersecting: true });
     }
-}
+  };
 
-componentWillUnmount() {
-  this.forceUpdate()
-}
+  componentWillUnmount() {
+    this.forceUpdate();
+  }
 
-  render () {
+  render() {
     const options = {
-      onChange: this.handleIntersection
-        };
+      onChange: this.handleIntersection,
+    };
 
-    const parsedGNews = this.props.gData.articles
-    const parsedBingNews = this.props.data.value
-
+    const parsedGNews = this.props.gJson.articles;
+    const parsedBingNews = this.props.azureJson.value;
     const duplicateRemovalBing = parsedBingNews.filter(
       (thing, index, self) =>
         index ===
         self.findIndex(
-          t => t.description === thing.description || t.name === thing.name
+          (t) => t.description === thing.description || t.name === thing.name
         )
-    )
+    );
     const duplicateRemovalGNews = parsedGNews.filter(
       (thing, index, self) =>
         index ===
         self.findIndex(
-          t => t.description === thing.description || t.title === thing.title
+          (t) => t.description === thing.description || t.title === thing.title
         )
-    )
-          const deforestationTitle = "Global deforestation news and map."
-          const deforestationMetaDescription = "Live news about worldwide deforestation and map builder to check on global forest loss.";
-          const deforestationKeywords = "Deforestation, global warming, climate change, environment"
-          
+    );
+    const deforestationTitle = "Global deforestation news and map.";
+    const deforestationMetaDescription =
+      "Live news about worldwide deforestation and map builder to check on global forest loss.";
+    const deforestationKeywords =
+      "Deforestation, global warming, climate change, environment";
+
     return (
       <>
-        <SiteHeader description={deforestationMetaDescription} title={deforestationTitle} keywords={deforestationKeywords}/>
+        <SiteHeader
+          description={deforestationMetaDescription}
+          title={deforestationTitle}
+          keywords={deforestationKeywords}
+        />
         <StickyMenu />
 
-        <Container fluid={true} id='landing-page-deforestation'>
+        <Container fluid={true} id="landing-page-deforestation">
           <Container>
             <Header
-              as='h1'
-              textAlign='center'
-              className='h1-id'
-              id='h1-deforestation'
+              as="h1"
+              textAlign="center"
+              className="h1-id"
+              id="h1-deforestation"
             >
               Global Forest Loss
             </Header>
-            <Grid columns='equal'>
+            <Grid columns="equal">
               <Grid.Row centered={true}>
-                <Image src='images/forest.png' size='tiny' />
-                <Header as='h2' id='h2-news'>
+                <Image src="images/forest.png" size="tiny" />
+                <Header as="h2" id="h2-news">
                   This section is meant to gather data about the current
                   worldwide forests situation. This is done through APIs,
                   databases, news, MapBuilders, and journals.
                 </Header>
               </Grid.Row>
             </Grid>
-            <Grid centered className='icon-style'>
+            <Grid centered className="icon-style">
               <Grid.Row centered>
                 <Scroll.Link
                   spy={true}
                   smooth={true}
                   duration={1000}
-                  to='jump-news'
+                  to="jump-news"
                 >
                   <Button basic className="icon-style">
-                    <Image src='/images/icons-double-down.png' />
+                    <Image src="/images/icons-double-down.png" />
                   </Button>
                 </Scroll.Link>
               </Grid.Row>
             </Grid>
           </Container>
         </Container>
-        <Divider name='jump-news' className='hide-divider' />
+        <Divider name="jump-news" className="hide-divider" />
         <Container>
-          <Grid fluid={true.toString()} className='temperature-background'>
+          <Grid fluid={true.toString()} className="temperature-background">
             <Container>
-              <Header as='h2' className='h2-general' textAlign='center'>
-                Global forest loss from 2000 to 2014
+              <Header as="h2" className="h2-general" textAlign="center">
+                Global forest loss map
               </Header>
-              <Grid column='equal' centered>
+              <Grid column="equal" centered>
                 <Button
                   onClick={this.handleForest}
-                  style={{ marginBottom: '20px' }}
+                  style={{ marginBottom: "20px" }}
                 >
                   {this.state.toggle
-                    ? 'Show 2001 - 2014 deforestation'
-                    : 'Use Global Forest Watch map'}
+                    ? "Deforestation by divided year"
+                    : "Deforestation between 2000 - 2019"}{" "}
                 </Button>
                 <Grid.Row centered>
-                  
                   <Container>
+                    {" "}
                     {this.state.toggle ? (
                       <Embed
-                        as='iframe'
-                        style={{ width: '800px', height: '800px', padding: 0  }}
-                        frameBorder='0'
-                        src='https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03'
+                        as="iframe"
+                        style={{
+                          width: "800px",
+                          height: "800px",
+                          padding: 0,
+                        }}
+                        frameBorder="0"
+                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=47.89%2C-24.5%2C33.63%2C-108.13&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C3%3A100&embedded=true"
                       />
                     ) : (
                       <Embed
-                        as='iframe'
-                        style={{ width: '800px', height: '800px', padding: 0 }}
-                        frameBorder='0'
-                        scrolling='no'
-                        marginHeight='0'
-                        marginWidth='0'
-                        title='Forest loss copy'
-                        src='//www.arcgis.com/apps/Embed/index.html?webmap=ed33972acffc4e7c9b260c753f1a6bd4&extent=-157.4447,-41.8564,177.9459,71.6&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light'
+                        as="iframe"
+                        style={{
+                          width: "800px",
+                          height: "800px",
+                          padding: 0,
+                        }}
+                        frameBorder="0"
+                        scrolling="no"
+                        marginHeight="0"
+                        marginWidth="0"
+                        title="Forest loss copy"
+                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=16.12%2C-23.01%2C-37.45%2C-108.34&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C1%3A100&embedded=true"
                       />
-                    )}
+                    )}{" "}
                   </Container>
 
                   <Container>
-                    <span>Credits: Hansen, UMD, Google, USGS, NASA</span>
+                    <span>Credits: University of Maryland, department of geographical sciences.</span>
                   </Container>
-                  <Container id='deforestation-text' textAlign='left'>
-                    {this.state.toggle ? (
+                  <Container id="deforestation-text" textAlign="left">
+                    {this.state.toggle ? (<>
+                      <p>Results from time-series analysis of Landsat images characterizing forest extent and change.</p>
                       <p>
-                        This is a custom map builder, where you can check on
-                        different features like tree cover loss and gain,
-                        <b> deforestation alert system</b> that monitors forest
-                        cover loss and forest degradation in the Brazilian
-                        Amazon and the globe, areas of likely tree cover loss in
-                        near-real time, and more...
+                      Trees are defined as vegetation taller than 5m in height and are expressed as a percentage per output grid cell as ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is defined as a stand-replacement disturbance, or a change from a forest to non-forest state, during the period 2000–2019. ‘Forest Cover Gain’ is defined as the inverse of loss, or a non-forest to forest change entirely within the period 2000–2012. ‘Forest Loss Year’ is a disaggregation of total ‘Forest Loss’ to annual time scales.
                       </p>
-                    ) : (
-                      <p>
-                        This data set provides a disaggregation of total forest
-                        loss to annual time scales. Encoded as either 0 (no
-                        loss) or else a value in the range 1–14, representing
-                        loss detected primarily in the year 2001–2014,
-                        respectively. This global dataset contain unsigned 8-bit
-                        values and have a spatial resolution of 1 arc-second per
-                        pixel, or approximately 30 meters per pixel at the
-                        equator. Quantification of global forest change has been
-                        lacking despite the recognized importance of forest
-                        ecosystem services. In this data, Earth observation
-                        satellite data were used to map global forest loss (2.3
-                        million square kilometers) and gain (0.8 million square
-                        kilometers) from 2000 to 2012 at a spatial resolution of
-                        30 meters. The tropics were the only climate domain to
-                        exhibit a trend, with forest loss increasing by 2101
-                        square kilometers per year. Brazil’s well-documented
-                        reduction in deforestation was offset by increasing
-                        forest loss in Indonesia, Malaysia, Paraguay, Bolivia,
-                        Zambia, Angola, and elsewhere. Intensive forestry
-                        practiced within subtropical forests resulted in the
-                        highest rates of forest change globally. Boreal forest
-                        loss due largely to fire and forestry was second to that
-                        in the tropics in absolute and proportional terms. These
-                        results depict a globally consistent and locally
-                        relevant record of forest change. Results from
-                        time-series analysis of 654,178 Landsat 7 ETM+ images in
-                        characterizing global forest extent and change from 2000
-                        through 2012. For additional information about these
-                        results, please see the associated journal article: <a
-                            href='https://science.sciencemag.org/content/342/6160/850'
-                            target='_blank'
-                          >
-                              source
-                          </a> (Hansen et al., Science 2013).{' '}
-                      </p>
-                    )}
+                      <p>Reference 2000 and 2019 imagery are median observations from a set of quality assessment-passed growing season observations. </p>
+                    </>) : (<>
+                        <p>Results from time-series analysis of Landsat images characterizing forest extent and change.</p>
+                        <p>
+                        Trees are defined as vegetation taller than 5m in height and are expressed as a percentage per output grid cell as ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is defined as a stand-replacement disturbance, or a change from a forest to non-forest state, during the period 2000–2019. ‘Forest Cover Gain’ is defined as the inverse of loss, or a non-forest to forest change entirely within the period 2000–2012. ‘Forest Loss Year’ is a disaggregation of total ‘Forest Loss’ to annual time scales.
+                        </p>
+                        <p>Reference 2000 and 2019 imagery are median observations from a set of quality assessment-passed growing season observations.</p>
+                    </>)}{" "}
                   </Container>
                 </Grid.Row>
               </Grid>
@@ -208,145 +192,159 @@ componentWillUnmount() {
           </Grid>
         </Container>
         <Container>
-          <Header as='h3' id='list-news' textAlign='center'>
+          <Header as="h3" id="list-news" textAlign="center">
             News List
           </Header>
-          <Header as='h4' textAlign='center'>
-          <Observer {...options}>
-      <span id='news-date'>Live: {new Date().toString()}</span>
-      </Observer>
+          <Header as="h4" textAlign="center">
+            <Observer {...options}>
+              <span id="news-date">Live: {new Date().toString()}</span>
+            </Observer>
           </Header>
           <Divider />
           <Item.Group divided>
             {duplicateRemovalGNews.map((obj, index) => {
               return (
-                <Item key={'gNews:' + index}>
+                <Item key={"gNews:" + index}>
                   <Item.Image
                     src={
-                      obj?.image
-                        ?? obj?.image
-                        ?? '/images/breaking-news.png'
+                     obj?.image || "/images/breaking-news.png"
                     }
                   />
-                  <Item.Content style={{ borderLeft: '1px solid #C8C8C8' }}>
-                    <Item.Header src={obj.url} target='_blank'>
-                      <a href={obj.url} target='_blank'>
-                        {obj.title}
-                      </a>
+                  <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>
+                    <Item.Header src={obj.url} target="_blank">
+                      <a href={obj.url}>{obj.title} </a>
                     </Item.Header>
                     <Item.Meta content={obj.author} />
                     <Item.Description>
                       <p>{obj.description}</p>
                     </Item.Description>
-                    <Item.Extra style={{ paddingTop: '45px' }}>
-                      <Grid columns='equal' centered stackable>
-                        <Grid.Column textAlign='center' verticalAlign='middle'>
+                    <Item.Extra style={{ paddingTop: "45px" }}>
+                      <Grid columns="equal" centered stackable>
+                        <Grid.Column textAlign="center" verticalAlign="middle">
                           <Label>Date: {obj.publishedAt}</Label>
                         </Grid.Column>
-                        <Grid.Column textAlign='center'>
+                        <Grid.Column textAlign="center">
                           <Button
-                            as='a'
+                            as="a"
                             href={obj.url}
-                            target='_blank'
+                            target="_blank"
                             inverted={true}
-                            className='news-button'
-                            size='small'
+                            className="news-button"
+                            size="small"
                           >
-                            {' '}
+                            {" "}
                             <Image
                               inline={true}
-                              size='mini'
-                              className='news-icon'
-                              src='images/icons8-location-96.png'
-                            />
-                            {obj.source.name ?? 'News'}
+                              size="mini"
+                              className="news-icon"
+                              src="images/icons8-location-96.png"
+                            />{" "}
+                            {obj.source.name ?? "News"}{" "}
                           </Button>
                         </Grid.Column>
                       </Grid>
                     </Item.Extra>
                   </Item.Content>
                 </Item>
-              )
+              );
             })}
-            <Divider />
-            {this.state.intersecting && duplicateRemovalBing.map((obj, index) => {
-              return (
-                <Item key={'bing:' + index}>
-                  <Item.Image
-                    size='tiny'
-                    src={
-                      obj?.image?.thumbnail?.contentUrl ??
-                      obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                      '/images/breaking-news.png'
-                    }
-                  />
-                  <Item.Content style={{ borderLeft: '1px solid #C8C8C8' }}>
-                    <Item.Header src={obj.url} target='_blank'>
-                      <a href={obj.url} target='_blank'>
-                        {obj.name}
-                      </a>
-                    </Item.Header>
-                    <Item.Meta content={obj.provider.name} />
-                    <Item.Description>
-                      <p>{obj.description}</p>
-                    </Item.Description>
-                    <Item.Extra style={{ paddingTop: '45px' }}>
-                      <Grid columns='equal' centered stackable>
-                        <Grid.Column textAlign='center' verticalAlign='middle'>
-                          <Label>Date: {obj.datePublished}</Label>
-                        </Grid.Column>
-                        <Grid.Column textAlign='center'>
-                          <Button
-                            as='a'
-                            href={obj.url}
-                            target='_blank'
-                            inverted={true}
-                            className='news-button'
-                            size='small'
+            <Divider />{" "}
+            {this.state.intersecting &&
+              duplicateRemovalBing.map((obj, index) => {
+                return (
+                  <Item key={"bing:" + index}>
+                    <Item.Image
+                      size="tiny"
+                      src={
+                        obj?.image?.thumbnail?.contentUrl ??
+                        obj?.provider[0]?.image?.thumbnail?.contentUrl ??
+                        "/images/breaking-news.png"
+                      }
+                    />
+                    <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>
+                      <Item.Header src={obj.url} target="_blank">
+                        <a href={obj.url}>{obj.name} </a>
+                      </Item.Header>
+                      <Item.Meta content={obj.provider.name} />
+                      <Item.Description>
+                        <p>{obj.description}</p>
+                      </Item.Description>
+                      <Item.Extra style={{ paddingTop: "45px" }}>
+                        <Grid columns="equal" centered stackable>
+                          <Grid.Column
+                            textAlign="center"
+                            verticalAlign="middle"
                           >
-                            {' '}
-                            <Image
-                              inline={true}
-                              size='mini'
-                              className='news-icon'
-                              src='images/icons8-location-96.png'
-                            />
-                            {obj?.provider[0]?.name ?? 'News'}
-                          </Button>
-                        </Grid.Column>
-                      </Grid>
-                    </Item.Extra>
-                  </Item.Content>
-                </Item>
-              )
-            })}
+                            <Label>Date: {obj.datePublished}</Label>
+                          </Grid.Column>
+                          <Grid.Column textAlign="center">
+                            <Button
+                              as="a"
+                              href={obj.url}
+                              target="_blank"
+                              inverted={true}
+                              className="news-button"
+                              size="small"
+                            >
+                              {" "}
+                              <Image
+                                inline={true}
+                                size="mini"
+                                className="news-icon"
+                                src="images/icons8-location-96.png"
+                              />{" "}
+                              {obj?.provider[0]?.name ?? "News"}{" "}
+                            </Button>
+                          </Grid.Column>
+                        </Grid>
+                      </Item.Extra>
+                    </Item.Content>
+                  </Item>
+                );
+              })}{" "}
           </Item.Group>
         </Container>
       </>
-    )
+    );
   }
 }
+SemanticDeforestation.propTypes = {
+  gJson: PropTypes.shape({
+    articleCount: PropTypes.number,
+    articles: PropTypes.arrayOf(PropTypes.object),
+    timestamp: PropTypes.number,
+  }),
+  azureJson: PropTypes.shape({
+    totalEstimatedMatches: PropTypes.number,
+    value: PropTypes.arrayOf(PropTypes.object),
+    _type: PropTypes.string,
+  }),
+};
 
-export async function getServerSideProps ({ res }) {
+export async function getServerSideProps({ res }) {
   const resp = await client.newsOperations.search(search_term, {
-    market: 'en-XA',
-    count: 100
-  })
+    market: "en-XA",
+    count: 100,
+  });
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
     `https://gnews.io/api/v3/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
-  )
+  );
 
   const gJson = JSON.parse(JSON.stringify(gNewsResp.data));
-  const gData = await gJson;
-  const json = JSON.parse(JSON.stringify(resp));
-  const data = await json;
+  const azureJson = JSON.parse(JSON.stringify(resp));
 
   res.setHeader(
-    'Cache-Control',
-    'maxage=43200, s-maxage=43200, stale-while-revalidate'
-  ) // Vercel Cache (Network)
+    "Cache-Control",
+    "maxage=43200, s-maxage=43200, stale-while-revalidate"
+  ); // Vercel Cache (Network)
 
-  return { props: { data, gData} }
+  return {
+    props: {
+      gJson,
+      azureJson,
+    },
+  };
 }
+
 export default SemanticDeforestation;
