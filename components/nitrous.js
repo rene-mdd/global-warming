@@ -1,57 +1,57 @@
-import fetch from 'unfetch'
-import Chart from 'chart.js'
-import nitrousData from '../public/data/csvjson-nitrous.json'
-const csv = require('csvtojson')
-import { Container, Grid } from 'semantic-ui-react'
+import fetch from 'unfetch';
+import Chart from 'chart.js';
+import nitrousData from '../public/data/csvjson-nitrous.json';
+import { Container, Grid } from 'semantic-ui-react';
+import PropTypes from "prop-types";
 
 class Nitrous extends React.Component {
   constructor (props) {
-    super(props)
-    this.state = { nitrousData: {}, prehistoricNitrous: {}, isLoading: true }
-    this.url = 'api/nitrous-oxide-api'
+    super(props);
+    this.state = { nitrousData: {}, prehistoricNitrous: {}, isLoading: true };
+    this.url = 'api/nitrous-oxide-api';
   }
 
   async componentDidMount () {
-    this.props.callBackPropNitrous(this.state.isLoading)
-    const date = []
-    const amount = []
+    this.props.callBackPropNitrous(this.state.isLoading);
+    const date = [];
+    const amount = [];
 
     nitrousData.forEach(obj => {
-      date.push(obj.year.split(',').filter(x => x)[0])
-      amount.push(parseFloat(obj.year.split(',').filter(x => x)[1]).toFixed(1))
-    })
+      date.push(obj.year.split(',').filter(x => x)[0]);
+      amount.push(parseFloat(obj.year.split(',').filter(x => x)[1]).toFixed(1));
+    });
 
-    const nitrousObject = { date: date, amount: amount }
+    const nitrousObject = { date: date, amount: amount };
 
-    this.setState({ prehistoricNitrous: nitrousObject })
+    this.setState({ prehistoricNitrous: nitrousObject });
 
     try {
-      const response = await fetch(this.url)
-      const data = await response.json()
+      const response = await fetch(this.url);
+      const data = await response.json();
       if (data) {
-        this.setState({ nitrousData: data, isLoading: false })
-        this.props.callBackPropNitrous(this.state.isLoading)
+        this.setState({ nitrousData: data, isLoading: false });
+        this.props.callBackPropNitrous(this.state.isLoading);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   goNitrous = isLoading => {
-    this.props.callBackPropNitrous(isLoading)
+    this.props.callBackPropNitrous(isLoading);
   }
 
   parsedNitrousData = (cleanNitrousPrehistoricData, cleanNitrousData) => {
-    const date = []
-    const average = []
+    const date = [];
+    const average = [];
     try {
       if (cleanNitrousData.nitrous) {
         cleanNitrousData.nitrous.forEach(obj => {
-          date.push(obj.date)
-          average.push(obj.average)
-        })
-        var ctx = 'myNitrousChart'
-        const myChart = new Chart(ctx, {
+          date.push(obj.date);
+          average.push(obj.average);
+        });
+        var ctx = document.getElementById("myNitrousChart");
+        new Chart(ctx, {
           type: 'line',
           data: {
             labels: cleanNitrousPrehistoricData.date.concat(date),
@@ -101,10 +101,10 @@ class Nitrous extends React.Component {
               ]
             }
           }
-        })
+        });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -119,7 +119,7 @@ class Nitrous extends React.Component {
         />
         <div
           onLoad={() => {
-            this.goNitrous(this.state.isLoading)
+            this.goNitrous(this.state.isLoading);
           }}
         />
 
@@ -134,9 +134,9 @@ class Nitrous extends React.Component {
             <Grid.Column width='14'>
           {!this.state.isLoading && (
             <Container as='footer'>
-              <p>Data 800,000 ago to 2001 source: United States, Environmental Protection Agency (EPA), (<a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases' target='_blank'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a>) </p>
+              <p>Data 800,000 ago to 2001 source: United States, Environmental Protection Agency (EPA), (<a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a>) </p>
               <p>
-              Ed Dlugokencky, NOAA/GML (<a href='www.esrl.noaa.gov/gmd/ccgg/trends_n2o/' target='_blank'>www.esrl.noaa.gov/gmd/ccgg/trends_n2o/</a>)</p>
+              Ed Dlugokencky, NOAA/GML (<a href='www.esrl.noaa.gov/gmd/ccgg/trends_n2o/'>www.esrl.noaa.gov/gmd/ccgg/trends_n2o/</a>)</p>
               <p>
                 <b> From 2001.01 the data is measured on a monthly basis</b>
               </p>
@@ -146,8 +146,12 @@ class Nitrous extends React.Component {
           </Grid.Column>
         </Grid>
       </>
-    )
+    );
   }
 }
 
-export default Nitrous
+Nitrous.propTypes = {
+  callBackPropNitrous: PropTypes.func,
+};
+
+export default Nitrous;

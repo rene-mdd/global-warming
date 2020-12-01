@@ -1,27 +1,26 @@
-import _ from 'lodash'
-import React, {Component} from 'react'
-import {Container, Image, Menu} from 'semantic-ui-react'
-import Link from 'next/link'
-import {slide as BurgerMenu} from 'react-burger-menu'
+import React, {Component} from 'react';
+import {Container, Image, Menu} from 'semantic-ui-react';
+import Link from 'next/link';
+import {slide as BurgerMenu} from 'react-burger-menu';
 
 export default class StickySideBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
             mediaQuery: false
-        }
-        this.mql = this.mql;
+        };
+        this.mql;
     }
 
     componentDidMount() {
         this.mql = window.matchMedia('(max-width: 600px)');
-        this.setState({mediaQuery: this.mql.matches})
+        this.setState({mediaQuery: this.mql.matches});
         window.addEventListener("resize", this.checkFunc);
     }
 
     checkFunc = () => {
         if (this.mql.matches !== this.state.mediaQuery) {
-            this.setState({mediaQuery: this.mql.matches})
+            this.setState({mediaQuery: this.mql.matches});
         }
     }
 
@@ -73,8 +72,7 @@ export default class StickySideBar extends Component {
                         </Link>
                     </Container>
                 </Menu>
-               
             } </>
-        )
+        );
     }
 }

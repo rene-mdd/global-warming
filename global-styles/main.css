@@ -243,3 +243,6 @@ nav a:hover {
 .hide-divider {
     opacity: 0
 }
+.form-width {
+    min-width: 350px;
+}

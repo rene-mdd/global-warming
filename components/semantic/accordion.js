@@ -1,6 +1,6 @@
-import _ from 'lodash'
-import React from 'react'
-import { Accordion, Label, Message } from 'semantic-ui-react'
+import _ from 'lodash';
+import React from 'react';
+import { Accordion, Label, Message } from 'semantic-ui-react';
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -19,7 +19,7 @@ import {
   ViberShareButton,
   VKShareButton,
   WhatsappShareButton
-} from 'react-share'
+} from 'react-share';
 import {
   EmailIcon,
   FacebookIcon,
@@ -38,7 +38,7 @@ import {
   ViberIcon,
   VKIcon,
   WhatsappIcon
-} from 'react-share'
+} from 'react-share';
 
 const share = [
   <FacebookShareButton
@@ -113,7 +113,7 @@ const share = [
     url='https://global-warming.org/'
     key='telegram'
   ><TelegramIcon size={50} borderRadius={5} /></TelegramShareButton>
-]
+];
 
 const panelTemp = _.times(1, i => ({
   key: `panel-${i}`,
@@ -137,7 +137,7 @@ const panelTemp = _.times(1, i => ({
       </Message>
     )
   }
-}))
+}));
 
 const panelCo2 = _.times(1, i => ({
   key: `panel-${i}`,
@@ -162,7 +162,7 @@ const panelCo2 = _.times(1, i => ({
       </Message>
     )
   }
-}))
+}));
 
 const panelMethane = _.times(1, i => ({
   key: `panel-${i}`,
@@ -187,7 +187,7 @@ const panelMethane = _.times(1, i => ({
       </Message>
     )
   }
-}))
+}));
 
 const panelNitrous = _.times(1, i => ({
   key: `panel-${i}`,
@@ -212,7 +212,7 @@ const panelNitrous = _.times(1, i => ({
       </Message>
     )
   }
-}))
+}));
 
 const panelArctic = _.times(1, i => ({
   key: `panel-${i}`,
@@ -236,7 +236,7 @@ const panelArctic = _.times(1, i => ({
       </Message>
     )
   }
-}))
+}));
 
 const panelShare = _.times(1, i => ({
   key: `panel-${i}`,
@@ -246,31 +246,31 @@ const panelShare = _.times(1, i => ({
   content: {
     content: share
   }
-}))
+}));
 
 const AccordionTemp = () => (
   <Accordion defaultActiveIndex={1} panels={panelTemp} />
-)
+);
 
 const AccordionCo2 = () => (
   <Accordion defaultActiveIndex={1} panels={panelCo2} />
-)
+);
 
 const AccordionMethane = () => (
   <Accordion defaultActiveIndex={1} panels={panelMethane} />
-)
+);
 
 const AccordionNitrous = () => (
   <Accordion defaultActiveIndex={1} panels={panelNitrous} />
-)
+);
 
 const AccordionArctic = () => (
   <Accordion defaultActiveIndex={1} panels={panelArctic} />
-)
+);
 
 const AccordionShare = () => (
   <Accordion as='div' defaultActiveIndex={1} panels={panelShare} />
-)
+);
 
 export {
   AccordionTemp,
@@ -279,4 +279,4 @@ export {
   AccordionNitrous,
   AccordionArctic,
   AccordionShare
-}
+};

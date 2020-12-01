@@ -1,5 +1,7 @@
 
-import Head from "next/head"
+import Head from "next/head";
+import PropTypes from "prop-types";
+
 export default function SiteHeader(props) {
         return (<>
      <Head>
@@ -39,11 +41,6 @@ export default function SiteHeader(props) {
           <link rel='icon' href='/favicon.ico' />
           <link
             rel='stylesheet'
-            type='text/css'
-            href='path/to/chartjs/dist/Chart.min.css'
-          />
-          <link
-            rel='stylesheet'
             href='//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css'
           />
           <link
@@ -51,7 +48,11 @@ export default function SiteHeader(props) {
             rel='stylesheet'
           />
         </Head>
-        </>)
-    
+        </>);
 }
-;
+
+SiteHeader.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  keyword: PropTypes.string
+};
