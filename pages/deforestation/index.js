@@ -162,7 +162,7 @@ class SemanticDeforestation extends React.Component {
                         marginHeight="0"
                         marginWidth="0"
                         title="Forest loss copy"
-                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=16.12%2C-23.01%2C-37.45%2C-108.34&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C1%3A100&embedded=true" style="border: 1px solid #ccc"
+                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=16.12%2C-23.01%2C-37.45%2C-108.34&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C1%3A100&embedded=true"
                       />
                     )}{" "}
                   </Container>
