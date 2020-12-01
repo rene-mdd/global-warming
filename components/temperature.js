@@ -37,7 +37,7 @@ class Temperature extends React.Component {
       const data = await response.json();
       this.setState({ temperatureData: data });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -138,7 +138,7 @@ class Temperature extends React.Component {
         });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
