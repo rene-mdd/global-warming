@@ -42,91 +42,77 @@ import {
 
 const share = [
   <FacebookShareButton
-    children={<FacebookIcon size={50} borderRadius={5} />}
+    
     url='https://global-warming.org/'
     key='facebook'
-  />,
+  ><FacebookIcon size={50} borderRadius={5} /></FacebookShareButton>,
   <EmailShareButton
-    children={<EmailIcon size={50} borderRadius={5} />}
+    
     url='https://global-warming.org/'
     key='email'
-  />,
+  ><EmailIcon size={50} borderRadius={5} /></EmailShareButton>,
   <InstapaperShareButton
-    children={<InstapaperIcon size={50} borderRadius={5} />}
+    
     url='https://global-warming.org/'
     key='instagram'
-  />,
+  ><InstapaperIcon size={50} borderRadius={5} /></InstapaperShareButton>,
   <LineShareButton
-    children={<LineIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='line'
-  />,
+  ><LineIcon size={50} borderRadius={5} /></LineShareButton>,
   <LinkedinShareButton
-    children={<LinkedinIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='linkedin'
-  />,
+  ><LinkedinIcon size={50} borderRadius={5} /></LinkedinShareButton>,
   <LivejournalShareButton
-    children={<LivejournalIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='liveJournal'
-  />,
+  ><LivejournalIcon size={50} borderRadius={5} /></LivejournalShareButton>,
   <MailruShareButton
-    children={<MailruIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='mailRu'
-  />,
+  ><MailruIcon size={50} borderRadius={5} /></MailruShareButton>,
   <OKShareButton
-    children={<OKIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='ok'
-  />,
+  ><OKIcon size={50} borderRadius={5} /></OKShareButton>,
   <PinterestShareButton
     media='https://global-warming.org/api/chart-img/tempChart.jpeg'
-    children={<PinterestIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='pinterest'
-  />,
+  ><PinterestIcon size={50} borderRadius={5} /></PinterestShareButton>,
   <PocketShareButton
-    children={<PocketIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='pocket'
-  />,
+  ><PocketIcon size={50} borderRadius={5} /></PocketShareButton>,
   <RedditShareButton
-    children={<RedditIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='reddit'
-  />,
+  ><RedditIcon size={50} borderRadius={5} /></RedditShareButton>,
   <TumblrShareButton
-    children={<TumblrIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='tumblr'
-  />,
+  ><TumblrIcon size={50} borderRadius={5} /></TumblrShareButton>,
   <TwitterShareButton
-    children={<TwitterIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='twitter'
-  />,
+  ><TwitterIcon size={50} borderRadius={5} /></TwitterShareButton>,
   <ViberShareButton
-    children={<ViberIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='viber'
-  />,
+  ><ViberIcon size={50} borderRadius={5} /></ViberShareButton>,
   <VKShareButton
-    children={<VKIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='vk'
-  />,
+  ><VKIcon size={50} borderRadius={5} /></VKShareButton>,
   <WhatsappShareButton
-    children={<WhatsappIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='whatsapp'
-  />,
+  ><WhatsappIcon size={50} borderRadius={5} /></WhatsappShareButton>,
   <TelegramShareButton
-    children={<TelegramIcon size={50} borderRadius={5} />}
     url='https://global-warming.org/'
     key='telegram'
-  />
+  ><TelegramIcon size={50} borderRadius={5} /></TelegramShareButton>
 ]
 
 const panelTemp = _.times(1, i => ({
