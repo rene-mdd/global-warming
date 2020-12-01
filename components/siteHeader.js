@@ -1,5 +1,7 @@
 
-import Head from "next/head"
+import Head from "next/head";
+import PropTypes from "prop-types";
+
 export default function SiteHeader(props) {
         return (<>
      <Head>
@@ -51,7 +53,11 @@ export default function SiteHeader(props) {
             rel='stylesheet'
           />
         </Head>
-        </>)
-    
+        </>);
 }
-;
+
+SiteHeader.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  keyword: PropTypes.string
+};

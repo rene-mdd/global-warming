@@ -207,7 +207,7 @@ class SemanticDeforestation extends React.Component {
                 <Item key={"gNews:" + index}>
                   <Item.Image
                     src={
-                     obj?.image || "/images/breaking-news.png"
+                     obj?.image ?? "/images/breaking-news.png"
                     }
                   />
                   <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>

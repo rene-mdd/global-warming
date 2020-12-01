@@ -1,4 +1,4 @@
-import StickyMenu from '../../components/semantic/sticky'
+import StickyMenu from '../../components/semantic/sticky';
 import {
   Button,
   Form,
@@ -8,9 +8,9 @@ import {
   Header,
   Segment,
   Message
-} from 'semantic-ui-react'
-import SiteHeader from '../../components/siteHeader'
-import { useState, useEffect } from 'react'
+} from 'semantic-ui-react';
+import SiteHeader from '../../components/siteHeader';
+import { useState } from 'react';
 
 const Contact = () => {
   const [contact, setContact] = useState({
@@ -21,66 +21,64 @@ const Contact = () => {
     message: '',
     replyTo: 'info@rene-rodriguez.com',
     accessKey: '21b96b01-5e41-419f-a493-cd3f5327a645'
-  })
+  });
 
   const [response, setResponse] = useState({
     type: '',
     message: ''
-  })
+  });
 
   const handleChange = e =>
-    setContact({ ...contact, [e.target.name]: e.target.value })
+    setContact({ ...contact, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
-    console.log(contact)
-    e.preventDefault()
-
+    e.preventDefault();
     setContact({
       ...contact,
       name: '',
       email: '',
       message: ''
-    })
+    });
     try {
       const res = await fetch('https://api.staticforms.xyz/submit', {
         method: 'POST',
         body: JSON.stringify(contact),
         headers: { 'Content-Type': 'application/json' }
-      })
+      });
 
-      const json = await res.json()
+      const json = await res.json();
 
       if (json.success) {
         setResponse({
           type: 'success',
           message: 'Thank you for reaching out to us.'
-        })
+        });
       } else {
         setResponse({
           type: 'error',
           message: json.message
-        })
+        });
       }
     } catch (e) {
-      console.log('An error occurred', e)
+      console.log('An error occurred', e);
       setResponse({
         type: 'error',
         message: 'An error occurred while submitting the form'
-      })
+      });
     }
-  }
+  };
   const contactMetaDescription =
     'For suggestions about this global warming project, or if you want to discuss ideas related to this kind of environmental issues, use this contact section.';
-    const contactMetaTitle = "Global warming contact for sharing ideas and solutions."
-    const contactKeywords = "Global warming, climate change, contact"
+    const contactMetaTitle = "Global warming contact for sharing ideas and solutions.";
+    const contactKeywords = "Global warming, climate change, contact";
   return (
     <>
       <SiteHeader description={contactMetaDescription} title={contactMetaTitle} keywords={contactKeywords}/>
       <StickyMenu />
       <Container fluid className='contact-container'>
         <Grid centered columns='equal'>
-          <Header as='h2' className='contact-title'>
-            <h1><span>Contact</span></h1>
+          <Header as='h1' className='contact-title'>
+          Contact
           </Header>
           <Grid.Row>
             <Grid.Column width='5'>
@@ -92,11 +90,11 @@ const Contact = () => {
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
-            <Grid.Column width='10'>
+            <Grid.Column width='10' className="form-width">
               <Segment>
                 <p id="contact-segment">
-                Hello! My name is René Rodríguez and I'm the developer of this
-                site. I'm currently living in Berlin. For suggestions about this
+                Hello! My name is René Rodríguez and I am the developer of this
+                site. I am currently living in Berlin. For suggestions about this
                 project, or if you want to discuss ideas related to this kind of
                 environmental issues, please send me a message or write me at{' '}
                 <b>hello@rene-rodriguez.com</b>{' '}
@@ -142,7 +140,7 @@ const Contact = () => {
                 <Form.TextArea
                   name='message'
                   label='Message'
-                  placeholder='What are you thinking about?'
+                  placeholder='Your message'
                   value={contact.message}
                   onChange={handleChange}
                   required
@@ -181,7 +179,7 @@ const Contact = () => {
         </Grid>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

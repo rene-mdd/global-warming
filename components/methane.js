@@ -1,62 +1,63 @@
-import fetch from 'unfetch'
-import Chart from 'chart.js'
-import methaneDataFile from '../public/data/csvjson-methane.json'
-import { Container, Grid } from 'semantic-ui-react'
+import fetch from 'unfetch';
+import Chart from 'chart.js';
+import methaneDataFile from '../public/data/csvjson-methane.json';
+import { Container, Grid } from 'semantic-ui-react';
+import PropTypes from "prop-types";
 
 class Methane extends React.Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.state = {
       methaneData: {},
       prehistoricMethane: {},
       isLoading: true
-    }
-    this.url = 'api/methane-api'
+    };
+    this.url = 'api/methane-api';
   }
 
   async componentDidMount () {
-    this.props.callBackPropMethane(this.state.isLoading)
+    this.props.callBackPropMethane(this.state.isLoading);
     // processing of json file
-    const date = []
-    const amount = []
+    const date = [];
+    const amount = [];
 
     methaneDataFile.forEach(obj => {
-      date.push(obj.year.split(',').filter(x => x)[0])
+      date.push(obj.year.split(',').filter(x => x)[0]);
       amount.push(
         Number(parseFloat(obj.year.split(',').filter(x => x)[1]).toFixed(1))
-      )
-    })
-    const methaneObject = { date: date, amount: amount }
+      );
+    });
+    const methaneObject = { date: date, amount: amount };
 
-    this.setState({ prehistoricMethane: methaneObject })
+    this.setState({ prehistoricMethane: methaneObject });
 
     try {
-      const response = await fetch(this.url)
-      const data = await response.json()
+      const response = await fetch(this.url);
+      const data = await response.json();
       if (data) {
-        this.setState({ methaneData: data, isLoading: false })
-        this.props.callBackPropMethane(false)
+        this.setState({ methaneData: data, isLoading: false });
+        this.props.callBackPropMethane(false);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   go = isLoading => {
-    this.props.callBackPropMethane(isLoading)
+    this.props.callBackPropMethane(isLoading);
   }
 
   parsedData = (methPrehistoricData, methaneData) => {
-    const date = []
-    const average = []
+    const date = [];
+    const average = [];
     try {
       if (methaneData.methane) {
         methaneData.methane.forEach(obj => {
-          date.push(obj.date)
-          average.push(obj.average)
-        })
-        var ctx = 'myMethChart'
-        const myChart = new Chart(ctx, {
+          date.push(obj.date);
+          average.push(obj.average);
+        });
+        var ctx = document.getElementById("myMethChart");
+        new Chart(ctx, {
           type: 'line',
           data: {
             labels: methPrehistoricData.date.concat(date),
@@ -106,10 +107,10 @@ class Methane extends React.Component {
               ]
             }
           }
-        })
+        });
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -124,7 +125,7 @@ class Methane extends React.Component {
         />
         <div
           onLoad={() => {
-            this.go(this.state.isLoading)
+            this.go(this.state.isLoading);
           }}
         />
         
@@ -142,7 +143,7 @@ class Methane extends React.Component {
               <p>
               Year 1983 to present data source: Global Monitoring Division of NOAA’s Earth System Research Laboratory Ed Dlugokencky, NOAA/GML (<a href='www.esrl.noaa.gov/gmd/ccgg/trends_ch4/' target='_blank'>www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</a>).
               </p>
-              <p>Data 800,000 years ago to 1983 source: United States, Environmental Protection Agency (EPA), (<a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases' target='_blank'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a>)</p>
+              <p>Data 800,000 years ago to 1983 source: United States, Environmental Protection Agency (EPA), (<a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a>)</p>
               <p >
                 <b>From 1983.07 this data is measured on a monthly basis</b>
               </p>
@@ -151,8 +152,12 @@ class Methane extends React.Component {
         </Grid.Column>
         </Grid>
       </>
-    )
+    );
   }
 }
 
-export default Methane
+Methane.propTypes = {
+  callBackPropMethane: PropTypes.func,
+};
+
+export default Methane;

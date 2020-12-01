@@ -1,56 +1,55 @@
-import { Container, Header, Grid, Button } from 'semantic-ui-react'
-import Nitrous from '../nitrous'
-import { AccordionNitrous, AccordionShare } from '../semantic/accordion'
+import { Container, Header, Grid, Button } from "semantic-ui-react";
+import Nitrous from "../nitrous";
+import { AccordionNitrous, AccordionShare } from "../semantic/accordion";
 
 class SemanticNitrous extends React.Component {
-  state = { nitrous: false, nitrousLoading: 'nitrousBtn', siteView: '' }
+  state = { nitrous: false, nitrousLoading: "nitrousBtn", siteView: "" };
   toggleNitrous = () => {
-    this.setState({ nitrous: !this.state.nitrous })
-  }
-  handleClickNitrous = isLoading => {
+    this.setState({ nitrous: !this.state.nitrous });
+  };
+  handleClickNitrous = (isLoading) => {
     if (isLoading) {
-      this.setState({ nitrousLoading: 'loading' })
+      this.setState({ nitrousLoading: "loading" });
     } else {
-      this.setState({ nitrousLoading: 'nitrousBtn' })
+      this.setState({ nitrousLoading: "nitrousBtn" });
     }
-  }
-  handleIntersection = event => {
-    console.log(event)
-    const intersectingResult = event.isIntersecting
+  };
+  handleIntersection = (event) => {
+    const intersectingResult = event.isIntersecting;
     if (intersectingResult) {
-      this.setState({ siteView: 'nitrous' })
+      this.setState({ siteView: "nitrous" });
     }
-  }
-  render () {
+  };
+  render() {
     return (
-      <Container as='section' fluid={true}>
+      <Container as="section" fluid={true}>
         <Container>
-          <Header as='h2' textAlign='center' className='h2-general'>
+          <Header as="h2" textAlign="center" className="h2-general">
             Nitrous Oxide levels from 800,000 years ago to present
           </Header>
           <Grid container={true}>
             <Grid.Row centered={true} stretched>
               {this.state.nitrous ? (
                 <Nitrous
-                  callBackPropNitrous={c => {
-                    this.handleClickNitrous(c)
+                  callBackPropNitrous={(c) => {
+                    this.handleClickNitrous(c);
                   }}
                 />
               ) : null}
             </Grid.Row>
             <Grid.Row centered={true}>
-              <Grid.Column width='eight' textAlign='center'>
+              <Grid.Column width="eight" textAlign="center">
                 <Button
                   onClick={this.toggleNitrous}
                   className={this.state.nitrousLoading}
                   id={this.state.nitrousLoading}
                 >
-                  {this.state.nitrous ? 'Hide graph' : 'Load graph'}
+                  {this.state.nitrous ? "Hide graph" : "Load graph"}
                 </Button>
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <Grid columns='equal'>
+          <Grid columns="equal">
             <Container>
               <p>
                 Nitrous oxide is a gas that is produced by the combustion of
@@ -59,30 +58,24 @@ class SemanticNitrous extends React.Component {
                 industrial activities.
               </p>
               <p>
-                {' '}
+                {" "}
                 It is the third largest heat-trapping gas in the atmosphere and
                 the biggest ozone-destroying compound emitted by human
                 activities.
-              </p>{' '}
+              </p>{" "}
               <p>
-                For more detailed information please visit:{' '}
-                <a
-                  href='https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3306630/'
-                  target='_blank'
-                >
+                For more detailed information please visit:{" "}
+                <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3306630/">
                   Stratospheric ozone depletion due to nitrous oxide: influences
                   of other gases
-                </a>
-                {' '}and{' '}
-                <a
-                  href='https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide'
-                  target='_blank'
-                >
+                </a>{" "}
+                and{" "}
+                <a href="https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide">
                   EPA: Nitrous Oxide Emissions
                 </a>
                 .
               </p>
-              <Grid className='api-segment' columns='equal' centered stackable>
+              <Grid className="api-segment" columns="equal" centered stackable>
                 <Grid.Column>
                   <AccordionNitrous />
                 </Grid.Column>
@@ -94,8 +87,8 @@ class SemanticNitrous extends React.Component {
           </Grid>
         </Container>
       </Container>
-    )
+    );
   }
 }
 
-export default SemanticNitrous
+export default SemanticNitrous;

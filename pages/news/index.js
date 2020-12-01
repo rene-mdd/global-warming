@@ -126,7 +126,7 @@ class News extends React.Component {
                 <Item key={"gNews:" + index}>
                   <Item.Image
                     src={
-                      obj?.image || "/images/breaking-news.png"
+                      obj?.image ?? "/images/breaking-news.png"
                     }
                   />
                   <Item.Content>

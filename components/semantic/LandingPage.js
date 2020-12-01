@@ -1,5 +1,5 @@
-import { Container, Header, Grid, Image, Button } from 'semantic-ui-react'
-import * as Scroll from 'react-scroll'
+import { Container, Header, Grid, Image, Button } from 'semantic-ui-react';
+import * as Scroll from 'react-scroll';
 
 const LandingPage = () => (
   <Container as='main' fluid className='landing-background'>
@@ -13,7 +13,7 @@ const LandingPage = () => (
         </Grid.Row>
       </Grid>
       <Header textAlign='center' className='h2-id'>
-        This site delivers up to date information and APIs about the earth's current
+        This site delivers up to date information and APIs about the earth&apos;s current
         temperature, the concentration of greenhouse gases in the atmosphere,
         and worldwide news about global warming and deforestation.
       </Header>
@@ -35,6 +35,6 @@ const LandingPage = () => (
       </Grid>
     </Container>
   </Container>
-)
+);
 
-export default LandingPage
+export default LandingPage;
