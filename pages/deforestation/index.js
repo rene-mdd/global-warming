@@ -124,7 +124,7 @@ class SemanticDeforestation extends React.Component {
           <Grid fluid={true.toString()} className="temperature-background">
             <Container>
               <Header as="h2" className="h2-general" textAlign="center">
-                Global forest loss from 2000 to 2014
+                Global forest loss map
               </Header>
               <Grid column="equal" centered>
                 <Button
@@ -132,8 +132,8 @@ class SemanticDeforestation extends React.Component {
                   style={{ marginBottom: "20px" }}
                 >
                   {this.state.toggle
-                    ? "Show 2001 - 2014 deforestation"
-                    : "Use Global Forest Watch map"}{" "}
+                    ? "Deforestation by divided year"
+                    : "Deforestation between 2000 - 2019"}{" "}
                 </Button>
                 <Grid.Row centered>
                   <Container>
@@ -147,7 +147,7 @@ class SemanticDeforestation extends React.Component {
                           padding: 0,
                         }}
                         frameBorder="0"
-                        src="https://my.gfw-mapbuilder.org/v1.latest/?appid=e53c3a031fa6479ab09ef9171ee91c03"
+                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=47.89%2C-24.5%2C33.63%2C-108.13&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C3%3A100&embedded=true"
                       />
                     ) : (
                       <Embed
@@ -162,61 +162,28 @@ class SemanticDeforestation extends React.Component {
                         marginHeight="0"
                         marginWidth="0"
                         title="Forest loss copy"
-                        src="//www.arcgis.com/apps/Embed/index.html?webmap=ed33972acffc4e7c9b260c753f1a6bd4&extent=-157.4447,-41.8564,177.9459,71.6&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&disable_scroll=false&theme=light"
+                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=16.12%2C-23.01%2C-37.45%2C-108.34&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C1%3A100&embedded=true" style="border: 1px solid #ccc"
                       />
                     )}{" "}
                   </Container>
 
                   <Container>
-                    <span>Credits: Hansen, UMD, Google, USGS, NASA</span>
+                    <span>Credits: University of Maryland, department of geographical sciences.</span>
                   </Container>
                   <Container id="deforestation-text" textAlign="left">
-                    {this.state.toggle ? (
+                    {this.state.toggle ? (<>
+                      <p>Results from time-series analysis of Landsat images characterizing forest extent and change.</p>
                       <p>
-                        This is a custom map builder, where you can check on
-                        different features like tree cover loss and gain,
-                        <b>deforestation alert system</b>
-                        that monitors forest cover loss and forest degradation
-                        in the Brazilian Amazon and the globe, areas of likely
-                        tree cover loss in near-real time, and more...
+                      Trees are defined as vegetation taller than 5m in height and are expressed as a percentage per output grid cell as ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is defined as a stand-replacement disturbance, or a change from a forest to non-forest state, during the period 2000–2019. ‘Forest Cover Gain’ is defined as the inverse of loss, or a non-forest to forest change entirely within the period 2000–2012. ‘Forest Loss Year’ is a disaggregation of total ‘Forest Loss’ to annual time scales.
                       </p>
-                    ) : (
-                      <p>
-                        This data set provides a disaggregation of total forest
-                        loss to annual time scales. Encoded as either 0 (no
-                        loss) or else a value in the range 1–14, representing
-                        loss detected primarily in the year 2001–2014,
-                        respectively. This global dataset contain unsigned 8-bit
-                        values and have a spatial resolution of 1 arc-second per
-                        pixel, or approximately 30 meters per pixel at the
-                        equator. Quantification of global forest change has been
-                        lacking despite the recognized importance of forest
-                        ecosystem services. In this data, Earth observation
-                        satellite data were used to map global forest loss (2.3
-                        million square kilometers) and gain (0.8 million square
-                        kilometers) from 2000 to 2012 at a spatial resolution of
-                        30 meters. The tropics were the only climate domain to
-                        exhibit a trend, with forest loss increasing by 2101
-                        square kilometers per year. Brazil’s well-documented
-                        reduction in deforestation was offset by increasing
-                        forest loss in Indonesia, Malaysia, Paraguay, Bolivia,
-                        Zambia, Angola, and elsewhere. Intensive forestry
-                        practiced within subtropical forests resulted in the
-                        highest rates of forest change globally. Boreal forest
-                        loss due largely to fire and forestry was second to that
-                        in the tropics in absolute and proportional terms. These
-                        results depict a globally consistent and locally
-                        relevant record of forest change. Results from
-                        time-series analysis of 654,178 Landsat 7 ETM+ images in
-                        characterizing global forest extent and change from 2000
-                        through 2012. For additional information about these
-                        results, please see the associated journal article:
-                        <a href="https://science.sciencemag.org/content/342/6160/850">
-                          source
-                        </a>
-                        (Hansen et al., Science 2013).{" "}
-                      </p>
-                    )}{" "}
+                      <p>Reference 2000 and 2019 imagery are median observations from a set of quality assessment-passed growing season observations. </p>
+                    </>) : (<>
+                        <p>Results from time-series analysis of Landsat images characterizing forest extent and change.</p>
+                        <p>
+                        Trees are defined as vegetation taller than 5m in height and are expressed as a percentage per output grid cell as ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is defined as a stand-replacement disturbance, or a change from a forest to non-forest state, during the period 2000–2019. ‘Forest Cover Gain’ is defined as the inverse of loss, or a non-forest to forest change entirely within the period 2000–2012. ‘Forest Loss Year’ is a disaggregation of total ‘Forest Loss’ to annual time scales.
+                        </p>
+                        <p>Reference 2000 and 2019 imagery are median observations from a set of quality assessment-passed growing season observations.</p>
+                    </>)}{" "}
                   </Container>
                 </Grid.Row>
               </Grid>
@@ -240,7 +207,7 @@ class SemanticDeforestation extends React.Component {
                 <Item key={"gNews:" + index}>
                   <Item.Image
                     src={
-                      obj?.image || obj?.image || "/images/breaking-news.png"
+                     obj?.image || "/images/breaking-news.png"
                     }
                   />
                   <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>

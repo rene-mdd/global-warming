@@ -49,7 +49,6 @@ class News extends React.Component {
 
     const parsedGNews = this.props.gJson.articles;
     const parsedBingNews = this.props.jsonAzure.value;
-    console.log(this.props);
     const duplicateRemovalBing = parsedBingNews.filter(
       (thing, index, self) =>
         index ===
@@ -127,10 +126,10 @@ class News extends React.Component {
                 <Item key={"gNews:" + index}>
                   <Item.Image
                     src={
-                      obj?.image || obj?.image || "/images/breaking-news.png"
+                      obj?.image || "/images/breaking-news.png"
                     }
                   />
-                  <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>
+                  <Item.Content>
                     <Item.Header as="header" src={obj.url} target="_blank">
                       <a href={obj.url}>{obj.title} </a>
                     </Item.Header>
@@ -181,7 +180,7 @@ class News extends React.Component {
                         "/images/breaking-news.png"
                       }
                     />
-                    <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>
+                    <Item.Content>
                       <Item.Header src={obj.url} target="_blank">
                         <a href={obj.url}>{obj.name} </a>
                       </Item.Header>
@@ -205,7 +204,6 @@ class News extends React.Component {
                               inverted={true}
                               className="news-button"
                               size="small"
-                              floated="right"
                             >
                               {" "}
                               <Image
