@@ -206,13 +206,11 @@ class SemanticDeforestation extends React.Component {
               return (
                 <Item key={"gNews:" + index}>
                   <Item.Image
-                    src={
-                     obj?.image || "/images/breaking-news.png"
-                    }
+                    src={obj?.image ?? (this.forceUpdate(), "/images/breaking-news.png")}
                   />
-                  <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>
+                  <Item.Content>
                     <Item.Header src={obj.url} target="_blank">
-                      <a href={obj.url}>{obj.title} </a>
+                      <a href={obj.url}>{obj.title}</a>
                     </Item.Header>
                     <Item.Meta content={obj.author} />
                     <Item.Description>
@@ -261,7 +259,7 @@ class SemanticDeforestation extends React.Component {
                         "/images/breaking-news.png"
                       }
                     />
-                    <Item.Content style={{ borderLeft: "1px solid #C8C8C8" }}>
+                    <Item.Content>
                       <Item.Header src={obj.url} target="_blank">
                         <a href={obj.url}>{obj.name} </a>
                       </Item.Header>

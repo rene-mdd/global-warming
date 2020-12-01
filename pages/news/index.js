@@ -125,9 +125,7 @@ class News extends React.Component {
               return (
                 <Item key={"gNews:" + index}>
                   <Item.Image
-                    src={
-                      obj?.image || "/images/breaking-news.png"
-                    }
+                    src={obj?.image ?? (this.forceUpdate(), "/images/breaking-news.png")}
                   />
                   <Item.Content>
                     <Item.Header as="header" src={obj.url} target="_blank">
