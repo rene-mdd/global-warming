@@ -243,6 +243,9 @@ class SemanticDeforestation extends React.Component {
                       </Grid>
                     </Item.Extra>
                   </Item.Content>
+                  <Observer {...options}>
+              <span></span>
+            </Observer>
                 </Item>
               );
             })}
