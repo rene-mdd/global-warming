@@ -25,7 +25,7 @@ class SemanticArctic extends React.Component {
       <Container as="section" fluid={true}>
         <Container>
           <Header as="h2" textAlign="center" className="h2-general">
-            Melted Polar Ice Cap
+            Melted Polar Ice Caps
           </Header>
           <Grid container={true}>
             <Grid.Row centered={true} stretched>
