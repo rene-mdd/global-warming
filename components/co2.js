@@ -1,8 +1,10 @@
+/* eslint-disable react/destructuring-assignment */
+import React from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import preCo2Data from "../public/data/csvjson-co2.json";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import preCo2Data from "../public/data/csvjson-co2.json";
 
 class Co2 extends React.Component {
   constructor(props) {
@@ -11,11 +13,15 @@ class Co2 extends React.Component {
       co2Data: [],
       prehistoric: {},
       isLoading: true,
+      graphError: "",
     };
     this.url = "api/co2-api";
   }
+
   async componentDidMount() {
-    this.props.callBackPropCo2(this.state.isLoading);
+    const { isLoading } = this.state;
+    this.props.loadingCo2Callback(isLoading);
+
     const date = [];
     const amount = [];
     preCo2Data.forEach((obj) => {
@@ -24,22 +30,28 @@ class Co2 extends React.Component {
         Number(parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1))
       );
     });
-    const co2Object = { date: date, amount: amount };
+    const co2Object = { date, amount };
     this.setState({ prehistoric: co2Object });
     try {
       const response = await fetch(this.url);
       const data = await response.json();
       if (data) {
         this.setState({ co2Data: data, isLoading: false });
-        this.props.callBackPropCo2(this.state.isLoading);
+        this.props.loadingCo2Callback(false);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error)
+      this.setState({
+        graphError:
+          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
+      });
     }
   }
-  goCo2 = (isLoading) => {
-    this.props.callBackPropCo2(isLoading);
-  };
+
+  // goCo2 = (isLoading) => {
+  //   this.props.loadingCo2Callback(isLoading);
+  // };
+
   parsedCo2Data = (prehistoricData, currentData) => {
     const date = [];
     const trend = [];
@@ -49,98 +61,102 @@ class Co2 extends React.Component {
           date.push(`${obj.year}.${obj.month}.${obj.day}`);
           trend.push(obj.trend);
         });
-        var ctx = document.getElementById("myCo2Chart");
-        new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: prehistoricData.date.concat(date),
-            datasets: [
-              {
-                label: "Carbon Dioxide",
-                data: prehistoricData.amount.concat(trend),
-                fill: false,
-                borderColor: "#4984B8",
-                backgroundColor: "black",
-                pointRadius: false,
-                pointHoverBorderWidth: 10,
-                pointBackgroundColor: "rgba(255, 99, 132, 1)",
-                pointHoverBackgroundColor: "rgba(255, 99, 132, 1)",
-                pointHoverBorderColor: "black",
-                borderWidth: 1,
-                pointHoverRadius: 5,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              bounds: "ticks",
-              ticks: {
-                suggestedMax: 800000,
-                suggestedMin: -800000,
-              },
-              yAxes: [
+        const ctx = document.getElementById("myCo2Chart");
+        (() =>
+          new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: prehistoricData.date.concat(date),
+              datasets: [
                 {
-                  stacked: true,
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Part Per million (ppm)",
-                  },
-                },
-              ],
-              xAxes: [
-                {
-                  stacked: true,
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Year",
-                  },
-                  ticks: {
-                    maxRotation: 90,
-                  },
+                  label: "Carbon Dioxide",
+                  data: prehistoricData.amount.concat(trend),
+                  fill: false,
+                  borderColor: "#4984B8",
+                  backgroundColor: "black",
+                  pointRadius: false,
+                  pointHoverBorderWidth: 10,
+                  pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                  pointHoverBackgroundColor: "rgba(255, 99, 132, 1)",
+                  pointHoverBorderColor: "black",
+                  borderWidth: 1,
+                  pointHoverRadius: 5,
                 },
               ],
             },
-          },
-        });
+            options: {
+              scales: {
+                bounds: "ticks",
+                ticks: {
+                  suggestedMax: 800000,
+                  suggestedMin: -800000,
+                },
+                yAxes: [
+                  {
+                    stacked: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Part Per million (ppm)",
+                    },
+                  },
+                ],
+                xAxes: [
+                  {
+                    stacked: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Year",
+                    },
+                    ticks: {
+                      maxRotation: 90,
+                    },
+                  },
+                ],
+              },
+            },
+          }))();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error)
+      this.setState({
+        graphError:
+          "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",
+      });
     }
   };
+
   render() {
+    const { isLoading, co2Data, prehistoric, graphError } = this.state;
     return (
       <>
-        <div
-          onLoad={this.parsedCo2Data(
-            this.state.prehistoric,
-            this.state.co2Data
-          )}
-        />
-        <div
-          onLoad={() => {
-            this.goCo2(this.state.isLoading);
-          }}
-        />
+        <div onLoad={this.parsedCo2Data(prehistoric, co2Data)} />
+
         <Container className="chart-container">
-          <canvas id="myCo2Chart"></canvas>
+          <canvas id="myCo2Chart" />
           <Grid centered columns="equal">
             <Grid.Column width="14" fluid="true">
-              {!this.state.isLoading && (
+              {!isLoading && (
                 <Container as="footer">
+                  <p>
+                    <span style={{ color: "#FD4659" }}>{graphError}</span>
+                  </p>
                   <p>
                     From 1958, the measurements of carbon dioxide concentrations
                     are done by Mauna Loa Observatory. Source: Ed Dlugokencky
                     and Pieter Tans, NOAA/GML (
                     <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
-                      https://www.esrl.noaa.gov/gmd/ccgg/trends/
+                      <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
                     </a>
                     )
                   </p>
                   <p>
-                    Data source: 800,000 years ago to 1958{" "}
+                    Data source: 800,000 years ago to 1958
                     <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                      https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
-                    </a>{" "}
+                      <em>
+                        {" "}
+                        https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                      </em>
+                    </a>
                   </p>
                   <p>
                     <b>
@@ -159,7 +175,11 @@ class Co2 extends React.Component {
 }
 
 Co2.propTypes = {
-  callBackPropCo2: PropTypes.func,
+  loadingCo2Callback: PropTypes.func,
+};
+
+Co2.defaultProps = {
+  loadingCo2Callback: true,
 };
 
 export default Co2;

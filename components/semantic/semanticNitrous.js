@@ -1,12 +1,18 @@
+import React from "react";
 import { Container, Header, Grid, Button } from "semantic-ui-react";
 import Nitrous from "../nitrous";
-import { AccordionNitrous, AccordionShare } from "../semantic/accordion";
+import { AccordionNitrous, AccordionShare } from "./accordion";
 
 class SemanticNitrous extends React.Component {
-  state = { nitrous: false, nitrousLoading: "nitrousBtn", siteView: "" };
+  constructor(props) {
+    super(props);
+    this.state = { nitrous: false, nitrousLoading: "nitrousBtn" };
+  }
+
   toggleNitrous = () => {
-    this.setState({ nitrous: !this.state.nitrous });
+    this.setState((prevState) => ({ nitrous: !prevState.nitrous }));
   };
+
   handleClickNitrous = (isLoading) => {
     if (isLoading) {
       this.setState({ nitrousLoading: "loading" });
@@ -14,37 +20,40 @@ class SemanticNitrous extends React.Component {
       this.setState({ nitrousLoading: "nitrousBtn" });
     }
   };
-  handleIntersection = (event) => {
-    const intersectingResult = event.isIntersecting;
-    if (intersectingResult) {
-      this.setState({ siteView: "nitrous" });
-    }
-  };
+
+  // handleIntersection = (event) => {
+  //   const intersectingResult = event.isIntersecting;
+  //   if (intersectingResult) {
+  //     this.setState({ siteView: "nitrous" });
+  //   }
+  // };
+
   render() {
+    const { nitrous, nitrousLoading } = this.state;
     return (
-      <Container as="section" fluid={true}>
+      <Container as="section" fluid>
         <Container>
           <Header as="h2" textAlign="center" className="h2-general">
             Nitrous Oxide levels from 800,000 years ago to present
           </Header>
-          <Grid container={true}>
-            <Grid.Row centered={true} stretched>
-              {this.state.nitrous ? (
+          <Grid container>
+            <Grid.Row centered stretched>
+              {nitrous ? (
                 <Nitrous
-                  callBackPropNitrous={(c) => {
-                    this.handleClickNitrous(c);
+                  loadingNitrousCallback={(isLoading) => {
+                    this.handleClickNitrous(isLoading);
                   }}
                 />
               ) : null}
             </Grid.Row>
-            <Grid.Row centered={true}>
+            <Grid.Row centered>
               <Grid.Column width="eight" textAlign="center">
                 <Button
                   onClick={this.toggleNitrous}
-                  className={this.state.nitrousLoading}
-                  id={this.state.nitrousLoading}
+                  className={nitrousLoading}
+                  id={nitrousLoading}
                 >
-                  {this.state.nitrous ? "Hide graph" : "Load graph"}
+                  {nitrous ? "Hide graph" : "Load graph"}
                 </Button>
               </Grid.Column>
             </Grid.Row>
@@ -58,18 +67,17 @@ class SemanticNitrous extends React.Component {
                 industrial activities.
               </p>
               <p>
-                {" "}
                 It is the third largest heat-trapping gas in the atmosphere and
                 the biggest ozone-destroying compound emitted by human
                 activities.
-              </p>{" "}
+              </p>
               <p>
-                For more detailed information please visit:{" "}
+                For more detailed information please visit:
                 <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3306630/">
                   Stratospheric ozone depletion due to nitrous oxide: influences
                   of other gases
-                </a>{" "}
-                and{" "}
+                </a>
+                and
                 <a href="https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide">
                   EPA: Nitrous Oxide Emissions
                 </a>

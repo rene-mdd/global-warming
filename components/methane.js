@@ -1,33 +1,38 @@
-import fetch from 'unfetch';
-import Chart from 'chart.js';
-import methaneDataFile from '../public/data/csvjson-methane.json';
-import { Container, Grid } from 'semantic-ui-react';
+/* eslint-disable react/destructuring-assignment */
+import React from "react";
+import fetch from "unfetch";
+import Chart from "chart.js";
+import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import methaneDataFile from "../public/data/csvjson-methane.json";
 
 class Methane extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       methaneData: {},
       prehistoricMethane: {},
-      isLoading: true
+      isLoading: true,
+      graphError: "",
     };
-    this.url = 'api/methane-api';
+    this.url = "api/methane-api";
   }
 
-  async componentDidMount () {
-    this.props.callBackPropMethane(this.state.isLoading);
+  async componentDidMount() {
+    const { isLoading } = this.state;
+    this.props.loadingMethaneCallback(isLoading);
+
     // processing of json file
     const date = [];
     const amount = [];
 
-    methaneDataFile.forEach(obj => {
-      date.push(obj.year.split(',').filter(x => x)[0]);
+    methaneDataFile.forEach((obj) => {
+      date.push(obj.year.split(",").filter((x) => x)[0]);
       amount.push(
-        Number(parseFloat(obj.year.split(',').filter(x => x)[1]).toFixed(1))
+        Number(parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1))
       );
     });
-    const methaneObject = { date: date, amount: amount };
+    const methaneObject = { date, amount };
 
     this.setState({ prehistoricMethane: methaneObject });
 
@@ -36,15 +41,15 @@ class Methane extends React.Component {
       const data = await response.json();
       if (data) {
         this.setState({ methaneData: data, isLoading: false });
-        this.props.callBackPropMethane(false);
+        this.props.loadingMethaneCallback(false);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error)
+      this.setState({
+        graphError:
+          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
+      });
     }
-  }
-
-  go = isLoading => {
-    this.props.callBackPropMethane(isLoading);
   }
 
   parsedData = (methPrehistoricData, methaneData) => {
@@ -52,104 +57,126 @@ class Methane extends React.Component {
     const average = [];
     try {
       if (methaneData.methane) {
-        methaneData.methane.forEach(obj => {
+        methaneData.methane.forEach((obj) => {
           date.push(obj.date);
           average.push(obj.average);
         });
-        var ctx = document.getElementById("myMethChart");
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: methPrehistoricData.date.concat(date),
-            datasets: [
-              {
-                label: 'Methane',
-                data: methPrehistoricData.amount.concat(average),
-                fill: false,
-                borderColor: '#A75E09',
-                backgroundColor: 'rgba(255, 0, 0, 0.1);',
-                pointRadius: 0.5,
-                pointHoverBorderWidth: 1,
-                pointBackgroundColor: 'rgba(255, 0, 0, 0.1);',
-                pointHoverBackgroundColor: 'white',
-                pointHoverBorderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
-                pointHoverRadius: 10
-              }
-            ]
-          },
-          options: {
-            scales: {
-              bounds: 'ticks',
-              ticks: {
-                suggestedMax: 800000,
-                suggestedMin: -800000
-              },
-              yAxes: [
+        const ctx = document.getElementById("myMethChart");
+        (() =>
+          new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: methPrehistoricData.date.concat(date),
+              datasets: [
                 {
-                  stacked: true,
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Part Per million (ppm)'
-                  }
-                }
+                  label: "Methane",
+                  data: methPrehistoricData.amount.concat(average),
+                  fill: false,
+                  borderColor: "#A75E09",
+                  backgroundColor: "rgba(255, 0, 0, 0.1);",
+                  pointRadius: 0.5,
+                  pointHoverBorderWidth: 1,
+                  pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
+                  pointHoverBackgroundColor: "white",
+                  pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+                  borderWidth: 1,
+                  pointHoverRadius: 10,
+                },
               ],
-              xAxes: [
-                {
-                  stacked: true,
-                  scaleLabel: {
-                    display: true,
-                    labelString: 'Year'
+            },
+            options: {
+              scales: {
+                bounds: "ticks",
+                ticks: {
+                  suggestedMax: 800000,
+                  suggestedMin: -800000,
+                },
+                yAxes: [
+                  {
+                    stacked: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Part Per million (ppm)",
+                    },
                   },
-                  ticks:{
-                  maxRotation: 90}
-                }
-              ]
-            }
-          }
-        });
+                ],
+                xAxes: [
+                  {
+                    stacked: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Year",
+                    },
+                    ticks: {
+                      maxRotation: 90,
+                    },
+                  },
+                ],
+              },
+            },
+          }))();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error)
+      this.setState({
+        graphError:
+          "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",
+      });
     }
-  }
+  };
 
-  render () {
+  render() {
+    const {
+      methaneData,
+      prehistoricMethane,
+      isLoading,
+      graphError,
+    } = this.state;
     return (
       <>
-        <div
-          onLoad={this.parsedData(
-            this.state.prehistoricMethane,
-            this.state.methaneData
-          )}
-        />
-        <div
-          onLoad={() => {
-            this.go(this.state.isLoading);
-          }}
-        />
-        
-          <Container
-            className='chart-container'
-            style={{ position: 'relative', width: '80vw' }}
-          >
-            <canvas id='myMethChart'></canvas>
-          </Container>
-          <Grid width='equal' centered>
-          <Grid.Column width='fourteen'>
-          {!this.state.isLoading && (
-            <Container as='footer'>
-              {' '}
-              <p>
-              Year 1983 to present data source: Global Monitoring Division of NOAA’s Earth System Research Laboratory Ed Dlugokencky, NOAA/GML (<a href='www.esrl.noaa.gov/gmd/ccgg/trends_ch4/' target='_blank'>www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</a>).
-              </p>
-              <p>Data 800,000 years ago to 1983 source: United States, Environmental Protection Agency (EPA), (<a href='https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases'>https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases</a>)</p>
-              <p >
-                <b>From 1983.07 this data is measured on a monthly basis</b>
-              </p>
-            </Container>
-          )}
-        </Grid.Column>
+        <div onLoad={this.parsedData(prehistoricMethane, methaneData)} />
+
+        <Container
+          className="chart-container"
+          style={{ position: "relative", width: "80vw" }}
+        >
+          <canvas id="myMethChart" />
+        </Container>
+        <Grid width="equal" centered>
+          <Grid.Column width="fourteen">
+            {!isLoading && (
+              <Container as="footer">
+                <p>
+                  <span style={{ color: "#FD4659" }}>{graphError}</span>
+                </p>
+                <p>
+                  Year 1983 to present data source: Global Monitoring Division
+                  of NOAA’s Earth System Research Laboratory Ed Dlugokencky,
+                  NOAA/GML (
+                  <a
+                    href="www.esrl.noaa.gov/gmd/ccgg/trends_ch4/"
+                    target="_blank"
+                  >
+                    <em> www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</em>
+                  </a>
+                  ).
+                </p>
+                <p>
+                  Data 800,000 years ago to 1983 source: United States,
+                  Environmental Protection Agency (EPA), (
+                  <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
+                    <em>
+                      https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                    </em>
+                  </a>
+                  )
+                </p>
+                <p>
+                  <b>From 1983.07 this data is measured on a monthly basis</b>
+                </p>
+              </Container>
+            )}
+          </Grid.Column>
         </Grid>
       </>
     );
@@ -157,7 +184,11 @@ class Methane extends React.Component {
 }
 
 Methane.propTypes = {
-  callBackPropMethane: PropTypes.func,
+  loadingMethaneCallback: PropTypes.func,
+};
+
+Methane.defaultProps = {
+  loadingMethaneCallback: true,
 };
 
 export default Methane;

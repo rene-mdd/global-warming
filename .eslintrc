@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended",
+    // "plugin:react-hooks/recommended",
+    // always put prettier at last
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "jsx-a11y",
+    "prettier",
+    "react"
+  ],
+    "env": {
+        "browser": true,
+        "node": true
+    },
+  "rules": {
+    "semi": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/no-cycle": ["error", { "maxDepth": "∞" }],
+    "prettier/prettier": ["warn", {"usePrettierrc": false, "endOfLine":"auto", "singleQuote": false, "parser": "flow"}],
+    "no-use-before-define": "off",
+    "react/react-in-jsx-scope": "off",
+    "jsx-a11y/label-has-for": 0,
+    "no-console": 1
+  }
+}
