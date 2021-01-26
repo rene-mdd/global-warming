@@ -1,4 +1,5 @@
-import StickyMenu from "../../components/semantic/sticky";
+/* eslint-disable no-nested-ternary */
+import { useState } from "react";
 import {
   Button,
   Form,
@@ -9,8 +10,8 @@ import {
   Segment,
   Message,
 } from "semantic-ui-react";
+import StickyMenu from "../../components/semantic/sticky";
 import SiteHeader from "../../components/siteHeader";
-import { useState } from "react";
 
 const Contact = () => {
   const [contact, setContact] = useState({
@@ -59,11 +60,11 @@ const Contact = () => {
           message: json.message,
         });
       }
-    } catch (e) {
-      console.log("An error occurred", e);
+    } catch (event) {
       setResponse({
         type: "error",
-        message: "An error occurred while submitting the form",
+        message:
+          "An error occurred while submitting the form. please write a direct email to rene.r@live.com",
       });
     }
   };
@@ -102,7 +103,8 @@ const Contact = () => {
                   this site. I am currently living in Berlin. For suggestions
                   about this project, or if you want to discuss ideas related to
                   this kind of environmental issues, please send me a message or
-                  write me at <b>rene.r@live.com</b>{" "}
+                  write me at
+                  <b>rene.r@live.com</b>
                 </p>
               </Segment>
               <Form
@@ -111,30 +113,39 @@ const Contact = () => {
                 onSubmit={handleSubmit}
               >
                 <Form.Field required>
-                  <label>Name</label>
-                  <input
-                    placeholder="Name"
-                    name="name"
-                    value={contact.name}
-                    onChange={handleChange}
-                  />
+                  <label htmlFor="name">
+                    Name
+                    <input
+                      id="name"
+                      placeholder="Name"
+                      name="name"
+                      value={contact.name}
+                      onChange={handleChange}
+                    />
+                  </label>
                 </Form.Field>
                 <Form.Field required>
-                  <label>Email</label>
-                  <input
-                    placeholder="Your email address"
-                    name="email"
-                    value={contact.email}
-                    onChange={handleChange}
-                  />
+                  <label htmlFor="email">
+                    Email
+                    <input
+                      id="email"
+                      placeholder="Your email address"
+                      name="email"
+                      value={contact.email}
+                      onChange={handleChange}
+                    />
+                  </label>
                 </Form.Field>
                 <Form.Field style={{ display: "none" }}>
-                  <label>Subject</label>
-                  <input
-                    type="hidden"
-                    name="subject"
-                    onChange={handleChange}
-                  ></input>
+                  <label htmlFor="subject">
+                    Subject
+                    <input
+                      id="subject"
+                      type="hidden"
+                      name="subject"
+                      onChange={handleChange}
+                    />
+                  </label>
                   <input
                     name="honeypot"
                     style={{ display: "none" }}
@@ -165,6 +176,7 @@ const Contact = () => {
                 warning={response.type === "error"}
                 success={response.type === "success"}
                 header={
+                  // ternary operators used to save space
                   response.type === "success"
                     ? "Your email was sent."
                     : response.type === "error"

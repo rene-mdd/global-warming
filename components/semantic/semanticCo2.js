@@ -1,14 +1,18 @@
+import React from "react";
 import { Container, Header, Grid, Button } from "semantic-ui-react";
 import Co2 from "../co2";
-import { AccordionCo2, AccordionShare } from "../semantic/accordion";
-// import Observer from '@researchgate/react-intersection-observer';
-// import SideMenu from '../semantic/sideMenu'
+import { AccordionCo2, AccordionShare } from "./accordion";
 
 class SemanticCo2 extends React.Component {
-  state = { co2: false, co2Loading: "co2Btn", siteView: "" };
+  constructor(props) {
+    super(props);
+    this.state = { co2: false, co2Loading: "co2Btn" };
+  }
+
   toggleCo2 = () => {
-    this.setState({ co2: !this.state.co2 });
+    this.setState((prevState) => ({ co2: !prevState.co2 }));
   };
+
   handleClickCo2 = (isLoading) => {
     if (isLoading) {
       this.setState({ co2Loading: "loading" });
@@ -16,37 +20,33 @@ class SemanticCo2 extends React.Component {
       this.setState({ co2Loading: "co2Btn" });
     }
   };
-  handleIntersection = (event) => {
-    const intersectingCo2Result = event.isIntersecting;
-    if (intersectingCo2Result) {
-      this.setState({ siteView: "co2" });
-    }
-  };
+
   render() {
+    const { co2, co2Loading } = this.state;
     return (
-      <Container as="section" fluid={true}>
+      <Container as="section" fluid>
         <Container>
           <Header as="h2" textAlign="center" className="h2-general">
             Carbon Dioxide levels from 800,000 years ago to present
           </Header>
-          <Grid container={true}>
-            <Grid.Row centered={true} stretched>
-              {this.state.co2 ? (
+          <Grid container>
+            <Grid.Row centered stretched>
+              {co2 ? (
                 <Co2
-                  callBackPropCo2={(c) => {
-                    this.handleClickCo2(c);
+                  loadingCo2Callback={(isLoading) => {
+                    this.handleClickCo2(isLoading);
                   }}
                 />
               ) : null}
             </Grid.Row>
-            <Grid.Row centered={true}>
+            <Grid.Row centered>
               <Grid.Column width="eight" textAlign="center">
                 <Button
                   onClick={this.toggleCo2}
-                  className={this.state.co2Loading}
-                  id={this.state.co2Loading}
+                  className={co2Loading}
+                  id={co2Loading}
                 >
-                  {this.state.co2 ? "Hide graph" : "Load graph"}
+                  {co2 ? "Hide graph" : "Load graph"}
                 </Button>
               </Grid.Column>
             </Grid.Row>
@@ -61,15 +61,14 @@ class SemanticCo2 extends React.Component {
                 amount by more than 30%.
               </p>
               <p>
-                {" "}
                 For more information about prehistoric CO2 concentration,
-                current and future consequences please visit{" "}
+                current and future consequences please visit
                 <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide">
-                  Climate Change: Atmospheric Carbon Dioxide
-                </a>{" "}
-                and{" "}
+                  <em> Climate Change: Atmospheric Carbon Dioxide</em>
+                </a>
+                <em> and</em>
                 <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/">
-                  The relentless rise of carbon dioxide
+                  <em> The relentless rise of carbon dioxide</em>
                 </a>
                 .
               </p>

@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-curly-newline */
+import React from "react";
 import { Menu, Sidebar, Sticky, Rail, Grid } from "semantic-ui-react";
-import { Link, animateScroll as scroll } from "react-scroll";
+import * as Scroll from "react-scroll";
 
 export default class SideBar extends React.Component {
   constructor(props) {
@@ -10,8 +12,11 @@ export default class SideBar extends React.Component {
       rotate: false,
     };
   }
+
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
   render() {
+    const { activeItem, menuVisible, rotate } = this.state;
     return (
       <>
         <Sticky className="chart-img--remove">
@@ -23,14 +28,15 @@ export default class SideBar extends React.Component {
                     style={{ margin: "42px 0 -20px 0" }}
                     onClick={() =>
                       this.setState({
-                        menuVisible: !this.state.menuVisible,
-                        rotate: !this.state.rotate,
+                        menuVisible: !menuVisible,
+                        rotate: !rotate,
                       })
                     }
                   >
                     <img
+                      alt="rotate"
                       src="images/icons8-more-than-60.png"
-                      id={this.state.rotate ? "rotate-right" : "rotate-left"}
+                      id={rotate ? "rotate-right" : "rotate-left"}
                     />
                   </Menu.Item>
                 </Menu>
@@ -39,9 +45,7 @@ export default class SideBar extends React.Component {
                 <Sidebar.Pushable
                   as="nav"
                   className={
-                    this.state.rotate
-                      ? "sidebar-config-out"
-                      : "sidebar-config-in"
+                    rotate ? "sidebar-config-out" : "sidebar-config-in"
                   }
                 >
                   <Sidebar
@@ -51,90 +55,90 @@ export default class SideBar extends React.Component {
                     animation="slide along"
                     width="thin"
                     className="sideBar"
-                    visible={this.state.menuVisible}
+                    visible={menuVisible}
                     vertical
                     inverted
                   >
-                    <Link
+                    <Scroll.Link
                       to="jump-to-temperature"
-                      spy={true}
-                      smooth={true}
+                      spy
+                      smooth
                       offset={0}
                       duration={1000}
                     >
                       <Menu.Item
                         as="div"
                         name="temperature"
-                        active={this.state.activeItem === "temperature"}
+                        active={activeItem === "temperature"}
                         onClick={this.handleItemClick}
                       >
                         Temperature
                       </Menu.Item>
-                    </Link>
-                    <Link
+                    </Scroll.Link>
+                    <Scroll.Link
                       to="jump-to-co2"
-                      spy={true}
-                      smooth={true}
+                      spy
+                      smooth
                       offset={0}
                       duration={1000}
                     >
                       <Menu.Item
                         as="div"
                         name="co2"
-                        active={this.state.activeItem === "co2"}
+                        active={activeItem === "co2"}
                         onClick={this.handleItemClick}
                       >
                         Carbon Dioxide
                       </Menu.Item>
-                    </Link>
-                    <Link
+                    </Scroll.Link>
+                    <Scroll.Link
                       to="jump-to-methane"
-                      spy={true}
-                      smooth={true}
+                      spy
+                      smooth
                       offset={0}
                       duration={1000}
                     >
                       <Menu.Item
                         as="div"
                         name="methane"
-                        active={this.state.activeItem === "methane"}
+                        active={activeItem === "methane"}
                         onClick={this.handleItemClick}
                       >
                         Methane
                       </Menu.Item>
-                    </Link>
-                    <Link
+                    </Scroll.Link>
+                    <Scroll.Link
                       to="jump-to-nitrous"
-                      spy={true}
-                      smooth={true}
+                      spy
+                      smooth
                       offset={0}
                       duration={1000}
                     >
                       <Menu.Item
                         as="div"
                         name="nitrous"
-                        active={this.state.activeItem === "nitrous"}
+                        active={activeItem === "nitrous"}
                         onClick={this.handleItemClick}
                       >
                         Nitrous Oxide
                       </Menu.Item>
-                    </Link>
-                    <Link
+                    </Scroll.Link>
+                    <Scroll.Link
                       to="jump-to-arctic"
-                      spy={true}
-                      smooth={true}
+                      spy
+                      smooth
                       offset={0}
                       duration={1000}
                     >
                       <Menu.Item
                         as="div"
                         name="arctic"
-                        active={this.state.activeItem === "arctic"}
+                        active={activeItem === "arctic"}
                         onClick={this.handleItemClick}
                       >
                         Polar Ice
                       </Menu.Item>
-                    </Link>
+                    </Scroll.Link>
                   </Sidebar>
                 </Sidebar.Pushable>
               </Grid.Column>

@@ -1,12 +1,18 @@
+import React from "react";
 import { Container, Header, Grid, Button } from "semantic-ui-react";
 import Methane from "../methane";
-import { AccordionMethane, AccordionShare } from "../semantic/accordion";
+import { AccordionMethane, AccordionShare } from "./accordion";
 
 class SemanticMethane extends React.Component {
-  state = { methane: false, methaneLoading: "methaneBtn", siteView: "" };
+  constructor(props) {
+    super(props);
+    this.state = { methane: false, methaneLoading: "methaneBtn" };
+  }
+
   toggleMethane = () => {
-    this.setState({ methane: !this.state.methane });
+    this.setState((prevState) => ({ methane: !prevState.methane }));
   };
+
   handleClickMethane = (isLoading) => {
     if (isLoading) {
       this.setState({ methaneLoading: "loading" });
@@ -14,37 +20,33 @@ class SemanticMethane extends React.Component {
       this.setState({ methaneLoading: "methaneBtn" });
     }
   };
-  handleIntersection = (event) => {
-    const intersectingCo2Result = event.isIntersecting;
-    if (intersectingCo2Result) {
-      this.setState({ siteView: "methane" });
-    }
-  };
+
   render() {
+    const { methane, methaneLoading } = this.state;
     return (
-      <Container as="section" fluid={true}>
+      <Container as="section" fluid>
         <Container>
           <Header as="h2" textAlign="center" className="h2-general">
             Methane levels from 800,000 years ago to present
           </Header>
-          <Grid container={true}>
-            <Grid.Row centered={true} stretched>
-              {this.state.methane ? (
+          <Grid container>
+            <Grid.Row centered stretched>
+              {methane ? (
                 <Methane
-                  callBackPropMethane={(c) => {
-                    this.handleClickMethane(c);
+                  loadingMethaneCallback={(isLoading) => {
+                    this.handleClickMethane(isLoading);
                   }}
                 />
               ) : null}
             </Grid.Row>
-            <Grid.Row centered={true}>
+            <Grid.Row centered>
               <Grid.Column width="eight" textAlign="center">
                 <Button
                   onClick={this.toggleMethane}
-                  className={this.state.methaneLoading}
-                  id={this.state.methaneLoading}
+                  className={methaneLoading}
+                  id={methaneLoading}
                 >
-                  {this.state.methane ? "Hide graph" : "Load graph"}
+                  {methane ? "Hide graph" : "Load graph"}
                 </Button>
               </Grid.Column>
             </Grid.Row>
@@ -55,7 +57,8 @@ class SemanticMethane extends React.Component {
                 Methane is a flammable gas formed by geological and biological
                 processes. Some of the natural ones are leaks from natural gas
                 systems and wetlands.
-                <br /> 50-65% of total global methane emissions come from human
+                <br />
+                50-65% of total global methane emissions come from human
                 activities. These include livestock, agriculture, energy and
                 industry, waste from homes and businesses.
               </p>
@@ -67,13 +70,13 @@ class SemanticMethane extends React.Component {
                 have increased this amount by around 150%.
               </p>
               <p>
-                For more information about the methane situation please visit:{" "}
+                For more information about the methane situation please visit:
                 <a href="https://www.epa.gov/ghgemissions/overview-greenhouse-gases#methane">
-                  EPA: Methane Emissions
-                </a>{" "}
-                and{" "}
+                  <em> EPA: Methane Emissions </em>
+                </a>
+                and
                 <a href="https://earthobservatory.nasa.gov/images/146978/methane-emissions-continue-to-rise">
-                  NASA: Methane Emissions Continue to Rise
+                  <em> NASA: Methane Emissions Continue to Rise</em>
                 </a>
                 .
               </p>
@@ -81,9 +84,11 @@ class SemanticMethane extends React.Component {
                 For more information about the prehistoric methane
                 concentration, please visit:
                 <a href="https://www.nature.com/articles/nature06950">
-                  {" "}
-                  Orbital and millennial-scale features of atmospheric CH4 over
-                  the past 800,000 years
+                  <em>
+                    {" "}
+                    Orbital and millennial-scale features of atmospheric CH4
+                    over the past 800,000 years
+                  </em>
                 </a>
               </p>
 
