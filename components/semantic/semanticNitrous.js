@@ -21,13 +21,6 @@ class SemanticNitrous extends React.Component {
     }
   };
 
-  // handleIntersection = (event) => {
-  //   const intersectingResult = event.isIntersecting;
-  //   if (intersectingResult) {
-  //     this.setState({ siteView: "nitrous" });
-  //   }
-  // };
-
   render() {
     const { nitrous, nitrousLoading } = this.state;
     return (
@@ -77,7 +70,7 @@ class SemanticNitrous extends React.Component {
                   Stratospheric ozone depletion due to nitrous oxide: influences
                   of other gases
                 </a>
-                and
+                <em> and </em>
                 <a href="https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide">
                   EPA: Nitrous Oxide Emissions
                 </a>

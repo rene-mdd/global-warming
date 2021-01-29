@@ -124,7 +124,7 @@ class News extends React.Component {
           <Item.Group divided>
             {duplicateRemovalGNews.map((obj) => (
               <Item key={obj.title}>
-                <Item.Image src={obj?.image ?? "/images/breaking-news.png"} />
+                <Item.Image src={obj?.image || "/images/breaking-news.png"} />
                 <Item.Content>
                   <Item.Header as="header" src={obj.url} target="_blank">
                     <a href={obj.url}>{obj.title}</a>
