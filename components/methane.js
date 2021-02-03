@@ -153,11 +153,8 @@ class Methane extends React.Component {
                   Year 1983 to present data source: Global Monitoring Division
                   of NOAA’s Earth System Research Laboratory Ed Dlugokencky,
                   NOAA/GML (
-                  <a
-                    href="www.esrl.noaa.gov/gmd/ccgg/trends_ch4/"
-                    target="_blank"
-                  >
-                    <em> www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</em>
+                  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/">
+                    <em> https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</em>
                   </a>
                   ).
                 </p>

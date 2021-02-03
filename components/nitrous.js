@@ -159,8 +159,8 @@ class Nitrous extends React.Component {
                 </p>
                 <p>
                   Ed Dlugokencky, NOAA/GML (
-                  <a href="www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
-                    www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
+                  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
+                    https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
                   </a>
                   )
                 </p>
