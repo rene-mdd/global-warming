@@ -74,11 +74,11 @@ class SemanticArctic extends React.Component {
                 fueling more the process of global warming.
               </p>
               <p>
-                For details please visit:
+                For details please visit:&nbsp;
                 <a href="https://www.npolar.no/en/themes/climate-change-in-the-arctic/#toggle-id-8">
                   Climate change in the Arctic
                 </a>
-                and
+                <span> and </span>
                 <a href="https://www.igsoc.org/annals/46/a46a005.pdf">
                   Recent air-temperature changes in the Arctic
                 </a>

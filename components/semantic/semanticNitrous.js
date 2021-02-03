@@ -65,12 +65,12 @@ class SemanticNitrous extends React.Component {
                 activities.
               </p>
               <p>
-                For more detailed information please visit:
+                For more detailed information please visit:&nbsp;
                 <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3306630/">
                   Stratospheric ozone depletion due to nitrous oxide: influences
                   of other gases
                 </a>
-                <em> and </em>
+                <span> and </span>
                 <a href="https://www.epa.gov/ghgemissions/overview-greenhouse-gases#nitrous-oxide">
                   EPA: Nitrous Oxide Emissions
                 </a>
