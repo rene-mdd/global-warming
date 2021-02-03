@@ -30,7 +30,7 @@ function SemanticTemperature() {
               this graph, correspond to the Roman Warm Period and the Medieval
               Warm Period. These events were at regional and not global scale.
               <a href="https://www.ipcc.ch/report/ar4/wg1/">
-                <em> AR4 Climate Change 2007: The Physical Science Basis</em>
+                <em> AR4 Climate Change 2007: The Physical Science Basis </em>
               </a>
               . For more information about prehistoric temperature records
               please visit:

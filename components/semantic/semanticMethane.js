@@ -70,11 +70,11 @@ class SemanticMethane extends React.Component {
                 have increased this amount by around 150%.
               </p>
               <p>
-                For more information about the methane situation please visit:
+                For more information about the methane situation please
+                visit:&nbsp;
                 <a href="https://www.epa.gov/ghgemissions/overview-greenhouse-gases#methane">
-                  <em> EPA: Methane Emissions </em>
+                  <span> EPA: Methane Emissions and </span>
                 </a>
-                and
                 <a href="https://earthobservatory.nasa.gov/images/146978/methane-emissions-continue-to-rise">
                   <em> NASA: Methane Emissions Continue to Rise</em>
                 </a>
@@ -82,13 +82,13 @@ class SemanticMethane extends React.Component {
               </p>
               <p>
                 For more information about the prehistoric methane
-                concentration, please visit:
+                concentration, please visit:&nbsp;
                 <a href="https://www.nature.com/articles/nature06950">
-                  <em>
+                  <span>
                     {" "}
                     Orbital and millennial-scale features of atmospheric CH4
-                    over the past 800,000 years
-                  </em>
+                    over the past 800,000 years.
+                  </span>
                 </a>
               </p>
 

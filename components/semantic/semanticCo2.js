@@ -62,13 +62,13 @@ class SemanticCo2 extends React.Component {
               </p>
               <p>
                 For more information about prehistoric CO2 concentration,
-                current and future consequences please visit
+                current and future consequences please visit:&nbsp;
                 <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide">
-                  <em> Climate Change: Atmospheric Carbon Dioxide</em>
+                  <em> Climate Change: Atmospheric Carbon Dioxide </em>
                 </a>
-                <em> and</em>
+                <span> and </span>
                 <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/">
-                  <em> The relentless rise of carbon dioxide</em>
+                  <em>The relentless rise of carbon dioxide</em>
                 </a>
                 .
               </p>
