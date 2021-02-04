@@ -31,7 +31,7 @@ export default function SiteHeader({ title, description, keyword }) {
         <meta property="og:image:type" content="image/png" />
         <meta name="description" content={description} />
         <meta name="keywords" content={keyword} />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/gif" href="favicon/favicon.ico" />
         <link
           rel="stylesheet"
           href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"

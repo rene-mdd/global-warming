@@ -247,7 +247,10 @@ class SemanticDeforestation extends React.Component {
           <Item.Group divided>
             {duplicateRemovalGNews.map((obj) => (
               <Item key={obj.title}>
-                <Item.Image src={obj?.image ?? "/images/breaking-news.png"} />
+                <Item.Image
+                  src={obj?.image ?? "/images/breaking-news.png"}
+                  alt="Breaking news"
+                />
                 <Item.Content>
                   <Item.Header src={obj.url} target="_blank">
                     <a href={obj.url}>{obj.title}</a>
@@ -297,10 +300,11 @@ class SemanticDeforestation extends React.Component {
                 <Item key={obj.name}>
                   <Item.Image
                     size="tiny"
+                    alt="Breaking news"
                     src={
                       obj?.image?.thumbnail?.contentUrl ??
                       obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                      "/images/breaking-news.png"
+                      "/images/breaking-news.jpg"
                     }
                   />
                   <Item.Content>
@@ -362,12 +366,12 @@ SemanticDeforestation.propTypes = {
 SemanticDeforestation.defaultProps = {
   gJson: PropTypes.shape({
     articleCount: "",
-    articles: PropTypes.arrayOf("/images/breaking-news.png"),
+    articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
     timestamp: 0,
   }),
   azureJson: PropTypes.shape({
     totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.png"),
+    value: PropTypes.arrayOf("/images/breaking-news.jpg"),
     _type: "",
   }),
 };

@@ -124,7 +124,10 @@ class News extends React.Component {
           <Item.Group divided>
             {duplicateRemovalGNews.map((obj) => (
               <Item key={obj.title}>
-                <Item.Image src={obj?.image || "/images/breaking-news.png"} />
+                <Item.Image
+                  alt="Breaking news"
+                  src={obj?.image || "/images/breaking-news.jpg"}
+                />
                 <Item.Content>
                   <Item.Header as="header" src={obj.url} target="_blank">
                     <a href={obj.url}>{obj.title}</a>
@@ -173,10 +176,11 @@ class News extends React.Component {
                 <Item key={obj.name}>
                   <Item.Image
                     style={{ width: "100px" }}
+                    alt="Breaking news"
                     src={
                       obj?.image?.thumbnail?.contentUrl ??
                       obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                      "/images/breaking-news.png"
+                      "/images/breaking-news.jpg"
                     }
                   />
                   <Item.Content>
@@ -240,12 +244,12 @@ News.propTypes = {
 News.defaultProps = {
   gJson: PropTypes.shape({
     articleCount: 0,
-    articles: PropTypes.arrayOf("/images/breaking-news.png"),
+    articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
     timestamp: 0,
   }),
   jsonAzure: PropTypes.shape({
     totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.png"),
+    value: PropTypes.arrayOf("/images/breaking-news.jpg"),
     _type: "",
   }),
 };
