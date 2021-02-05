@@ -178,8 +178,8 @@ class Temperature extends React.Component {
                 Improvements in the GISTEMP uncertainty model. J. Geophys. Res.
                 Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522. Source
                 data year 1 – 1979: &nbsp;
-                <a href="https://cmr.earthdata.nasa.gov/search/concepts/C1215197080-NOAA_NCEI">
-                  Earh Data - Nasa
+                <a href="https://earthdata.nasa.gov/">
+                  https://earthdata.nasa.gov/
                 </a>
               </p>
 
