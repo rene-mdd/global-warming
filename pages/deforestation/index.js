@@ -383,7 +383,7 @@ export async function getServerSideProps({ res }) {
   });
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
-    `https://gnews.io/api/v3/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
+    `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
   );
 
   const gJson = JSON.parse(JSON.stringify(gNewsResp.data));
