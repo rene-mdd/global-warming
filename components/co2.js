@@ -4,14 +4,14 @@ import fetch from "unfetch";
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import preCo2Data from "../public/data/csvjson-co2.json";
+import localCo2Data from "../public/data/csvjson-co2.json";
 
 class Co2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      co2Data: [],
-      prehistoric: {},
+      latestCo2Data: [],
+      prehistoricData: {},
       isLoading: true,
       graphError: "",
     };
@@ -24,19 +24,19 @@ class Co2 extends React.Component {
 
     const date = [];
     const amount = [];
-    preCo2Data.forEach((obj) => {
+    localCo2Data.forEach((obj) => {
       date.push(obj.year.split(",").filter((x) => x)[0]);
       amount.push(
         Number(parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1))
       );
     });
-    const co2Object = { date, amount };
-    this.setState({ prehistoric: co2Object });
+    const parsedToObject = { date, amount };
+    this.setState({ prehistoricData: parsedToObject });
     try {
       const response = await fetch(this.url);
       const data = await response.json();
       if (data) {
-        this.setState({ co2Data: data, isLoading: false });
+        this.setState({ latestCo2Data: data, isLoading: false });
         this.props.loadingCo2Callback(false);
       }
     } catch (error) {
@@ -48,18 +48,14 @@ class Co2 extends React.Component {
     }
   }
 
-  // goCo2 = (isLoading) => {
-  //   this.props.loadingCo2Callback(isLoading);
-  // };
-
-  parsedCo2Data = (prehistoricData, currentData) => {
+  parsedCo2Data = (prehistoricData, latestCo2Data) => {
     const date = [];
-    const trend = [];
+    const amount = [];
     try {
-      if (currentData.co2) {
-        currentData.co2.forEach((obj) => {
+      if (latestCo2Data.co2) {
+        latestCo2Data.co2.forEach((obj) => {
           date.push(`${obj.year}.${obj.month}.${obj.day}`);
-          trend.push(obj.trend);
+          amount.push(obj.trend);
         });
         const ctx = document.getElementById("myCo2Chart");
         (() =>
@@ -70,7 +66,7 @@ class Co2 extends React.Component {
               datasets: [
                 {
                   label: "Carbon Dioxide",
-                  data: prehistoricData.amount.concat(trend),
+                  data: prehistoricData.amount.concat(amount),
                   fill: false,
                   borderColor: "#4984B8",
                   backgroundColor: "black",
@@ -126,10 +122,15 @@ class Co2 extends React.Component {
   };
 
   render() {
-    const { isLoading, co2Data, prehistoric, graphError } = this.state;
+    const {
+      isLoading,
+      latestCo2Data,
+      prehistoricData,
+      graphError,
+    } = this.state;
     return (
       <>
-        <div onLoad={this.parsedCo2Data(prehistoric, co2Data)} />
+        <div onLoad={this.parsedCo2Data(prehistoricData, latestCo2Data)} />
 
         <Container className="chart-container">
           <canvas id="myCo2Chart" />

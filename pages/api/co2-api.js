@@ -36,15 +36,14 @@ export default async (req, res) => {
     const sliced = parsedCopy.slice(60);
     const co2 = [];
     sliced.forEach((obj) => {
-      if (oldKey !== "year") {
-        Object.defineProperty(
-          obj,
-          ["year"],
-          Object.getOwnPropertyDescriptor(obj, oldKey)
-        );
-        // eslint-disable-next-line no-param-reassign
-        delete obj[oldKey];
-      }
+      Object.defineProperty(
+        obj,
+        ["year"],
+        Object.getOwnPropertyDescriptor(obj, oldKey)
+      );
+      // eslint-disable-next-line no-param-reassign
+      delete obj[oldKey];
+
       co2.push({
         year: obj.year,
         month: obj.field2,
