@@ -21,13 +21,6 @@ class SemanticArctic extends React.Component {
     }
   };
 
-  // handleIntersection = (event) => {
-  //   const intersectingCo2Result = event.isIntersecting;
-  //   if (intersectingCo2Result) {
-  //     this.setState({ siteView: "arctic" });
-  //   }
-  // };
-
   render() {
     const { arctic, arcticLoading } = this.state;
     return (
@@ -69,12 +62,12 @@ class SemanticArctic extends React.Component {
               </p>
 
               <p>
-                Another consequence is permafrost thawing, this is a process in
+                Another consequence is permafrost thawing. This is a process in
                 which large amounts of methane is released to the atmosphere,
                 fueling more the process of global warming.
               </p>
               <p>
-                For details please visit:&nbsp;
+                For more details please visit:&nbsp;
                 <a href="https://www.npolar.no/en/themes/climate-change-in-the-arctic/#toggle-id-8">
                   Climate change in the Arctic
                 </a>

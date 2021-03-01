@@ -10,7 +10,7 @@ class Nitrous extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nitrousData: {},
+      latestNitrousData: {},
       prehistoricNitrous: {},
       isLoading: true,
       graphError: "",
@@ -32,15 +32,15 @@ class Nitrous extends React.Component {
       );
     });
 
-    const nitrousObject = { date, amount };
+    const parsedToObject = { date, amount };
 
-    this.setState({ prehistoricNitrous: nitrousObject });
+    this.setState({ prehistoricNitrous: parsedToObject });
 
     try {
       const response = await fetch(this.url);
       const data = await response.json();
       if (data) {
-        this.setState({ nitrousData: data, isLoading: false });
+        this.setState({ latestNitrousData: data, isLoading: false });
         this.props.loadingNitrousCallback(false);
       }
     } catch (error) {
@@ -52,12 +52,12 @@ class Nitrous extends React.Component {
     }
   }
 
-  parsedNitrousData = (cleanNitrousPrehistoricData, cleanNitrousData) => {
+  parsedNitrousData = (cleanNitrousPrehistoricData, latestNitrousData) => {
     const date = [];
     const average = [];
     try {
-      if (cleanNitrousData.nitrous) {
-        cleanNitrousData.nitrous.forEach((obj) => {
+      if (latestNitrousData.nitrous) {
+        latestNitrousData.nitrous.forEach((obj) => {
           date.push(obj.date);
           average.push(obj.average);
         });
@@ -129,12 +129,14 @@ class Nitrous extends React.Component {
     const {
       graphError,
       prehistoricNitrous,
-      nitrousData,
+      latestNitrousData,
       isLoading,
     } = this.state;
     return (
       <>
-        <div onLoad={this.parsedNitrousData(prehistoricNitrous, nitrousData)} />
+        <div
+          onLoad={this.parsedNitrousData(prehistoricNitrous, latestNitrousData)}
+        />
 
         <Container
           className="chart-container"

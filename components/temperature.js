@@ -3,14 +3,14 @@ import React from "react";
 import { Container, Grid } from "semantic-ui-react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import temperatureFile from "../public/data/csvjson-temperature.json";
+import localTemperatureData from "../public/data/csvjson-temperature.json";
 
 class Temperature extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      temperatureData: {},
-      aWarmingData: {},
+      latestTemperatureData: {},
+      commonEraData: {},
     };
     this.url = "api/temperature-api";
   }
@@ -18,7 +18,7 @@ class Temperature extends React.Component {
   async componentDidMount() {
     const date = [];
     const amount = [];
-    temperatureFile.forEach((obj) => {
+    localTemperatureData.forEach((obj) => {
       date.push(obj.year.split(" ").filter((x) => x)[0]);
       amount.push(
         parseFloat(
@@ -30,20 +30,20 @@ class Temperature extends React.Component {
       );
     });
 
-    const temperatureObject = { date, amount };
+    const parsedToObject = { date, amount };
 
-    this.setState({ aWarmingData: temperatureObject });
+    this.setState({ commonEraData: parsedToObject });
 
     try {
       const response = await fetch(this.url);
       const data = await response.json();
-      this.setState({ temperatureData: data });
+      this.setState({ latestTemperatureData: data });
     } catch (error) {
       // console.log(error);
     }
   }
 
-  displayTempGraph = (aWarmingData, temperatureLiveData) => {
+  displayTempGraph = (commonEraData, temperatureLiveData) => {
     const date = [];
     const station = [];
 
@@ -86,11 +86,11 @@ class Temperature extends React.Component {
           new Chart(ctx, {
             type: "line",
             data: {
-              labels: aWarmingData.date.concat(date),
+              labels: commonEraData.date.concat(date),
               datasets: [
                 {
                   label: "Temperature",
-                  data: aWarmingData.amount.concat(station),
+                  data: commonEraData.amount.concat(station),
                   fill: false,
                   borderColor: "#FF073A",
                   backgroundColor: "black",
@@ -149,12 +149,15 @@ class Temperature extends React.Component {
   };
 
   render() {
-    const { aWarmingData, temperatureData } = this.state;
+    const { commonEraData, latestTemperatureData } = this.state;
     return (
       <>
         <div
           className="hide"
-          onLoad={this.displayTempGraph(aWarmingData, temperatureData.result)}
+          onLoad={this.displayTempGraph(
+            commonEraData,
+            latestTemperatureData.result
+          )}
         />
 
         <Container

@@ -4,13 +4,13 @@ import fetch from "unfetch";
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import methaneDataFile from "../public/data/csvjson-methane.json";
+import localMethaneData from "../public/data/csvjson-methane.json";
 
 class Methane extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      methaneData: {},
+      latestMethaneData: {},
       prehistoricMethane: {},
       isLoading: true,
       graphError: "",
@@ -26,21 +26,21 @@ class Methane extends React.Component {
     const date = [];
     const amount = [];
 
-    methaneDataFile.forEach((obj) => {
+    localMethaneData.forEach((obj) => {
       date.push(obj.year.split(",").filter((x) => x)[0]);
       amount.push(
         Number(parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1))
       );
     });
-    const methaneObject = { date, amount };
+    const parsedToObject = { date, amount };
 
-    this.setState({ prehistoricMethane: methaneObject });
+    this.setState({ prehistoricMethane: parsedToObject });
 
     try {
       const response = await fetch(this.url);
       const data = await response.json();
       if (data) {
-        this.setState({ methaneData: data, isLoading: false });
+        this.setState({ latestMethaneData: data, isLoading: false });
         this.props.loadingMethaneCallback(false);
       }
     } catch (error) {
@@ -52,12 +52,12 @@ class Methane extends React.Component {
     }
   }
 
-  parsedData = (methPrehistoricData, methaneData) => {
+  parsedData = (methPrehistoricData, latestMethaneData) => {
     const date = [];
     const average = [];
     try {
-      if (methaneData.methane) {
-        methaneData.methane.forEach((obj) => {
+      if (latestMethaneData.methane) {
+        latestMethaneData.methane.forEach((obj) => {
           date.push(obj.date);
           average.push(obj.average);
         });
@@ -127,14 +127,14 @@ class Methane extends React.Component {
 
   render() {
     const {
-      methaneData,
+      latestMethaneData,
       prehistoricMethane,
       isLoading,
       graphError,
     } = this.state;
     return (
       <>
-        <div onLoad={this.parsedData(prehistoricMethane, methaneData)} />
+        <div onLoad={this.parsedData(prehistoricMethane, latestMethaneData)} />
 
         <Container
           className="chart-container"

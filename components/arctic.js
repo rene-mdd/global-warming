@@ -31,14 +31,14 @@ class Arctic extends React.Component {
     }
   }
 
-  displayArcticGraph = (AData) => {
+  displayArcticGraph = (arcticDataResult) => {
     const yearArray = [];
     const extentArray = [];
     const areaArray = [];
     try {
       const ctx = document.getElementById("arcticChart");
-      if (AData) {
-        AData.forEach(({ year, extent, area }) => {
+      if (arcticDataResult) {
+        arcticDataResult.forEach(({ year, extent, area }) => {
           yearArray.push(year);
           extentArray.push(parseFloat(extent));
           areaArray.push(parseFloat(area));
