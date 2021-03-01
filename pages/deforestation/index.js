@@ -38,10 +38,6 @@ class SemanticDeforestation extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    this.forceUpdate();
-  }
-
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       this.setState({ intersecting: true });

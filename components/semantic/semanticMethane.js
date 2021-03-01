@@ -59,8 +59,8 @@ class SemanticMethane extends React.Component {
                 systems and wetlands.
                 <br />
                 50-65% of total global methane emissions come from human
-                activities. These include livestock, agriculture, energy and
-                industry, waste from homes and businesses.
+                activities. These include livestock, agriculture, oil and gas
+                systems, waste from homes and businesses, landfills, and so on.
               </p>
               <p>
                 Methane is a gas with a global warming potential several times

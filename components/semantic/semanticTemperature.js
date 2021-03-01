@@ -88,18 +88,14 @@ function SemanticTemperature() {
                   On the causal structure between CO2 and global temperature
                 </em>
               </a>
-              ,
+              <em> and</em>
               <a href="https://environmentcounts.org/ec-perspective-accounting-for-800000-years-of-climate-change/">
                 <em>
                   {" "}
-                  EC Perspective: Accounting for 800,000 years of climate change
+                  EC Perspective: Accounting for 800,000 years of climate
+                  change.
                 </em>
               </a>
-              <em> and</em>
-              <a href="https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php">
-                <em> How is Today’s Warming Different from the Past?</em>
-              </a>
-              .
             </p>
             <Grid className="api-segment" columns="equal" centered stackable>
               <Grid.Column>

@@ -99,10 +99,10 @@ const Contact = () => {
             <Grid.Column width="10" className="form-width">
               <Segment>
                 <p id="contact-segment">
-                  Hello! My name is René Rodríguez and I am the developer of
-                  this site. I am currently living in Berlin. For suggestions
-                  about this project, or if you want to discuss ideas related to
-                  this kind of environmental issues, please send me a message or
+                  Hello! My name is René Rodríguez and I am the creator of this
+                  site. I am currently living in Berlin. For suggestions about
+                  this project, or if you want to discuss ideas related to this
+                  kind of environmental issues, please send me a message or
                   write me at
                   <b>rene.r@live.com</b>
                 </p>
