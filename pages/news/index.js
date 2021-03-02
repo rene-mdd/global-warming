@@ -36,10 +36,6 @@ class News extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    this.forceUpdate();
-  }
-
   handleIntersection = (event) => {
     if (event.isIntersecting) {
       this.setState({ intersecting: true });
@@ -47,13 +43,13 @@ class News extends React.Component {
   };
 
   render() {
-    const { gJson, jsonAzure } = this.props;
+    const { googleNewsJson, jsonAzure } = this.props;
     const { intersecting } = this.state;
     const options = {
       onChange: this.handleIntersection,
     };
 
-    const parsedGNews = gJson.articles;
+    const parsedGNews = googleNewsJson.articles;
     const parsedBingNews = jsonAzure.value;
     const duplicateRemovalBing = parsedBingNews.filter(
       (thing, index, self) =>
@@ -229,7 +225,7 @@ class News extends React.Component {
   }
 }
 News.propTypes = {
-  gJson: PropTypes.shape({
+  googleNewsJson: PropTypes.shape({
     articleCount: PropTypes.number,
     articles: PropTypes.arrayOf(PropTypes.object),
     timestamp: PropTypes.number,
@@ -242,7 +238,7 @@ News.propTypes = {
 };
 
 News.defaultProps = {
-  gJson: PropTypes.shape({
+  googleNewsJson: PropTypes.shape({
     articleCount: 0,
     articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
     timestamp: 0,
@@ -266,7 +262,7 @@ export async function getServerSideProps({ res }) {
   const gNewsResp = await axios.get(
     `https://gnews.io/api/v4/search?q=%22climate%20change%22&lang=en&image=required&token=${gNewsVariable}`
   );
-  const gJson = JSON.parse(JSON.stringify(gNewsResp.data));
+  const googleNewsJson = JSON.parse(JSON.stringify(gNewsResp.data));
 
   res.setHeader(
     "Cache-Control",
@@ -276,7 +272,7 @@ export async function getServerSideProps({ res }) {
   return {
     props: {
       jsonAzure,
-      gJson,
+      googleNewsJson,
     },
   };
 }
