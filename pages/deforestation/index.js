@@ -17,7 +17,6 @@ import {
 } from "semantic-ui-react";
 import StickyMenu from "../../components/semantic/sticky";
 import SiteHeader from "../../components/siteHeader";
-
 // eslint-disable-next-line prefer-destructuring
 const CognitiveServicesCredentials = require("ms-rest-azure")
   .CognitiveServicesCredentials;
@@ -51,13 +50,13 @@ class SemanticDeforestation extends React.Component {
   };
 
   render() {
-    const { gJson, azureJson } = this.props;
+    const { googleNewsJson, azureJson } = this.props;
     const { toggle, intersecting } = this.state;
     const options = {
       onChange: this.handleIntersection,
     };
 
-    const parsedGNews = gJson.articles;
+    const parsedGNews = googleNewsJson.articles;
     const parsedBingNews = azureJson.value;
     const duplicateRemovalBing = parsedBingNews.filter(
       (thing, index, self) =>
@@ -347,7 +346,7 @@ class SemanticDeforestation extends React.Component {
   }
 }
 SemanticDeforestation.propTypes = {
-  gJson: PropTypes.shape({
+  googleNewsJson: PropTypes.shape({
     articleCount: PropTypes.number,
     articles: PropTypes.arrayOf(PropTypes.object),
     timestamp: PropTypes.number,
@@ -360,7 +359,7 @@ SemanticDeforestation.propTypes = {
 };
 
 SemanticDeforestation.defaultProps = {
-  gJson: PropTypes.shape({
+  googleNewsJson: PropTypes.shape({
     articleCount: "",
     articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
     timestamp: 0,
@@ -382,7 +381,7 @@ export async function getServerSideProps({ res }) {
     `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
   );
 
-  const gJson = JSON.parse(JSON.stringify(gNewsResp.data));
+  const googleNewsJson = JSON.parse(JSON.stringify(gNewsResp.data));
   const azureJson = JSON.parse(JSON.stringify(resp));
 
   res.setHeader(
@@ -392,7 +391,7 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
-      gJson,
+      googleNewsJson,
       azureJson,
     },
   };
