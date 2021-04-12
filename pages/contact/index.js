@@ -52,7 +52,7 @@ const Contact = () => {
       if (json.success) {
         setResponse({
           type: "success",
-          message: "Thank you for reaching out to us.",
+          message: "Thank you for reaching out.",
         });
       } else {
         setResponse({
@@ -104,7 +104,7 @@ const Contact = () => {
                   this project, or if you want to discuss ideas related to this
                   kind of environmental issues, please send me a message or
                   write me at
-                  <b>rene.r@live.com</b>
+                  <b> rene.r@live.com</b>
                 </p>
               </Segment>
               <Form
