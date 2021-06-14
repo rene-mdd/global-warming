@@ -20,7 +20,7 @@ const Contact = () => {
     subject: "StaticForms - Contact Form",
     honeypot: "",
     message: "",
-    replyTo: "info@rene-rodriguez.com",
+    replyTo: "rene.r@live.com",
     accessKey: "21b96b01-5e41-419f-a493-cd3f5327a645",
   });
 
