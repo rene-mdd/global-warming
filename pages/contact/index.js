@@ -20,7 +20,7 @@ const Contact = () => {
     subject: "StaticForms - Contact Form",
     honeypot: "",
     message: "",
-    replyTo: "info@rene-rodriguez.com",
+    replyTo: "rene.r@live.com",
     accessKey: "21b96b01-5e41-419f-a493-cd3f5327a645",
   });
 
@@ -99,11 +99,11 @@ const Contact = () => {
             <Grid.Column width="10" className="form-width">
               <Segment>
                 <p id="contact-segment">
-                  Hello! My name is René Rodríguez and I am the creator of this
-                  site. I am currently living in Berlin. For suggestions about
-                  this project, or if you want to discuss ideas related to this
-                  kind of environmental issues, please send me a message or
-                  write me at
+                  Hello! My name is René and I am the creator of this site. I am
+                  currently living in Berlin. For suggestions about this
+                  project, or if you want to discuss ideas related to this kind
+                  of environmental issues, please send me a message or write me
+                  at
                   <b> rene.r@live.com</b>
                 </p>
               </Segment>
