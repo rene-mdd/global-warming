@@ -11,7 +11,7 @@ import SemanticArctic from "../components/semantic/semanticArctic";
 import SiteHeader from "../components/siteHeader";
 
 function Home() {
-  const homeTitle = "Global Warming";
+  const homeTitle = "Global Warming API";
   const homeMetaDescription =
     "Global warming & climate change up to date APIs, data, graphs, and news. Earth's temperature, carbon dioxide (CO2), methane, nitrous oxide, and melted polar ice cap.";
   const homeKeywords = "Global warming, climate change, API, graphs";

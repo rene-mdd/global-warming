@@ -18,10 +18,10 @@ import {
 import StickyMenu from "../../components/semantic/sticky";
 import SiteHeader from "../../components/siteHeader";
 // eslint-disable-next-line prefer-destructuring
-const CognitiveServicesCredentials = require("ms-rest-azure")
-  .CognitiveServicesCredentials;
+const CognitiveServicesCredentials =
+  require("ms-rest-azure").CognitiveServicesCredentials;
 
-const azureEnvKey = process.env.API_KEY_AZURE;
+const azureEnvKey = process.env.NEXT_PUBLIC_API_KEY_AZURE;
 const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
 const searchTerm = "deforestation";
 const NewsSearchAPIClient = require("azure-cognitiveservices-newssearch");
@@ -41,12 +41,6 @@ class SemanticDeforestation extends React.Component {
     if (event.isIntersecting) {
       this.setState({ intersecting: true });
     }
-  };
-
-  handleForest = () => {
-    this.setState((prevState) => ({
-      toggle: !prevState.toggle,
-    }));
   };
 
   render() {
@@ -126,44 +120,19 @@ class SemanticDeforestation extends React.Component {
                 Global forest loss map
               </Header>
               <Grid column="equal" centered>
-                <Button
-                  onClick={this.handleForest}
-                  style={{ marginBottom: "20px" }}
-                >
-                  {toggle
-                    ? "Deforestation by divided year"
-                    : "Deforestation between 2000 - 2019"}
-                </Button>
                 <Grid.Row centered>
                   <Container>
                     {" "}
-                    {toggle ? (
-                      <Embed
-                        as="iframe"
-                        style={{
-                          width: "800px",
-                          height: "800px",
-                          padding: 0,
-                        }}
-                        frameBorder="0"
-                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=47.89%2C-24.5%2C33.63%2C-108.13&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C3%3A100&embedded=true"
-                      />
-                    ) : (
-                      <Embed
-                        as="iframe"
-                        style={{
-                          width: "800px",
-                          height: "800px",
-                          padding: 0,
-                        }}
-                        frameBorder="0"
-                        scrolling="no"
-                        marginHeight="0"
-                        marginWidth="0"
-                        title="Forest loss copy"
-                        src="https://earthenginepartners.appspot.com/science-2013-global-forest?hl=en&llbox=16.12%2C-23.01%2C-37.45%2C-108.34&t=ROADMAP&layers=layer0%2C15%3A100%2C6%2Clayer12%2Clayer9%3A100%2C1%3A100&embedded=true"
-                      />
-                    )}
+                    <Embed
+                      as="iframe"
+                      style={{
+                        width: "800px",
+                        height: "800px",
+                        padding: 0,
+                      }}
+                      frameBorder="0"
+                      src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
+                    />
                   </Container>
 
                   <Container>
@@ -376,7 +345,7 @@ export async function getServerSideProps({ res }) {
     market: "en-XA",
     count: 100,
   });
-  const gNewsVariable = process.env.API_KEY_GOOGLE;
+  const gNewsVariable = process.env.NEXT_PUBLIC_API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
     `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
   );
