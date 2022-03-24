@@ -92,7 +92,7 @@ class Arctic extends React.Component {
           }))();
       }
     } catch (error) {
-      // console.log(error);
+      console.error(error);
       this.setState({
         graphError:
           "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",

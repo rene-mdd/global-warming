@@ -44,7 +44,7 @@ class Nitrous extends React.Component {
         this.props.loadingNitrousCallback(false);
       }
     } catch (error) {
-      // console.log(error)
+      console.error(error)
       this.setState({
         graphError:
           "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
@@ -117,7 +117,7 @@ class Nitrous extends React.Component {
           }))();
       }
     } catch (error) {
-      // console.log(error)
+      console.error(error)
       this.setState({
         graphError:
           "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",

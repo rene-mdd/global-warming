@@ -40,7 +40,7 @@ class Co2 extends React.Component {
         this.props.loadingCo2Callback(false);
       }
     } catch (error) {
-      // console.log(error)
+      console.error(error)
       this.setState({
         graphError:
           "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
@@ -113,7 +113,7 @@ class Co2 extends React.Component {
           }))();
       }
     } catch (error) {
-      // console.log(error)
+      console.error(error)
       this.setState({
         graphError:
           "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",

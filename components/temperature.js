@@ -39,7 +39,7 @@ class Temperature extends React.Component {
       const data = await response.json();
       this.setState({ latestTemperatureData: data });
     } catch (error) {
-      // console.log(error);
+      console.error(error);
     }
   }
 
@@ -144,7 +144,7 @@ class Temperature extends React.Component {
           }))();
       }
     } catch (error) {
-      // console.log(error);
+      console.error(error);
     }
   };
 
@@ -184,10 +184,6 @@ class Temperature extends React.Component {
                 <a href="https://earthdata.nasa.gov/">
                   https://earthdata.nasa.gov/
                 </a>
-              </p>
-
-              <p>
-                <b>From 1880.04 the data is measured on a monthly basis</b>
               </p>
             </Container>
           </Grid.Column>
