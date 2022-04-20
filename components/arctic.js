@@ -1,43 +1,50 @@
 /* eslint-disable react/destructuring-assignment */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { arcticService } from "../services/dataService";
 
-class Arctic extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { arcticData: [], isLoading: true, graphError: "" };
-    this.url = "api/arctic-api";
-  }
+function Arctic() {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = { arcticData: [], isLoading: true, graphError: "" };
+  const url = "api/arctic-api";
+  // }
+  const [isLoading, setIsLoading] = useState(true);
+  const [arcticData, setArcticData] = useState([]);
+  const [graphError, setGraphError] = useState("");
 
-  async componentDidMount() {
-    const { isLoading } = this.state;
-    this.props.arcticLoadingCallback(isLoading);
-
-    try {
-      const response = await fetch(this.url);
-      const data = await response.json();
-      if (data) {
-        this.setState({ arcticData: data, isLoading: false });
-        this.props.arcticLoadingCallback(false);
+  useEffect(() => {
+    async function fetchArcticData() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data) {
+          console.log(data)
+          setIsLoading(false);
+          setArcticData(data);
+          arcticService.setData({value: data.result, isLoading: isLoading});
+        }
+      } catch (error) {
+        setGraphError(
+          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you."
+        );
       }
-    } catch (error) {
-      this.setState({
-        graphError:
-          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
-      });
     }
-  }
+    fetchArcticData();
+  }, []);
 
-  displayArcticGraph = (arcticDataResult) => {
+  const displayArcticGraph = (arcticDataResult) => {
     const yearArray = [];
     const extentArray = [];
     const areaArray = [];
     try {
       const ctx = document.getElementById("arcticChart");
       if (arcticDataResult) {
+        // arcticService.setData(arcticDataResult);
+
         arcticDataResult.forEach(({ year, extent, area }) => {
           yearArray.push(year);
           extentArray.push(parseFloat(extent));
@@ -93,44 +100,40 @@ class Arctic extends React.Component {
       }
     } catch (error) {
       console.error(error);
-      this.setState({
-        graphError:
-          "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",
-      });
+      setGraphError(
+        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+      );
     }
   };
 
-  render() {
-    const { isLoading, arcticData, graphError } = this.state;
-    return (
-      <>
-        <div onLoad={this.displayArcticGraph(arcticData.result)} />
+  return (
+    <>
+      <div onLoad={displayArcticGraph(arcticData.result)} />
 
-        <Container
-          className="chart-container"
-          style={{ position: "relative", width: "80vw" }}
-        >
-          <canvas id="arcticChart" />
-        </Container>
-        <Grid width="equal" centered>
-          <Grid.Column fluid="true" width="14">
-            {!isLoading && (
-              <Container as="footer" style={{ marginTop: "-5px" }}>
-                <p>
-                  <span style={{ color: "#FD4659" }}>{graphError}</span>
-                </p>
-                <p>
-                  Data source: Satellite observations. Credit:
-                  <a href="https://nsidc.org/">NSIDC</a>
-                  /NASA.
-                </p>
-              </Container>
-            )}
-          </Grid.Column>
-        </Grid>
-      </>
-    );
-  }
+      <Container
+        className="chart-container"
+        style={{ position: "relative", width: "80vw" }}
+      >
+        <canvas id="arcticChart" />
+      </Container>
+      <Grid width="equal" centered>
+        <Grid.Column fluid="true" width="14">
+          {!isLoading && (
+            <Container as="footer" style={{ marginTop: "-5px" }}>
+              <p>
+                <span style={{ color: "#FD4659" }}>{graphError}</span>
+              </p>
+              <p>
+                Data source: Satellite observations. Credit:
+                <a href="https://nsidc.org/">NSIDC</a>
+                /NASA.
+              </p>
+            </Container>
+          )}
+        </Grid.Column>
+      </Grid>
+    </>
+  );
 }
 
 Arctic.propTypes = {

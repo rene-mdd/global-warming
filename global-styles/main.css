@@ -248,10 +248,22 @@ nav a:hover {
     min-width: 350px;
 }
 
-.today-value {
+.today-value, .arctic-value {
     margin: 10px 0;
 }
+
 .today-value p {
     font-weight: bold;
     font-size: medium;
+}
+.arctic-value p {
+    font-weight: bold;
+    font-size: medium;
+}
+
+.today-value p span {
+    color: rgba(255, 99, 132, 1);
+}
+.arctic-value p span {
+    color: rgba(44, 130, 201, 1);
 }

@@ -9,6 +9,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-rxjs/core": "^0.9.5",
+    "@react-rxjs/utils": "^0.9.5",
     "@researchgate/react-intersection-observer": "^1.3.5",
     "axios": "^0.21.4",
     "azure-cognitiveservices-newssearch": "^2.0.0",
@@ -29,6 +31,7 @@
     "react-scripts": "^4.0.3",
     "react-scroll": "^1.8.6",
     "react-share": "^4.4.0",
+    "rxjs": "^7.5.5",
     "sass": "^1.49.9",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.2",
