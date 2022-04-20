@@ -1,6 +1,6 @@
 html * {
     padding: 0;
-    font-family: 'Play', sans-serif !important;
+    font-family: "Play", sans-serif !important;
     font-size: 100%;
 }
 
@@ -10,24 +10,25 @@ body {
 
 .mini-icon {
     width: 20px;
-    height: 20px
+    height: 20px;
 }
 
 #temperature-description {
-    padding-top: -30px !important
-};
+    padding-top: -30px !important;
+}
 
 #temp-error {
-    margin: 35px 0 !important
+    margin: 35px 0 !important;
 }
 
 p {
-    font-size: 22px
+    font-size: 22px;
 }
 
 .landing-background {
     height: 100vh !important;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/background-global-warming.png') !important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url("/images/background-global-warming.png") !important;
     background-size: cover !important;
 }
 
@@ -44,59 +45,59 @@ p {
 .h1-news {
     padding: 35vh 0 0 !important;
     font-size: 2.5em !important;
-    color: white !important
+    color: white !important;
 }
 .h2-general {
     padding: 20vh 0 10vh !important;
     font-size: 2em !important;
-    color: #343837 !important
+    color: #343837 !important;
 }
 footer p {
     margin: 0;
-    font-size: 0.8em
+    font-size: 0.8em;
 }
 #down-icon {
-    padding-top: 6rem !important
+    padding-top: 6rem !important;
 }
 .api-segment {
-    margin: 8vh 0 !important
+    margin: 8vh 0 !important;
 }
 .accordion-co2 {
     width: 90%;
     font-size: 150% !important;
     background-color: #12d3cf !important;
-    color: white !important
+    color: white !important;
 }
 .accordion-temp {
     width: 90%;
     font-size: 150% !important;
     background-color: #12d3cf !important;
-    color: white !important
+    color: white !important;
 }
 .accordion-methane {
     width: 90%;
     font-size: 150% !important;
     background-color: #12d3cf !important;
-    color: white !important
+    color: white !important;
 }
 .accordion-nitrous {
     width: 90%;
     font-size: 150% !important;
     background-color: #12d3cf !important;
-    color: white !important
+    color: white !important;
 }
 .accordion-arctic {
     width: 90%;
     font-size: 150% !important;
     background-color: #12d3cf !important;
-    color: white !important
+    color: white !important;
 }
 .news-button {
-    background-color: #0E87CC !important;
+    background-color: #0e87cc !important;
 }
 @media only screen and (max-width: 600px) {
     i {
-        display: none !important
+        display: none !important;
     }
     .h1-class {
         padding: 15vh 0 0 !important;
@@ -106,7 +107,7 @@ footer p {
     .h1-news {
         padding: 15vh 0 0 !important;
         font-size: 2em !important;
-        color: white !important
+        color: white !important;
     }
     #h1-deforestation {
         padding: 15vh 0 0 !important;
@@ -124,74 +125,74 @@ footer p {
         font-weight: 400 !important;
     }
     .fix {
-        display: none !important
+        display: none !important;
     }
 }
 .api-segment i::before {
     position: relative;
-    content: url('circle-right.png') !important;
+    content: url("circle-right.png") !important;
     margin-left: -15px;
-    bottom: -7px !important
+    bottom: -7px !important;
 }
 .landing-page-news {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/newspaper-background.jpg') !important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
     background-size: cover !important;
     height: 100vh !important;
 }
 #h1-deforestation {
     font-size: 2.5em;
     color: white !important;
-    padding: 35vh 0 0vh
+    padding: 35vh 0 0vh;
 }
 #h2-news {
     font-size: 1.5em;
     color: white !important;
-    font-weight: 400
+    font-weight: 400;
 }
 #list-news {
     font-size: 2.2em !important;
-    padding: 10vh !important
+    padding: 10vh !important;
 }
 #news-date {
     font-weight: 300;
     text-decoration: underline;
-    padding: 10px !important
+    padding: 10px !important;
 }
 h4 {
     font-size: 1.5em !important;
-    margin-bottom: 5vh !important
+    margin-bottom: 5vh !important;
 }
 #co2Btn {
     background-color: #1687a7 !important;
-    color: white !important
+    color: white !important;
 }
 #methaneBtn {
     background-color: #1687a7 !important;
-    color: white !important
+    color: white !important;
 }
 #nitrousBtn {
     background-color: #1687a7 !important;
-    color: white !important
+    color: white !important;
 }
 #arcticBtn {
     background-color: #1687a7 !important;
-    color: white !important
+    color: white !important;
 }
 .sideBar {
-    position: relative !important
+    position: relative !important;
 }
 #landing-page-deforestation {
     background-color: #048243;
-    height: 100vh !important
+    height: 100vh !important;
 }
 .sidebar-config-out {
     transform: translateX(-150px) !important;
     transition-duration: 1s;
-    background: rgb(104, 104, 104) !important
+    background: rgb(104, 104, 104) !important;
 }
 .sidebar-config-in {
     transition-duration: 1s;
-    background: rgb(104, 104, 104) !important
+    background: rgb(104, 104, 104) !important;
 }
 .fix {
     position: fixed !important;
@@ -199,50 +200,58 @@ h4 {
     margin-top: 35vh !important;
     padding: 0;
     opacity: 1 !important;
-    height: 50px !important
+    height: 50px !important;
 }
 #rotate-left {
     transform: rotate(180deg);
-    transition-duration: 1s
+    transition-duration: 1s;
 }
 #rotate-right {
     transform: rotate(1deg);
-    transition-duration: 1s
+    transition-duration: 1s;
 }
 #deforestation-text {
     padding-top: 50px !important;
 }
 .display-none {
-    display: none !important
+    display: none !important;
 }
 .contact-title {
-    font-size: 3em !important
+    font-size: 3em !important;
 }
 .news-icon {
     margin-right: 10px !important;
-    width: 25px !important
+    width: 25px !important;
 }
 .contact-container {
-    margin-top: 35vh !important
+    margin-top: 35vh !important;
 }
 .header p {
-    font-size: 1.3em !important
+    font-size: 1.3em !important;
 }
 .api-content p {
-    font-size: 1.1em !important
+    font-size: 1.1em !important;
 }
 .submit-button {
-    background-color: #47C072 !important;
+    background-color: #47c072 !important;
 }
 nav a:hover {
-    background-color: #6db629 !important
+    background-color: #6db629 !important;
 }
 #contact-segment {
-    font-size: 1.2em !important
+    font-size: 1.2em !important;
 }
 .hide-divider {
-    opacity: 0
+    opacity: 0;
 }
 .form-width {
     min-width: 350px;
+}
+
+.today-value {
+    margin: 10px 0;
+}
+.today-value p {
+    font-weight: bold;
+    font-size: medium;
 }
