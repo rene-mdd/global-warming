@@ -13,15 +13,14 @@ function SemanticArctic() {
     arcticService.getData().subscribe((data) => {
       if(data) {
         setArcticLoading("arcticBtn");
-        console.log(data)
         setTodayValue(data.value.pop());
       }
     })
   })
 
   const toggleArctic = () => {
-    setArctic(!arctic);
-    setArcticLoading("loading");
+    setArctic(prevState => !prevState);
+    setArcticLoading(prevState => prevState === "loading" ? prevState : "arcticBtn");
   };
 
   return (
@@ -49,7 +48,7 @@ function SemanticArctic() {
         <Grid columns="equal">
           <Container textAlign="center" className="arctic-value">
             <p>
-              Today's value: <span>{`${todayValue.extent}, ${todayValue.area}`}</span>
+              Today's value: <span>{`Extent ${todayValue.extent ? todayValue.extent : 0}, Area ${todayValue.area ? todayValue.area : 0}`}</span>
             </p>
           </Container>
           <Container id="scrolling-container">
