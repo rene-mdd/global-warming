@@ -1,13 +1,14 @@
 
 import { Subject } from "rxjs";
 
-const subject = new Subject();
+const temperatureSubject = new Subject({});
 const arcticSubject = new Subject({});
+const co2Subject = new Subject({});
 
-export const dataService = {
-    setData: data => subject.next({ value: data }),
-    clearData: () => subject.next(),
-    getData: () => subject.asObservable()
+export const temperatureService = {
+    setData: data => temperatureSubject.next({ value: data }),
+    clearData: () => temperatureSubject.next(),
+    getData: () => temperatureSubject.asObservable()
 };
 
 export const arcticService = {
@@ -16,4 +17,11 @@ export const arcticService = {
     getData: () => arcticSubject.asObservable()
 };
 
-arcticSubject.subscribe((data) => console.log(data))
+export const co2Service = {
+    setData: (data) => co2Subject.next({value: data}),
+    clearData: () => co2Subject.next(),
+    getData: () => co2Subject.asObservable()
+};
+
+co2Subject.subscribe((data) => console.log(data))
+temperatureSubject.subscribe((data) => console.log(data))

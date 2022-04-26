@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Header, Grid } from "semantic-ui-react";
-import { dataService } from "../../services/dataService";
+import { temperatureService } from "../../services/dataService";
 import { Temperature } from "../temperature";
 import { AccordionTemp, AccordionShare } from "./accordion";
 
 function SemanticTemperature() {
-  const [todayValue, setTodayValue] = useState("");
+  const [todayValue, setTodayValue] = useState({});
 
-  dataService.getData().subscribe((message) => {
-    if (message.value) {
-      setTodayValue(message.value.pop());
-    }
-  });
+  useEffect(() => {
+    temperatureService.getData().subscribe((message) => {
+      if (message.value) {
+        setTodayValue(message.value.pop());
+      }
+    });
+  }, [])
+
   return (
     <Container as="section" fluid className="temperature-background">
       <Container>

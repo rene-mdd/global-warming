@@ -4,13 +4,10 @@ import { Container, Grid } from "semantic-ui-react";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import localTemperatureData from "../public/data/csvjson-temperature.json";
-import { dataService } from "../services/dataService";
+import { temperatureService } from "../services/dataService";
 
 function TemperatureMemo() {
-
   const url = "api/temperature-api";
-  const [latestTemperatureData, setLatestTemperatureData] = useState([]);
-  const [commonEraData, setCommonEraData] = useState([]);
 
   useEffect(() => {
     const date = [];
@@ -28,14 +25,11 @@ function TemperatureMemo() {
     });
 
     const parsedToObject = { date, amount };
-
-    setCommonEraData(parsedToObject);
-
     async function fetchData() {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        setLatestTemperatureData( data );
+        displayTempGraph(parsedToObject, data.result);
       } catch (error) {
         console.error(error);
       }
@@ -46,10 +40,10 @@ function TemperatureMemo() {
   const displayTempGraph = (commonEraData, temperatureLiveData) => {
     const date = [];
     const station = [];
-    
+
     try {
       if (temperatureLiveData) {
-        dataService.setData(temperatureLiveData);
+        temperatureService.setData(temperatureLiveData);
         // transform api to arrays. Using ternary experison to save space.
         temperatureLiveData.forEach((obj) => {
           date.push(
@@ -150,13 +144,6 @@ function TemperatureMemo() {
 
   return (
     <>
-      <div
-        className="hide"
-        onLoad={displayTempGraph(
-          commonEraData,
-          latestTemperatureData.result
-        )}
-      />
 
       <Container
         className="chart-container"

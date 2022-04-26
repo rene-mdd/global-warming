@@ -1,26 +1,28 @@
 /* eslint-disable react/destructuring-assignment */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import localCo2Data from "../public/data/csvjson-co2.json";
+import { co2Service } from "../services/dataService";
 
-class Co2 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      latestCo2Data: [],
-      prehistoricData: {},
-      isLoading: true,
-      graphError: "",
-    };
-    this.url = "api/co2-api";
-  }
+function Co2() {
+  // this.state = {
+  //   latestCo2Data: [],
+  //   prehistoricData: {},
+  //   isLoading: true,
+  //   graphError: "",
+  // };
+  const [latestCo2Data, setLatestCo2Data] = useState([]);
+  const [prehistoricData, setPrehistoricData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [graphError, setGraphError] = useState("");
+  const url = "api/co2-api";
 
-  async componentDidMount() {
-    const { isLoading } = this.state;
-    this.props.loadingCo2Callback(isLoading);
+  useEffect(() => {
+    // const { isLoading } = this.state;
+    // this.props.loadingCo2Callback(isLoading);
 
     const date = [];
     const amount = [];
@@ -31,28 +33,36 @@ class Co2 extends React.Component {
       );
     });
     const parsedToObject = { date, amount };
-    this.setState({ prehistoricData: parsedToObject });
-    try {
-      const response = await fetch(this.url);
-      const data = await response.json();
-      if (data) {
-        this.setState({ latestCo2Data: data, isLoading: false });
-        this.props.loadingCo2Callback(false);
-      }
-    } catch (error) {
-      console.error(error)
-      this.setState({
-        graphError:
-          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
-      });
-    }
-  }
+    // this.setState({ prehistoricData: parsedToObject });
+    async function fetchData() {
+      try {
 
-  parsedCo2Data = (prehistoricData, latestCo2Data) => {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data) {
+          // setLatestCo2Data(data);
+          console.log(data)
+          console.log(parsedToObject)
+          parsedCo2Data(parsedToObject, data)
+          co2Service.setData(data.co2.pop());
+          // this.setState({ latestCo2Data: data, isLoading: false });
+          // this.props.loadingCo2Callback(false);
+        }
+      } catch (error) {
+        console.error(error);
+        setGraphError("There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.")
+      }
+    }
+    fetchData();
+  }, []);
+
+  const parsedCo2Data = (prehistoricData, latestCo2Data) => {
     const date = [];
     const amount = [];
     try {
-      if (latestCo2Data.co2) {
+      if (latestCo2Data) {
+        setIsLoading(false);
+        console.log(latestCo2Data)
         latestCo2Data.co2.forEach((obj) => {
           date.push(`${obj.year}.${obj.month}.${obj.day}`);
           amount.push(obj.trend);
@@ -113,66 +123,60 @@ class Co2 extends React.Component {
           }))();
       }
     } catch (error) {
-      console.error(error)
-      this.setState({
-        graphError:
-          "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",
-      });
+      console.error(error);
+      setGraphError("There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.");
     }
   };
 
-  render() {
-    const {
-      isLoading,
-      latestCo2Data,
-      prehistoricData,
-      graphError,
-    } = this.state;
-    return (
-      <>
-        <div onLoad={this.parsedCo2Data(prehistoricData, latestCo2Data)} />
+  // const {
+  //   isLoading,
+  //   latestCo2Data,
+  //   prehistoricData,
+  //   graphError,
+  // } = this.state;
+  return (
+    <>
+      {/* <div onLoad={parsedCo2Data(prehistoricData, latestCo2Data)} /> */}
 
-        <Container className="chart-container">
-          <canvas id="myCo2Chart" />
-          <Grid centered columns="equal">
-            <Grid.Column width="14" fluid="true">
-              {!isLoading && (
-                <Container as="footer">
-                  <p>
-                    <span style={{ color: "#FD4659" }}>{graphError}</span>
-                  </p>
-                  <p>
-                    From 1958, the measurements of carbon dioxide concentrations
-                    are done by Mauna Loa Observatory. Source: Ed Dlugokencky
-                    and Pieter Tans, NOAA/GML (
-                    <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
-                      <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
-                    </a>
-                    )
-                  </p>
-                  <p>
-                    Data source: 800,000 years ago to 1958
-                    <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                      <em>
-                        {" "}
-                        https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
-                      </em>
-                    </a>
-                  </p>
-                  <p>
-                    <b>
-                      From 2010.01.01 the data is measured on a quasi daily
-                      basis
-                    </b>
-                  </p>
-                </Container>
-              )}
-            </Grid.Column>
-          </Grid>
-        </Container>
-      </>
-    );
-  }
+      <Container className="chart-container">
+        <canvas id="myCo2Chart" />
+        <Grid centered columns="equal">
+          <Grid.Column width="14" fluid="true">
+            {!isLoading && (
+              <Container as="footer">
+                <p>
+                  <span style={{ color: "#FD4659" }}>{graphError}</span>
+                </p>
+                <p>
+                  From 1958, the measurements of carbon dioxide concentrations
+                  are done by Mauna Loa Observatory. Source: Ed Dlugokencky and
+                  Pieter Tans, NOAA/GML (
+                  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
+                    <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
+                  </a>
+                  )
+                </p>
+                <p>
+                  Data source: 800,000 years ago to 1958
+                  <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
+                    <em>
+                      {" "}
+                      https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                    </em>
+                  </a>
+                </p>
+                <p>
+                  <b>
+                    From 2010.01.01 the data is measured on a quasi daily basis
+                  </b>
+                </p>
+              </Container>
+            )}
+          </Grid.Column>
+        </Grid>
+      </Container>
+    </>
+  );
 }
 
 Co2.propTypes = {
