@@ -22,6 +22,3 @@ export const co2Service = {
     clearData: () => co2Subject.next(),
     getData: () => co2Subject.asObservable()
 };
-
-co2Subject.subscribe((data) => console.log(data))
-temperatureSubject.subscribe((data) => console.log(data))

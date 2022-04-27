@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Header, Grid } from "semantic-ui-react";
 import { temperatureService } from "../../services/dataService";
-import { Temperature } from "../temperature";
+import Temperature from "../temperature";
 import { AccordionTemp, AccordionShare } from "./accordion";
 
 function SemanticTemperature() {

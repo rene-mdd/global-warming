@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
@@ -6,26 +5,20 @@ import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { arcticService } from "../services/dataService";
 
-function Arctic() {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { arcticData: [], isLoading: true, graphError: "" };
+function Arctic(props) {
   const url = "api/arctic-api";
-  // }
-  const [isLoading, setIsLoading] = useState(true);
-  const [arcticData, setArcticData] = useState([]);
   const [graphError, setGraphError] = useState("");
 
   useEffect(() => {
+    props.parentCallBack(true);
     async function fetchArcticData() {
       try {
         const response = await fetch(url);
         const data = await response.json();
         if (data) {
-          console.log(data)
-          setIsLoading(false);
-          setArcticData(data);
-          arcticService.setData({value: data.result, isLoading: isLoading});
+          displayArcticGraph(data.result);
+          props.parentCallBack(false);
+          arcticService.setData({value: data.result});
         }
       } catch (error) {
         setGraphError(
@@ -36,16 +29,14 @@ function Arctic() {
     fetchArcticData();
   }, []);
 
-  const displayArcticGraph = (arcticDataResult) => {
+  const displayArcticGraph = (arcticData) => {
     const yearArray = [];
     const extentArray = [];
     const areaArray = [];
     try {
       const ctx = document.getElementById("arcticChart");
-      if (arcticDataResult) {
-        // arcticService.setData(arcticDataResult);
-
-        arcticDataResult.forEach(({ year, extent, area }) => {
+      if (arcticData) {
+        arcticData.forEach(({ year, extent, area }) => {
           yearArray.push(year);
           extentArray.push(parseFloat(extent));
           areaArray.push(parseFloat(area));
@@ -108,8 +99,6 @@ function Arctic() {
 
   return (
     <>
-      <div onLoad={displayArcticGraph(arcticData.result)} />
-
       <Container
         className="chart-container"
         style={{ position: "relative", width: "80vw" }}
@@ -118,7 +107,6 @@ function Arctic() {
       </Container>
       <Grid width="equal" centered>
         <Grid.Column fluid="true" width="14">
-          {!isLoading && (
             <Container as="footer" style={{ marginTop: "-5px" }}>
               <p>
                 <span style={{ color: "#FD4659" }}>{graphError}</span>
@@ -129,7 +117,6 @@ function Arctic() {
                 /NASA.
               </p>
             </Container>
-          )}
         </Grid.Column>
       </Grid>
     </>
@@ -137,11 +124,11 @@ function Arctic() {
 }
 
 Arctic.propTypes = {
-  arcticLoadingCallback: PropTypes.func,
+  parentCallBack: PropTypes.func,
 };
 
 Arctic.defaultProps = {
-  arcticLoadingCallback: true,
+  parentCallBack: true,
 };
 
 export default Arctic;

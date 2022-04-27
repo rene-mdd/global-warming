@@ -6,22 +6,16 @@ import { arcticService } from "../../services/dataService";
 
 function SemanticArctic() {
   const [arctic, setArctic] = useState(false);
-  const [arcticLoading, setArcticLoading] = useState("arcticBtn");
+  const [arcticLoading, setArcticLoading] = useState(false);
   const [todayValue, setTodayValue] = useState({});
 
   useEffect(() => {
     arcticService.getData().subscribe((data) => {
       if(data) {
-        setArcticLoading("arcticBtn");
         setTodayValue(data.value.pop());
       }
     })
   })
-
-  const toggleArctic = () => {
-    setArctic(prevState => !prevState);
-    setArcticLoading(prevState => prevState === "loading" ? prevState : "arcticBtn");
-  };
 
   return (
     <Container as="section" fluid>
@@ -31,14 +25,14 @@ function SemanticArctic() {
         </Header>
         <Grid container>
           <Grid.Row centered stretched>
-            {arctic ? <Arctic /> : null}
+            {arctic ? <Arctic parentCallBack={loading => setArcticLoading(loading)}/> : null}
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column width="eight" textAlign="center">
               <Button
-                onClick={toggleArctic}
-                className={arcticLoading}
-                id={arcticLoading}
+                onClick={() => setArctic(prevState => !prevState)}
+                className={arcticLoading ? "loading" : "arcticBtn"}
+                id={arcticLoading ? "loading" : "arcticBtn"}
               >
                 {arctic ? "Hide graph" : "Load graph"}
               </Button>

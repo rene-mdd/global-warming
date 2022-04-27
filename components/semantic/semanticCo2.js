@@ -5,7 +5,6 @@ import { AccordionCo2, AccordionShare } from "./accordion";
 import { co2Service } from "../../services/dataService";
 
 function SemanticCo2() {
-
   const [co2, setCo2] = useState(false);
   const [co2Loading, setCo2Loading] = useState("co2Btn");
   const [todayValue, setTodayValue] = useState(0);

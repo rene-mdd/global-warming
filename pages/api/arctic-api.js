@@ -18,8 +18,9 @@ export default async function fetchArcticApi(req, res) {
   }
   try {
     const { data } = await axios.get(
-      "https://climate.nasa.gov/system/internal_resources/details/original/1929_Arctic_data_1979-2019.txt"
+      "https://climate.nasa.gov/system/internal_resources/details/original/2485_Sept_Arctic_extent_1979-2021.xlsx"
     );
+    console.log(data)
     const lines = data.split("\n");
     // in the _ vars we store the dashed lines
     // eslint-disable-next-line no-unused-vars

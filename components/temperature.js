@@ -1,12 +1,11 @@
-/* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Container, Grid } from "semantic-ui-react";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import localTemperatureData from "../public/data/csvjson-temperature.json";
 import { temperatureService } from "../services/dataService";
 
-function TemperatureMemo() {
+function Temperature() {
   const url = "api/temperature-api";
 
   useEffect(() => {
@@ -177,4 +176,4 @@ function TemperatureMemo() {
   );
 }
 
-export const Temperature = React.memo(TemperatureMemo);
+export default Temperature;

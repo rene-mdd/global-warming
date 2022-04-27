@@ -8,22 +8,11 @@ import localCo2Data from "../public/data/csvjson-co2.json";
 import { co2Service } from "../services/dataService";
 
 function Co2() {
-  // this.state = {
-  //   latestCo2Data: [],
-  //   prehistoricData: {},
-  //   isLoading: true,
-  //   graphError: "",
-  // };
-  const [latestCo2Data, setLatestCo2Data] = useState([]);
-  const [prehistoricData, setPrehistoricData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [graphError, setGraphError] = useState("");
   const url = "api/co2-api";
 
   useEffect(() => {
-    // const { isLoading } = this.state;
-    // this.props.loadingCo2Callback(isLoading);
-
     const date = [];
     const amount = [];
     localCo2Data.forEach((obj) => {
@@ -33,20 +22,13 @@ function Co2() {
       );
     });
     const parsedToObject = { date, amount };
-    // this.setState({ prehistoricData: parsedToObject });
     async function fetchData() {
       try {
-
         const response = await fetch(url);
         const data = await response.json();
         if (data) {
-          // setLatestCo2Data(data);
-          console.log(data)
-          console.log(parsedToObject)
           parsedCo2Data(parsedToObject, data)
           co2Service.setData(data.co2.pop());
-          // this.setState({ latestCo2Data: data, isLoading: false });
-          // this.props.loadingCo2Callback(false);
         }
       } catch (error) {
         console.error(error);
@@ -62,7 +44,6 @@ function Co2() {
     try {
       if (latestCo2Data) {
         setIsLoading(false);
-        console.log(latestCo2Data)
         latestCo2Data.co2.forEach((obj) => {
           date.push(`${obj.year}.${obj.month}.${obj.day}`);
           amount.push(obj.trend);
@@ -128,16 +109,8 @@ function Co2() {
     }
   };
 
-  // const {
-  //   isLoading,
-  //   latestCo2Data,
-  //   prehistoricData,
-  //   graphError,
-  // } = this.state;
   return (
     <>
-      {/* <div onLoad={parsedCo2Data(prehistoricData, latestCo2Data)} /> */}
-
       <Container className="chart-container">
         <canvas id="myCo2Chart" />
         <Grid centered columns="equal">
