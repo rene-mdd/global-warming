@@ -1,58 +1,47 @@
-/* eslint-disable react/destructuring-assignment */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import nitrousLocalData from "../public/data/csvjson-nitrous.json";
 
-class Nitrous extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      latestNitrousData: {},
-      prehistoricNitrous: {},
-      isLoading: true,
-      graphError: "",
-    };
-    this.url = "api/nitrous-oxide-api";
-  }
+function Nitrous(props) {
+  const [graphError, setGraphError] = useState("");
+  const url = "api/nitrous-oxide-api";
 
-  async componentDidMount() {
-    const { isLoading } = this.state;
-    this.props.loadingNitrousCallback(isLoading);
-
-    const date = [];
-    const amount = [];
-
-    nitrousLocalData.forEach((obj) => {
-      date.push(obj.year.split(",").filter((x) => x)[0]);
-      amount.push(
-        parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1)
-      );
-    });
-
-    const parsedToObject = { date, amount };
-
-    this.setState({ prehistoricNitrous: parsedToObject });
-
-    try {
-      const response = await fetch(this.url);
-      const data = await response.json();
-      if (data) {
-        this.setState({ latestNitrousData: data, isLoading: false });
-        this.props.loadingNitrousCallback(false);
-      }
-    } catch (error) {
-      console.error(error)
-      this.setState({
-        graphError:
-          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
+  useEffect(() => {
+    props.parentCallBack(true);
+    async function fetchData() {
+      const date = [];
+      const amount = [];
+      nitrousLocalData.forEach((obj) => {
+        date.push(obj.year.split(",").filter((x) => x)[0]);
+        amount.push(
+          parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1)
+        );
       });
-    }
-  }
 
-  parsedNitrousData = (cleanNitrousPrehistoricData, latestNitrousData) => {
+      const parsedToObject = { date, amount };
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data) {
+          parsedNitrousData(parsedToObject, data);
+          props.parentCallBack(false);
+        }
+      } catch (error) {
+        console.error(error);
+        setGraphError("There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.");
+      }
+    }
+    fetchData();
+  }, []);
+
+  const parsedNitrousData = (
+    cleanNitrousPrehistoricData,
+    latestNitrousData
+  ) => {
     const date = [];
     const average = [];
     try {
@@ -117,65 +106,50 @@ class Nitrous extends React.Component {
           }))();
       }
     } catch (error) {
-      console.error(error)
-      this.setState({
-        graphError:
-          "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",
-      });
+      console.error(error);
+      setGraphError(
+        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+      );
     }
   };
 
-  render() {
-    const {
-      graphError,
-      prehistoricNitrous,
-      latestNitrousData,
-      isLoading,
-    } = this.state;
-    return (
-      <>
-        <div
-          onLoad={this.parsedNitrousData(prehistoricNitrous, latestNitrousData)}
-        />
-
-        <Container
-          className="chart-container"
-          style={{ position: "relative", width: "80vw" }}
-        >
-          <canvas id="myNitrousChart" />
-        </Container>
-        <Grid width="equal" centered>
-          <Grid.Column width="14">
-            {!isLoading && (
-              <Container as="footer">
-                <p>
-                  <span style={{ color: "#FD4659" }}>{graphError}</span>
-                </p>
-                <p>
-                  Data 800,000 ago to 2001 source: United States, Environmental
-                  Protection Agency (EPA), (
-                  <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                    https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
-                  </a>
-                  )
-                </p>
-                <p>
-                  Ed Dlugokencky, NOAA/GML (
-                  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
-                    https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
-                  </a>
-                  )
-                </p>
-                <p>
-                  <b> From 2001.01 the data is measured on a monthly basis</b>
-                </p>
-              </Container>
-            )}
-          </Grid.Column>
-        </Grid>
-      </>
-    );
-  }
+  return (
+    <>
+      <Container
+        className="chart-container"
+        style={{ position: "relative", width: "80vw" }}
+      >
+        <canvas id="myNitrousChart" />
+      </Container>
+      <Grid width="equal" centered>
+        <Grid.Column width="14">
+            <Container as="footer">
+              <p>
+                <span style={{ color: "#FD4659" }}>{graphError}</span>
+              </p>
+              <p>
+                Data 800,000 ago to 2001 source: United States, Environmental
+                Protection Agency (EPA), (
+                <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
+                  https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                </a>
+                )
+              </p>
+              <p>
+                Ed Dlugokencky, NOAA/GML (
+                <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
+                  https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
+                </a>
+                )
+              </p>
+              <p>
+                <b> From 2001.01 the data is measured on a monthly basis</b>
+              </p>
+            </Container>
+        </Grid.Column>
+      </Grid>
+    </>
+  );
 }
 
 Nitrous.propTypes = {

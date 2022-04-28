@@ -12,9 +12,7 @@ function SemanticArctic() {
   useEffect(() => {
     arcticService.getData().subscribe((data) => {
       if(data) {
-        console.log(data)
         setTodayValue(data.value.pop());
-        console.log(todayValue)
       }
     })
   })

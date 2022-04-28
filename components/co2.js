@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
