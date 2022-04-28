@@ -16,9 +16,9 @@ function Arctic(props) {
         const response = await fetch(url);
         const data = await response.json();
         if (data) {
-          displayArcticGraph(data.result);
+          displayArcticGraph(data.arcticData);
           props.parentCallBack(false);
-          arcticService.setData({value: data.result});
+          arcticService.setData(data.arcticData);
         }
       } catch (error) {
         setGraphError(

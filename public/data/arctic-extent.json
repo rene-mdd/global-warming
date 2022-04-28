@@ -1,0 +1,432 @@
+[
+ {
+  "Column1": 0,
+  "year": 1979,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.05,
+  "area": 4.58,
+  "rank": 33
+ },
+ {
+  "Column1": 1,
+  "year": 1980,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.67,
+  "area": 4.87,
+  "rank": 43
+ },
+ {
+  "Column1": 2,
+  "year": 1981,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.14,
+  "area": 4.44,
+  "rank": 34.5
+ },
+ {
+  "Column1": 3,
+  "year": 1982,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.3,
+  "area": 4.43,
+  "rank": 37
+ },
+ {
+  "Column1": 4,
+  "year": 1983,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.39,
+  "area": 4.7,
+  "rank": 39
+ },
+ {
+  "Column1": 5,
+  "year": 1984,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.8100000000000005,
+  "area": 4.11,
+  "rank": 31
+ },
+ {
+  "Column1": 6,
+  "year": 1985,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.7,
+  "area": 4.23,
+  "rank": 29
+ },
+ {
+  "Column1": 7,
+  "year": 1986,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.41,
+  "area": 4.72,
+  "rank": 40
+ },
+ {
+  "Column1": 8,
+  "year": 1987,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.28,
+  "area": 5.64,
+  "rank": 36
+ },
+ {
+  "Column1": 9,
+  "year": 1988,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.37,
+  "area": 5.36,
+  "rank": 38
+ },
+ {
+  "Column1": 10,
+  "year": 1989,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.01,
+  "area": 4.86,
+  "rank": 32
+ },
+ {
+  "Column1": 11,
+  "year": 1990,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.14,
+  "area": 4.55,
+  "rank": 23
+ },
+ {
+  "Column1": 12,
+  "year": 1991,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.47,
+  "area": 4.51,
+  "rank": 26
+ },
+ {
+  "Column1": 13,
+  "year": 1992,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.47,
+  "area": 5.43,
+  "rank": 41
+ },
+ {
+  "Column1": 14,
+  "year": 1993,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.4,
+  "area": 4.58,
+  "rank": 25
+ },
+ {
+  "Column1": 15,
+  "year": 1994,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.14,
+  "area": 5.13,
+  "rank": 34.5
+ },
+ {
+  "Column1": 16,
+  "year": 1995,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.08,
+  "area": 4.43,
+  "rank": 20
+ },
+ {
+  "Column1": 17,
+  "year": 1996,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 7.58,
+  "area": 5.62,
+  "rank": 42
+ },
+ {
+  "Column1": 18,
+  "year": 1997,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.6899999999999995,
+  "area": 4.89,
+  "rank": 28
+ },
+ {
+  "Column1": 19,
+  "year": 1998,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.54,
+  "area": 4.3,
+  "rank": 27
+ },
+ {
+  "Column1": 20,
+  "year": 1999,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.12,
+  "area": 4.29,
+  "rank": 21.5
+ },
+ {
+  "Column1": 21,
+  "year": 2000,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.25,
+  "area": 4.35,
+  "rank": 24
+ },
+ {
+  "Column1": 22,
+  "year": 2001,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.73,
+  "area": 4.59,
+  "rank": 30
+ },
+ {
+  "Column1": 23,
+  "year": 2002,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 5.83,
+  "area": 4.03,
+  "rank": 17
+ },
+ {
+  "Column1": 24,
+  "year": 2003,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 6.12,
+  "area": 4.05,
+  "rank": 21.5
+ },
+ {
+  "Column1": 25,
+  "year": 2004,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 5.98,
+  "area": 4.39,
+  "rank": 19
+ },
+ {
+  "Column1": 26,
+  "year": 2005,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 5.5,
+  "area": 4.07,
+  "rank": 16
+ },
+ {
+  "Column1": 27,
+  "year": 2006,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 5.86,
+  "area": 4.01,
+  "rank": 18
+ },
+ {
+  "Column1": 28,
+  "year": 2007,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.27,
+  "area": 2.82,
+  "rank": 3
+ },
+ {
+  "Column1": 29,
+  "year": 2008,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.69,
+  "area": 3.26,
+  "rank": 8
+ },
+ {
+  "Column1": 30,
+  "year": 2009,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 5.26,
+  "area": 3.76,
+  "rank": 15
+ },
+ {
+  "Column1": 31,
+  "year": 2010,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.87,
+  "area": 3.34,
+  "rank": 11
+ },
+ {
+  "Column1": 32,
+  "year": 2011,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.56,
+  "area": 3.21,
+  "rank": 6
+ },
+ {
+  "Column1": 33,
+  "year": 2012,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 3.57,
+  "area": 2.41,
+  "rank": 1
+ },
+ {
+  "Column1": 34,
+  "year": 2013,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 5.21,
+  "area": 3.7800000000000002,
+  "rank": 13
+ },
+ {
+  "Column1": 35,
+  "year": 2014,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 5.22,
+  "area": 3.74,
+  "rank": 14
+ },
+ {
+  "Column1": 36,
+  "year": 2015,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.62,
+  "area": 3.42,
+  "rank": 7
+ },
+ {
+  "Column1": 37,
+  "year": 2016,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.53,
+  "area": 2.91,
+  "rank": 5
+ },
+ {
+  "Column1": 38,
+  "year": 2017,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.82,
+  "area": 3.35,
+  "rank": 10
+ },
+ {
+  "Column1": 39,
+  "year": 2018,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.79,
+  "area": 3.35,
+  "rank": 9
+ },
+ {
+  "Column1": 40,
+  "year": 2019,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4.36,
+  "area": 3.17,
+  "rank": 4
+ },
+ {
+  "Column1": 41,
+  "year": 2020,
+  "month": 9,
+  "data-type": "Goddard",
+  "hemisphere": "N",
+  "extent": 4,
+  "area": 2.83,
+  "rank": 2
+ },
+ {
+  "Column1": 42,
+  "year": 2021,
+  "month": 9,
+  "data-type": "NRTSI-G",
+  "hemisphere": "N",
+  "extent": 4.92,
+  "area": 3.43,
+  "rank": 12
+ }
+]

@@ -12,7 +12,7 @@ export const temperatureService = {
 };
 
 export const arcticService = {
-    setData: ({value, isLoading}) => arcticSubject.next({ value: value, isLoading: isLoading }),
+    setData:  data  => arcticSubject.next({ value: data }),
     clearData: () => arcticSubject.next(),
     getData: () => arcticSubject.asObservable()
 };
