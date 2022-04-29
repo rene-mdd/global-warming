@@ -1,40 +1,41 @@
 // Loading bar helper
-import React from "react";
+import React, { useEffect } from "react";
 import NProgress from "nprogress";
 import Router from "next/router";
 import PropTypes from "prop-types";
 
-/* eslint-disable react/prefer-stateless-function */
-class NextNProgress extends React.Component {
-  timer = null;
 
-  componentDidMount() {
-    const { options } = this.props;
+function NextNProgress(props) {
+
+  let timer = {};
+
+  useEffect(() => {
+    const { options } = props;
     if (options) {
       NProgress.configure(options);
     }
+    
+    Router.events.on("routeChangeStart", routeChangeStart);
+    Router.events.on("routeChangeComplete", routeChangeEnd);
+    Router.events.on("routeChangeError", routeChangeEnd);
+  }, [])
 
-    Router.events.on("routeChangeStart", this.routeChangeStart);
-    Router.events.on("routeChangeComplete", this.routeChangeEnd);
-    Router.events.on("routeChangeError", this.routeChangeEnd);
-  }
-
-  routeChangeStart = () => {
-    const { startPosition } = this.props;
+  const routeChangeStart = () => {
+    const { startPosition } = props;
     NProgress.set(startPosition);
     NProgress.start();
   };
 
-  routeChangeEnd = () => {
-    const { stopDelayMs } = this.props;
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
+  const routeChangeEnd = () => {
+    const { stopDelayMs } = props;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
       NProgress.done(true);
     }, stopDelayMs);
   };
 
-  render() {
-    const { color, height } = this.props;
+
+    const { color, height } = props;
 
     return (
       <style jsx global>
@@ -108,7 +109,6 @@ class NextNProgress extends React.Component {
         `}
       </style>
     );
-  }
 }
 
 NextNProgress.propTypes = {
