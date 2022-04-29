@@ -40,7 +40,7 @@ function Nitrous(props) {
       }
     }
     fetchData();
-  }, []);
+  }, [props]);
 
   const displayNitrousGraph = (
     cleanNitrousPrehistoricData,
@@ -157,11 +157,11 @@ function Nitrous(props) {
 }
 
 Nitrous.propTypes = {
-  loadingNitrousCallback: PropTypes.func,
+  parentCallBack: PropTypes.func,
 };
 
 Nitrous.defaultProps = {
-  loadingNitrousCallback: true,
+  parentCallBack: true,
 };
 
 export default Nitrous;

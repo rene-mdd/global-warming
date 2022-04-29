@@ -40,7 +40,7 @@ function Co2(props) {
       }
     }
     fetchData();
-  }, []);
+  }, [props]);
 
   const displayCo2Graph = (prehistoricData, latestCo2Data) => {
     const date = [];
@@ -156,11 +156,11 @@ function Co2(props) {
 }
 
 Co2.propTypes = {
-  loadingCo2Callback: PropTypes.func,
+  parentCallBack: PropTypes.func,
 };
 
 Co2.defaultProps = {
-  loadingCo2Callback: true,
+  parentCallBack: true,
 };
 
 export default Co2;

@@ -4,6 +4,7 @@ import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { arcticService } from "../services/dataService";
+
 function Arctic(props) {
   const url = "api/arctic-api";
   const [graphError, setGraphError] = useState("");
@@ -26,7 +27,7 @@ function Arctic(props) {
       }
     }
     fetchArcticData();
-  }, []);
+  }, [props]);
 
   const displayArcticGraph = (arcticData) => {
     const yearArray = [];

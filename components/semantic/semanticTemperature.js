@@ -30,7 +30,8 @@ function SemanticTemperature() {
         <Grid columns="equal" style={{ marginTop: "7vh" }}>
           <Container textAlign="center" className="today-value">
             <p>
-              Today's value: <span>{todayValue.station}</span>
+              Today's value:
+              <span>{todayValue.station}</span>
             </p>
           </Container>
           <Container>

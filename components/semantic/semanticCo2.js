@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Header, Grid, Button } from "semantic-ui-react";
 import Co2 from "../co2";
 import { AccordionCo2, AccordionShare } from "./accordion";
@@ -43,7 +43,8 @@ function SemanticCo2() {
         <Grid columns="equal">
           <Container textAlign="center" className="today-value">
             <p>
-              Today's value: <span>{todayValue}</span>
+              Today's value:
+              <span>{todayValue}</span>
             </p>
           </Container>
           <Container>

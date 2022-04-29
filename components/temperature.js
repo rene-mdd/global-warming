@@ -143,7 +143,6 @@ function Temperature() {
 
   return (
     <>
-
       <Container
         className="chart-container"
         style={{ position: "relative", width: "80vw" }}

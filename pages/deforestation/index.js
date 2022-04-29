@@ -16,6 +16,7 @@ import {
 } from "semantic-ui-react";
 import StickyMenu from "../../components/semantic/sticky";
 import SiteHeader from "../../components/siteHeader";
+
 const CognitiveServicesCredentials =
   require("ms-rest-azure").CognitiveServicesCredentials;
 
@@ -27,7 +28,6 @@ const NewsSearchAPIClient = require("azure-cognitiveservices-newssearch");
 const client = new NewsSearchAPIClient(credentials);
 
 function SemanticDeforestation(props) {
-  const [toggle, setToggle] = useState(true);
   const [intersecting, setIntersecting] = useState(false);
 
   const handleIntersection = (event) => {
@@ -133,55 +133,28 @@ function SemanticDeforestation(props) {
                   </span>
                 </Container>
                 <Container id="deforestation-text" textAlign="left">
-                  {toggle ? (
-                    <>
-                      <p>
-                        Results from time-series analysis of Landsat images
-                        characterizing forest extent and change.
-                      </p>
-                      <p>
-                        Trees are defined as vegetation taller than 5m in height
-                        and are expressed as a percentage per output grid cell
-                        as ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is
-                        defined as a stand-replacement disturbance, or a change
-                        from a forest to non-forest state, during the period
-                        2000–2019. ‘Forest Cover Gain’ is defined as the inverse
-                        of loss, or a non-forest to forest change entirely
-                        within the period 2000–2012. ‘Forest Loss Year’ is a
-                        disaggregation of total ‘Forest Loss’ to annual time
-                        scales.
-                      </p>
-                      <p>
-                        Reference 2000 and 2019 imagery are median observations
-                        from a set of quality assessment-passed growing season
-                        observations.
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <p>
-                        Results from time-series analysis of Landsat images
-                        characterizing forest extent and change.
-                      </p>
-                      <p>
-                        Trees are defined as vegetation taller than 5m in height
-                        and are expressed as a percentage per output grid cell
-                        as ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is
-                        defined as a stand-replacement disturbance, or a change
-                        from a forest to non-forest state, during the period
-                        2000–2019. ‘Forest Cover Gain’ is defined as the inverse
-                        of loss, or a non-forest to forest change entirely
-                        within the period 2000–2012. ‘Forest Loss Year’ is a
-                        disaggregation of total ‘Forest Loss’ to annual time
-                        scales.
-                      </p>
-                      <p>
-                        Reference 2000 and 2019 imagery are median observations
-                        from a set of quality assessment-passed growing season
-                        observations.
-                      </p>
-                    </>
-                  )}
+                  <>
+                    <p>
+                      Results from time-series analysis of Landsat images
+                      characterizing forest extent and change.
+                    </p>
+                    <p>
+                      Trees are defined as vegetation taller than 5m in height
+                      and are expressed as a percentage per output grid cell as
+                      ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is defined
+                      as a stand-replacement disturbance, or a change from a
+                      forest to non-forest state, during the period 2000–2019.
+                      ‘Forest Cover Gain’ is defined as the inverse of loss, or
+                      a non-forest to forest change entirely within the period
+                      2000–2012. ‘Forest Loss Year’ is a disaggregation of total
+                      ‘Forest Loss’ to annual time scales.
+                    </p>
+                    <p>
+                      Reference 2000 and 2019 imagery are median observations
+                      from a set of quality assessment-passed growing season
+                      observations.
+                    </p>
+                  </>
                 </Container>
               </Grid.Row>
             </Grid>
@@ -307,12 +280,12 @@ function SemanticDeforestation(props) {
 SemanticDeforestation.propTypes = {
   googleNewsJson: PropTypes.shape({
     articleCount: PropTypes.number,
-    articles: PropTypes.arrayOf(PropTypes.object),
+    articles: PropTypes.arrayOf(PropTypes.shape({})),
     timestamp: PropTypes.number,
   }),
   azureJson: PropTypes.shape({
     totalEstimatedMatches: PropTypes.number,
-    value: PropTypes.arrayOf(PropTypes.object),
+    value: PropTypes.arrayOf(PropTypes.shape({})),
     _type: PropTypes.string,
   }),
 };

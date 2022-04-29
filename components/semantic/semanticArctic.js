@@ -46,9 +46,8 @@ function SemanticArctic() {
           <Container textAlign="center" className="arctic-value">
             <p>
               Today's value:{" "}
-              <span>{`Extent ${
-                todayValue.extent ? todayValue.extent : 0
-              }, Area ${todayValue.area ? todayValue.area : 0}`}</span>
+              <span>{`Extent ${todayValue.extent ? todayValue.extent : 0
+                }, Area ${todayValue.area ? todayValue.area : 0}`}</span>
             </p>
           </Container>
           <Container id="scrolling-container">

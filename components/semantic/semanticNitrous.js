@@ -45,7 +45,8 @@ function SemanticNitrous() {
         <Grid columns="equal">
           <Container textAlign="center" className="today-value">
             <p>
-              Today's value: <span>{todayValue}</span>
+              Today's value:
+              <span>{todayValue}</span>
             </p>
           </Container>
           <Container>

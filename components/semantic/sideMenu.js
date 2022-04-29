@@ -3,10 +3,14 @@ import { Menu, Sidebar, Sticky, Rail, Grid } from "semantic-ui-react";
 import * as Scroll from "react-scroll";
 
 export default function SideBar() {
-
   const [activeItem, setActiveItem] = useState("");
   const [menuVisible, setMenuVisible] = useState(true);
   const [rotate, setRotate] = useState(false);
+
+  const handleClick = () => {
+    setMenuVisible((prevState) => !prevState);
+    setRotate((prevState) => !prevState);
+  };
 
   return (
     <>
@@ -17,10 +21,7 @@ export default function SideBar() {
               <Menu secondary attached="top" className="sidebar-button">
                 <Menu.Item
                   style={{ margin: "42px 0 -20px 0" }}
-                  onClick={() => {
-                    setMenuVisible((prevState) => !prevState),
-                      setRotate((prevState) => !prevState);
-                  }}
+                  onClick={() => handleClick()}
                 >
                   <img
                     alt="rotate"
