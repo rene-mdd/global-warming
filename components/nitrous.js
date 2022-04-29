@@ -4,6 +4,7 @@ import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import nitrousLocalData from "../public/data/csvjson-nitrous.json";
+import { nitrousService } from "../services/dataService";
 
 function Nitrous(props) {
   const [graphError, setGraphError] = useState("");
@@ -27,18 +28,21 @@ function Nitrous(props) {
         const response = await fetch(url);
         const data = await response.json();
         if (data) {
-          parsedNitrousData(parsedToObject, data);
+          displayNitrousGraph(parsedToObject, data);
           props.parentCallBack(false);
+          nitrousService.setData(data.nitrous.pop());
         }
       } catch (error) {
         console.error(error);
-        setGraphError("There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.");
+        setGraphError(
+          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you."
+        );
       }
     }
     fetchData();
   }, []);
 
-  const parsedNitrousData = (
+  const displayNitrousGraph = (
     cleanNitrousPrehistoricData,
     latestNitrousData
   ) => {
@@ -123,29 +127,29 @@ function Nitrous(props) {
       </Container>
       <Grid width="equal" centered>
         <Grid.Column width="14">
-            <Container as="footer">
-              <p>
-                <span style={{ color: "#FD4659" }}>{graphError}</span>
-              </p>
-              <p>
-                Data 800,000 ago to 2001 source: United States, Environmental
-                Protection Agency (EPA), (
-                <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                  https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
-                </a>
-                )
-              </p>
-              <p>
-                Ed Dlugokencky, NOAA/GML (
-                <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
-                  https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
-                </a>
-                )
-              </p>
-              <p>
-                <b> From 2001.01 the data is measured on a monthly basis</b>
-              </p>
-            </Container>
+          <Container as="footer">
+            <p>
+              <span style={{ color: "#FD4659" }}>{graphError}</span>
+            </p>
+            <p>
+              Data 800,000 ago to 2001 source: United States, Environmental
+              Protection Agency (EPA), (
+              <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
+                https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+              </a>
+              )
+            </p>
+            <p>
+              Ed Dlugokencky, NOAA/GML (
+              <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
+                https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
+              </a>
+              )
+            </p>
+            <p>
+              <b> From 2001.01 the data is measured on a monthly basis</b>
+            </p>
+          </Container>
         </Grid.Column>
       </Grid>
     </>

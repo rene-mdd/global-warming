@@ -6,20 +6,15 @@ import { co2Service } from "../../services/dataService";
 
 function SemanticCo2() {
   const [co2, setCo2] = useState(false);
-  const [co2Loading, setCo2Loading] = useState("co2Btn");
-  const [todayValue, setTodayValue] = useState(0);
-
-  const toggleCo2 = () => {
-    setCo2(prevState => !prevState);
-    setCo2Loading("loading");
-  };
+  const [co2Loading, setCo2Loading] = useState(false);
+  const [todayValue, setTodayValue] = useState("0");
 
   useEffect(() => {
-    co2Service.getData().subscribe((data) => {
+    const subscription = co2Service.getData().subscribe((data) => {
       setTodayValue(data.value.trend);
-      setCo2Loading("co2Btn");
-    })
-  }, [])
+    });
+    return subscription.unsubscribe.bind(subscription);
+  }, []);
 
   return (
     <Container as="section" fluid>
@@ -29,14 +24,16 @@ function SemanticCo2() {
         </Header>
         <Grid container>
           <Grid.Row centered stretched>
-            {co2 ? <Co2 /> : null}
+            {co2 ? (
+              <Co2 parentCallBack={(loading) => setCo2Loading(loading)} />
+            ) : null}
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column width="eight" textAlign="center">
               <Button
-                onClick={() => toggleCo2()}
-                className={co2Loading}
-                id={co2Loading}
+                onClick={() => setCo2((prevState) => !prevState)}
+                className={co2Loading ? "loading" : "co2Btn"}
+                id={co2Loading ? "loading" : "co2Btn"}
               >
                 {co2 ? "Hide graph" : "Load graph"}
               </Button>
@@ -44,7 +41,7 @@ function SemanticCo2() {
           </Grid.Row>
         </Grid>
         <Grid columns="equal">
-        <Container textAlign="center" className="today-value">
+          <Container textAlign="center" className="today-value">
             <p>
               Today's value: <span>{todayValue}</span>
             </p>

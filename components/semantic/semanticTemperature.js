@@ -8,12 +8,13 @@ function SemanticTemperature() {
   const [todayValue, setTodayValue] = useState({});
 
   useEffect(() => {
-    temperatureService.getData().subscribe((message) => {
+    const subscription = temperatureService.getData().subscribe((message) => {
       if (message.value) {
         setTodayValue(message.value.pop());
       }
     });
-  }, [])
+    return subscription.unsubscribe.bind(subscription);
+  }, []);
 
   return (
     <Container as="section" fluid className="temperature-background">

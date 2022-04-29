@@ -4,7 +4,6 @@ import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { arcticService } from "../services/dataService";
-
 function Arctic(props) {
   const url = "api/arctic-api";
   const [graphError, setGraphError] = useState("");
@@ -107,16 +106,15 @@ function Arctic(props) {
       </Container>
       <Grid width="equal" centered>
         <Grid.Column fluid="true" width="14">
-            <Container as="footer" style={{ marginTop: "-5px" }}>
-              <p>
-                <span style={{ color: "#FD4659" }}>{graphError}</span>
-              </p>
-              <p>
-                Data source: Satellite observations. Credit:
-                <a href="https://nsidc.org/">NSIDC</a>
-                /NASA.
-              </p>
-            </Container>
+          <Container as="footer" style={{ marginTop: "-5px" }}>
+            <p>
+              <span style={{ color: "#FD4659" }}>{graphError}</span>
+            </p>
+            <p>
+              Data source: Satellite observations. Credit:
+              <a href="https://climate.nasa.gov/">NASA</a>
+            </p>
+          </Container>
         </Grid.Column>
       </Grid>
     </>

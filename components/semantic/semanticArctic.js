@@ -10,12 +10,13 @@ function SemanticArctic() {
   const [todayValue, setTodayValue] = useState({});
 
   useEffect(() => {
-    arcticService.getData().subscribe((data) => {
-      if(data) {
+    const subscription = arcticService.getData().subscribe((data) => {
+      if (data) {
         setTodayValue(data.value.pop());
       }
-    })
-  })
+    });
+    return subscription.unsubscribe.bind(subscription);
+  });
 
   return (
     <Container as="section" fluid>
@@ -25,12 +26,14 @@ function SemanticArctic() {
         </Header>
         <Grid container>
           <Grid.Row centered stretched>
-            {arctic ? <Arctic parentCallBack={loading => setArcticLoading(loading)}/> : null}
+            {arctic ? (
+              <Arctic parentCallBack={(loading) => setArcticLoading(loading)} />
+            ) : null}
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column width="eight" textAlign="center">
               <Button
-                onClick={() => setArctic(prevState => !prevState)}
+                onClick={() => setArctic((prevState) => !prevState)}
                 className={arcticLoading ? "loading" : "arcticBtn"}
                 id={arcticLoading ? "loading" : "arcticBtn"}
               >
@@ -42,7 +45,10 @@ function SemanticArctic() {
         <Grid columns="equal">
           <Container textAlign="center" className="arctic-value">
             <p>
-              Today's value: <span>{`Extent ${todayValue.extent ? todayValue.extent : 0}, Area ${todayValue.area ? todayValue.area : 0}`}</span>
+              Today's value:{" "}
+              <span>{`Extent ${
+                todayValue.extent ? todayValue.extent : 0
+              }, Area ${todayValue.area ? todayValue.area : 0}`}</span>
             </p>
           </Container>
           <Container id="scrolling-container">

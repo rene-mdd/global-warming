@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Header, Grid, Button } from "semantic-ui-react";
 import Nitrous from "../nitrous";
 import { AccordionNitrous, AccordionShare } from "./accordion";
+import { nitrousService } from "../../services/dataService";
 
 function SemanticNitrous() {
   const [nitrous, setNitrous] = useState(false);
   const [nitrousLoading, setNitrousLoading] = useState(false);
+  const [todayValue, setTodayValue] = useState("0");
+
+  useEffect(() => {
+    const subscription = nitrousService.getData().subscribe((data) => {
+      setTodayValue(data.value.average);
+    });
+    return subscription.unsubscribe.bind(subscription);
+  }, []);
 
   return (
     <Container as="section" fluid>
@@ -15,7 +24,11 @@ function SemanticNitrous() {
         </Header>
         <Grid container>
           <Grid.Row centered stretched>
-            {nitrous ? <Nitrous parentCallBack={loading => setNitrousLoading(loading)} /> : null}
+            {nitrous ? (
+              <Nitrous
+                parentCallBack={(loading) => setNitrousLoading(loading)}
+              />
+            ) : null}
           </Grid.Row>
           <Grid.Row centered>
             <Grid.Column width="eight" textAlign="center">
@@ -30,6 +43,11 @@ function SemanticNitrous() {
           </Grid.Row>
         </Grid>
         <Grid columns="equal">
+          <Container textAlign="center" className="today-value">
+            <p>
+              Today's value: <span>{todayValue}</span>
+            </p>
+          </Container>
           <Container>
             <p>
               Nitrous oxide is a gas that is produced by the combustion of
