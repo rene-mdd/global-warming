@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
@@ -17,7 +16,6 @@ import {
 import StickyMenu from "../../components/semantic/sticky";
 import SiteHeader from "../../components/siteHeader";
 
-// eslint-disable-next-line prefer-destructuring
 const CognitiveServicesCredentials = require("ms-rest-azure")
   .CognitiveServicesCredentials;
 
@@ -28,25 +26,19 @@ const NewsSearchAPIClient = require("azure-cognitiveservices-newssearch");
 
 const client = new NewsSearchAPIClient(credentials);
 
-class News extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      intersecting: false,
-    };
-  }
+function News(props) {
 
-  handleIntersection = (event) => {
+  const [intersecting, setIntersecting] = useState(false);
+
+  const handleIntersection = (event) => {
     if (event.isIntersecting) {
-      this.setState({ intersecting: true });
+      setIntersecting(true);
     }
   };
 
-  render() {
-    const { googleNewsJson, jsonAzure } = this.props;
-    const { intersecting } = this.state;
+    const { googleNewsJson, jsonAzure } = props;
     const options = {
-      onChange: this.handleIntersection,
+      onChange: handleIntersection,
     };
 
     const parsedGNews = googleNewsJson.articles;
@@ -222,7 +214,6 @@ class News extends React.Component {
         </Container>
       </>
     );
-  }
 }
 News.propTypes = {
   googleNewsJson: PropTypes.shape({
