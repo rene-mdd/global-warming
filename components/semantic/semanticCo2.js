@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import React, { useEffect, useState } from "react";
 import { Container, Header, Grid, Button } from "semantic-ui-react";
 import Co2 from "../co2";

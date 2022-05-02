@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 import React, { useEffect } from "react";
 import { Container, Grid } from "semantic-ui-react";
 import fetch from "unfetch";

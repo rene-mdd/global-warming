@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
+/* eslint-disable */ 
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
