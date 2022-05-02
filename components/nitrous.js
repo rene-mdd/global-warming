@@ -12,22 +12,24 @@ function Nitrous(props) {
   const url = "api/nitrous-oxide-api";
 
   useEffect(() => {
+    console.log("one", props)
     props.parentCallBack(true);
+    const date = [];
+    const amount = [];
+    nitrousLocalData.forEach((obj) => {
+      date.push(obj.year.split(",").filter((x) => x)[0]);
+      amount.push(
+        parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1)
+      );
+    });
+    
+    const parsedToObject = { date, amount };
+
     async function fetchData() {
-      const date = [];
-      const amount = [];
-      nitrousLocalData.forEach((obj) => {
-        date.push(obj.year.split(",").filter((x) => x)[0]);
-        amount.push(
-          parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1)
-        );
-      });
-
-      const parsedToObject = { date, amount };
-
       try {
         const response = await fetch(url);
         const data = await response.json();
+        console.log(data, props)
         if (data) {
           displayNitrousGraph(parsedToObject, data);
           props.parentCallBack(false);
@@ -41,7 +43,7 @@ function Nitrous(props) {
       }
     }
     fetchData();
-  }, [props]);
+  }, []);
 
   const displayNitrousGraph = (
     cleanNitrousPrehistoricData,

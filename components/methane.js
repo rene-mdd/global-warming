@@ -13,6 +13,8 @@ function Methane(props) {
 
   useEffect(() => {
     // processing of json file
+    props.parentCallBack(true);
+
     const date = [];
     const amount = [];
 
@@ -24,7 +26,6 @@ function Methane(props) {
     });
     const parsedToObject = { date, amount };
 
-    props.parentCallBack(true);
     async function fetchData() {
       try {
         const response = await fetch(url);
@@ -42,7 +43,7 @@ function Methane(props) {
       }
     }
     fetchData();
-  }, [props]);
+  }, []);
 
   const displayMethaneGraph = (methPrehistoricData, latestMethaneData) => {
     const date = [];

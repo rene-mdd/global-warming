@@ -41,7 +41,7 @@ function Co2(props) {
       }
     }
     fetchData();
-  }, [props]);
+  }, []);
 
   const displayCo2Graph = (prehistoricData, latestCo2Data) => {
     const date = [];

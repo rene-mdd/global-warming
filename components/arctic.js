@@ -28,7 +28,7 @@ function Arctic(props) {
       }
     }
     fetchArcticData();
-  }, [props]);
+  }, []);
 
   const displayArcticGraph = (arcticData) => {
     const yearArray = [];
