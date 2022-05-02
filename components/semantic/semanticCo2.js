@@ -44,7 +44,7 @@ function SemanticCo2() {
           <Container textAlign="center" className="today-value">
             <p>
               Today's value:
-              <span>{todayValue}</span>
+              <span> {todayValue}</span>
             </p>
           </Container>
           <Container>

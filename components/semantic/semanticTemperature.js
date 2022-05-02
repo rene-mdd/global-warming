@@ -31,7 +31,7 @@ function SemanticTemperature() {
           <Container textAlign="center" className="today-value">
             <p>
               Today's value:
-              <span>{todayValue.station}</span>
+              <span> {todayValue.station}</span>
             </p>
           </Container>
           <Container>
