@@ -1,6 +1,6 @@
+/* eslint-disable */ 
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
-/* eslint-disable */ 
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
@@ -12,7 +12,6 @@ function Nitrous(props) {
   const url = "api/nitrous-oxide-api";
 
   useEffect(() => {
-    console.log("one", props)
     props.parentCallBack(true);
     const date = [];
     const amount = [];
@@ -22,14 +21,13 @@ function Nitrous(props) {
         parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1)
       );
     });
-    
+
     const parsedToObject = { date, amount };
 
     async function fetchData() {
       try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data, props)
         if (data) {
           displayNitrousGraph(parsedToObject, data);
           props.parentCallBack(false);
