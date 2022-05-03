@@ -1,21 +1,15 @@
-/* eslint-disable no-nested-ternary */
-import React from "react";
+/* eslint-disable */ 
+import React, { useEffect } from "react";
 import { Container, Grid } from "semantic-ui-react";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import localTemperatureData from "../public/data/csvjson-temperature.json";
+import { temperatureService } from "../services/dataService";
 
-class Temperature extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      latestTemperatureData: {},
-      commonEraData: {},
-    };
-    this.url = "api/temperature-api";
-  }
+function Temperature() {
+  const url = "api/temperature-api";
 
-  async componentDidMount() {
+  useEffect(() => {
     const date = [];
     const amount = [];
     localTemperatureData.forEach((obj) => {
@@ -31,24 +25,25 @@ class Temperature extends React.Component {
     });
 
     const parsedToObject = { date, amount };
-
-    this.setState({ commonEraData: parsedToObject });
-
-    try {
-      const response = await fetch(this.url);
-      const data = await response.json();
-      this.setState({ latestTemperatureData: data });
-    } catch (error) {
-      console.error(error);
+    async function fetchData() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        displayTempGraph(parsedToObject, data.result);
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
+    fetchData();
+  }, []);
 
-  displayTempGraph = (commonEraData, temperatureLiveData) => {
+  const displayTempGraph = (commonEraData, temperatureLiveData) => {
     const date = [];
     const station = [];
 
     try {
       if (temperatureLiveData) {
+        temperatureService.setData(temperatureLiveData);
         // transform api to arrays. Using ternary experison to save space.
         temperatureLiveData.forEach((obj) => {
           date.push(
@@ -107,9 +102,8 @@ class Temperature extends React.Component {
             options: {
               animation: {
                 onComplete: ({ chart }) => {
-                  const completeAnimation = chart.canvas.classList.add(
-                    "animation-complete"
-                  );
+                  const completeAnimation =
+                    chart.canvas.classList.add("animation-complete");
                   return completeAnimation;
                 },
               },
@@ -148,49 +142,38 @@ class Temperature extends React.Component {
     }
   };
 
-  render() {
-    const { commonEraData, latestTemperatureData } = this.state;
-    return (
-      <>
-        <div
-          className="hide"
-          onLoad={this.displayTempGraph(
-            commonEraData,
-            latestTemperatureData.result
-          )}
-        />
-
-        <Container
-          className="chart-container"
-          style={{ position: "relative", width: "80vw" }}
-        >
-          <canvas id="tempChart" />
-        </Container>
-        <Grid centered columns="equal">
-          <Grid.Column width="14">
-            <Container as="footer">
-              <p>
-                Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis
-                (GISTEMP), version 4. NASA Goddard Institute for Space Studies.
-                Dataset accessed 20YY-MM-DD at
-                <a href="https://data.giss.nasa.gov/gistemp/">
-                  <em> https://data.giss.nasa.gov/gistemp/</em>
-                </a>
-                . Source data 1880 - present: Lenssen, N., G. Schmidt, J.
-                Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019:
-                Improvements in the GISTEMP uncertainty model. J. Geophys. Res.
-                Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522. Source
-                data year 1 – 1979: &nbsp;
-                <a href="https://earthdata.nasa.gov/">
-                  https://earthdata.nasa.gov/
-                </a>
-              </p>
-            </Container>
-          </Grid.Column>
-        </Grid>
-      </>
-    );
-  }
+  return (
+    <>
+      <Container
+        className="chart-container"
+        style={{ position: "relative", width: "80vw" }}
+      >
+        <canvas id="tempChart" />
+      </Container>
+      <Grid centered columns="equal">
+        <Grid.Column width="14">
+          <Container as="footer">
+            <p>
+              Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis
+              (GISTEMP), version 4. NASA Goddard Institute for Space Studies.
+              Dataset accessed 20YY-MM-DD at
+              <a href="https://data.giss.nasa.gov/gistemp/">
+                <em> https://data.giss.nasa.gov/gistemp/</em>
+              </a>
+              . Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen,
+              M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in
+              the GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no.
+              12, 6307-6326, doi:10.1029/2018JD029522. Source data year 1 –
+              1979: &nbsp;
+              <a href="https://earthdata.nasa.gov/">
+                https://earthdata.nasa.gov/
+              </a>
+            </p>
+          </Container>
+        </Grid.Column>
+      </Grid>
+    </>
+  );
 }
 
 export default Temperature;

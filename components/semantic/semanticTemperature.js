@@ -1,8 +1,22 @@
+/* eslint-disable */ 
+import React, { useEffect, useState } from "react";
 import { Container, Header, Grid } from "semantic-ui-react";
+import { temperatureService } from "../../services/dataService";
 import Temperature from "../temperature";
 import { AccordionTemp, AccordionShare } from "./accordion";
 
 function SemanticTemperature() {
+  const [todayValue, setTodayValue] = useState({});
+
+  useEffect(() => {
+    const subscription = temperatureService.getData().subscribe((message) => {
+      if (message.value) {
+        setTodayValue(message.value.pop());
+      }
+    });
+    return subscription.unsubscribe.bind(subscription);
+  }, []);
+
   return (
     <Container as="section" fluid className="temperature-background">
       <Container>
@@ -15,6 +29,12 @@ function SemanticTemperature() {
           </Grid.Row>
         </Grid>
         <Grid columns="equal" style={{ marginTop: "7vh" }}>
+          <Container textAlign="center" className="today-value">
+            <p>
+              Today's value:
+              <span> {todayValue.station}</span>
+            </p>
+          </Container>
           <Container>
             <p>
               The current global warming rate is not natural. From 1880 to 1981

@@ -16,10 +16,10 @@ export default function MyApp({ Component, pageProps }) {
 
 MyApp.propTypes = {
   Component: PropTypes.func,
-  pageProps: PropTypes.objectOf(),
+  pageProps: PropTypes.shape({}),
 };
 
 MyApp.defaultProps = {
   Component: PropTypes.func,
-  pageProps: PropTypes.objectOf(),
+  pageProps: PropTypes.shape({}),
 };

@@ -1,28 +1,20 @@
-/* eslint-disable react/destructuring-assignment */
-import React from "react";
+/* eslint-disable */ 
+import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import { Container, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import localMethaneData from "../public/data/csvjson-methane.json";
+import { methaneService } from "../services/dataService";
 
-class Methane extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      latestMethaneData: {},
-      prehistoricMethane: {},
-      isLoading: true,
-      graphError: "",
-    };
-    this.url = "api/methane-api";
-  }
+function Methane(props) {
+  const [graphError, setGraphError] = useState("");
+  const url = "api/methane-api";
 
-  async componentDidMount() {
-    const { isLoading } = this.state;
-    this.props.loadingMethaneCallback(isLoading);
-
+  useEffect(() => {
     // processing of json file
+    props.parentCallBack(true);
+
     const date = [];
     const amount = [];
 
@@ -34,25 +26,26 @@ class Methane extends React.Component {
     });
     const parsedToObject = { date, amount };
 
-    this.setState({ prehistoricMethane: parsedToObject });
-
-    try {
-      const response = await fetch(this.url);
-      const data = await response.json();
-      if (data) {
-        this.setState({ latestMethaneData: data, isLoading: false });
-        this.props.loadingMethaneCallback(false);
+    async function fetchData() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data) {
+          methaneService.setData(data.methane.pop());
+          displayMethaneGraph(parsedToObject, data);
+          props.parentCallBack(false);
+        }
+      } catch (error) {
+        console.error(error);
+        setGraphError(
+          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you."
+        );
       }
-    } catch (error) {
-      console.error(error)
-      this.setState({
-        graphError:
-          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you.",
-      });
     }
-  }
+    fetchData();
+  }, []);
 
-  parsedData = (methPrehistoricData, latestMethaneData) => {
+  const displayMethaneGraph = (methPrehistoricData, latestMethaneData) => {
     const date = [];
     const average = [];
     try {
@@ -117,75 +110,60 @@ class Methane extends React.Component {
           }))();
       }
     } catch (error) {
-      console.error(error)
-      this.setState({
-        graphError:
-          "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",
-      });
+      console.error(error);
+      setGraphError(
+        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+      );
     }
   };
-
-  render() {
-    const {
-      latestMethaneData,
-      prehistoricMethane,
-      isLoading,
-      graphError,
-    } = this.state;
-    return (
-      <>
-        <div onLoad={this.parsedData(prehistoricMethane, latestMethaneData)} />
-
-        <Container
-          className="chart-container"
-          style={{ position: "relative", width: "80vw" }}
-        >
-          <canvas id="myMethChart" />
-        </Container>
-        <Grid width="equal" centered>
-          <Grid.Column width="fourteen">
-            {!isLoading && (
-              <Container as="footer">
-                <p>
-                  <span style={{ color: "#FD4659" }}>{graphError}</span>
-                </p>
-                <p>
-                  Year 1983 to present data source: Global Monitoring Division
-                  of NOAA’s Earth System Research Laboratory Ed Dlugokencky,
-                  NOAA/GML (
-                  <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/">
-                    <em> https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</em>
-                  </a>
-                  ).
-                </p>
-                <p>
-                  Data 800,000 years ago to 1983 source: United States,
-                  Environmental Protection Agency (EPA), (
-                  <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                    <em>
-                      https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
-                    </em>
-                  </a>
-                  )
-                </p>
-                <p>
-                  <b>From 1983.07 this data is measured on a monthly basis</b>
-                </p>
-              </Container>
-            )}
-          </Grid.Column>
-        </Grid>
-      </>
-    );
-  }
+  return (
+    <>
+      <Container
+        className="chart-container"
+        style={{ position: "relative", width: "80vw" }}
+      >
+        <canvas id="myMethChart" />
+      </Container>
+      <Grid width="equal" centered>
+        <Grid.Column width="fourteen">
+          <Container as="footer">
+            <p>
+              <span style={{ color: "#FD4659" }}>{graphError}</span>
+            </p>
+            <p>
+              Year 1983 to present data source: Global Monitoring Division of
+              NOAA’s Earth System Research Laboratory Ed Dlugokencky, NOAA/GML (
+              <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/">
+                <em> https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</em>
+              </a>
+              ).
+            </p>
+            <p>
+              Data 800,000 years ago to 1983 source: United States,
+              Environmental Protection Agency (EPA), (
+              <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
+                <em>
+                  https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                </em>
+              </a>
+              )
+            </p>
+            <p>
+              <b>From 1983.07 this data is measured on a monthly basis</b>
+            </p>
+          </Container>
+        </Grid.Column>
+      </Grid>
+    </>
+  );
 }
 
 Methane.propTypes = {
-  loadingMethaneCallback: PropTypes.func,
+  parentCallBack: PropTypes.func,
 };
 
 Methane.defaultProps = {
-  loadingMethaneCallback: true,
+  parentCallBack: true,
 };
 
 export default Methane;
