@@ -52,9 +52,11 @@ p {
     font-size: 2em !important;
     color: #343837 !important;
 }
-footer p {
-    margin: 0;
-    font-size: 0.8em;
+footer {
+    p {
+        margin: 0;
+        font-size: 0.8em;
+    }
 }
 #down-icon {
     padding-top: 6rem !important;
@@ -128,11 +130,13 @@ footer p {
         display: none !important;
     }
 }
-.api-segment i::before {
-    position: relative;
-    content: url("circle-right.png") !important;
-    margin-left: -15px;
-    bottom: -7px !important;
+.api-segment {
+    i::before {
+        position: relative;
+        content: url("circle-right.png") !important;
+        margin-left: -15px;
+        bottom: -7px !important;
+    }
 }
 .landing-page-news {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
@@ -226,17 +230,23 @@ h4 {
 .contact-container {
     margin-top: 35vh !important;
 }
-.header p {
-    font-size: 1.3em !important;
+.header {
+    p {
+        font-size: 1.3em !important;
+    }
 }
-.api-content p {
-    font-size: 1.1em !important;
+.api-content {
+    p {
+        font-size: 1.1em !important;
+    }
 }
 .submit-button {
     background-color: #47c072 !important;
 }
-nav a:hover {
-    background-color: #6db629 !important;
+nav {
+    a:hover {
+        background-color: #6db629 !important;
+    }
 }
 #contact-segment {
     font-size: 1.2em !important;
@@ -248,22 +258,33 @@ nav a:hover {
     min-width: 350px;
 }
 
-.today-value, .arctic-value {
+.today-value,
+.arctic-value {
     margin: 10px 0;
 }
 
-.today-value p {
-    font-weight: bold;
-    font-size: medium;
+.today-value {
+    p {
+        font-weight: bold;
+        font-size: medium;
+    }
 }
-.arctic-value p {
-    font-weight: bold;
-    font-size: medium;
+.arctic-value {
+    p {
+        font-weight: bold;
+        font-size: medium;
+    }
 }
 
-.today-value p span {
-    color: rgba(255, 99, 132, 1);
+.today-value {
+    p span {
+        color: rgba(255, 99, 132, 1);
+    }
 }
-.arctic-value p span {
-    color: rgba(44, 130, 201, 1);
+.arctic-value {
+    p {
+        span {
+            color: rgba(44, 130, 201, 1);
+        }
+    }
 }
