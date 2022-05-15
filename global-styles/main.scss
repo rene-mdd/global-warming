@@ -222,6 +222,7 @@ h4 {
 }
 .contact-title {
     font-size: 3em !important;
+    margin-bottom: 30px;
 }
 .news-icon {
     margin-right: 10px !important;
@@ -229,6 +230,14 @@ h4 {
 }
 .contact-container {
     margin-top: 35vh !important;
+    .contact-earth-logo {
+        margin-bottom: 30px;
+    }
+    .contact-info {
+        padding: 10px;
+        margin: 20px 0;
+        background-color: #dbecffc4;
+    }
 }
 .header {
     p {
@@ -242,6 +251,9 @@ h4 {
 }
 .submit-button {
     background-color: #47c072 !important;
+    color: white;
+    font-size: 16px;
+    margin: 20px 0;
 }
 nav {
     a:hover {
@@ -253,9 +265,6 @@ nav {
 }
 .hide-divider {
     opacity: 0;
-}
-.form-width {
-    min-width: 350px;
 }
 
 .today-value,
@@ -287,4 +296,7 @@ nav {
             color: rgba(44, 130, 201, 1);
         }
     }
+}
+.hide-element {
+    display: none;
 }
