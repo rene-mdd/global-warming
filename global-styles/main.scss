@@ -58,8 +58,10 @@ footer {
         font-size: 0.8em;
     }
 }
-#down-icon {
-    padding-top: 6rem !important;
+.down-icon {
+    margin: 20px 0;
+    width: 142px;
+    height: 142px;
 }
 .api-segment {
     margin: 8vh 0 !important;
@@ -94,9 +96,7 @@ footer {
     background-color: #12d3cf !important;
     color: white !important;
 }
-.news-button {
-    background-color: #0e87cc !important;
-}
+
 @media only screen and (max-width: 600px) {
     i {
         display: none !important;
@@ -157,15 +157,14 @@ footer {
     font-size: 2.2em !important;
     padding: 10vh !important;
 }
-#news-date {
+.news-date {
     font-weight: 300;
     text-decoration: underline;
     padding: 10px !important;
+    font-size: 21px;
+    margin-bottom: 30px;
 }
-h4 {
-    font-size: 1.5em !important;
-    margin-bottom: 5vh !important;
-}
+
 #co2Btn {
     background-color: #1687a7 !important;
     color: white !important;
@@ -188,6 +187,7 @@ h4 {
 #landing-page-deforestation {
     background-color: #048243;
     height: 100vh !important;
+    overflow: auto;
 }
 .sidebar-config-out {
     transform: translateX(-150px) !important;
@@ -222,22 +222,16 @@ h4 {
 }
 .contact-title {
     font-size: 3em !important;
+    margin-top: 35vh !important;
+}
+
+.contact-earth-logo {
     margin-bottom: 30px;
 }
-.news-icon {
-    margin-right: 10px !important;
-    width: 25px !important;
-}
-.contact-container {
-    margin-top: 35vh !important;
-    .contact-earth-logo {
-        margin-bottom: 30px;
-    }
-    .contact-info {
-        padding: 10px;
-        margin: 20px 0;
-        background-color: #dbecffc4;
-    }
+.contact-info {
+    padding: 10px;
+    margin: 20px 0;
+    background-color: #dbecffc4;
 }
 .header {
     p {
@@ -299,4 +293,16 @@ nav {
 }
 .hide-element {
     display: none;
+}
+
+.deforestation-iframe {
+    width: 100%;
+    height: 600px;
+    padding: 0;
+}
+
+.forest-logo {
+    width: 80px;
+    height: 80px;
+    margin: 20px 0;
 }

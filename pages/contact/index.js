@@ -52,7 +52,6 @@ const Contact = () => {
       });
 
       const json = await res.json();
-      console.log(json);
       if (json.success) {
         setResponse({
           type: "success",
@@ -85,7 +84,7 @@ const Contact = () => {
         keywords={contactKeywords}
       />
       <StickyMenu />
-      <Container className="contact-container">
+      <Container>
         <Grid columns={{ lg: 12 }} xl="auto">
           <Typography align="center" variant="h1" className="contact-title">
             Contact
