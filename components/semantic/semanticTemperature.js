@@ -1,9 +1,13 @@
 /* eslint-disable */ 
 import React, { useEffect, useState } from "react";
-import { Container, Header, Grid } from "semantic-ui-react";
 import { temperatureService } from "../../services/dataService";
 import Temperature from "../temperature";
 import { AccordionTemp, AccordionShare } from "./accordion";
+import {
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 function SemanticTemperature() {
   const [todayValue, setTodayValue] = useState({});
@@ -18,18 +22,16 @@ function SemanticTemperature() {
   }, []);
 
   return (
-    <Container as="section" fluid className="temperature-background">
+    <Container component="section" className="temperature-background">
       <Container>
-        <Header as="h2" textAlign="center" className="h2-general">
+        <Typography component="h2" align="center" className="h2-general">
           Global temperature anomalies from year 1 to present
-        </Header>
+        </Typography>
         <Grid container>
-          <Grid.Row centered stretched>
             <Temperature />
-          </Grid.Row>
         </Grid>
-        <Grid columns="equal" style={{ marginTop: "7vh" }}>
-          <Container textAlign="center" className="today-value">
+        <Grid style={{ marginTop: "7vh" }}>
+          <Container align="center" className="today-value">
             <p>
               Today's value:
               <span> {todayValue.station}</span>
@@ -117,13 +119,13 @@ function SemanticTemperature() {
                 </em>
               </a>
             </p>
-            <Grid className="api-segment" columns="equal" centered stackable>
-              <Grid.Column>
+            <Grid container className="api-segment" columns={12} justifyContent="space-around">
+              <Grid item xs={6}>
                 <AccordionTemp />
-              </Grid.Column>
-              <Grid.Column>
+              </Grid>
+              <Grid item xs={6}>
                 <AccordionShare />
-              </Grid.Column>
+              </Grid>
             </Grid>
           </Container>
         </Grid>
