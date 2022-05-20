@@ -87,10 +87,10 @@ function SemanticCo2() {
               justifyContent="space-around"
             >
               <Grid item xs={6}>
-                <AccordionShare />
+              <AccordionCo2 />
               </Grid>
               <Grid item xs={6}>
-                <AccordionCo2 />
+                <AccordionShare />
               </Grid>
             </Grid>
           </Container>
