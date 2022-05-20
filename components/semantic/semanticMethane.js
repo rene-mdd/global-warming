@@ -101,7 +101,6 @@ function SemanticMethane() {
                 </span>
               </a>
             </p>
-
             <Grid
               container
               className="api-segment"
