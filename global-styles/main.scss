@@ -43,7 +43,7 @@ p {
     text-shadow: 1px 1px 1px #000 !important;
 }
 .h1-news {
-    padding: 35vh 0 0 !important;
+    margin-top: auto !important;
     font-size: 2.5em !important;
     color: white !important;
 }
@@ -142,6 +142,18 @@ footer {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
     background-size: cover !important;
     height: 100vh !important;
+    .news-icon {
+        width: 80px;
+        height: 80px;
+        margin: 30px 0;
+    }
+    .arrow-icon {
+        width: 100px;
+        height: 100px;
+    }
+    .down-icon-wrapper:hover {
+        background-color: white;
+    }
 }
 #h1-deforestation {
     font-size: 2.5em;
@@ -156,13 +168,6 @@ footer {
 #list-news {
     font-size: 2.2em !important;
     padding: 10vh !important;
-}
-.news-date {
-    font-weight: 300;
-    text-decoration: underline;
-    padding: 10px !important;
-    font-size: 21px;
-    margin-bottom: 30px;
 }
 
 #co2Btn {

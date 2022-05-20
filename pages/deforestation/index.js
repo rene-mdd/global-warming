@@ -73,47 +73,40 @@ function SemanticDeforestation(props) {
         keywords={deforestationKeywords}
       />
       <StickyMenu />
-
-      <Container maxWidth={false} id="landing-page-deforestation">
-        <Container>
-          <Typography
-            component="h1"
-            variant="h1"
-            id="h1-deforestation"
-            align="center"
-            sx={{ fontWeight: "bold" }}
-          >
-            Global Forest Loss
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        id="landing-page-deforestation"
+      >
+          <Typography component="h1" textAlign="center" className="h1-news">
+            Global Deforestation
           </Typography>
-          <Grid>
-            <Grid container justifyContent="center" alignItems="center">
-              <CardMedia
-                component="img"
-                image="images/forest.png"
-                className="forest-logo"
-              />
-              <Typography component="h2" id="h2-news" align="center">
-                This section is meant to gather data about the current state of
-                worldwide deforestation. This is done through APIs, databases,
-                news, MapBuilders, and journals.
-              </Typography>
-            </Grid>
+          <Grid align="center">
+            <CardMedia
+              component="img"
+              image="images/forest.png"
+              className="forest-logo"
+            />
+            <Typography component="h2" id="h2-news" align="center">
+              This section is meant to gather data about the current state of
+              worldwide deforestation. This is done through APIs, databases,
+              news, MapBuilders, and journals.
+            </Typography>
           </Grid>
-          <Grid>
-            <Grid container align="center" justifyContent="center">
+            <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
               <Scroll.Link spy smooth duration={1000} to="jump-news">
-                <Button>
+                <Button className="down-icon-wrapper">
                   <CardMedia
                     image="/images/icons-double-down.png"
                     component="img"
                     className="down-icon"
+                    alt="move to next section"
                   />
                 </Button>
               </Scroll.Link>
             </Grid>
-          </Grid>
-        </Container>
-      </Container>
+      </Grid>
       <Divider name="jump-news" className="hide-divider" />
       <Container>
         <Grid className="temperature-background">
@@ -171,7 +164,15 @@ function SemanticDeforestation(props) {
         <Typography component="h3" id="list-news" align="center">
           News List
         </Typography>
-        <Typography gutterBottom className="news-date" align="center">
+        <Typography
+          gutterBottom
+          sx={{
+            textDecoration: "underline",
+            fontSize: "21px",
+          }}
+          component="h4"
+          align="center"
+        >
           {`Live: ${new Date().toString()}`}
         </Typography>
         <List sx={{ width: "100%", bgcolor: "background.paper" }}>
@@ -222,7 +223,6 @@ function SemanticDeforestation(props) {
                     <Grid item>
                       <Paper
                         sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                        variant="outlined"
                         elevation={3}
                       >
                         Date: {obj.publishedAt}
