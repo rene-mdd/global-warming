@@ -1,7 +1,5 @@
 /* eslint-disable */
 import React from "react";
-// import _ from "lodash";
-// import { Label, Message } from "semantic-ui-react";
 import {
   Accordion,
   AccordionDetails,

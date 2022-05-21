@@ -1,7 +1,27 @@
+/* eslint-disable */
 import React, { Component } from "react";
-import { Container, Image, Menu } from "semantic-ui-react";
+// import { Container, Image, Menu } from "semantic-ui-react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  Container,
+  Box,
+  AppBar,
+  Toolbar,
+  Button,
+  Avatar,
+  ButtonGroup,
+} from "@mui/material";
+
 import Link from "next/link";
 import { slide as BurgerMenu } from "react-burger-menu";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+    },
+  },
+});
 
 export default class StickySideBar extends Component {
   constructor(props) {
@@ -36,43 +56,51 @@ export default class StickySideBar extends Component {
               <Link href="/">Home</Link>
             </Container>
             <Container id="about" className="menu-item">
+              <Link href="/about">About</Link>
+            </Container>
+            <Container id="news" className="menu-item">
               <Link href="/news">News</Link>
             </Container>
-            <Container id="contact" className="menu-item">
+            <Container id="deforestation" className="menu-item">
               <Link href="/deforestation">Deforestation</Link>
             </Container>
-            <Container id="deforestation" className="menu-item">
+            <Container id="contact" className="menu-item">
               <Link href="/contact">Contact</Link>
             </Container>
           </BurgerMenu>
         ) : (
           // desktop menu
-          <Menu
-            as="header"
-            fixed="top"
-            size="huge"
-            className="chart-img--remove"
-          >
-            <Container as="nav">
-              <Link href="/" passHref>
-                <Menu.Item as="a" position="left">
-                  <Image size="mini" src="images/logo-planet-image.png" />
-                </Menu.Item>
-              </Link>
-              <Link href="/" passHref>
-                <Menu.Item as="a">Home</Menu.Item>
-              </Link>
-              <Link href="/news" passHref>
-                <Menu.Item as="a">News</Menu.Item>
-              </Link>
-              <Link href="/deforestation" passHref>
-                <Menu.Item as="a">Deforestation</Menu.Item>
-              </Link>
-              <Link href="/contact" passHref>
-                <Menu.Item position="right">Contact</Menu.Item>
-              </Link>
-            </Container>
-          </Menu>
+          <ThemeProvider theme={theme}>
+            <Box>
+              <AppBar position="fixed" color="primary">
+                <Toolbar sx={{ justifyContent: "center" }}>
+                  <Link href="/">
+                    <Avatar
+                      sx={{ width: "35px" }}
+                      src="images/logo-planet-image.png"
+                      className="menu-icon"
+                    />
+                  </Link>
+                  <ButtonGroup variant="text" size="large">
+                    <Link href="/news">
+                      <Button color="inherit" className="menu">Home</Button>
+                    </Link>
+                    <Link href="/about">
+                      <Button color="inherit" className="menu">About</Button>
+                    </Link>
+                    <Link href="/deforestation">
+                      <Button color="inherit" className="menu">Deforestation</Button>
+                    </Link>
+                  </ButtonGroup>
+                  <Link href="/contact">
+                    <Button color="inherit" className="menu" sx={{ marginLeft: "auto" }}>
+                      Contact
+                    </Button>
+                  </Link>
+                </Toolbar>
+              </AppBar>
+            </Box>
+          </ThemeProvider>
         )}
       </>
     );

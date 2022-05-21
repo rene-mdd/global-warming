@@ -176,7 +176,8 @@ footer {
 }
 .contact-title {
     font-size: 3em !important;
-    margin-top: 35vh !important;
+    margin-top: 25vh !important;
+    margin-bottom: 10vh !important;
 }
 
 .contact-earth-logo {
@@ -262,4 +263,12 @@ nav {
     width: 80px;
     height: 80px;
     margin: 20px 0;
+}
+.menu-icon {
+    cursor: pointer;
+    margin-right: auto;
+}
+.menu {
+    font-weight: bold;
+    font-size: 110%;
 }

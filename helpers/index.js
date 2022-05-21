@@ -1,4 +1,5 @@
 // Loading bar helper
+/* eslint-disable */
 import React, { useEffect } from "react";
 import NProgress from "nprogress";
 import Router from "next/router";

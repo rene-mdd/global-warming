@@ -111,7 +111,7 @@ const Contact = () => {
                 <Paper className="contact-info">
                   <p id="contact-segment">
                     For suggestions about this
-                    project, or if you want to discuss ideas related to this
+                    project or if you want to discuss ideas related to this
                     kind of environmental issues, please send us a <strong>message</strong>.
                   </p>
                 </Paper>
