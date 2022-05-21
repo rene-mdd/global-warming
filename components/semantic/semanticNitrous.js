@@ -86,10 +86,10 @@ function SemanticNitrous() {
               justifyContent="space-around"
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionShare />
+                <AccordionNitrous />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionNitrous />
+                <AccordionShare />
               </Grid>
             </Grid>
           </Container>

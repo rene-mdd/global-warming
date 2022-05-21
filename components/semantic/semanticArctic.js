@@ -95,10 +95,10 @@ function SemanticArctic() {
               justifyContent="space-around"
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-              <AccordionShare />
+              <AccordionArctic />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
-               <AccordionArctic />
+              <AccordionShare />
               </Grid>
             </Grid>
           </Container>

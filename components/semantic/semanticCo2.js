@@ -87,10 +87,10 @@ function SemanticCo2() {
               justifyContent="space-around"
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionShare />
+                <AccordionCo2 />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionCo2 />
+              <AccordionShare />
               </Grid>
             </Grid>
           </Container>

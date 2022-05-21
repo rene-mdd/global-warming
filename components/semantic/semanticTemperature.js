@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { temperatureService } from "../../services/dataService";
 import Temperature from "../temperature";
-import { AccordionTemp, AccordionShare } from "./accordion";
+import {AccordionTemp, AccordionShare } from "./accordion";
 import { Container, Grid, Typography } from "@mui/material";
 
 function SemanticTemperature() {

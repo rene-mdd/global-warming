@@ -108,10 +108,10 @@ function SemanticMethane() {
               justifyContent="space-around"
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionShare />
+              <AccordionMethane />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionMethane />
+                <AccordionShare />
               </Grid>
             </Grid>
           </Container>
