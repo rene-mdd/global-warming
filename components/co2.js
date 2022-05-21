@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import { Container, Grid } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+} from "@mui/material";
 import PropTypes from "prop-types";
 import localCo2Data from "../public/data/csvjson-co2.json";
 import { co2Service } from "../services/dataService";
@@ -119,9 +122,10 @@ function Co2(props) {
     <>
       <Container className="chart-container">
         <canvas id="myCo2Chart" />
-        <Grid centered columns="equal">
-          <Grid.Column width="14" fluid="true">
-            <Container as="footer">
+        </Container>
+        <Grid container columns={10} justifyContent="center">
+          <Grid item xs={9}>
+            <Container component="footer" sx={{ marginTop: "-5px" }}>
               <p>
                 <span style={{ color: "#FD4659" }}>{graphError}</span>
               </p>
@@ -149,9 +153,8 @@ function Co2(props) {
                 </b>
               </p>
             </Container>
-          </Grid.Column>
+          </Grid>
         </Grid>
-      </Container>
     </>
   );
 }

@@ -82,15 +82,15 @@ function SemanticCo2() {
             </p>
             <Grid
               container
+              spacing={3}
               className="api-segment"
-              columns={12}
               justifyContent="space-around"
             >
-              <Grid item xs={6}>
-              <AccordionCo2 />
-              </Grid>
-              <Grid item xs={6}>
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />
+              </Grid>
+              <Grid item xs sx={{ minWidth: "250px" }}>
+                <AccordionCo2 />
               </Grid>
             </Grid>
           </Container>

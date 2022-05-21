@@ -4,11 +4,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Nitrous from "../nitrous";
 import { AccordionNitrous, AccordionShare } from "./accordion";
 import { nitrousService } from "../../services/dataService";
-import {
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 const theme = createTheme({
@@ -85,14 +81,14 @@ function SemanticNitrous() {
             </p>
             <Grid
               container
+              spacing={3}
               className="api-segment"
-              columns={12}
               justifyContent="space-around"
             >
-              <Grid item xs={6}>
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionNitrous />
               </Grid>
             </Grid>

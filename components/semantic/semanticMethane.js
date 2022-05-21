@@ -103,15 +103,15 @@ function SemanticMethane() {
             </p>
             <Grid
               container
+              spacing={3}
               className="api-segment"
-              columns={12}
               justifyContent="space-around"
             >
-              <Grid item xs={6}>
-              <AccordionMethane />
+              <Grid item xs sx={{ minWidth: "250px" }}>
+                <AccordionShare />
               </Grid>
-              <Grid item xs={6}>
-              <AccordionShare />
+              <Grid item xs sx={{ minWidth: "250px" }}>
+                <AccordionMethane />
               </Grid>
             </Grid>
           </Container>

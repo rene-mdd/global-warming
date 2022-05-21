@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import { Container, Grid } from "semantic-ui-react";
+// import { Container, Grid } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+} from "@mui/material";
 import PropTypes from "prop-types";
 import nitrousLocalData from "../public/data/csvjson-nitrous.json";
 import { nitrousService } from "../services/dataService";
@@ -122,13 +126,12 @@ function Nitrous(props) {
     <>
       <Container
         className="chart-container"
-        style={{ position: "relative", width: "80vw" }}
       >
         <canvas id="myNitrousChart" />
       </Container>
-      <Grid width="equal" centered>
-        <Grid.Column width="14">
-          <Container as="footer">
+      <Grid container columns={10} justifyContent="center">
+        <Grid item xs={9}>
+          <Container component="footer" sx={{ marginTop: "-5px" }}>
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
@@ -151,7 +154,7 @@ function Nitrous(props) {
               <b> From 2001.01 the data is measured on a monthly basis</b>
             </p>
           </Container>
-        </Grid.Column>
+        </Grid>
       </Grid>
     </>
   );

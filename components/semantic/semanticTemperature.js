@@ -1,13 +1,9 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import { temperatureService } from "../../services/dataService";
 import Temperature from "../temperature";
 import { AccordionTemp, AccordionShare } from "./accordion";
-import {
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 
 function SemanticTemperature() {
   const [todayValue, setTodayValue] = useState({});
@@ -28,7 +24,7 @@ function SemanticTemperature() {
           Global temperature anomalies from year 1 to present
         </Typography>
         <Grid container>
-            <Temperature />
+          <Temperature />
         </Grid>
         <Grid sx={{ marginTop: "7vh" }}>
           <Container align="center" className="today-value">
@@ -119,11 +115,16 @@ function SemanticTemperature() {
                 </em>
               </a>
             </p>
-            <Grid container className="api-segment" columns={12} justifyContent="space-around">
-              <Grid item xs={6}>
+            <Grid
+              container
+              spacing={3}
+              className="api-segment"
+              justifyContent="space-around"
+            >
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionTemp />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />
               </Grid>
             </Grid>

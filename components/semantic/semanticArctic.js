@@ -90,15 +90,15 @@ function SemanticArctic() {
             </p>
             <Grid
               container
+              spacing={3}
               className="api-segment"
-              columns={12}
               justifyContent="space-around"
             >
-              <Grid item xs={6}>
-                <AccordionArctic />
+              <Grid item xs sx={{ minWidth: "250px" }}>
+              <AccordionShare />
               </Grid>
-              <Grid item xs={6}>
-                <AccordionShare />
+              <Grid item xs sx={{ minWidth: "250px" }}>
+               <AccordionArctic />
               </Grid>
             </Grid>
           </Container>
