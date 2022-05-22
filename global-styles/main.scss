@@ -144,13 +144,13 @@ footer {
     overflow: auto;
 }
 .sidebar-config-out {
-    transform: translateX(-150px) !important;
+    transform: translateX(-150px);
     transition-duration: 1s;
-    background: rgb(104, 104, 104) !important;
 }
 .sidebar-config-in {
+    transform: translateX(0px);
     transition-duration: 1s;
-    background: rgb(104, 104, 104) !important;
+    background: rgb(26, 26, 26);
 }
 .fix {
     position: fixed !important;
@@ -215,7 +215,6 @@ nav {
 .hide-divider {
     opacity: 0;
 }
-
 .today-value,
 .arctic-value {
     margin: 10px 0;
@@ -223,7 +222,6 @@ nav {
 .primary-color {
     color: #2c82c9;
 }
-
 .today-value {
     p {
         font-weight: bold;
@@ -236,7 +234,6 @@ nav {
         font-size: medium;
     }
 }
-
 .today-value {
     p span {
         color: rgba(255, 99, 132, 1);
@@ -258,7 +255,6 @@ nav {
     height: 600px;
     padding: 0;
 }
-
 .forest-logo {
     width: 80px;
     height: 80px;
@@ -271,4 +267,13 @@ nav {
 .menu {
     font-weight: bold;
     font-size: 110%;
+}
+.side-menu-text {
+    color: white;
+}
+.side-menu-icon {
+    transform: translate(-10px);
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
 }

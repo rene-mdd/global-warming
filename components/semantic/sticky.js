@@ -11,7 +11,6 @@ import {
   Avatar,
   ButtonGroup,
 } from "@mui/material";
-
 import Link from "next/link";
 import { slide as BurgerMenu } from "react-burger-menu";
 
@@ -82,7 +81,7 @@ export default class StickySideBar extends Component {
                     />
                   </Link>
                   <ButtonGroup variant="text" size="large">
-                    <Link href="/news">
+                    <Link href="/">
                       <Button color="inherit" className="menu">Home</Button>
                     </Link>
                     <Link href="/about">
