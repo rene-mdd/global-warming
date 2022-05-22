@@ -6,8 +6,8 @@ import {
 } from "@mui/material";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import localTemperatureData from "../public/data/csvjson-temperature.json";
-import { temperatureService } from "../services/dataService";
+import localTemperatureData from "../../public/data/csvjson-temperature.json";
+import { temperatureService } from "../../services/dataService";
 
 function Temperature() {
   const url = "api/temperature-api";

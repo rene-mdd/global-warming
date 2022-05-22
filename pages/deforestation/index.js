@@ -16,7 +16,7 @@ import {
   List,
   ListItemAvatar,
 } from "@mui/material";
-import StickyMenu from "../../components/semantic/sticky";
+import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
 const CognitiveServicesCredentials =
@@ -261,7 +261,7 @@ function SemanticDeforestation(props) {
                       image={
                         obj?.image?.thumbnail?.contentUrl ??
                         obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                        "/images/breaking-news.jpg"
+                        "/images/breaking-news.png"
                       }
                       component="img"
                       alt="Breaking news"
@@ -344,12 +344,12 @@ SemanticDeforestation.propTypes = {
 SemanticDeforestation.defaultProps = {
   googleNewsJson: PropTypes.shape({
     articleCount: "",
-    articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
   azureJson: PropTypes.shape({
     totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    value: PropTypes.arrayOf("/images/breaking-news.png"),
     _type: "",
   }),
 };

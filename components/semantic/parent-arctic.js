@@ -2,7 +2,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Arctic from "../arctic";
+import Arctic from "../charts/arctic";
 import { AccordionArctic, AccordionShare } from "./accordion";
 import { arcticService } from "../../services/dataService";
 import { LoadingButton } from "@mui/lab";

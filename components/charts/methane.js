@@ -5,8 +5,8 @@ import Chart from "chart.js";
 // import { Container, Grid } from "semantic-ui-react";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import localMethaneData from "../public/data/csvjson-methane.json";
-import { methaneService } from "../services/dataService";
+import localMethaneData from "../../public/data/csvjson-methane.json";
+import { methaneService } from "../../services/dataService";
 
 function Methane(props) {
   const [graphError, setGraphError] = useState("");

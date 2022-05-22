@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { useState } from "react";
-import StickyMenu from "../../components/semantic/sticky";
+import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import {
   Container,
@@ -110,7 +110,7 @@ const Contact = () => {
               <Grid item xs={10} md={6}>
                 <Paper className="contact-info">
                   <p id="contact-segment">
-                    For suggestions about this
+                    For questions about this
                     project or if you want to discuss ideas related to this
                     kind of environmental issues, please send us a <strong>message</strong>.
                   </p>

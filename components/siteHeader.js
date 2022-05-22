@@ -25,7 +25,7 @@ export default function SiteHeader({ title, description, keyword }) {
         <meta property="og:url" content="https://global-warming.org/" />
         {/* link to live chart api/chart-img/tempChart.jpeg */}
         <meta property="og:title" content="Global Warming Data and API" />
-        <meta property="og:image" content="images/share-image.png" />
+        <meta property="og:image" content="images/logo-planet-image.png" />
         <meta property="og:image:width" content="75" />
         <meta property="og:image:height" content="75" />
         <meta property="og:image:type" content="image/png" />

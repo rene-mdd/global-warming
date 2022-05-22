@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { Menu, Sidebar, Sticky, Rail, Grid } from "semantic-ui-react";
 import {
   Container,
   Grid,

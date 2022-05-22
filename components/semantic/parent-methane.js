@@ -1,6 +1,6 @@
 /* eslint-disable */ 
 import React, { useEffect, useState } from "react";
-import Methane from "../methane";
+import Methane from "../charts/methane";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AccordionMethane, AccordionShare } from "./accordion";
 import { methaneService } from "../../services/dataService";

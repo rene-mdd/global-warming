@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Co2 from "../co2";
+import Co2 from "../charts/co2";
 import { AccordionCo2, AccordionShare } from "./accordion";
 import { co2Service } from "../../services/dataService";
 import {

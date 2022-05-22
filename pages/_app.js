@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import "../global-styles/main.scss";
 import PropTypes from "prop-types";
-import "semantic-ui-css/semantic.min.css";
 import "../global-styles/burger-menu.scss";
 import NextNProgress from "../helpers/index";
 

@@ -2,10 +2,9 @@
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-// import { Container, Grid } from "semantic-ui-react";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import { arcticService } from "../services/dataService";
+import { arcticService } from "../../services/dataService";
 
 function Arctic(props) {
   const url = "api/arctic-api";

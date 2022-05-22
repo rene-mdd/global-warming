@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Nitrous from "../nitrous";
+import Nitrous from "../charts/nitrous";
 import { AccordionNitrous, AccordionShare } from "./accordion";
 import { nitrousService } from "../../services/dataService";
 import { Container, Grid, Typography } from "@mui/material";

@@ -2,14 +2,13 @@
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-// import { Container, Grid } from "semantic-ui-react";
 import {
   Container,
   Grid,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import nitrousLocalData from "../public/data/csvjson-nitrous.json";
-import { nitrousService } from "../services/dataService";
+import nitrousLocalData from "../../public/data/csvjson-nitrous.json";
+import { nitrousService } from "../../services/dataService";
 
 function Nitrous(props) {
   const [graphError, setGraphError] = useState("");

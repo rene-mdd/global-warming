@@ -7,8 +7,8 @@ import {
   Grid,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import localCo2Data from "../public/data/csvjson-co2.json";
-import { co2Service } from "../services/dataService";
+import localCo2Data from "../../public/data/csvjson-co2.json";
+import { co2Service } from "../../services/dataService";
 
 function Co2(props) {
   const [graphError, setGraphError] = useState("");

@@ -75,7 +75,7 @@ export default class StickySideBar extends Component {
                 <Toolbar sx={{ justifyContent: "center" }}>
                   <Link href="/">
                     <Avatar
-                      sx={{ width: "35px" }}
+                      sx={{ width: "50px" }}
                       src="images/logo-planet-image.png"
                       className="menu-icon"
                     />
@@ -86,6 +86,9 @@ export default class StickySideBar extends Component {
                     </Link>
                     <Link href="/about">
                       <Button color="inherit" className="menu">About</Button>
+                    </Link>
+                    <Link href="/news">
+                      <Button color="inherit" className="menu">News</Button>
                     </Link>
                     <Link href="/deforestation">
                       <Button color="inherit" className="menu">Deforestation</Button>

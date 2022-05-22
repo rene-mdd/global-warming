@@ -16,7 +16,7 @@ import {
   List,
   ListItemAvatar,
 } from "@mui/material";
-import StickyMenu from "../../components/semantic/sticky";
+import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
 const CognitiveServicesCredentials =
@@ -207,7 +207,7 @@ function News(props) {
                       image={
                         obj?.image?.thumbnail?.contentUrl ??
                         obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                        "/images/breaking-news.jpg"
+                        "/images/breaking-news.png"
                       }
                       component="img"
                       alt="Breaking news"
@@ -290,12 +290,12 @@ News.propTypes = {
 News.defaultProps = {
   googleNewsJson: PropTypes.shape({
     articleCount: 0,
-    articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
   jsonAzure: PropTypes.shape({
     totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    value: PropTypes.arrayOf("/images/breaking-news.png"),
     _type: "",
   }),
 };
