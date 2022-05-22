@@ -25,7 +25,7 @@ function Home() {
       <StickyMenu />
       <SideMenu />
       <LandingPage />
-      <Divider name="jump-to-temperature" hidden />
+      <Divider name="jump-to-temperature" />
       <SemanticTemperature />
       <Divider name="jump-to-co2" />
       <SemanticCo2 />

@@ -1,8 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable */
 import "../global-styles/main.scss";
 import PropTypes from "prop-types";
 import "../global-styles/burger-menu.scss";
 import NextNProgress from "../helpers/index";
+import 'normalize.css/normalize.css';
 
 export default function MyApp({ Component, pageProps }) {
   return (

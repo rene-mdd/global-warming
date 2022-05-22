@@ -34,10 +34,6 @@ export default function SiteHeader({ title, description, keyword }) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="shortcut icon" type="image/gif" href="favicon/favicon.ico" />
         <link
-          rel="stylesheet"
-          href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
-        />
-        <link
           href="https://fonts.googleapis.com/css2?family=Play&display=swap"
           rel="stylesheet"
         />

@@ -79,33 +79,33 @@ function SemanticDeforestation(props) {
         justifyContent="center"
         id="landing-page-deforestation"
       >
-          <Typography component="h1" align="center" className="h1-news">
-            Global Deforestation
+        <Typography component="h1" align="center" className="h1-news">
+          Global Deforestation
+        </Typography>
+        <Grid align="center">
+          <CardMedia
+            component="img"
+            image="images/forest.png"
+            className="forest-logo"
+          />
+          <Typography component="h2" className="h2-news" align="center">
+            This section is meant to gather data about the current state of
+            worldwide deforestation. This is done through APIs, databases, news,
+            MapBuilders, and journals.
           </Typography>
-          <Grid align="center">
-            <CardMedia
-              component="img"
-              image="images/forest.png"
-              className="forest-logo"
-            />
-            <Typography component="h2" id="h2-news" align="center">
-              This section is meant to gather data about the current state of
-              worldwide deforestation. This is done through APIs, databases,
-              news, MapBuilders, and journals.
-            </Typography>
-          </Grid>
-            <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
-              <Scroll.Link spy smooth duration={1000} to="jump-news">
-                <Button className="down-icon-wrapper">
-                  <CardMedia
-                    image="/images/icons-double-down.png"
-                    component="img"
-                    className="down-icon"
-                    alt="move to next section"
-                  />
-                </Button>
-              </Scroll.Link>
-            </Grid>
+        </Grid>
+        <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
+          <Scroll.Link spy smooth duration={1000} to="jump-news">
+            <Button className="down-icon-wrapper">
+              <CardMedia
+                image="/images/icons-double-down.png"
+                component="img"
+                className="down-icon"
+                alt="move to next section"
+              />
+            </Button>
+          </Scroll.Link>
+        </Grid>
       </Grid>
       <Divider name="jump-news" className="hide-divider" />
       <Container>
