@@ -84,7 +84,7 @@ function News(props) {
         </Typography>
         <Grid align="center">
           <CardMedia component="img" image="images/icons8-news-256.png" className="news-icon" />
-          <Typography component="h2" className="h2-news">
+          <Typography component="h2" className="h2-landing-page">
             Up to date worldwide news about global warming and climate change.
           </Typography>
         </Grid>

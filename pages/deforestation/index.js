@@ -77,7 +77,7 @@ function SemanticDeforestation(props) {
         container
         direction="column"
         justifyContent="center"
-        id="landing-page-deforestation"
+        className="landing-page-deforestation"
       >
         <Typography component="h1" align="center" className="h1-news">
           Global Deforestation
@@ -86,7 +86,7 @@ function SemanticDeforestation(props) {
           <CardMedia
             component="img"
             image="images/forest.png"
-            className="forest-logo"
+            className="landing-page-logo"
           />
           <Typography component="h2" className="h2-news" align="center">
             This section is meant to gather data about the current state of

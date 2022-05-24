@@ -42,9 +42,14 @@ p {
     text-shadow: 1px 1px 1px #000 !important;
 }
 .h1-news {
-    margin-top: auto !important;
-    font-size: 2.5em !important;
-    color: white !important;
+    margin-top: auto;
+    font-size: 2.5em;
+    color: white;
+}
+.h1-about {
+    margin-top: auto;
+    font-size: 2.5em;
+    color: black;
 }
 .h2-general {
     padding: 20vh 0 10vh !important;
@@ -90,11 +95,8 @@ footer {
         font-size: 1.2em !important;
         text-shadow: 1px 1px 1px #000 !important;
     }
-    .h2-news {
-        font-size: 1.2em !important;
-        color: white !important;
-        font-weight: 400 !important;
-
+    .h2-landing-page {
+        width: 90% !important;
     }
     .fix {
         display: none !important;
@@ -112,11 +114,6 @@ footer {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
     background-size: cover !important;
     height: 100vh !important;
-    .news-icon {
-        width: 80px;
-        height: 80px;
-        margin: 30px 0;
-    }
     .arrow-icon {
         width: 100px;
         height: 100px;
@@ -136,6 +133,12 @@ footer {
     font-weight: 400;
     width: 70%;
 }
+.h2-landing-page {
+    font-size: 1.5em;
+    color: black;
+    font-weight: 400;
+    width: 70%;
+}
 #list-news {
     font-size: 2.2em !important;
     padding: 10vh !important;
@@ -144,8 +147,12 @@ footer {
 .sideBar {
     position: relative !important;
 }
-#landing-page-deforestation {
-    background-color: #048243;
+.landing-page-deforestation {
+    background-color: #1FA774;
+    height: 100vh !important;
+    overflow: auto;
+}
+.landing-page-about {
     height: 100vh !important;
     overflow: auto;
 }
@@ -261,7 +268,7 @@ nav {
     height: 600px;
     padding: 0;
 }
-.forest-logo {
+.landing-page-logo {
     width: 80px;
     height: 80px;
     margin: 20px 0;
@@ -282,4 +289,21 @@ nav {
     width: 50px;
     height: 50px;
     cursor: pointer;
+}
+.team-picture {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+}
+.timeline {
+    height: 100vh;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #016795;
+}
+.timeline-title {
+    margin-top: 25vh;
+    color: white;
 }

@@ -12,11 +12,11 @@ import * as Scroll from "react-scroll";
 
 export default function SideBar() {
   const [activeItem, setActiveItem] = useState("");
-  const [menuVisible, setMenuVisible] = useState(true);
+  // const [menuVisible, setMenuVisible] = useState(true);
   const [rotate, setRotate] = useState(false);
 
   const handleClick = () => {
-    setMenuVisible((prevState) => !prevState);
+    // setMenuVisible((prevState) => !prevState);
     setRotate((prevState) => !prevState);
   };
 
@@ -36,7 +36,7 @@ export default function SideBar() {
             component="nav"
             className={rotate ? "sidebar-config-out" : "sidebar-config-in"}
           >
-            <MenuList className="sideBar" visible={menuVisible}>
+            <MenuList className="sideBar">
               <Scroll.Link
                 to="jump-to-temperature"
                 spy
@@ -45,7 +45,7 @@ export default function SideBar() {
                 duration={1000}
               >
                 <MenuItem
-                  active={activeItem === "temperature"}
+                  sx={{ opacity: activeItem === "temperature" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("temperature")}
                   className="side-menu-text"
                 >
@@ -60,7 +60,7 @@ export default function SideBar() {
                 duration={1000}
               >
                 <MenuItem
-                  active={activeItem === "co2"}
+                  sx={{ opacity: activeItem === "co2" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("co2")}
                   className="side-menu-text"
                 >
@@ -75,7 +75,7 @@ export default function SideBar() {
                 duration={1000}
               >
                 <MenuItem
-                  active={activeItem === "methane"}
+                  sx={{ opacity: activeItem === "methane" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("methane")}
                   className="side-menu-text"
                 >
@@ -90,7 +90,7 @@ export default function SideBar() {
                 duration={1000}
               >
                 <MenuItem
-                  active={activeItem === "nitrous"}
+                  sx={{ opacity: activeItem === "nitrous" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("nitrous")}
                   className="side-menu-text"
                 >
@@ -105,7 +105,7 @@ export default function SideBar() {
                 duration={1000}
               >
                 <MenuItem
-                  active={activeItem === "arctic"}
+                  sx={{ opacity: activeItem === "arctic" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("arctic")}
                   className="side-menu-text"
                 >
