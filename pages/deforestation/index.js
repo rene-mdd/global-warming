@@ -88,7 +88,7 @@ function SemanticDeforestation(props) {
             image="images/forest.png"
             className="landing-page-logo"
           />
-          <Typography component="h2" className="h2-landing" align="center">
+          <Typography component="h2" className="h2-deforestation" align="center">
             This section is meant to gather data about the current state of
             worldwide deforestation. This is done through APIs, databases, news,
             MapBuilders, and journals.
@@ -131,7 +131,7 @@ function SemanticDeforestation(props) {
                   sciences.
                 </span>
               </Container>
-              <Container id="deforestation-text">
+              <Container className="deforestation-text">
                 <>
                   <p>
                     Results from time-series analysis of Landsat images
@@ -161,7 +161,7 @@ function SemanticDeforestation(props) {
         </Grid>
       </Container>
       <Container>
-        <Typography component="h3" id="list-news" align="center">
+        <Typography component="h3" className="list-news" align="center">
           News List
         </Typography>
         <Typography

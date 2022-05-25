@@ -17,14 +17,6 @@ a {
     height: 20px;
 }
 
-#temperature-description {
-    padding-top: -30px !important;
-}
-
-#temp-error {
-    margin: 35px 0 !important;
-}
-
 p {
     font-size: 22px;
 }
@@ -39,7 +31,12 @@ p {
 .h2-landing {
     color: white !important;
     font-size: 1.5em !important;
-    text-shadow: 1px 1px 1px #000 !important;
+    text-shadow: 1px 1px 1px rgb(214, 210, 210) !important;
+    width: 70%;
+}
+.h2-deforestation {
+    color: white !important;
+    font-size: 1.5em !important;
     width: 70%;
 }
 .h1-landing {
@@ -86,18 +83,14 @@ footer {
         font-size: 2em !important;
         color: white !important;
     }
-    #h1-deforestation {
-        padding: 15vh 0 0 !important;
-        font-size: 2em;
-        color: white !important;
-    }
-    .h2-id {
-        color: white !important;
-        font-size: 1.2em !important;
-        text-shadow: 1px 1px 1px #000 !important;
-    }
     .fix {
         display: none !important;
+    }
+    .h2-deforestation {
+        width: 90%;
+    }
+    .h2-landing {
+        width: 90%;
     }
 }
 .api-segment {
@@ -120,18 +113,13 @@ footer {
         background-color: white;
     }
 }
-#h1-deforestation {
-    font-size: 2.5em;
-    color: white !important;
-    padding: 35vh 0 0vh;
-}
 .h2-landing-about {
     font-size: 1.5em;
     color: black;
     font-weight: 400;
     width: 70%;
 }
-#list-news {
+.list-news {
     font-size: 2.2em !important;
     padding: 10vh !important;
 }
@@ -140,7 +128,7 @@ footer {
     position: relative !important;
 }
 .landing-page-deforestation {
-    background-color: #1FA774;
+    background-color: #1fa774;
     height: 100vh !important;
     overflow: auto;
 }
@@ -173,7 +161,7 @@ footer {
     transform: rotate(1deg);
     transition-duration: 1s;
 }
-#deforestation-text {
+.deforestation-text {
     padding-top: 50px !important;
 }
 .display-none {
@@ -192,6 +180,9 @@ footer {
     padding: 10px;
     margin: 20px 0;
     background-color: #dbecffc4;
+    .contact-segment {
+        font-size: 1.2em !important;
+    }
 }
 .header {
     p {
@@ -214,9 +205,7 @@ nav {
         background-color: #6db629 !important;
     }
 }
-#contact-segment {
-    font-size: 1.2em !important;
-}
+
 .hide-divider {
     opacity: 0;
 }

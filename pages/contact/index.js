@@ -109,7 +109,7 @@ const Contact = () => {
             <Grid container justifyContent="center">
               <Grid item xs={10} md={6}>
                 <Paper className="contact-info">
-                  <p id="contact-segment">
+                  <p className="contact-segment">
                     For questions about this
                     project or if you want to discuss ideas related to this
                     kind of environmental issues, please send us a <strong>message</strong>.
