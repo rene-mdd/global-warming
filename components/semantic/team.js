@@ -10,11 +10,11 @@ import {
   export default function Team(props) {
   
     const content = {
-      badge: "LOREM IPSUM",
-      "header-p1": "Donec lacinia",
+      badge: "GWO",
+      "header-p1": "Organization Team",
       "header-p2": "turpis non sapien lobortis pretium",
       description:
-        "Integer feugiat massa sapien, vitae tristique metus suscipit nec.",
+        "We need to show the world who is destroying it",
       "01_image":
         "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd91&w=256&ah=256&q=80",
       "01_name": "Danny Bailey",

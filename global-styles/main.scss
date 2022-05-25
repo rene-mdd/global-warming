@@ -36,12 +36,13 @@ p {
     background-size: cover !important;
 }
 
-.h2-id {
+.h2-landing {
     color: white !important;
     font-size: 1.5em !important;
     text-shadow: 1px 1px 1px #000 !important;
+    width: 70%;
 }
-.h1-news {
+.h1-landing {
     margin-top: auto;
     font-size: 2.5em;
     color: white;
@@ -80,7 +81,7 @@ footer {
         color: white !important;
         font-size: 2em !important;
     }
-    .h1-news {
+    .h1-landing {
         padding: 15vh 0 0 !important;
         font-size: 2em !important;
         color: white !important;
@@ -94,9 +95,6 @@ footer {
         color: white !important;
         font-size: 1.2em !important;
         text-shadow: 1px 1px 1px #000 !important;
-    }
-    .h2-landing-page {
-        width: 90% !important;
     }
     .fix {
         display: none !important;
@@ -127,13 +125,7 @@ footer {
     color: white !important;
     padding: 35vh 0 0vh;
 }
-.h2-news {
-    font-size: 1.5em;
-    color: white !important;
-    font-weight: 400;
-    width: 70%;
-}
-.h2-landing-page {
+.h2-landing-about {
     font-size: 1.5em;
     color: black;
     font-weight: 400;
@@ -306,4 +298,7 @@ nav {
 .timeline-title {
     margin-top: 25vh;
     color: white;
+}
+.timeline-q {
+    font-size: 22px;
 }

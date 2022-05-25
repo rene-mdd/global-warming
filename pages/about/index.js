@@ -50,7 +50,7 @@ function About() {
             image="images/logo-planet-image.png"
             className="landing-page-logo"
           />
-          <Typography component="h2" className="h2-landing-page " align="center">
+          <Typography component="h2" className="h2-landing-about" align="center">
           We aim to be the most complete and reliable platform for worldwide environmental accountability.
 
           </Typography>

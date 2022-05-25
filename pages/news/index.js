@@ -79,12 +79,12 @@ function News(props) {
         justifyContent="center"
         className="landing-page-news"
       >
-        <Typography component="h1" textAlign="center" className="h1-news">
+        <Typography component="h1" textAlign="center" className="h1-landing">
           Global Warming & Climate Change World News
         </Typography>
         <Grid align="center">
           <CardMedia component="img" image="images/icons8-news-256.png" className="news-icon" />
-          <Typography component="h2" className="h2-landing-page">
+          <Typography component="h2" className="h2-landing">
             Up to date worldwide news about global warming and climate change.
           </Typography>
         </Grid>

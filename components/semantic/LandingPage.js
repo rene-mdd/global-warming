@@ -10,22 +10,21 @@ import * as Scroll from "react-scroll";
 const LandingPage = () => (
   <Grid
     container
-    direction="column"
     justifyContent="center"
+    direction="column"
     className="landing-background"
     columns={12}
   >
-    <Typography component="h1" align="center" className="h1-news">
+    <Typography component="h1" align="center" className="h1-landing">
       Global Warming live graphs and API
     </Typography>
     <Grid align="center">
-
       <CardMedia
         component="img"
         image="images/icons8-stocks-64.png"
-        className="forest-logo"
+        className="landing-page-logo"
       />
-      <Typography align="center" className="h2-id" maxWidth="80%">
+      <Typography align="center" className="h2-landing" maxWidth="80%">
         This site delivers up to date information and APIs about the
         earth&quot;s current temperature, the concentration of greenhouse gases
         in the atmosphere, and worldwide news about global warming and

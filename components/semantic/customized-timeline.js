@@ -36,6 +36,7 @@ export default function CustomizedTimeline() {
           align="right"
           variant="body2"
           color="white"
+          className="timeline-q"
         >
           9:30 am
         </TimelineOppositeContent>
@@ -58,6 +59,7 @@ export default function CustomizedTimeline() {
           sx={{ m: "auto 0" }}
           variant="body2"
           color="white"
+          className="timeline-q"
         >
           10:00 am
         </TimelineOppositeContent>
