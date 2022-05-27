@@ -31,7 +31,7 @@ export default function SiteHeader({ title, description, keyword }) {
         <meta property="og:image:type" content="image/png" />
         <meta name="description" content={description} />
         <meta name="keywords" content={keyword} />
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" type="image/gif" href="favicon/favicon.ico" />
         <link
           href="https://fonts.googleapis.com/css2?family=Play&display=swap"

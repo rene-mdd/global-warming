@@ -88,7 +88,11 @@ function SemanticDeforestation(props) {
             image="images/forest.png"
             className="landing-page-logo"
           />
-          <Typography component="h2" className="h2-deforestation" align="center">
+          <Typography
+            component="h2"
+            className="h2-deforestation"
+            align="center"
+          >
             This section is meant to gather data about the current state of
             worldwide deforestation. This is done through APIs, databases, news,
             MapBuilders, and journals.
@@ -108,138 +112,122 @@ function SemanticDeforestation(props) {
         </Grid>
       </Grid>
       <Divider name="jump-news" className="hide-divider" />
-      <Container>
-        <Grid className="temperature-background">
-          <Container>
-            <Typography component="h2" className="h2-general" align="center">
-              Global forest loss map
-            </Typography>
-            <Grid container justifyContent="center">
-              <Grid item sm={12} md={10}>
-                <Container>
-                  <Container
-                    className="deforestation-iframe"
-                    component="iframe"
-                    frameBorder="0"
-                    src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
-                  />
-                </Container>
-              </Grid>
-              <Container align="center">
-                <span>
-                  Credits: University of Maryland, department of geographical
-                  sciences.
-                </span>
-              </Container>
-              <Container className="deforestation-text">
-                <>
-                  <p>
-                    Results from time-series analysis of Landsat images
-                    characterizing forest extent and change.
-                  </p>
-                  <p>
-                    Trees are defined as vegetation taller than 5m in height and
-                    are expressed as a percentage per output grid cell as ‘2000
-                    Percent Tree Cover’. ‘Forest Cover Loss’ is defined as a
-                    stand-replacement disturbance, or a change from a forest to
-                    non-forest state, during the period 2000–2019. ‘Forest Cover
-                    Gain’ is defined as the inverse of loss, or a non-forest to
-                    forest change entirely within the period 2000–2012. ‘Forest
-                    Loss Year’ is a disaggregation of total ‘Forest Loss’ to
-                    annual time scales.
-                  </p>
-                  <p>
-                    Reference 2000 and 2019 imagery are median observations from
-                    a set of quality assessment-passed growing season
-                    observations.
-                  </p>
-                </>
-              </Container>
-            </Grid>
+      <Grid className="temperature-background">
+        <Typography component="h2" className="h2-general" align="center">
+          Global forest loss map
+        </Typography>
+        <Grid container justifyContent="center">
+          <Grid item sm={12} md={10}>
+            <Container>
+              <Container
+                className="deforestation-iframe"
+                component="iframe"
+                frameBorder="0"
+                src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
+              />
+            </Container>
+          </Grid>
+          <Container align="center">
+            <span>
+              Credits: University of Maryland, department of geographical
+              sciences.
+            </span>
           </Container>
-          <Divider sx={{ margin: "30px" }} />
+          <Container className="deforestation-text">
+            <>
+              <p>
+                Results from time-series analysis of Landsat images
+                characterizing forest extent and change.
+              </p>
+              <p>
+                Trees are defined as vegetation taller than 5m in height and are
+                expressed as a percentage per output grid cell as ‘2000 Percent
+                Tree Cover’. ‘Forest Cover Loss’ is defined as a
+                stand-replacement disturbance, or a change from a forest to
+                non-forest state, during the period 2000–2019. ‘Forest Cover
+                Gain’ is defined as the inverse of loss, or a non-forest to
+                forest change entirely within the period 2000–2012. ‘Forest Loss
+                Year’ is a disaggregation of total ‘Forest Loss’ to annual time
+                scales.
+              </p>
+              <p>
+                Reference 2000 and 2019 imagery are median observations from a
+                set of quality assessment-passed growing season observations.
+              </p>
+            </>
+          </Container>
         </Grid>
-      </Container>
-      <Container>
+        <Divider sx={{ margin: "30px" }} />
+      </Grid>
+      <Grid>
         <Typography component="h3" className="list-news" align="center">
           News List
         </Typography>
-        <Typography
-          gutterBottom
-          sx={{
-            textDecoration: "underline",
-            fontSize: "21px",
-          }}
-          component="h4"
-          align="center"
-        >
+        <Typography component="h4" className="date">
           {`Live: ${new Date().toString()}`}
         </Typography>
-        <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+        <List sx={{ width: "100%" }}>
           {duplicateRemovalGNews.map((obj) => (
             <Grid
               key={obj.title}
               container
-              spacing={6}
-              justifyContent="center"
-              sx={{ margin: "15px 0" }}
+              columnSpacing={{ xs: 1 }}
+              rowSpacing={{ xs: 6 }}
+              className="news-item"
             >
-              <Grid item md={4} xs={12}>
+              <Grid item md={4} xs={10}>
                 <ListItemAvatar>
                   <CardMedia
                     image={obj?.image ?? "/images/breaking-news.png"}
                     component="img"
                     alt="Breaking news"
-                    sx={{ borderRadius: "10px" }}
+                    className="gnews-image"
                   />
                 </ListItemAvatar>
               </Grid>
-              <Grid item xs={12} sm container>
+              <Grid
+                item
+                direction="column"
+                spacing={2}
+                md={8}
+                xs={10}
+                alignSelf="end"
+              >
+                <a href={obj.url}>
+                  <Typography
+                    component="h5"
+                    variant="h5"
+                    sx={{ color: "#4183c4" }}
+                  >
+                    {obj.title}
+                  </Typography>
+                </a>
+                <Typography paragraph>{obj.description}</Typography>
                 <Grid
-                  item
-                  sx={{ justifyContent: "end" }}
                   container
-                  direction="column"
+                  justifyContent="space-around"
+                  alignItems="center"
                   spacing={2}
                 >
-                  <a href={obj.url}>
-                    <Typography
-                      component="h5"
-                      variant="h5"
-                      sx={{ color: "#4183c4" }}
+                  <Grid item>
+                    <Paper
+                      sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                      elevation={3}
                     >
-                      {obj.title}
-                    </Typography>
-                  </a>
-                  <Typography paragraph color="text.secondary">
-                    {obj.description}
-                  </Typography>
-                  <Grid
-                    container
-                    justifyContent="space-around"
-                    alignItems="center"
-                    spacing={2}
-                  >
-                    <Grid item>
-                      <Paper
-                        sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                        elevation={3}
-                      >
-                        Date: {obj.publishedAt}
-                      </Paper>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        href={obj.url}
-                        variant="contained"
-                        endIcon={<PublicIcon />}
-                      >
-                        {obj.source.name ?? "News"}
-                      </Button>
-                    </Grid>
+                      Date: {obj.publishedAt}
+                    </Paper>
                   </Grid>
-                  <Divider sx={{ marginTop: "10px" }} />
+                  <Grid item>
+                    <Button
+                      href={obj.url}
+                      variant="contained"
+                      endIcon={<PublicIcon />}
+                    >
+                      {obj.source.name ?? "News"}
+                    </Button>
+                  </Grid>
                 </Grid>
+                <Divider sx={{ marginTop: "10px" }} />
               </Grid>
               <Observer {...options}>
                 <span />
@@ -251,11 +239,11 @@ function SemanticDeforestation(props) {
               <Grid
                 key={obj.name}
                 container
-                spacing={6}
-                justifyContent="center"
-                sx={{ margin: "15px 0" }}
+                columnSpacing={{ xs: 6 }}
+                rowSpacing={{ xs: 6 }}
+                className="news-item"
               >
-                <Grid item md={4} xs={12}>
+                <Grid item md={4} xs={10}>
                   <ListItemAvatar>
                     <CardMedia
                       image={
@@ -265,15 +253,11 @@ function SemanticDeforestation(props) {
                       }
                       component="img"
                       alt="Breaking news"
-                      sx={{
-                        borderRadius: "10px",
-                        maxWidth: "100px",
-                        margin: "auto",
-                      }}
+                      className="bing-image"
                     />
                   </ListItemAvatar>
                 </Grid>
-                <Grid item xs={12} sm container>
+                <Grid item md={8} xs={10}>
                   <Grid
                     item
                     sx={{ justifyContent: "end" }}
@@ -324,7 +308,7 @@ function SemanticDeforestation(props) {
               </Grid>
             ))}
         </List>
-      </Container>
+      </Grid>
     </>
   );
 }

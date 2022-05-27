@@ -93,6 +93,8 @@ function SemanticArctic() {
               spacing={3}
               className="api-segment"
               justifyContent="space-around"
+              mt={10}
+              mb={10}
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
               <AccordionArctic />

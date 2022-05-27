@@ -13,14 +13,10 @@ import SiteHeader from "../../components/siteHeader";
 import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
 
-
 function About() {
+  // not ready
 
-    // not ready
-
-
-
-    // not ready
+  // not ready
   const aboutTitle = "Global deforestation news and map.";
   const aboutMetaDescription =
     "Live news about worldwide deforestation and map builder to check on global forest loss.";
@@ -50,9 +46,13 @@ function About() {
             image="images/logo-planet-image.png"
             className="landing-page-logo"
           />
-          <Typography component="h2" className="h2-landing-about" align="center">
-          We aim to be the most complete and reliable platform for worldwide environmental accountability.
-
+          <Typography
+            component="h2"
+            className="h2-landing-about"
+            align="center"
+          >
+            We aim to be the most complete and reliable platform for worldwide
+            environmental accountability.
           </Typography>
         </Grid>
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
@@ -70,12 +70,14 @@ function About() {
       </Grid>
       <Divider name="jump-news" className="hide-divider" />
       <Grid container className="timeline">
-          <Typography variant="h2" className="timeline-title">
-              Project Timeline
-          </Typography>
-          <CustomizedTimeline />
+        <Typography variant="h2" className="timeline-title">
+          Project Timeline
+        </Typography>
+        <CustomizedTimeline />
       </Grid>
-    <Team />
+      <Grid>
+        <Team />
+      </Grid>
     </>
   );
 }

@@ -16,22 +16,20 @@ a {
     width: 20px;
     height: 20px;
 }
-
 p {
     font-size: 22px;
 }
-
 .landing-background {
-    height: 100vh !important;
+    min-height: 100vh !important;
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
         url("/images/background-global-warming.png") !important;
     background-size: cover !important;
+    flex-wrap: nowrap;
 }
 
 .h2-landing {
     color: white !important;
     font-size: 1.5em !important;
-    text-shadow: 1px 1px 1px rgb(214, 210, 210) !important;
     width: 70%;
 }
 .h2-deforestation {
@@ -64,34 +62,6 @@ footer {
     margin: 20px 0;
     width: 142px;
     height: 142px;
-}
-.api-segment {
-    margin: 8vh 0 !important;
-}
-
-@media only screen and (max-width: 600px) {
-    i {
-        display: none !important;
-    }
-    .h1-class {
-        padding: 15vh 0 0 !important;
-        color: white !important;
-        font-size: 2em !important;
-    }
-    .h1-landing {
-        padding: 15vh 0 0 !important;
-        font-size: 2em !important;
-        color: white !important;
-    }
-    .fix {
-        display: none !important;
-    }
-    .h2-deforestation {
-        width: 90%;
-    }
-    .h2-landing {
-        width: 90%;
-    }
 }
 .api-segment {
     i::before {
@@ -277,17 +247,72 @@ nav {
     height: 100px;
 }
 .timeline {
-    height: 100vh;
     justify-content: center;
     align-content: center;
     align-items: center;
     flex-direction: column;
     background-color: #016795;
-}
-.timeline-title {
-    margin-top: 25vh;
-    color: white;
+    .timeline-title {
+        margin-top: 25vh;
+        color: white;
+        font-size: 3em !important;
+        margin-bottom: 30px;
+    }
 }
 .timeline-q {
     font-size: 22px;
+}
+@media only screen and (max-width: 700px) {
+    i {
+        display: none !important;
+    }
+    .h1-class {
+        padding: 15vh 0 0 !important;
+        color: white !important;
+        font-size: 2em !important;
+    }
+    .h1-landing {
+        padding: 15vh 0 0 !important;
+        font-size: 2em !important;
+        color: white !important;
+    }
+    .fix {
+        display: none !important;
+    }
+    .h2-deforestation {
+        width: 90%;
+    }
+    .h2-landing {
+        width: 90%;
+    }
+    .timeline {
+        .timeline-title {
+            font-size: 2.2em !important;
+        }
+    }
+}
+.timeline-content,
+.timeline-item {
+    width: 100%;
+}
+.date {
+    text-decoration: underline;
+    font-size: 1.5em;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.gnews-image {
+    border-radius: 10px;
+    margin: auto;
+    width: 80%;
+}
+.news-item {
+    width: 100%;
+    justify-content: center;
+    margin: 30px 0;
+}
+.bing-image {
+    border-radius: 10px;
+    max-width: 100px;
+    margin: auto;
 }

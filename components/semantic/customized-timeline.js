@@ -29,8 +29,8 @@ import { Typography } from "@mui/material";
 
 export default function CustomizedTimeline() {
   return (
-    <Timeline position="alternate">
-      <TimelineItem>
+    <Timeline position="alternate" sx={{ marginBottom: "50px", width: "100%" }}>
+      <TimelineItem className="timeline-item">
         <TimelineOppositeContent
           sx={{ m: "auto 0" }}
           align="right"
@@ -38,7 +38,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          9:30 am
+          Q4 2022
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -47,11 +47,16 @@ export default function CustomizedTimeline() {
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
-        <TimelineContent sx={{ py: "12px", px: 2 }}>
+        <TimelineContent
+          sx={{ py: "12px", px: 2 }}
+          className="timeline-content"
+        >
           <Typography variant="h6" component="span" color="white">
-            Eat
+            Team
           </Typography>
-          <Typography color="white">Because you need strength</Typography>
+          <Typography color="white">
+            Recruitment of the organization founding members
+          </Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -61,7 +66,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          10:00 am
+          Q1 2023
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -72,9 +77,12 @@ export default function CustomizedTimeline() {
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
           <Typography variant="h6" component="span" color="white">
-            Code
+            Legal
           </Typography>
-          <Typography color="white">Because it&apos;s awesome!</Typography>
+          <Typography color="white">
+            The registration and paperwork of the nonprofit organization in
+            Germany
+          </Typography>
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>

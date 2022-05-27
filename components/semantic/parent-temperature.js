@@ -118,6 +118,8 @@ function SemanticTemperature() {
             <Grid
               container
               spacing={3}
+              mt={10}
+              mb={10}
               className="api-segment"
               justifyContent="space-around"
             >

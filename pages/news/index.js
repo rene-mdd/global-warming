@@ -72,7 +72,6 @@ function News(props) {
         keywords={newsKeywords}
       />
       <StickyMenu />
-
       <Grid
         container
         direction="column"
@@ -83,7 +82,11 @@ function News(props) {
           Global Warming & Climate Change World News
         </Typography>
         <Grid align="center">
-          <CardMedia component="img" image="images/icons8-news-256.png" className="landing-page-logo" />
+          <CardMedia
+            component="img"
+            image="images/icons8-news-256.png"
+            className="landing-page-logo"
+          />
           <Typography component="h2" className="h2-landing">
             Up to date worldwide news about global warming and climate change.
           </Typography>
@@ -106,86 +109,74 @@ function News(props) {
         <Typography component="h3" className="list-news" textAlign="center">
           News List
         </Typography>
-        <Typography
-          gutterBottom
-          sx={{
-            textDecoration: "underline",
-            fontSize: "21px",
-          }}
-          component="h4"
-          align="center"
-        >
-          Live:
+        <Typography component="h4" className="date">
           <Observer {...options}>
-            <span> {new Date().toString()}</span>
+            <span> {`Live: ${new Date().toString()}`}</span>
           </Observer>
         </Typography>
-        <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+        <List sx={{ width: "100%" }}>
           {duplicateRemovalGNews.map((obj) => (
             <Grid
               key={obj.title}
               container
-              spacing={6}
-              justifyContent="center"
-              sx={{ margin: "15px 0" }}
+              columnSpacing={{ xs: 1 }}
+              rowSpacing={{ xs: 6 }}
+              className="news-item"
             >
-              <Grid item md={4} xs={12}>
+              <Grid item md={4} xs={10}>
                 <ListItemAvatar>
                   <CardMedia
                     image={obj?.image ?? "/images/breaking-news.png"}
                     component="img"
-                    alt="Breaking news"
-                    sx={{ borderRadius: "10px" }}
+                    alt="News image"
+                    className="gnews-image"
                   />
                 </ListItemAvatar>
               </Grid>
-              <Grid item xs={12} sm container>
+              <Grid
+                item
+                direction="column"
+                spacing={2}
+                md={8}
+                xs={10}
+                alignSelf="end"
+              >
+                <a href={obj.url}>
+                  <Typography
+                    component="h5"
+                    variant="h5"
+                    sx={{ color: "#4183c4" }}
+                  >
+                    {obj.title}
+                  </Typography>
+                </a>
+                <Typography paragraph>{obj.description}</Typography>
                 <Grid
-                  item
-                  sx={{ justifyContent: "end" }}
                   container
-                  direction="column"
+                  justifyContent="space-around"
+                  alignItems="center"
                   spacing={2}
                 >
-                  <a href={obj.url}>
-                    <Typography
-                      component="h5"
-                      variant="h5"
-                      sx={{ color: "#4183c4" }}
+                  <Grid item>
+                    <Paper
+                      sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                      variant="outlined"
+                      elevation={3}
                     >
-                      {obj.title}
-                    </Typography>
-                  </a>
-                  <Typography paragraph color="text.secondary">
-                    {obj.description}
-                  </Typography>
-                  <Grid
-                    container
-                    justifyContent="space-around"
-                    alignItems="center"
-                    spacing={2}
-                  >
-                    <Grid item>
-                      <Paper
-                        sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                        variant="outlined"
-                        elevation={3}
-                      >
-                        Date: {obj.publishedAt}
-                      </Paper>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        href={obj.url}
-                        variant="contained"
-                        endIcon={<PublicIcon />}
-                      >
-                        {obj.source.name ?? "News"}
-                      </Button>
-                    </Grid>
+                      Date: {obj.publishedAt}
+                    </Paper>
                   </Grid>
-                  <Divider sx={{ marginTop: "10px" }} />
+                  <Grid item>
+                    <Button
+                      href={obj.url}
+                      variant="contained"
+                      endIcon={<PublicIcon />}
+                    >
+                      {obj.source.name ?? "News"}
+                    </Button>
+                  </Grid>
                 </Grid>
+                <Divider sx={{ marginTop: "10px" }} />
               </Grid>
               <Observer {...options}>
                 <span></span>
@@ -197,11 +188,11 @@ function News(props) {
               <Grid
                 key={obj.name}
                 container
-                spacing={6}
-                justifyContent="center"
-                sx={{ margin: "15px 0" }}
+                columnSpacing={{ xs: 6 }}
+                rowSpacing={{ xs: 6 }}
+                className="news-item"
               >
-                <Grid item md={4} xs={12}>
+                <Grid item md={4} xs={10}>
                   <ListItemAvatar>
                     <CardMedia
                       image={
@@ -210,22 +201,17 @@ function News(props) {
                         "/images/breaking-news.png"
                       }
                       component="img"
-                      alt="Breaking news"
-                      sx={{
-                        borderRadius: "10px",
-                        maxWidth: "100px",
-                        margin: "auto",
-                      }}
+                      alt="News image"
+                      className="bing-image"
                     />
                   </ListItemAvatar>
                 </Grid>
-                <Grid item xs={12} sm container>
+                <Grid item md={8} xs={10}>
                   <Grid
                     item
                     sx={{ justifyContent: "end" }}
                     container
                     direction="column"
-                    spacing={2}
                   >
                     <a href={obj.url}>
                       <Typography
