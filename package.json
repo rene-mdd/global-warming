@@ -26,7 +26,7 @@
     "fetch-jsonp": "^1.2.1",
     "ftp": "^0.3.10",
     "lodash": "^4.17.21",
-    "ms-rest-azure": "^3.0.1",
+    "ms-rest-azure": "^3.0.2",
     "next": "^12.1.5",
     "next-images": "^1.8.4",
     "normalize.css": "^8.0.1",

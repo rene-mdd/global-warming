@@ -55,6 +55,22 @@ function About() {
             environmental accountability.
           </Typography>
         </Grid>
+        <Container component="div" align="center">
+          <iframe
+            title="Tons of CO2 emitted into the atmosphere"
+            src="https://www.theworldcounts.com/embed/challenges/23?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+            style={{ border: "none" }}
+            height="100"
+            width="300"
+          ></iframe>
+          <iframe
+            title="World average temperature (°C)"
+            src="https://www.theworldcounts.com/embed/challenges/21?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+            style={{ border: "none" }}
+            height="100"
+            width="300"
+          ></iframe>
+        </Container>
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
           <Scroll.Link spy smooth duration={1000} to="jump-news">
             <Button className="down-icon-wrapper">
