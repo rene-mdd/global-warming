@@ -48,7 +48,6 @@ export default class StickySideBar extends Component {
     const { mediaQuery } = this.state;
     return (
       <>
-        {" "}
         {mediaQuery ? (
           <BurgerMenu>
             <Container id="home" className="menu-item">
@@ -82,20 +81,32 @@ export default class StickySideBar extends Component {
                   </Link>
                   <ButtonGroup variant="text" size="large">
                     <Link href="/">
-                      <Button color="inherit" className="menu">Home</Button>
+                      <Button color="inherit" className="menu">
+                        Home
+                      </Button>
                     </Link>
                     <Link href="/about">
-                      <Button color="inherit" className="menu">About</Button>
+                      <Button color="inherit" className="menu">
+                        About
+                      </Button>
                     </Link>
                     <Link href="/news">
-                      <Button color="inherit" className="menu">News</Button>
+                      <Button color="inherit" className="menu">
+                        News
+                      </Button>
                     </Link>
                     <Link href="/deforestation">
-                      <Button color="inherit" className="menu">Deforestation</Button>
+                      <Button color="inherit" className="menu">
+                        Deforestation
+                      </Button>
                     </Link>
                   </ButtonGroup>
                   <Link href="/contact">
-                    <Button color="inherit" className="menu" sx={{ marginLeft: "auto" }}>
+                    <Button
+                      color="inherit"
+                      className="menu"
+                      sx={{ marginLeft: "auto" }}
+                    >
                       Contact
                     </Button>
                   </Link>

@@ -51,8 +51,8 @@ function About() {
             className="h2-landing-about"
             align="center"
           >
-            We aim to be the most complete and reliable platform for worldwide
-            environmental accountability.
+            We are developing the most complete and reliable platform for
+            worldwide environmental accountability.
           </Typography>
         </Grid>
         <Container component="div" align="center">
@@ -60,6 +60,7 @@ function About() {
             title="Tons of CO2 emitted into the atmosphere"
             src="https://www.theworldcounts.com/embed/challenges/23?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
             style={{ border: "none" }}
+            id="iframe"
             height="100"
             width="300"
           ></iframe>
