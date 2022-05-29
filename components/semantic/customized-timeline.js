@@ -29,10 +29,12 @@ import { Typography } from "@mui/material";
 
 export default function CustomizedTimeline() {
   return (
-    <Timeline position="alternate" sx={{ marginBottom: "50px", width: "100%" }}>
+    <Timeline
+      position="alternate"
+      sx={{ marginBottom: "50px", width: "100%", padding: "0" }}
+    >
       <TimelineItem className="timeline-item">
         <TimelineOppositeContent
-          sx={{ m: "auto 0" }}
           align="right"
           variant="body2"
           color="white"
@@ -55,7 +57,7 @@ export default function CustomizedTimeline() {
             Team
           </Typography>
           <Typography color="white">
-            Recruitment of the organization founding members
+            Recruitment of the organization members
           </Typography>
         </TimelineContent>
       </TimelineItem>
@@ -80,8 +82,7 @@ export default function CustomizedTimeline() {
             Legal
           </Typography>
           <Typography color="white">
-            The registration and paperwork of the nonprofit organization in
-            Germany
+            Registration and paperwork of the nonprofit organization in Germany
           </Typography>
         </TimelineContent>
       </TimelineItem>

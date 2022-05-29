@@ -3,7 +3,6 @@ html * {
   font-family: "Play", sans-serif !important;
   font-size: 100%;
 }
-
 body {
   background: linear-gradient(
       90deg,
@@ -12,11 +11,9 @@ body {
     )
     100% !important;
 }
-
 a {
   text-decoration: none;
 }
-
 .mini-icon {
   width: 20px;
   height: 20px;
@@ -31,7 +28,6 @@ p {
   background-size: cover !important;
   flex-wrap: nowrap;
 }
-
 .h2-landing {
   color: white !important;
   font-size: 1.5em !important;
@@ -98,7 +94,6 @@ footer {
   font-size: 2.2em !important;
   padding: 10vh !important;
 }
-
 .sideBar {
   position: relative !important;
 }
@@ -109,15 +104,17 @@ footer {
 }
 .landing-page-about {
   overflow: auto;
+  min-height: 100vh;
 }
 .sidebar-config-out {
   transform: translateX(-150px);
   transition-duration: 1s;
+  background-color: rgb(26, 26, 26) !important;
 }
 .sidebar-config-in {
   transform: translateX(0px);
   transition-duration: 1s;
-  background: rgb(26, 26, 26);
+  background-color: rgb(26, 26, 26) !important;
 }
 .fix {
   position: fixed !important;
@@ -265,6 +262,7 @@ nav {
 }
 .timeline-q {
   font-size: 22px;
+  margin: auto 0;
 }
 @media only screen and (max-width: 700px) {
   i {
@@ -288,9 +286,13 @@ nav {
     width: 90%;
   }
   .timeline {
+    min-height: 100vh !important;
     .timeline-title {
       font-size: 2.2em !important;
     }
+  }
+  .h2-landing-about {
+    font-size: 1.2em;
   }
 }
 .timeline-content,
