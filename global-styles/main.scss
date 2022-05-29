@@ -39,9 +39,9 @@ p {
   width: 70%;
 }
 .h1-landing {
-  margin-top: 25vh;
-  font-size: 2.5em;
-  color: white;
+  margin-top: 25vh !important;
+  font-size: 2.5em !important;
+  color: white !important;
 }
 .h1-about {
   margin-top: 25vh !important;
@@ -110,11 +110,13 @@ footer {
   transform: translateX(-150px);
   transition-duration: 1s;
   background-color: rgb(26, 26, 26) !important;
+  color: white;
 }
 .sidebar-config-in {
   transform: translateX(0px);
   transition-duration: 1s;
   background-color: rgb(26, 26, 26) !important;
+  color: white;
 }
 .fix {
   position: fixed !important;
