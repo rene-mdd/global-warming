@@ -85,10 +85,9 @@ footer {
   }
 }
 .h2-landing-about {
-  font-size: 1.5em;
-  color: black;
-  font-weight: 400;
-  width: 70%;
+  font-size: 1.5em !important;
+  font-weight: 400 !important;
+  width: 70% !important;
 }
 .list-news {
   font-size: 2.2em !important;
@@ -108,15 +107,15 @@ footer {
 }
 .sidebar-config-out {
   transform: translateX(-150px);
-  transition-duration: 1s;
+  transition-duration: 1s !important;
   background-color: rgb(26, 26, 26) !important;
-  color: white;
+  color: white !important;
 }
 .sidebar-config-in {
   transform: translateX(0px);
-  transition-duration: 1s;
+  transition-duration: 1s !important;
   background-color: rgb(26, 26, 26) !important;
-  color: white;
+  color: white !important;
 }
 .fix {
   position: fixed !important;
@@ -255,6 +254,7 @@ nav {
   align-items: center;
   flex-direction: column;
   background-color: #016795;
+  min-height: 100vh;
   .timeline-title {
     margin-top: 25vh;
     color: white;
@@ -288,13 +288,12 @@ nav {
     width: 90%;
   }
   .timeline {
-    min-height: 100vh !important;
     .timeline-title {
       font-size: 2.2em !important;
     }
   }
   .h2-landing-about {
-    font-size: 1.2em;
+    font-size: 1.2em !important;
   }
 }
 .timeline-content,
