@@ -92,12 +92,12 @@ footer {
 }
 .landing-page-deforestation {
   background-color: #1fa774;
-  height: 100vh !important;
+  min-height: 100vh !important;
   overflow: auto;
 }
 .landing-page-about {
   overflow: auto;
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 .sidebar-config-out {
   transform: translateX(-150px);
@@ -305,11 +305,6 @@ nav {
   margin: auto;
   width: 80% !important;
 }
-.news-item {
-  width: 100%;
-  justify-content: center;
-  margin: 30px 0;
-}
 .bing-image {
   border-radius: 10px;
   max-width: 100px;
@@ -319,7 +314,7 @@ nav {
   min-height: 100vh;
 }
 .news-wrapper {
-  padding: 15px !important;
+  padding: 15px 0 !important;
   border-radius: 10px !important;
   width: 100% !important;
   justify-content: center !important;

@@ -19,8 +19,8 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-const CognitiveServicesCredentials = require("ms-rest-azure")
-  .CognitiveServicesCredentials;
+const CognitiveServicesCredentials =
+  require("ms-rest-azure").CognitiveServicesCredentials;
 
 const azureEnvKey = process.env.API_KEY_AZURE;
 const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
@@ -92,21 +92,22 @@ function SemanticDeforestation(props) {
             component="h2"
             className="h2-deforestation"
             align="center"
+            gutterBottom
           >
             This section is meant to gather data about the current state of
             worldwide deforestation. This is done through APIs, databases, news,
             MapBuilders, and journals.
           </Typography>
         </Grid>
-        <Container component="div" align="center">
+        {/* <Container component="div" align="center" maxWidth={false}>
           <iframe
-            title="Tons of CO2 emitted into the atmosphere"
-            src="https://www.theworldcounts.com/embed/challenges/23?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+            title="Hectares of forests cut down or burned"
+            src="https://www.theworldcounts.com/embed/challenges/93?background_color=#1fa774&color=#fff&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
             style={{ border: "none" }}
             height="100"
             width="300"
           ></iframe>
-        </Container>
+        </Container> */}
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
           <Scroll.Link spy smooth duration={1000} to="jump-news">
             <Button className="down-icon-wrapper">
@@ -168,7 +169,7 @@ function SemanticDeforestation(props) {
         </Grid>
         <Divider sx={{ margin: "30px" }} />
       </Grid>
-      <Grid>
+      <Container>
         <Typography component="h3" className="list-news" align="center">
           News List
         </Typography>
@@ -177,147 +178,128 @@ function SemanticDeforestation(props) {
         </Typography>
         <List sx={{ width: "100%" }}>
           {duplicateRemovalGNews.map((obj) => (
-            <Grid
-              key={obj.title}
-              container
-              columnSpacing={{ xs: 1 }}
-              rowSpacing={{ xs: 6 }}
-              className="news-item"
-            >
-              <Grid item md={4} xs={10}>
-                <ListItemAvatar>
-                  <CardMedia
-                    image={obj?.image ?? "/images/breaking-news.png"}
-                    component="img"
-                    alt="Breaking news"
-                    className="gnews-image"
-                  />
-                </ListItemAvatar>
-              </Grid>
-              <Grid
-                item
-                direction="column"
-                spacing={2}
-                md={8}
-                xs={10}
-                alignSelf="end"
-              >
-                <a href={obj.url}>
-                  <Typography
-                    component="h5"
-                    variant="h5"
-                    sx={{ color: "#4183c4" }}
-                  >
-                    {obj.title}
-                  </Typography>
-                </a>
-                <Typography paragraph>{obj.description}</Typography>
-                <Grid
-                  container
-                  justifyContent="space-around"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <Grid item>
-                    <Paper
-                      sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                      elevation={3}
-                    >
-                      Date: {obj.publishedAt}
-                    </Paper>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      href={obj.url}
-                      variant="contained"
-                      endIcon={<PublicIcon />}
-                    >
-                      {obj.source.name ?? "News"}
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Divider sx={{ marginTop: "10px" }} />
-              </Grid>
-              <Observer {...options}>
-                <span />
-              </Observer>
-            </Grid>
-          ))}
-          {intersecting &&
-            duplicateRemovalBing.map((obj) => (
-              <Grid
-                key={obj.name}
-                container
-                columnSpacing={{ xs: 6 }}
-                rowSpacing={{ xs: 6 }}
-                className="news-item"
-              >
+            <Paper key={obj.title} elevation={2} className="news-wrapper">
+              <Grid container justifyContent="center" alignItems="center">
                 <Grid item md={4} xs={10}>
                   <ListItemAvatar>
                     <CardMedia
-                      image={
-                        obj?.image?.thumbnail?.contentUrl ??
-                        obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                        "/images/breaking-news.png"
-                      }
+                      image={obj?.image ?? "/images/breaking-news.png"}
                       component="img"
-                      alt="Breaking news"
-                      className="bing-image"
+                      alt="breaking news"
+                      className="gnews-image"
                     />
                   </ListItemAvatar>
                 </Grid>
-                <Grid item md={8} xs={10}>
+                <Grid item mt={2} md={8} xs={10} alignSelf="end">
+                  <a href={obj.url}>
+                    <Typography
+                      component="h5"
+                      variant="h5"
+                      sx={{ color: "#4183c4" }}
+                    >
+                      {obj.title}
+                    </Typography>
+                  </a>
+                  <Typography paragraph>{obj.description}</Typography>
                   <Grid
-                    item
-                    sx={{ justifyContent: "end" }}
                     container
-                    direction="column"
+                    justifyContent="space-around"
+                    alignItems="center"
                     spacing={2}
                   >
-                    <a href={obj.url}>
-                      <Typography
-                        component="h5"
-                        variant="h5"
-                        sx={{ color: "#4183c4" }}
+                    <Grid item>
+                      <Paper
+                        sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                        variant="outlined"
                       >
-                        {obj.name}
-                      </Typography>
-                    </a>
-                    <Typography paragraph color="text.secondary">
-                      {obj.description}
-                    </Typography>
-                    <Grid
-                      container
-                      justifyContent="space-around"
-                      alignItems="center"
-                      spacing={2}
-                    >
-                      <Grid item>
-                        <Paper
-                          sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                          variant="outlined"
-                          elevation={3}
-                        >
-                          Date: {obj.datePublished}
-                        </Paper>
-                      </Grid>
-                      <Grid item>
-                        <Button
-                          href={obj.url}
-                          variant="contained"
-                          endIcon={<PublicIcon />}
-                        >
-                          {obj?.provider[0]?.name ?? "News"}
-                        </Button>
-                      </Grid>
+                        Date: {obj.publishedAt}
+                      </Paper>
                     </Grid>
-                    <Divider sx={{ marginTop: "10px" }} />
+                    <Grid item>
+                      <Button
+                        href={obj.url}
+                        variant="contained"
+                        endIcon={<PublicIcon />}
+                      >
+                        {obj.source.name ?? "News"}
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Grid>
+                <Observer {...options}>
+                  <span />
+                </Observer>
               </Grid>
+            </Paper>
+          ))}
+          {intersecting &&
+            duplicateRemovalBing.map((obj) => (
+              <Paper key={obj.name} elevation={2} className="news-wrapper">
+                <Grid container justifyContent="center" alignItems="center">
+                  <Grid item md={4} xs={10}>
+                    <ListItemAvatar>
+                      <CardMedia
+                        image={
+                          obj?.image?.thumbnail?.contentUrl ??
+                          obj?.provider[0]?.image?.thumbnail?.contentUrl ??
+                          "/images/breaking-news.png"
+                        }
+                        component="img"
+                        alt="Breaking news"
+                        className="bing-image"
+                      />
+                    </ListItemAvatar>
+                  </Grid>
+                  <Grid item md={8} xs={10} mt={2}>
+                    <Grid
+                      item
+                      sx={{ justifyContent: "end" }}
+                      container
+                      direction="column"
+                    >
+                      <a href={obj.url}>
+                        <Typography
+                          component="h5"
+                          variant="h5"
+                          sx={{ color: "#4183c4" }}
+                        >
+                          {obj.name}
+                        </Typography>
+                      </a>
+                      <Typography paragraph color="text.secondary">
+                        {obj.description}
+                      </Typography>
+                      <Grid
+                        container
+                        justifyContent="space-around"
+                        alignItems="center"
+                        spacing={2}
+                      >
+                        <Grid item>
+                          <Paper
+                            sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                            variant="outlined"
+                          >
+                            Date: {obj.datePublished}
+                          </Paper>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            href={obj.url}
+                            variant="contained"
+                            endIcon={<PublicIcon />}
+                          >
+                            {obj?.provider[0]?.name ?? "News"}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Paper>
             ))}
         </List>
-      </Grid>
+      </Container>
     </>
   );
 }

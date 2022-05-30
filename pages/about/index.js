@@ -59,15 +59,14 @@ function About() {
         <Container component="div" align="center" maxWidth={false}>
           <iframe
             title="Tons of CO2 emitted into the atmosphere"
-            src="https://www.theworldcounts.com/embed/challenges/23?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+            src="https://www.theworldcounts.com/embed/challenges/23?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
             style={{ border: "none" }}
-            id="iframe"
             height="100"
             width="300"
           ></iframe>
           <iframe
             title="World average temperature (°C)"
-            src="https://www.theworldcounts.com/embed/challenges/21?background_color=white&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+            src="https://www.theworldcounts.com/embed/challenges/21?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
             style={{ border: "none" }}
             height="100"
             width="300"

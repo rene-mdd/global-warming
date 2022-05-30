@@ -106,7 +106,7 @@ function News(props) {
       </Grid>
       <Divider name="jump-to-news" className="hide-divider" />
       <Container>
-        <Typography component="h3" className="list-news" textAlign="center">
+        <Typography component="h3" className="list-news" align="center">
           News List
         </Typography>
         <Typography component="h4" className="date">
@@ -116,26 +116,19 @@ function News(props) {
         </Typography>
         <List sx={{ width: "100%" }}>
           {duplicateRemovalGNews.map((obj) => (
-            <Paper elevation={2} className="news-wrapper">
-              <Grid key={obj.title} container justifyContent="center">
+            <Paper key={obj.title} elevation={2} className="news-wrapper">
+              <Grid container justifyContent="center" alignItems="center">
                 <Grid item md={4} xs={10}>
                   <ListItemAvatar>
                     <CardMedia
                       image={obj?.image ?? "/images/breaking-news.png"}
                       component="img"
-                      alt="News image"
+                      alt="breaking news"
                       className="gnews-image"
                     />
                   </ListItemAvatar>
                 </Grid>
-                <Grid
-                  item
-                  direction="column"
-                  spacing={2}
-                  md={8}
-                  xs={10}
-                  alignSelf="end"
-                >
+                <Grid item mt={2} md={8} xs={10} alignSelf="end">
                   <a href={obj.url}>
                     <Typography
                       component="h5"
@@ -156,7 +149,6 @@ function News(props) {
                       <Paper
                         sx={{ padding: "6px 16px", fontWeight: "bold" }}
                         variant="outlined"
-                        elevation={3}
                       >
                         Date: {obj.publishedAt}
                       </Paper>
@@ -171,7 +163,6 @@ function News(props) {
                       </Button>
                     </Grid>
                   </Grid>
-                  {/* <Divider sx={{ marginTop: "10px" }} /> */}
                 </Grid>
                 <Observer {...options}>
                   <span></span>
@@ -181,12 +172,8 @@ function News(props) {
           ))}
           {intersecting &&
             duplicateRemovalBing.map((obj) => (
-              <Paper elevation={2} className="news-wrapper">
-                <Grid
-                  key={obj.name}
-                  container
-                  justifyContent="center"
-                >
+              <Paper key={obj.name} elevation={2} className="news-wrapper">
+                <Grid container justifyContent="center" alignItems="center">
                   <Grid item md={4} xs={10}>
                     <ListItemAvatar>
                       <CardMedia
@@ -201,7 +188,7 @@ function News(props) {
                       />
                     </ListItemAvatar>
                   </Grid>
-                  <Grid item md={8} xs={10}>
+                  <Grid item md={8} xs={10} mt={2}>
                     <Grid
                       item
                       sx={{ justifyContent: "end" }}
@@ -230,7 +217,6 @@ function News(props) {
                           <Paper
                             sx={{ padding: "6px 16px", fontWeight: "bold" }}
                             variant="outlined"
-                            elevation={3}
                           >
                             Date: {obj.datePublished}
                           </Paper>
@@ -245,7 +231,6 @@ function News(props) {
                           </Button>
                         </Grid>
                       </Grid>
-                      {/* <Divider sx={{ marginTop: "10px" }} /> */}
                     </Grid>
                   </Grid>
                 </Grid>
