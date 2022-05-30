@@ -4,12 +4,7 @@ html * {
   font-size: 100%;
 }
 body {
-  background: linear-gradient(
-      90deg,
-      hsla(120, 100%, 99%, 1) 0%,
-      hsla(0, 0%, 100%, 1)
-    )
-    100% !important;
+  background: linear-gradient(90deg, hsla(120, 100%, 99%, 1) 0%, hsla(0, 0%, 100%, 1)) 100% !important;
 }
 a {
   text-decoration: none;
@@ -72,8 +67,7 @@ footer {
   }
 }
 .landing-page-news {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("/images/newspaper-background.jpg") !important;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
   background-size: cover !important;
   height: 100vh !important;
   .arrow-icon {
@@ -302,14 +296,14 @@ nav {
 }
 .date {
   text-decoration: underline;
-  font-size: 1.5em;
-  margin-bottom: 40px;
+  font-size: 1.5em !important;
+  margin-bottom: 40px !important;
   text-align: center;
 }
 .gnews-image {
   border-radius: 10px;
   margin: auto;
-  width: 80%;
+  width: 80% !important;
 }
 .news-item {
   width: 100%;
@@ -320,4 +314,14 @@ nav {
   border-radius: 10px;
   max-width: 100px;
   margin: auto;
+}
+.team-wrapper {
+  min-height: 100vh;
+}
+.news-wrapper {
+  padding: 15px !important;
+  border-radius: 10px !important;
+  width: 100% !important;
+  justify-content: center !important;
+  margin: 30px 0px !important;
 }

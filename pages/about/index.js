@@ -93,7 +93,7 @@ function About() {
         </Typography>
         <CustomizedTimeline />
       </Grid>
-      <Grid>
+      <Grid className="team-wrapper">
         <Team />
       </Grid>
     </>
