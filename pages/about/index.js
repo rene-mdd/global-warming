@@ -56,22 +56,26 @@ function About() {
             worldwide environmental accountability.
           </Typography>
         </Grid>
-        <Container component="div" align="center" maxWidth={false}>
-          <iframe
-            title="Tons of CO2 emitted into the atmosphere"
-            src="https://www.theworldcounts.com/embed/challenges/23?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
-            style={{ border: "none" }}
-            height="100"
-            width="300"
-          ></iframe>
-          <iframe
-            title="World average temperature (°C)"
-            src="https://www.theworldcounts.com/embed/challenges/21?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
-            style={{ border: "none" }}
-            height="100"
-            width="300"
-          ></iframe>
-        </Container>
+        <Grid component="div" container justifyContent="center">
+          <Grid item>
+            <iframe
+              title="Tons of CO2 emitted into the atmosphere"
+              src="https://www.theworldcounts.com/embed/challenges/23?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+              style={{ border: "none", width: "100%" }}
+              height="125"
+              width="300"
+            ></iframe>
+          </Grid>
+          <Grid item>
+            <iframe
+              title="World average temperature (°C)"
+              src="https://www.theworldcounts.com/embed/challenges/21?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+              style={{ border: "none", width: "100%" }}
+              height="125"
+              width="300"
+            ></iframe>
+          </Grid>
+        </Grid>
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
           <Scroll.Link spy smooth duration={1000} to="jump-news">
             <Button className="down-icon-wrapper">

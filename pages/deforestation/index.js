@@ -220,6 +220,7 @@ function SemanticDeforestation(props) {
                         href={obj.url}
                         variant="contained"
                         endIcon={<PublicIcon />}
+                        className="new-source"
                       >
                         {obj.source.name ?? "News"}
                       </Button>
@@ -283,11 +284,12 @@ function SemanticDeforestation(props) {
                             Date: {obj.datePublished}
                           </Paper>
                         </Grid>
-                        <Grid item>
+                        <Grid item >
                           <Button
                             href={obj.url}
                             variant="contained"
                             endIcon={<PublicIcon />}
+                            className="new-source"
                           >
                             {obj?.provider[0]?.name ?? "News"}
                           </Button>

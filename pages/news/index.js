@@ -158,6 +158,7 @@ function News(props) {
                         href={obj.url}
                         variant="contained"
                         endIcon={<PublicIcon />}
+                        className="new-source"
                       >
                         {obj.source.name ?? "News"}
                       </Button>
@@ -226,6 +227,7 @@ function News(props) {
                             href={obj.url}
                             variant="contained"
                             endIcon={<PublicIcon />}
+                            className="new-source"
                           >
                             {obj?.provider[0]?.name ?? "News"}
                           </Button>
