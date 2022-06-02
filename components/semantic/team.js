@@ -46,9 +46,9 @@ export default function Team(props) {
         <Box pt={8} pb={12} textAlign="center">
           <Box mb={9}>
             <Container maxWidth="sm">
-              <Typography variant="overline" color="textSecondary" paragraph>
+              {/* <Typography variant="overline" color="textSecondary" paragraph>
                 {content.badge}
-              </Typography>
+              </Typography> */}
               <Typography
                 variant="h3"
                 paragraph

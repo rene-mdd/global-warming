@@ -162,9 +162,9 @@ footer {
 }
 .submit-button {
   background-color: #47c072 !important;
-  color: white;
-  font-size: 16px;
-  margin: 20px 0;
+  color: white !important;
+  font-size: 16px !important;
+  margin: 20px 0 !important;
 }
 nav {
   a:hover {
@@ -207,7 +207,7 @@ nav {
   }
 }
 .hide-element {
-  display: none;
+  display: none !important;
 }
 
 .deforestation-iframe {
@@ -239,8 +239,8 @@ nav {
 }
 .team-picture {
   margin: 0 auto;
-  width: 100px;
-  height: 100px;
+  width: 100px !important;
+  height: 100px !important;
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
