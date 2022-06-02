@@ -78,7 +78,7 @@ function News(props) {
         justifyContent="center"
         className="landing-page-news"
       >
-        <Typography component="h1" textAlign="center" className="h1-landing">
+        <Typography component="h2" textAlign="center" className="h1-landing">
           Global Warming & Climate Change World News
         </Typography>
         <Grid align="center">

@@ -2,7 +2,6 @@
 import { Container, Grid, Box, Typography, Avatar } from "@mui/material";
 
 export default function Team(props) {
-  const date = new Date().getFullYear();
 
   const content = {
     badge: "GWO",
@@ -133,7 +132,7 @@ export default function Team(props) {
                 {content["04_job"]}
               </Typography>
             </Grid>
-            <Container>
+            <Grid item xs={12}>
               <Typography paragraph mt={10}>
                 If you want to be part of the organization write us at
                 <Typography color="primary" variant="a" component="a" href="mailto: help@global-warming.org" target="_blank">
@@ -144,7 +143,7 @@ export default function Team(props) {
                 We are currently offering only volunteer work. By mid
                 2023 we hope to start hiring interns and fulltime staff.
               </Typography>
-            </Container>
+            </Grid>
             {/* <Grid item xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"

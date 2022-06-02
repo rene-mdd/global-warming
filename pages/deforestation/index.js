@@ -79,7 +79,7 @@ function SemanticDeforestation(props) {
         justifyContent="center"
         className="landing-page-deforestation"
       >
-        <Typography component="h1" align="center" className="h1-landing">
+        <Typography component="h2" align="center" className="h1-landing">
           Global Deforestation
         </Typography>
         <Grid align="center">

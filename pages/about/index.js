@@ -1,7 +1,6 @@
 /* eslint-disable */
 import * as Scroll from "react-scroll";
 import {
-  Container,
   CardMedia,
   Grid,
   Typography,
@@ -15,13 +14,11 @@ import CustomizedTimeline from "../../components/semantic/customized-timeline";
 
 function About() {
   // not ready
-
-  // not ready
-  const aboutTitle = "Global deforestation news and map.";
+  const aboutTitle = "About Global Warming";
   const aboutMetaDescription =
-    "Live news about worldwide deforestation and map builder to check on global forest loss.";
+    "Our mission is to provide the public with information related to every organization carbon footprint";
   const aboutKeywords =
-    "Deforestation, global warming, climate change, environment";
+    "Global warming, about, carbon footprint, climate change, environment";
 
   return (
     <>
@@ -37,7 +34,7 @@ function About() {
         justifyContent="center"
         className="landing-page-about"
       >
-        <Typography component="h1" align="center" className="h1-about">
+        <Typography paragraph align="center" className="h1-about">
           About Us
         </Typography>
         <Grid align="center">

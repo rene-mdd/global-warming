@@ -86,7 +86,7 @@ const Contact = () => {
       <StickyMenu />
       <Container>
         <Grid columns={{ lg: 12 }} xl="auto">
-          <Typography align="center" variant="h1" className="contact-title">
+          <Typography align="center" variant="h1" component="h2" className="contact-title">
             Contact
           </Typography>
           <Grid>

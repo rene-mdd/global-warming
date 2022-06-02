@@ -28,8 +28,8 @@ export default function CustomizedTimeline() {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot sx={{ backgroundColor: "white" }}>
-            <GroupsIcon color="primary" />
+          <TimelineDot sx={{ backgroundColor: "#373737" }}>
+            <CopyrightIcon color="inherit" />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
@@ -56,14 +56,14 @@ export default function CustomizedTimeline() {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot sx={{ backgroundColor: "#373737" }}>
-            <CopyrightIcon color="inherit" />
+          <TimelineDot sx={{ backgroundColor: "#FC824A" }}>
+            <WorkOutlineIcon sx={{ color: "white" }} />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
           <Typography variant="h6" component="span" color="white">
-            Work
+            Kick off
           </Typography>
           <Typography color="white">
             Start of data collection and funding campaign
@@ -81,8 +81,8 @@ export default function CustomizedTimeline() {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot sx={{ backgroundColor: "#FC824A" }}>
-            <WorkOutlineIcon sx={{ color: "white" }} />
+          <TimelineDot sx={{ backgroundColor: "white" }}>
+            <GroupsIcon color="primary" />
           </TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
