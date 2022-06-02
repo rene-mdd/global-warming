@@ -1,20 +1,22 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
+import PublicIcon from "@mui/icons-material/Public";
 import Observer from "@researchgate/react-intersection-observer";
 import {
+  CardMedia,
   Container,
-  Header,
-  Grid,
-  Image,
-  Button,
   Divider,
-  Item,
-  Label,
-} from "semantic-ui-react";
-import StickyMenu from "../../components/semantic/sticky";
+  Grid,
+  Typography,
+  Paper,
+  Button,
+  List,
+  ListItemAvatar,
+} from "@mui/material";
+import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
 const CognitiveServicesCredentials =
@@ -70,147 +72,173 @@ function News(props) {
         keywords={newsKeywords}
       />
       <StickyMenu />
-
-      <Container fluid className="landing-page-news">
-        <Container>
-          <Header as="h1" textAlign="center" className="h1-news">
-            Global Warming & Climate Change World News
-          </Header>
-          <Grid columns="equal">
-            <Grid.Row centered>
-              <Image src="images/icons8-news-256.png" size="tiny" />
-              <Header as="h2" id="h2-news">
-                Up to date worldwide news about Global Warming and Climate
-                Change. This section includes information from small and
-                mainstream firms.
-              </Header>
-            </Grid.Row>
-          </Grid>
-          <Grid centered>
-            <Grid.Row centered>
-              <Scroll.Link spy smooth duration={1000} to="jump-to-news">
-                <Button className="icon-style" basic>
-                  <Image src="/images/icons-double-down.png" />
-                </Button>
-              </Scroll.Link>
-            </Grid.Row>
-          </Grid>
-        </Container>
-      </Container>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        className="landing-page-news"
+      >
+        <Typography component="h2" textAlign="center" className="h1-landing">
+          Global Warming & Climate Change World News
+        </Typography>
+        <Grid align="center">
+          <CardMedia
+            component="img"
+            image="images/icons8-news-256.png"
+            className="landing-page-logo"
+          />
+          <Typography component="h2" className="h2-landing">
+            Up to date worldwide news about global warming and climate change.
+          </Typography>
+        </Grid>
+        <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
+          <Scroll.Link spy smooth duration={1000} to="jump-to-news">
+            <Button className="down-icon-wrapper">
+              <CardMedia
+                component="img"
+                image="/images/icons-double-down.png"
+                className="arrow-icon"
+                alt="move to next section"
+              />
+            </Button>
+          </Scroll.Link>
+        </Grid>
+      </Grid>
       <Divider name="jump-to-news" className="hide-divider" />
       <Container>
-        <Header as="h3" id="list-news" textAlign="center">
+        <Typography component="h3" className="list-news" align="center">
           News List
-        </Header>
-        <Header as="h4" textAlign="center">
-          Live:
+        </Typography>
+        <Typography component="h4" className="date">
           <Observer {...options}>
-            <span id="news-date">{`Live: ${new Date().toString()}`}</span>
+            <span> {`Live: ${new Date().toString()}`}</span>
           </Observer>
-        </Header>
-        <Divider />
-        <Item.Group divided>
+        </Typography>
+        <List sx={{ width: "100%" }}>
           {duplicateRemovalGNews.map((obj) => (
-            <Item key={obj.title}>
-              <Item.Image
-                alt="Breaking news"
-                src={obj?.image || "/images/breaking-news.jpg"}
-              />
-              <Item.Content>
-                <Item.Header as="header" src={obj.url} target="_blank">
-                  <a href={obj.url}>{obj.title}</a>
-                </Item.Header>
-                <Item.Meta content={obj.author} />
-                <Item.Description>
-                  <p>{obj.description}</p>
-                </Item.Description>
-                <Item.Extra style={{ paddingTop: "45px" }}>
-                  <Grid columns="equal" centered stackable>
-                    <Grid.Column textAlign="center" verticalAlign="middle">
-                      <Label>
-                        Date:
-                        {obj.publishedAt}
-                      </Label>
-                    </Grid.Column>
-                    <Grid.Column textAlign="center">
-                      <Button
-                        as="a"
-                        href={obj.url}
-                        target="_blank"
-                        inverted
-                        className="news-button"
-                        size="small"
+            <Paper key={obj.title} elevation={2} className="news-wrapper">
+              <Grid container justifyContent="center" alignItems="center">
+                <Grid item md={4} xs={10}>
+                  <ListItemAvatar>
+                    <CardMedia
+                      image={obj?.image ?? "/images/breaking-news.png"}
+                      component="img"
+                      alt="breaking news"
+                      className="gnews-image"
+                    />
+                  </ListItemAvatar>
+                </Grid>
+                <Grid item mt={2} md={8} xs={10} alignSelf="end">
+                  <a href={obj.url}>
+                    <Typography
+                      component="h5"
+                      variant="h5"
+                      sx={{ color: "#4183c4" }}
+                    >
+                      {obj.title}
+                    </Typography>
+                  </a>
+                  <Typography paragraph>{obj.description}</Typography>
+                  <Grid
+                    container
+                    justifyContent="space-around"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    <Grid item>
+                      <Paper
+                        sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                        variant="outlined"
                       >
-                        <Image
-                          inline
-                          size="mini"
-                          className="news-icon"
-                          src="images/icons8-location-96.png"
-                        />
+                        Date: {obj.publishedAt}
+                      </Paper>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        href={obj.url}
+                        variant="contained"
+                        endIcon={<PublicIcon />}
+                        className="new-source"
+                      >
                         {obj.source.name ?? "News"}
                       </Button>
-                    </Grid.Column>
+                    </Grid>
                   </Grid>
-                </Item.Extra>
-              </Item.Content>
-              <Observer {...options}>
-                <span />
-              </Observer>
-            </Item>
+                </Grid>
+                <Observer {...options}>
+                  <span></span>
+                </Observer>
+              </Grid>
+            </Paper>
           ))}
-          <Divider />
           {intersecting &&
             duplicateRemovalBing.map((obj) => (
-              <Item key={obj.name}>
-                <Item.Image
-                  style={{ width: "100px" }}
-                  alt="Breaking news"
-                  src={
-                    obj?.image?.thumbnail?.contentUrl ??
-                    obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                    "/images/breaking-news.jpg"
-                  }
-                />
-                <Item.Content>
-                  <Item.Header src={obj.url} target="_blank">
-                    <a href={obj.url}>{obj.name}</a>
-                  </Item.Header>
-                  <Item.Meta content={obj.provider.name} />
-                  <Item.Description>
-                    <p>{obj.description}</p>
-                  </Item.Description>
-                  <Item.Extra style={{ paddingTop: "45px" }}>
-                    <Grid columns="equal" centered stackable>
-                      <Grid.Column textAlign="center" verticalAlign="middle">
-                        <Label>
-                          Date:
-                          {obj.datePublished}
-                        </Label>
-                      </Grid.Column>
-                      <Grid.Column textAlign="center">
-                        <Button
-                          as="a"
-                          href={obj.url}
-                          target="_blank"
-                          inverted
-                          className="news-button"
-                          size="small"
+              <Paper key={obj.name} elevation={2} className="news-wrapper">
+                <Grid container justifyContent="center" alignItems="center">
+                  <Grid item md={4} xs={10}>
+                    <ListItemAvatar>
+                      <CardMedia
+                        image={
+                          obj?.image?.thumbnail?.contentUrl ??
+                          obj?.provider[0]?.image?.thumbnail?.contentUrl ??
+                          "/images/breaking-news.png"
+                        }
+                        component="img"
+                        alt="News image"
+                        className="bing-image"
+                      />
+                    </ListItemAvatar>
+                  </Grid>
+                  <Grid item md={8} xs={10} mt={2}>
+                    <Grid
+                      item
+                      sx={{ justifyContent: "end" }}
+                      container
+                      direction="column"
+                    >
+                      <a href={obj.url}>
+                        <Typography
+                          component="h5"
+                          variant="h5"
+                          sx={{ color: "#4183c4" }}
                         >
-                          <Image
-                            inline
-                            size="mini"
-                            className="news-icon"
-                            src="images/icons8-location-96.png"
-                          />
-                          {obj?.provider[0]?.name ?? "News"}
-                        </Button>
-                      </Grid.Column>
+                          {obj.name}
+                        </Typography>
+                      </a>
+                      <Typography paragraph color="text.secondary">
+                        {obj.description}
+                      </Typography>
+                      <Grid
+                        container
+                        justifyContent="space-around"
+                        alignItems="center"
+                        spacing={2}
+                      >
+                        <Grid item>
+                          <Paper
+                            sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                            variant="outlined"
+                          >
+                            Date: {obj.datePublished}
+                          </Paper>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            href={obj.url}
+                            variant="contained"
+                            endIcon={<PublicIcon />}
+                            className="new-source"
+                          >
+                            {obj?.provider[0]?.name ?? "News"}
+                          </Button>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                  </Item.Extra>
-                </Item.Content>
-              </Item>
+                  </Grid>
+                </Grid>
+              </Paper>
             ))}
-        </Item.Group>
+        </List>
       </Container>
     </>
   );
@@ -231,12 +259,12 @@ News.propTypes = {
 News.defaultProps = {
   googleNewsJson: PropTypes.shape({
     articleCount: 0,
-    articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
   jsonAzure: PropTypes.shape({
     totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    value: PropTypes.arrayOf("/images/breaking-news.png"),
     _type: "",
   }),
 };

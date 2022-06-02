@@ -1,10 +1,13 @@
 /* eslint-disable */ 
 import React, { useEffect } from "react";
-import { Container, Grid } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+} from "@mui/material";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import localTemperatureData from "../public/data/csvjson-temperature.json";
-import { temperatureService } from "../services/dataService";
+import localTemperatureData from "../../public/data/csvjson-temperature.json";
+import { temperatureService } from "../../services/dataService";
 
 function Temperature() {
   const url = "api/temperature-api";
@@ -146,13 +149,12 @@ function Temperature() {
     <>
       <Container
         className="chart-container"
-        style={{ position: "relative", width: "80vw" }}
       >
         <canvas id="tempChart" />
       </Container>
-      <Grid centered columns="equal">
-        <Grid.Column width="14">
-          <Container as="footer">
+      <Grid container columns={10} justifyContent="center">
+        <Grid item xs={9}>
+          <Container component="footer" sx={{ marginTop: "-5px" }}>
             <p>
               Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis
               (GISTEMP), version 4. NASA Goddard Institute for Space Studies.
@@ -170,7 +172,7 @@ function Temperature() {
               </a>
             </p>
           </Container>
-        </Grid.Column>
+        </Grid>
       </Grid>
     </>
   );

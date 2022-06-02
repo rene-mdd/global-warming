@@ -1,9 +1,23 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
-import { Container, Header, Grid, Button } from "semantic-ui-react";
-import Co2 from "../co2";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Co2 from "../charts/co2";
 import { AccordionCo2, AccordionShare } from "./accordion";
 import { co2Service } from "../../services/dataService";
+import {
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { LoadingButton } from '@mui/lab';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1687a7",
+    },
+  },
+});
 
 function SemanticCo2() {
   const [co2, setCo2] = useState(false);
@@ -18,31 +32,29 @@ function SemanticCo2() {
   }, []);
 
   return (
-    <Container as="section" fluid>
+    <Container component="section">
       <Container>
-        <Header as="h2" textAlign="center" className="h2-general">
+        <Typography component="h2" align="center" className="h2-general">
           Carbon Dioxide levels from 800,000 years ago to present
-        </Header>
-        <Grid container>
-          <Grid.Row centered stretched>
+        </Typography>
+        <Grid container >
             {co2 ? (
               <Co2 parentCallBack={(loading) => setCo2Loading(loading)} />
             ) : null}
-          </Grid.Row>
-          <Grid.Row centered>
-            <Grid.Column width="eight" textAlign="center">
-              <Button
+          <Grid container justifyContent="center" sx={{margin: "20px 0"}}>
+            <ThemeProvider theme={theme}>
+            <LoadingButton
                 onClick={() => setCo2((prevState) => !prevState)}
-                className={co2Loading ? "loading" : "co2Btn"}
-                id={co2Loading ? "loading" : "co2Btn"}
+                loading={co2Loading ? true : false}
+                variant="contained"
               >
                 {co2 ? "Hide graph" : "Load graph"}
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
+              </LoadingButton>
+            </ThemeProvider>
+          </Grid>
         </Grid>
-        <Grid columns="equal">
-          <Container textAlign="center" className="today-value">
+        <Grid>
+          <Container align="center" className="today-value">
             <p>
               Today's value:
               <span> {todayValue}</span>
@@ -68,14 +80,20 @@ function SemanticCo2() {
               </a>
               .
             </p>
-
-            <Grid className="api-segment" columns="equal" centered stackable>
-              <Grid.Column>
+            <Grid
+              container
+              spacing={3}
+              className="api-segment"
+              justifyContent="space-around"
+              mt={10}
+              pb={10}
+            >
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionCo2 />
-              </Grid.Column>
-              <Grid.Column>
-                <AccordionShare />
-              </Grid.Column>
+              </Grid>
+              <Grid item xs sx={{ minWidth: "250px" }}>
+              <AccordionShare />
+              </Grid>
             </Grid>
           </Container>
         </Grid>

@@ -1,21 +1,22 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Observer from "@researchgate/react-intersection-observer";
 import * as Scroll from "react-scroll";
+import PublicIcon from "@mui/icons-material/Public";
 import {
   Container,
-  Header,
+  CardMedia,
   Grid,
-  Image,
+  Typography,
+  Paper,
   Button,
   Divider,
-  Item,
-  Label,
-  Embed,
-} from "semantic-ui-react";
-import StickyMenu from "../../components/semantic/sticky";
+  List,
+  ListItemAvatar,
+} from "@mui/material";
+import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
 const CognitiveServicesCredentials =
@@ -72,208 +73,234 @@ function SemanticDeforestation(props) {
         keywords={deforestationKeywords}
       />
       <StickyMenu />
-
-      <Container fluid id="landing-page-deforestation">
-        <Container>
-          <Header
-            as="h1"
-            textAlign="center"
-            className="h1-id"
-            id="h1-deforestation"
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        className="landing-page-deforestation"
+      >
+        <Typography component="h2" align="center" className="h1-landing">
+          Global Deforestation
+        </Typography>
+        <Grid align="center">
+          <CardMedia
+            component="img"
+            image="images/forest.png"
+            className="landing-page-logo"
+          />
+          <Typography
+            component="h2"
+            className="h2-deforestation"
+            align="center"
+            gutterBottom
           >
-            Global Forest Loss
-          </Header>
-          <Grid columns="equal">
-            <Grid.Row centered>
-              <Image src="images/forest.png" size="tiny" />
-              <Header as="h2" id="h2-news">
-                This section is meant to gather data about the current worldwide
-                forests situation. This is done through APIs, databases, news,
-                MapBuilders, and journals.
-              </Header>
-            </Grid.Row>
-          </Grid>
-          <Grid centered className="icon-style">
-            <Grid.Row centered>
-              <Scroll.Link spy smooth duration={1000} to="jump-news">
-                <Button basic className="icon-style">
-                  <Image src="/images/icons-double-down.png" />
-                </Button>
-              </Scroll.Link>
-            </Grid.Row>
-          </Grid>
-        </Container>
-      </Container>
-      <Divider name="jump-news" className="hide-divider" />
-      <Container>
-        <Grid fluid={true.toString()} className="temperature-background">
-          <Container>
-            <Header as="h2" className="h2-general" textAlign="center">
-              Global forest loss map
-            </Header>
-            <Grid column="equal" centered>
-              <Grid.Row centered>
-                <Container>
-                  {" "}
-                  <Embed
-                    as="iframe"
-                    style={{
-                      width: "800px",
-                      height: "800px",
-                      padding: 0,
-                    }}
-                    frameBorder="0"
-                    src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
-                  />
-                </Container>
-
-                <Container>
-                  <span>
-                    Credits: University of Maryland, department of geographical
-                    sciences.
-                  </span>
-                </Container>
-                <Container id="deforestation-text" textAlign="left">
-                  <>
-                    <p>
-                      Results from time-series analysis of Landsat images
-                      characterizing forest extent and change.
-                    </p>
-                    <p>
-                      Trees are defined as vegetation taller than 5m in height
-                      and are expressed as a percentage per output grid cell as
-                      ‘2000 Percent Tree Cover’. ‘Forest Cover Loss’ is defined
-                      as a stand-replacement disturbance, or a change from a
-                      forest to non-forest state, during the period 2000–2019.
-                      ‘Forest Cover Gain’ is defined as the inverse of loss, or
-                      a non-forest to forest change entirely within the period
-                      2000–2012. ‘Forest Loss Year’ is a disaggregation of total
-                      ‘Forest Loss’ to annual time scales.
-                    </p>
-                    <p>
-                      Reference 2000 and 2019 imagery are median observations
-                      from a set of quality assessment-passed growing season
-                      observations.
-                    </p>
-                  </>
-                </Container>
-              </Grid.Row>
-            </Grid>
-          </Container>
-          <Divider />
+            This section is meant to gather data about the current state of
+            worldwide deforestation. This is done through APIs, databases, news,
+            MapBuilders, and journals.
+          </Typography>
         </Grid>
-      </Container>
-      <Container>
-        <Header as="h3" id="list-news" textAlign="center">
-          News List
-        </Header>
-        <Header as="h4" textAlign="center">
-          <Observer {...options}>
-            <span id="news-date">{`Live: ${new Date().toString()}`}</span>
-          </Observer>
-        </Header>
-        <Divider />
-        <Item.Group divided>
-          {duplicateRemovalGNews.map((obj) => (
-            <Item key={obj.title}>
-              <Item.Image
-                src={obj?.image ?? "/images/breaking-news.png"}
-                alt="Breaking news"
+        {/* <Container component="div" align="center" maxWidth={false}>
+          <iframe
+            title="Hectares of forests cut down or burned"
+            src="https://www.theworldcounts.com/embed/challenges/93?background_color=#1fa774&color=#fff&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+            style={{ border: "none" }}
+            height="100"
+            width="300"
+          ></iframe>
+        </Container> */}
+        <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
+          <Scroll.Link spy smooth duration={1000} to="jump-news">
+            <Button className="down-icon-wrapper">
+              <CardMedia
+                image="/images/icons-double-down.png"
+                component="img"
+                className="down-icon"
+                alt="move to next section"
               />
-              <Item.Content>
-                <Item.Header src={obj.url} target="_blank">
-                  <a href={obj.url}>{obj.title}</a>
-                </Item.Header>
-                <Item.Meta content={obj.author} />
-                <Item.Description>
-                  <p>{obj.description}</p>
-                </Item.Description>
-                <Item.Extra style={{ paddingTop: "45px" }}>
-                  <Grid columns="equal" centered stackable>
-                    <Grid.Column textAlign="center" verticalAlign="middle">
-                      <Label>
-                        Date:
-                        {obj.publishedAt}
-                      </Label>
-                    </Grid.Column>
-                    <Grid.Column textAlign="center">
-                      <Button
-                        as="a"
-                        href={obj.url}
-                        target="_blank"
-                        inverted
-                        className="news-button"
-                        size="small"
+            </Button>
+          </Scroll.Link>
+        </Grid>
+      </Grid>
+      <Divider name="jump-news" className="hide-divider" />
+      <Grid className="temperature-background">
+        <Typography component="h2" className="h2-general" align="center">
+          Global forest loss map
+        </Typography>
+        <Grid container justifyContent="center">
+          <Grid item sm={12} md={10}>
+            <Container>
+              <Container
+                className="deforestation-iframe"
+                component="iframe"
+                frameBorder="0"
+                src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
+              />
+            </Container>
+          </Grid>
+          <Container align="center">
+            <span>
+              Credits: University of Maryland, department of geographical
+              sciences.
+            </span>
+          </Container>
+          <Container className="deforestation-text">
+            <>
+              <p>
+                Results from time-series analysis of Landsat images
+                characterizing forest extent and change.
+              </p>
+              <p>
+                Trees are defined as vegetation taller than 5m in height and are
+                expressed as a percentage per output grid cell as ‘2000 Percent
+                Tree Cover’. ‘Forest Cover Loss’ is defined as a
+                stand-replacement disturbance, or a change from a forest to
+                non-forest state, during the period 2000–2019. ‘Forest Cover
+                Gain’ is defined as the inverse of loss, or a non-forest to
+                forest change entirely within the period 2000–2012. ‘Forest Loss
+                Year’ is a disaggregation of total ‘Forest Loss’ to annual time
+                scales.
+              </p>
+              <p>
+                Reference 2000 and 2019 imagery are median observations from a
+                set of quality assessment-passed growing season observations.
+              </p>
+            </>
+          </Container>
+        </Grid>
+        <Divider sx={{ margin: "30px" }} />
+      </Grid>
+      <Container>
+        <Typography component="h3" className="list-news" align="center">
+          News List
+        </Typography>
+        <Typography component="h4" className="date">
+          {`Live: ${new Date().toString()}`}
+        </Typography>
+        <List sx={{ width: "100%" }}>
+          {duplicateRemovalGNews.map((obj) => (
+            <Paper key={obj.title} elevation={2} className="news-wrapper">
+              <Grid container justifyContent="center" alignItems="center">
+                <Grid item md={4} xs={10}>
+                  <ListItemAvatar>
+                    <CardMedia
+                      image={obj?.image ?? "/images/breaking-news.png"}
+                      component="img"
+                      alt="breaking news"
+                      className="gnews-image"
+                    />
+                  </ListItemAvatar>
+                </Grid>
+                <Grid item mt={2} md={8} xs={10} alignSelf="end">
+                  <a href={obj.url}>
+                    <Typography
+                      component="h5"
+                      variant="h5"
+                      sx={{ color: "#4183c4" }}
+                    >
+                      {obj.title}
+                    </Typography>
+                  </a>
+                  <Typography paragraph>{obj.description}</Typography>
+                  <Grid
+                    container
+                    justifyContent="space-around"
+                    alignItems="center"
+                    spacing={2}
+                  >
+                    <Grid item>
+                      <Paper
+                        sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                        variant="outlined"
                       >
-                        {" "}
-                        <Image
-                          inline
-                          size="mini"
-                          className="news-icon"
-                          src="images/icons8-location-96.png"
-                        />
+                        Date: {obj.publishedAt}
+                      </Paper>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        href={obj.url}
+                        variant="contained"
+                        endIcon={<PublicIcon />}
+                        className="new-source"
+                      >
                         {obj.source.name ?? "News"}
                       </Button>
-                    </Grid.Column>
+                    </Grid>
                   </Grid>
-                </Item.Extra>
-              </Item.Content>
-              <Observer {...options}>
-                <span />
-              </Observer>
-            </Item>
+                </Grid>
+                <Observer {...options}>
+                  <span />
+                </Observer>
+              </Grid>
+            </Paper>
           ))}
-          <Divider />
           {intersecting &&
             duplicateRemovalBing.map((obj) => (
-              <Item key={obj.name}>
-                <Item.Image
-                  size="tiny"
-                  alt="Breaking news"
-                  src={
-                    obj?.image?.thumbnail?.contentUrl ??
-                    obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                    "/images/breaking-news.jpg"
-                  }
-                />
-                <Item.Content>
-                  <Item.Header src={obj.url} target="_blank">
-                    <a href={obj.url}>{obj.name}</a>
-                  </Item.Header>
-                  <Item.Meta content={obj.provider.name} />
-                  <Item.Description>
-                    <p>{obj.description}</p>
-                  </Item.Description>
-                  <Item.Extra style={{ paddingTop: "45px" }}>
-                    <Grid columns="equal" centered stackable>
-                      <Grid.Column textAlign="center" verticalAlign="middle">
-                        <Label>{`Date: ${obj.datePublished}`}</Label>
-                      </Grid.Column>
-                      <Grid.Column textAlign="center">
-                        <Button
-                          as="a"
-                          href={obj.url}
-                          target="_blank"
-                          inverted
-                          className="news-button"
-                          size="small"
+              <Paper key={obj.name} elevation={2} className="news-wrapper">
+                <Grid container justifyContent="center" alignItems="center">
+                  <Grid item md={4} xs={10}>
+                    <ListItemAvatar>
+                      <CardMedia
+                        image={
+                          obj?.image?.thumbnail?.contentUrl ??
+                          obj?.provider[0]?.image?.thumbnail?.contentUrl ??
+                          "/images/breaking-news.png"
+                        }
+                        component="img"
+                        alt="Breaking news"
+                        className="bing-image"
+                      />
+                    </ListItemAvatar>
+                  </Grid>
+                  <Grid item md={8} xs={10} mt={2}>
+                    <Grid
+                      item
+                      sx={{ justifyContent: "end" }}
+                      container
+                      direction="column"
+                    >
+                      <a href={obj.url}>
+                        <Typography
+                          component="h5"
+                          variant="h5"
+                          sx={{ color: "#4183c4" }}
                         >
-                          {" "}
-                          <Image
-                            inline
-                            size="mini"
-                            className="news-icon"
-                            src="images/icons8-location-96.png"
-                          />
-                          {obj?.provider[0]?.name ?? "News"}
-                        </Button>
-                      </Grid.Column>
+                          {obj.name}
+                        </Typography>
+                      </a>
+                      <Typography paragraph color="text.secondary">
+                        {obj.description}
+                      </Typography>
+                      <Grid
+                        container
+                        justifyContent="space-around"
+                        alignItems="center"
+                        spacing={2}
+                      >
+                        <Grid item>
+                          <Paper
+                            sx={{ padding: "6px 16px", fontWeight: "bold" }}
+                            variant="outlined"
+                          >
+                            Date: {obj.datePublished}
+                          </Paper>
+                        </Grid>
+                        <Grid item >
+                          <Button
+                            href={obj.url}
+                            variant="contained"
+                            endIcon={<PublicIcon />}
+                            className="new-source"
+                          >
+                            {obj?.provider[0]?.name ?? "News"}
+                          </Button>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                  </Item.Extra>
-                </Item.Content>
-              </Item>
+                  </Grid>
+                </Grid>
+              </Paper>
             ))}
-        </Item.Group>
+        </List>
       </Container>
     </>
   );
@@ -294,12 +321,12 @@ SemanticDeforestation.propTypes = {
 SemanticDeforestation.defaultProps = {
   googleNewsJson: PropTypes.shape({
     articleCount: "",
-    articles: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
   azureJson: PropTypes.shape({
     totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.jpg"),
+    value: PropTypes.arrayOf("/images/breaking-news.png"),
     _type: "",
   }),
 };

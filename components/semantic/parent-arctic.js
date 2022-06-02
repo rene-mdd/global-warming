@@ -1,9 +1,19 @@
-/* eslint-disable */ 
+/* eslint-disable */
+import { Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Container, Header, Grid, Button, Menu } from "semantic-ui-react";
-import Arctic from "../arctic";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Arctic from "../charts/arctic";
 import { AccordionArctic, AccordionShare } from "./accordion";
 import { arcticService } from "../../services/dataService";
+import { LoadingButton } from "@mui/lab";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1687a7",
+    },
+  },
+});
 
 function SemanticArctic() {
   const [arctic, setArctic] = useState(false);
@@ -20,35 +30,37 @@ function SemanticArctic() {
   });
 
   return (
-    <Container as="section" fluid>
+    <Container component="section">
       <Container>
-        <Header as="h2" textAlign="center" className="h2-general">
+        <Typography component="h2" align="center" className="h2-general">
           Melted Polar Ice Caps
-        </Header>
+        </Typography>
         <Grid container>
-          <Grid.Row centered stretched>
-            {arctic ? (
-              <Arctic parentCallBack={(loading) => setArcticLoading(loading)} />
-            ) : null}
-          </Grid.Row>
-          <Grid.Row centered>
-            <Grid.Column width="eight" textAlign="center">
-              <Button
+          {arctic ? (
+            <Arctic parentCallBack={(loading) => setArcticLoading(loading)} />
+          ) : null}
+          <Grid container justifyContent="center" sx={{ margin: "20px 0" }}>
+            <ThemeProvider theme={theme}>
+              <LoadingButton
                 onClick={() => setArctic((prevState) => !prevState)}
-                className={arcticLoading ? "loading" : "arcticBtn"}
-                id={arcticLoading ? "loading" : "arcticBtn"}
+                loading={arcticLoading ? true : false}
+                variant="contained"
               >
                 {arctic ? "Hide graph" : "Load graph"}
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
+              </LoadingButton>
+            </ThemeProvider>
+          </Grid>
         </Grid>
-        <Grid columns="equal">
-          <Container textAlign="center" className="arctic-value">
+        <Grid>
+          <Container align="center" className="today-value">
             <p>
-              Today's value:{" "}
-              <span>{`Extent ${todayValue.extent ? todayValue.extent : 0
-                }, Area ${todayValue.area ? todayValue.area : 0}`}</span>
+              Today's value:
+              <span style={{ color: "#2c82c9" }}>
+                {" "}
+                {`Extent ${todayValue.extent ? todayValue.extent : 0}, Area ${
+                  todayValue.area ? todayValue.area : 0
+                }`}
+              </span>
             </p>
           </Container>
           <Container id="scrolling-container">
@@ -76,24 +88,29 @@ function SemanticArctic() {
               </a>
               .
             </p>
-            <Grid className="api-segment" columns="equal" centered stackable>
-              <Grid.Column>
-                <AccordionArctic />
-              </Grid.Column>
-              <Grid.Column>
-                <AccordionShare />
-              </Grid.Column>
+            <Grid
+              container
+              spacing={3}
+              className="api-segment"
+              justifyContent="space-around"
+              mt={10}
+              mb={10}
+            >
+              <Grid item xs sx={{ minWidth: "250px" }}>
+              <AccordionArctic />
+              </Grid>
+              <Grid item xs sx={{ minWidth: "250px" }}>
+              <AccordionShare />
+              </Grid>
             </Grid>
           </Container>
         </Grid>
       </Container>
-      <Container as="footer" textAlign="center">
-        <Menu.Item>
-          <p>
-            {`Copyright ©${new Date().getFullYear()}
+      <Container component="footer" align="center">
+        <p>
+          {`Copyright ©${new Date().getFullYear()}
               René Rodríguez. All Rights Reserved`}
-          </p>
-        </Menu.Item>
+        </p>
       </Container>
     </Container>
   );

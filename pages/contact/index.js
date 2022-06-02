@@ -1,17 +1,21 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import { useState } from "react";
-import {
-  Button,
-  Form,
-  Container,
-  Grid,
-  Image,
-  Header,
-  Segment,
-  Message,
-} from "semantic-ui-react";
-import StickyMenu from "../../components/semantic/sticky";
+import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
+import {
+  Container,
+  CardMedia,
+  Grid,
+  Typography,
+  Paper,
+  FormControl,
+  Input,
+  TextField,
+  Button,
+  Alert,
+  AlertTitle,
+  FormLabel,
+} from "@mui/material";
 
 const Contact = () => {
   const [contact, setContact] = useState({
@@ -20,8 +24,8 @@ const Contact = () => {
     subject: "StaticForms - Contact Form",
     honeypot: "",
     message: "",
-    replyTo: "rene.r@live.com",
-    accessKey: "21b96b01-5e41-419f-a493-cd3f5327a645",
+    replyTo: "help@global-warming",
+    accessKey: "4b81c8f7-3ee9-4f84-9e25-d45657620223",
   });
 
   const [response, setResponse] = useState({
@@ -48,7 +52,6 @@ const Contact = () => {
       });
 
       const json = await res.json();
-
       if (json.success) {
         setResponse({
           type: "success",
@@ -81,118 +84,120 @@ const Contact = () => {
         keywords={contactKeywords}
       />
       <StickyMenu />
-      <Container fluid className="contact-container">
-        <Grid centered columns="equal">
-          <Header as="h1" className="contact-title">
+      <Container>
+        <Grid columns={{ lg: 12 }} xl="auto">
+          <Typography align="center" variant="h1" component="h2" className="contact-title">
             Contact
-          </Header>
-          <Grid.Row>
-            <Grid.Column width="5">
-              <Image
-                centered
-                className="contact-image"
-                src="images/contact-image.png"
-              />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column width="10" className="form-width">
-              <Segment>
-                <p id="contact-segment">
-                  Hello! My name is René and I am the creator of this site. I am
-                  currently living in Berlin. For suggestions about this
-                  project, or if you want to discuss ideas related to this kind
-                  of environmental issues, please send me a message or write me
-                  at
-                  <b> rene.r@live.com</b>
-                </p>
-              </Segment>
-              <Form
-                action="https://api.staticforms.xyz/submit"
-                method="post"
-                onSubmit={handleSubmit}
-              >
-                <Form.Field required>
-                  <label htmlFor="name">
+          </Typography>
+          <Grid>
+            <Grid
+              justifyContent="center"
+              container
+              fullWidth
+            >
+              <Grid item xs={12} sm={10} md={6}>
+                <CardMedia
+                  src="images/contact-image.png"
+                  alt="earth image"
+                  component="img"
+                  className="contact-earth-logo"
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid>
+            <Grid container justifyContent="center">
+              <Grid item xs={10} md={6}>
+                <Paper className="contact-info">
+                  <p className="contact-segment">
+                    For questions about this
+                    project or if you want to discuss ideas related to this
+                    kind of environmental issues, please send us a <strong>message</strong>.
+                  </p>
+                </Paper>
+                <FormControl
+                  action="https://api.staticforms.xyz/submit"
+                  method="post"
+                  onSubmit={handleSubmit}
+                  component="form"
+                  fullWidth
+                >
+                  <FormLabel htmlFor="name" required>
                     Name
-                    <input
-                      id="name"
-                      placeholder="Name"
-                      name="name"
-                      value={contact.name}
-                      onChange={handleChange}
-                    />
-                  </label>
-                </Form.Field>
-                <Form.Field required>
-                  <label htmlFor="email">
+                  </FormLabel>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={contact.name}
+                    onChange={handleChange}
+                    autoFocus
+                  />
+                  <FormLabel htmlFor="email" required>
                     Email
-                    <input
-                      id="email"
-                      placeholder="Your email address"
-                      name="email"
-                      value={contact.email}
-                      onChange={handleChange}
-                    />
-                  </label>
-                </Form.Field>
-                <Form.Field style={{ display: "none" }}>
-                  <label htmlFor="subject">
-                    Subject
-                    <input
-                      id="subject"
-                      type="hidden"
-                      name="subject"
-                      onChange={handleChange}
-                    />
-                  </label>
-                  <input
-                    name="honeypot"
-                    style={{ display: "none" }}
+                  </FormLabel>
+                  <Input
+                    id="email"
+                    name="email"
+                    value={contact.email}
                     onChange={handleChange}
                   />
-                </Form.Field>
-
-                <Form.TextArea
-                  name="message"
-                  label="Message"
-                  placeholder="Your message"
-                  value={contact.message}
-                  onChange={handleChange}
-                  required
-                />
-                <Button
-                  className="submit-button"
-                  type="submit"
-                  value="Submit"
-                  onChange={handleChange}
-                  required
+                  <FormLabel htmlFor="subject" className="hide-element">
+                    Subject
+                  </FormLabel>
+                  <Input
+                    className="hide-element"
+                    id="subject"
+                    type="hidden"
+                    name="subject"
+                    onChange={handleChange}
+                  />
+                  <Input
+                    id="honeypot"
+                    name="honeypot"
+                    className="hide-element"
+                    onChange={handleChange}
+                  />
+                  <FormLabel htmlFor="message">Your message</FormLabel>
+                  <TextField
+                    id="message"
+                    name="message"
+                    variant="standard"
+                    value={contact.message}
+                    onChange={handleChange}
+                    margin="normal"
+                    required
+                    multiline
+                  />
+                  <Button
+                    className="submit-button"
+                    type="submit"
+                    value="Submit"
+                    onChange={handleChange}
+                    required
+                  >
+                    Submit
+                  </Button>
+                </FormControl>
+                <Alert
+                  hidden={response.type === ""}
+                  severity={response.type}
                 >
-                  Submit
-                </Button>
-              </Form>
-              <Message
-                hidden={response.type !== "success"}
-                warning={response.type === "error"}
-                success={response.type === "success"}
-                header={
-                  // ternary operators used to save space
-                  response.type === "success"
+                  {response.type === "success"
                     ? "Your email was sent."
                     : response.type === "error"
                     ? "Sorry there was an error"
-                    : null
-                }
-                content={
-                  response.type === "success"
-                    ? "Thank you!"
-                    : response.type === "error"
-                    ? "Try again or send an email"
-                    : null
-                }
-              />
-            </Grid.Column>
-          </Grid.Row>
+                    : null}
+                  <AlertTitle>
+                    {response.type === "success"
+                      ? "Thank you!"
+                      : response.type === "error"
+                      ? "Try again or write to help@global-warming.org"
+                      : null}
+                  </AlertTitle>
+                </Alert>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
       </Container>
     </>

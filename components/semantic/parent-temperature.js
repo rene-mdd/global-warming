@@ -1,9 +1,9 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
-import { Container, Header, Grid } from "semantic-ui-react";
 import { temperatureService } from "../../services/dataService";
-import Temperature from "../temperature";
-import { AccordionTemp, AccordionShare } from "./accordion";
+import Temperature from "../charts/temperature";
+import {AccordionTemp, AccordionShare } from "./accordion";
+import { Container, Grid, Typography } from "@mui/material";
 
 function SemanticTemperature() {
   const [todayValue, setTodayValue] = useState({});
@@ -18,18 +18,16 @@ function SemanticTemperature() {
   }, []);
 
   return (
-    <Container as="section" fluid className="temperature-background">
+    <Container component="section" className="temperature-background">
       <Container>
-        <Header as="h2" textAlign="center" className="h2-general">
+        <Typography component="h2" align="center" className="h2-general">
           Global temperature anomalies from year 1 to present
-        </Header>
+        </Typography>
         <Grid container>
-          <Grid.Row centered stretched>
-            <Temperature />
-          </Grid.Row>
+          <Temperature />
         </Grid>
-        <Grid columns="equal" style={{ marginTop: "7vh" }}>
-          <Container textAlign="center" className="today-value">
+        <Grid sx={{ marginTop: "7vh" }}>
+          <Container align="center" className="today-value">
             <p>
               Today's value:
               <span> {todayValue.station}</span>
@@ -117,13 +115,20 @@ function SemanticTemperature() {
                 </em>
               </a>
             </p>
-            <Grid className="api-segment" columns="equal" centered stackable>
-              <Grid.Column>
+            <Grid
+              container
+              spacing={3}
+              mt={10}
+              mb={10}
+              className="api-segment"
+              justifyContent="space-around"
+            >
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionTemp />
-              </Grid.Column>
-              <Grid.Column>
+              </Grid>
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />
-              </Grid.Column>
+              </Grid>
             </Grid>
           </Container>
         </Grid>

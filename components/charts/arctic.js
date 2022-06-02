@@ -1,10 +1,10 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import { Container, Grid } from "semantic-ui-react";
+import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import { arcticService } from "../services/dataService";
+import { arcticService } from "../../services/dataService";
 
 function Arctic(props) {
   const url = "api/arctic-api";
@@ -100,15 +100,12 @@ function Arctic(props) {
 
   return (
     <>
-      <Container
-        className="chart-container"
-        style={{ position: "relative", width: "80vw" }}
-      >
+      <Container className="chart-container">
         <canvas id="arcticChart" />
       </Container>
-      <Grid width="equal" centered>
-        <Grid.Column fluid="true" width="14">
-          <Container as="footer" style={{ marginTop: "-5px" }}>
+      <Grid container columns={10} justifyContent="center">
+        <Grid item xs={9}>
+          <Container component="footer" sx={{ marginTop: "-5px" }}>
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
@@ -117,7 +114,7 @@ function Arctic(props) {
               <a href="https://climate.nasa.gov/">NASA</a>
             </p>
           </Container>
-        </Grid.Column>
+        </Grid>
       </Grid>
     </>
   );

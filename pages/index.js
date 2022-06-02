@@ -1,13 +1,13 @@
 import React from "react";
-import { Divider } from "semantic-ui-react";
-import StickyMenu from "../components/semantic/sticky";
+import { Divider } from "@mui/material";
+import StickyMenu from "../components/semantic/menu";
 import SideMenu from "../components/semantic/sideMenu";
 import LandingPage from "../components/semantic/LandingPage";
-import SemanticTemperature from "../components/semantic/semanticTemperature";
-import SemanticCo2 from "../components/semantic/semanticCo2";
-import SemanticMethane from "../components/semantic/semanticMethane";
-import SemanticNitrous from "../components/semantic/semanticNitrous";
-import SemanticArctic from "../components/semantic/semanticArctic";
+import SemanticTemperature from "../components/semantic/parent-temperature";
+import SemanticCo2 from "../components/semantic/parent-co2";
+import SemanticMethane from "../components/semantic/parent-methane";
+import SemanticNitrous from "../components/semantic/parent-nitrous";
+import SemanticArctic from "../components/semantic/parent-arctic";
 import SiteHeader from "../components/siteHeader";
 
 function Home() {
@@ -25,7 +25,7 @@ function Home() {
       <StickyMenu />
       <SideMenu />
       <LandingPage />
-      <Divider name="jump-to-temperature" hidden />
+      <Divider name="jump-to-temperature" />
       <SemanticTemperature />
       <Divider name="jump-to-co2" />
       <SemanticCo2 />

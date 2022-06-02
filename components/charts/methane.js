@@ -1,11 +1,12 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
-import { Container, Grid } from "semantic-ui-react";
+// import { Container, Grid } from "semantic-ui-react";
+import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
-import localMethaneData from "../public/data/csvjson-methane.json";
-import { methaneService } from "../services/dataService";
+import localMethaneData from "../../public/data/csvjson-methane.json";
+import { methaneService } from "../../services/dataService";
 
 function Methane(props) {
   const [graphError, setGraphError] = useState("");
@@ -118,15 +119,12 @@ function Methane(props) {
   };
   return (
     <>
-      <Container
-        className="chart-container"
-        style={{ position: "relative", width: "80vw" }}
-      >
+      <Container className="chart-container">
         <canvas id="myMethChart" />
       </Container>
-      <Grid width="equal" centered>
-        <Grid.Column width="fourteen">
-          <Container as="footer">
+      <Grid container columns={10} justifyContent="center">
+        <Grid item xs={9}>
+          <Container component="footer" sx={{ marginTop: "-5px" }}>
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
@@ -152,7 +150,7 @@ function Methane(props) {
               <b>From 1983.07 this data is measured on a monthly basis</b>
             </p>
           </Container>
-        </Grid.Column>
+        </Grid>
       </Grid>
     </>
   );

@@ -7,7 +7,7 @@ Details:
 global-warming.org constantly fetch data from scientific sources, with the aim to serve
 visitors with up to date and trustworthy APIs, information, and news about the most urgent environmental issues: global warming and deforestation.
 
-Technologies: React-NextJs, semantic-ui-react.
+Technologies: React-NextJs, Material-UI.
 
 Don't forget to install the node modules: npm install
 
@@ -17,4 +17,4 @@ You need to get a microsoft azure and Gnews API key, in order to fetch the news.
 
 Site: www.global-warming.org
 
-Thank you!
+Please collaborate. We are happy about new merge requests!

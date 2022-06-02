@@ -1,9 +1,23 @@
 /* eslint-disable */ 
 import React, { useEffect, useState } from "react";
-import { Container, Header, Grid, Button } from "semantic-ui-react";
-import Methane from "../methane";
+import Methane from "../charts/methane";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AccordionMethane, AccordionShare } from "./accordion";
 import { methaneService } from "../../services/dataService";
+import {
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1687a7",
+    },
+  },
+});
 
 function SemanticMethane() {
   const [methane, setMethane] = useState(false);
@@ -18,33 +32,31 @@ function SemanticMethane() {
   }, []);
 
   return (
-    <Container as="section" fluid>
+    <Container component="section">
       <Container>
-        <Header as="h2" textAlign="center" className="h2-general">
+        <Typography component="h2" align="center" className="h2-general">
           Methane levels from 800,000 years ago to present
-        </Header>
+        </Typography>
         <Grid container>
-          <Grid.Row centered stretched>
             {methane ? (
               <Methane
                 parentCallBack={(loading) => setMethaneLoading(loading)}
               />
             ) : null}
-          </Grid.Row>
-          <Grid.Row centered>
-            <Grid.Column width="eight" textAlign="center">
-              <Button
+            <Grid container justifyContent="center" sx={{margin: "20px 0"}}>
+            <ThemeProvider theme={theme}>
+              <LoadingButton
                 onClick={() => setMethane((prevState) => !prevState)}
-                className={methaneLoading ? "loading" : "methaneBtn"}
-                id={methaneLoading ? "loading" : "methaneBtn"}
+                loading={methaneLoading ? true : false}
+                variant="contained"
               >
                 {methane ? "Hide graph" : "Load graph"}
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
+              </LoadingButton>
+              </ThemeProvider>
+            </Grid>
         </Grid>
-        <Grid columns="equal">
-          <Container textAlign="center" className="today-value">
+        <Grid>
+          <Container align="center" className="today-value">
             <p>
               Today's value:
               <span> {todayValue}</span>
@@ -89,14 +101,20 @@ function SemanticMethane() {
                 </span>
               </a>
             </p>
-
-            <Grid className="api-segment" columns="equal" centered stackable>
-              <Grid.Column>
-                <AccordionMethane />
-              </Grid.Column>
-              <Grid.Column>
+            <Grid
+              container
+              spacing={3}
+              className="api-segment"
+              justifyContent="space-around"
+              mt={10}
+              mb={10}
+            >
+              <Grid item xs sx={{ minWidth: "250px" }}>
+              <AccordionMethane />
+              </Grid>
+              <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />
-              </Grid.Column>
+              </Grid>
             </Grid>
           </Container>
         </Grid>
