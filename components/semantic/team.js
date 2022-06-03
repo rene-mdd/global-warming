@@ -22,9 +22,9 @@ export default function Team(props) {
     "04_name": "Team Member",
     "04_job": "Join us",
 
-    "05_image": "images/empty-profile.jpeg",
-    "05_name": "Team Member",
-    "05_job": "Join us",
+    "05_image": "images/miguel-prestol.jpeg",
+    "05_name": "Miguel Prestol",
+    "05_job": "Cyber Security ",
 
     "06_image": "images/empty-profile.jpeg",
     "06_name": "Team Member",
@@ -63,7 +63,7 @@ export default function Team(props) {
               </Typography>
             </Container>
           </Box>
-          <Grid container spacing={6}>
+          <Grid container spacing={6} justifyContent="center">
             <Grid item xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
@@ -115,7 +115,25 @@ export default function Team(props) {
                 {content["03_job"]}
               </Typography>
             </Grid>
+           
             <Grid item xs={12} sm={6} md={3}>
+                <Avatar
+                  alt="teammate picture"
+                  src={content["05_image"]}
+                  className="team-picture"
+                />
+                <Typography variant="h6" component="h6" gutterBottom>
+                  {content["05_name"]}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  component="span"
+                >
+                  {content["05_job"]}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["04_image"]}
@@ -144,24 +162,7 @@ export default function Team(props) {
                 2023 we hope to start hiring interns and fulltime staff.
               </Typography>
             </Grid>
-            {/* <Grid item xs={12} sm={6} md={3}>
-                <Avatar
-                  alt="teammate picture"
-                  src={content["05_image"]}
-                  className="team-picture"
-                />
-                <Typography variant="h6" component="h6" gutterBottom>
-                  {content["05_name"]}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  component="span"
-                >
-                  {content["05_job"]}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              {/* <Grid item xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["06_image"]}
@@ -177,8 +178,8 @@ export default function Team(props) {
                 >
                   {content["06_job"]}
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              </Grid> */}
+              {/* <Grid item xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["07_image"]}
@@ -194,8 +195,8 @@ export default function Team(props) {
                 >
                   {content["07_job"]}
                 </Typography>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              </Grid> */}
+              {/* <Grid item xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["08_image"]}
