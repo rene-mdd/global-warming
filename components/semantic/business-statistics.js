@@ -528,7 +528,7 @@ export default function CollapsibleTable() {
             </TableCell>
             <TableCell align="right">
               <Typography variant="span" fontWeight="bold">
-                Disclosure: GHG / Deforestation
+                Disclosure: GHG Emission / Deforestation
               </Typography>
             </TableCell>
             <TableCell align="right">
@@ -543,7 +543,7 @@ export default function CollapsibleTable() {
             </TableCell>
             <TableCell align="right">
               <Typography variant="span" fontWeight="bold">
-                Climate contribution / offsetting
+                Climate contribution / Offsetting
               </Typography>
             </TableCell>
             <TableCell align="right">
