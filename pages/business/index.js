@@ -48,7 +48,7 @@ function Business() {
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>
-            <Grid item xs={8} mb={6}>
+            <Grid item xs={12} md={12} lg={8} mb={6}>
             <CollapsibleTable />
             </Grid>
         </Grid>

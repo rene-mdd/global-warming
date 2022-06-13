@@ -41,6 +41,8 @@ function createData(
 function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const colorImpact =
+    row.impact <= 5 ? "red" : row.impact > 9 ? "green" : "orange";
 
   return (
     <>
@@ -62,10 +64,12 @@ function Row(props) {
         <TableCell align="right">{row.emissions}</TableCell>
         <TableCell align="right">{row.offset}</TableCell>
         <TableCell align="right">{row.deforestation}</TableCell>
-        <TableCell align="right">{row.impact}</TableCell>
+        <TableCell align="right" sx={{ color: colorImpact }}>
+          {row.impact}
+        </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell colSpan={8}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
           <Collapse in={open} timeout="auto" unmountOnExit size="100%">
             <Box sx={{ margin: 1 }}>
               <Typography
@@ -92,7 +96,7 @@ function Row(props) {
                       image={row?.profile?.logo}
                     />
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" width="100%">
                     <Container
                       disableGutters
                       component="div"
@@ -186,6 +190,84 @@ const rows = [
         link: "https://www.power-technology.com/projects/tramm-gothen-solar-park-mecklenburg-western-pomerania-germany/",
       },
     ],
+    products: [
+      "Volkswagen Arteon",
+      "Volkswagen Arteon 4motion",
+      "Volkswagen Atlas",
+      "Volkswagen Atlas 4motion",
+      "Volkswagen Atlas Cross Sport",
+      "Volkswagen Atlas Cross Sport 4motion",
+      "Volkswagen Beetle",
+      "Volkswagen Beetle Convertible",
+      "Volkswagen Beetle Dune",
+      "Volkswagen Beetle Dune Convertible",
+      "Volkswagen CC",
+      "Volkswagen CC 4motion",
+      "Volkswagen e-Golf",
+      "Volkswagen Eos",
+      "Volkswagen Golf",
+      "Volkswagen Golf Alltrack",
+      "Volkswagen Golf R",
+      "Volkswagen Golf SportWagen",
+      "Volkswagen Golf SportWagen 4motion",
+      "Volkswagen GTI",
+      "Volkswagen Jetta",
+      "Volkswagen Jetta GLI",
+      "Volkswagen Jetta Hybrid",
+      "Volkswagen Passat",
+      "Volkswagen Tiguan",
+      "Volkswagen Tiguan 4motion",
+      "Volkswagen Tiguan Limited",
+      "Volkswagen Tiguan Limited 4motion",
+      "Volkswagen Touareg",
+      "Volkswagen Cabrio",
+      "Volkswagen Cabriolet",
+      "Volkswagen Corrado",
+      "Volkswagen Corrado SLC",
+      "Volkswagen Eurovan",
+      "Volkswagen Eurovan Camper",
+      "Volkswagen Fox",
+      "Volkswagen Fox GL Wagon",
+      "Volkswagen Fox Wagon",
+      "Volkswagen Golf III",
+      "Volkswagen Golf III / GTI",
+      "Volkswagen Golf/GTI",
+      "Volkswagen GTI 16v",
+      "Volkswagen GTI VR6",
+      "Volkswagen GTI/Golf GT",
+      "Volkswagen Jetta GLI 16v",
+      "Volkswagen Jetta GLI/Wolfsburg Edition",
+      "Volkswagen Jetta GLX",
+      "Volkswagen Jetta III",
+      "Volkswagen Jetta III GLX",
+      "Volkswagen Jetta SportWagen",
+      "Volkswagen Jetta Wagon",
+      "Volkswagen New Beetle",
+      "Volkswagen New Beetle Convertible",
+      "Volkswagen New Golf",
+      "Volkswagen New GTI",
+      "Volkswagen New Jetta",
+      "Volkswagen Passat 4motion",
+      "Volkswagen Passat Syncro",
+      "Volkswagen Passat Wagon",
+      "Volkswagen Passat Wagon 4motion",
+      "Volkswagen Passat Wagon Syncro",
+      "Volkswagen Phaeton",
+      "Volkswagen Quantum",
+      "Volkswagen Quantum Syncro Wagon",
+      "Volkswagen Quantum Wagon",
+      "Volkswagen R32",
+      "Volkswagen Rabbit",
+      "Volkswagen Rabbit Convertible",
+      "Volkswagen Routan",
+      "Volkswagen Routan FWD",
+      "Volkswagen Scirocco",
+      "Volkswagen Scirocco 16v",
+      "Volkswagen Touareg Hybrid",
+      "Volkswagen Vanagon 2WD",
+      "Volkswagen Vanagon Syncro 4WD",
+      "Volkswagen Vanagon/Camper 2WD",
+    ],
   }),
   createData("JBS SA", "3 / 3", 1, "-1", 0, "-3", 3, {
     logo: "images/JBS_S.A.png",
@@ -193,7 +275,7 @@ const rows = [
       "This corporation is a good example of greenwashing. They have dozens of promises and projects related to environmental conservation and offsetting, but none of them are up and running. On the contrary, their emissions, and deforestation have been growing every year.",
       "Between 2016 and 2021 JBS increased their GHG emission by 51%.",
       "JBS have rampant deforestation in their supply chain as we can see in Trase platform, but forest500  gives them a 42% overall deforestation score. This ranking might be too lenient on the corporation. We need to investigate more about forest500 ranking methodology and their information sources.",
-      "Commited to net zero emissions by 2040 (dubious).",
+      "Commited to net zero emissions by 2040 (without a transpartent framework).",
     ],
     sources: [
       {
@@ -381,7 +463,7 @@ const rows = [
     details: [
       "Amazon is another example of greenwashing. The only climate contribution Amazon have promised to do is a $10 million donation for the conservation of forests in different US regions. This amount seems ridiculously small for a company of this size.",
       "They also launched the Agroforestry and Restoration Accelerator in partnership with The Nature Conservancy. But this project has not begun, and it will be a long time until we can measure its true impact.",
-      "Amazon emission had been increasing  by around 15% each year."
+      "Amazon emission had been increasing  by around 15% each year.",
     ],
     sources: [
       {
@@ -393,9 +475,7 @@ const rows = [
         link: "https://press.aboutamazon.com/news-releases/news-release-details/part-its-plan-be-net-zero-carbon-2040-amazon-commits-10-million",
       },
     ],
-    products: [
-      "everything in amazon.com"
-    ],
+    products: ["everything in amazon.com"],
   }),
   createData("Siemens AG", "4 / No data", 3, 1, 1, "No data", 9, {
     logo: "images/siemens-logo.png",
@@ -412,15 +492,13 @@ const rows = [
         link: "https://www.upstreamonline.com/energy-transition/siemens-energy-to-work-on-carbon-neutral-lng-plant-and-pipeline-amid-criticism/2-1-1033344",
       },
     ],
-    products: [
-      "https://www.wikiwand.com/en/List_of_Siemens_products"
-    ],
+    products: ["Products catalog"],
   }),
   createData("Adidas AG", "3 / -1", 1, 0, 0, 0, 3, {
     logo: "images/Adidas_Logo.svg.png",
     details: [
       "Adidas has committed to achieving climate neutrality (GHG - greenhouse gases) across its operations by 2025, reducing absolute GHG emissions across its entire value chain by 30% by 2030, measured against a baseline of 2017. But there is still not an official commitment to net-zero emissions.",
-      "Adidas claims a \"cumulative\" reduction of combined net emissions by 55%. But there is not a third-party source to confirm this."
+      'Adidas claims a "cumulative" reduction of combined net emissions by 55%. But there is not a third-party source to confirm this.',
     ],
     sources: [
       {
@@ -432,9 +510,7 @@ const rows = [
         link: "https://www.upstreamonline.com/energy-transition/siemens-energy-to-work-on-carbon-neutral-lng-plant-and-pipeline-amid-criticism/2-1-1033344",
       },
     ],
-    products: [
-      "https://www.wikiwand.com/en/List_of_Siemens_products"
-    ],
+    products: ["Products catalog"],
   }),
 ];
 
@@ -445,15 +521,41 @@ export default function CollapsibleTable() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Company</TableCell>
-            <TableCell align="right">Disclosure: GHG / Deforestation</TableCell>
-            <TableCell align="right">Commitment status</TableCell>
-            <TableCell align="right">Net emission reduction</TableCell>
-            <TableCell align="right">
-              Climate contribution / offsetting
+            <TableCell>
+              <Typography variant="span" fontWeight="bold">
+                Company
+              </Typography>
             </TableCell>
-            <TableCell align="right">Deforestation</TableCell>
-            <TableCell align="right">Environmental impact</TableCell>
+            <TableCell align="right">
+              <Typography variant="span" fontWeight="bold">
+                Disclosure: GHG / Deforestation
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="span" fontWeight="bold">
+                Commitment status
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="span" fontWeight="bold">
+                Net emission reduction
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="span" fontWeight="bold">
+                Climate contribution / offsetting
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="span" fontWeight="bold">
+                Deforestation
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography variant="span" fontWeight="bold">
+                Environmental impact
+              </Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
