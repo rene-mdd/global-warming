@@ -325,3 +325,14 @@ nav {
 .new-source {
   word-break: break-all !important;
 }
+.brands-logo {
+  height: 100px;
+  width: 100px;
+  margin: auto;
+  object-fit: contain;
+}
+.text-container {
+  max-height: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
