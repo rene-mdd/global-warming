@@ -326,10 +326,10 @@ nav {
   word-break: break-all !important;
 }
 .brands-logo {
-  height: 100px;
-  width: 100px;
-  margin: auto;
-  object-fit: contain;
+  height: 100px !important;
+  width: 100px !important;
+  margin: auto !important;
+  object-fit: contain !important;
 }
 .text-container {
   max-height: 200px;
