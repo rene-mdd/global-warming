@@ -77,7 +77,7 @@ function About() {
           </Grid>
         </Grid>
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
-          <Scroll.Link spy smooth duration={1000} to="jump-news">
+          <Scroll.Link spy smooth duration={1000} to="jump-news" Ref="nofollow">
             <Button className="down-icon-wrapper">
               <CardMedia
                 image="/images/icons-double-down.png"
