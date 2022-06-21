@@ -43,6 +43,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
+                Ref="nofollow"
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "temperature" ? "0.7" : "1" }}
@@ -58,6 +59,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
+                Ref="nofollow"
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "co2" ? "0.7" : "1" }}
@@ -73,6 +75,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
+                Ref="nofollow"
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "methane" ? "0.7" : "1" }}
@@ -88,6 +91,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
+                Ref="nofollow"
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "nitrous" ? "0.7" : "1" }}
@@ -103,6 +107,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
+                Ref="nofollow"
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "arctic" ? "0.7" : "1" }}
