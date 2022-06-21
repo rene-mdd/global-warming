@@ -87,6 +87,7 @@ function SemanticDeforestation(props) {
             component="img"
             image="images/forest.png"
             className="landing-page-logo"
+            alt="forest logo"
           />
           <Typography
             component="h2"
@@ -134,6 +135,7 @@ function SemanticDeforestation(props) {
                 component="iframe"
                 frameBorder="0"
                 src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
+                loading="lazy"
               />
             </Container>
           </Grid>

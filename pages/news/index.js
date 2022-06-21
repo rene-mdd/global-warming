@@ -86,6 +86,7 @@ function News(props) {
             component="img"
             image="images/icons8-news-256.png"
             className="landing-page-logo"
+            alt="news logo"
           />
           <Typography component="h2" className="h2-landing">
             Up to date worldwide news about global warming and climate change.

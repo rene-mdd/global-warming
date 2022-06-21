@@ -9,6 +9,7 @@ import SemanticMethane from "../components/semantic/parent-methane";
 import SemanticNitrous from "../components/semantic/parent-nitrous";
 import SemanticArctic from "../components/semantic/parent-arctic";
 import SiteHeader from "../components/siteHeader";
+import Footer from "../components/semantic/footer";
 
 function Home() {
   const homeTitle = "Global Warming API";
@@ -35,6 +36,7 @@ function Home() {
       <SemanticNitrous />
       <Divider name="jump-to-arctic" />
       <SemanticArctic />
+      <Footer />
     </>
   );
 }

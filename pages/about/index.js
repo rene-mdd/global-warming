@@ -42,6 +42,7 @@ function About() {
             component="img"
             image="images/logo-planet-image.png"
             className="landing-page-logo"
+            alt="planet dying logo"
           />
           <Typography
             component="h2"
@@ -61,6 +62,7 @@ function About() {
               style={{ border: "none", width: "100%" }}
               height="125"
               width="300"
+              loading="lazy"
             ></iframe>
           </Grid>
           <Grid item>
@@ -70,11 +72,12 @@ function About() {
               style={{ border: "none", width: "100%" }}
               height="125"
               width="300"
+              loading="lazy"
             ></iframe>
           </Grid>
         </Grid>
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
-          <Scroll.Link spy smooth duration={1000} to="jump-news">
+          <Scroll.Link spy smooth duration={1000} to="jump-news" Ref="nofollow">
             <Button className="down-icon-wrapper">
               <CardMedia
                 image="/images/icons-double-down.png"

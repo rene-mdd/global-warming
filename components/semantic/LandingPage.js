@@ -23,6 +23,7 @@ const LandingPage = () => (
         component="img"
         image="images/icons8-stocks-64.png"
         className="landing-page-logo"
+        alt="green energy"
       />
       <Typography align="center" className="h2-landing" maxWidth="80%">
         This site delivers up to date information and APIs about the
@@ -32,7 +33,7 @@ const LandingPage = () => (
       </Typography>
     </Grid>
     <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
-      <Scroll.Link spy smooth duration={1000} to="jump-to-temperature">
+      <Scroll.Link spy smooth duration={1000} to="jump-to-temperature" Ref="nofollow">
         <Button className="icon-style" basic>
           <CardMedia
             image="/images/icons-double-down.png"
