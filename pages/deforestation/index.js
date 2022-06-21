@@ -135,6 +135,7 @@ function SemanticDeforestation(props) {
                 component="iframe"
                 frameBorder="0"
                 src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
+                loading="lazy"
               />
             </Container>
           </Grid>

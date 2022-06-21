@@ -5,25 +5,8 @@ export default function SiteHeader({ title, description, keyword }) {
   return (
     <>
       <Head>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=[Tracking ID]"
-        />
-
-        <script
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-174660681-1');
-        `,
-          }}
-        />
         <title>{title}</title>
         <meta property="og:url" content="https://global-warming.org/" />
-        {/* link to live chart api/chart-img/tempChart.jpeg */}
         <meta property="og:title" content="Global Warming Data and API" />
         <meta property="og:image" content="images/logo-planet-image.png" />
         <meta property="og:image:width" content="75" />
@@ -34,10 +17,14 @@ export default function SiteHeader({ title, description, keyword }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" type="image/gif" href="favicon/favicon.ico" />
         <link
+          media="print"
+          onLoad="this.onload=null;this.removeAttribute('media');"
           href="https://fonts.googleapis.com/css2?family=Play&display=swap"
           rel="stylesheet"
         />
         <link
+          media="print"
+          onLoad="this.onload=null;this.removeAttribute('media');"
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />

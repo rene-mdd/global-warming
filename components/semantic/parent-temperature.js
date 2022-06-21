@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { temperatureService } from "../../services/dataService";
 import Temperature from "../charts/temperature";
-import {AccordionTemp, AccordionShare } from "./accordion";
+import { AccordionTemp, AccordionShare } from "./accordion";
 import { Container, Grid, Typography } from "@mui/material";
 
 function SemanticTemperature() {
@@ -23,9 +23,7 @@ function SemanticTemperature() {
         <Typography component="h2" align="center" className="h2-general">
           Global temperature anomalies from year 1 to present
         </Typography>
-        <Grid container>
-          <Temperature />
-        </Grid>
+        <Grid container>{todayValue === {} ? null : <Temperature />}</Grid>
         <Grid sx={{ marginTop: "7vh" }}>
           <Container align="center" className="today-value">
             <p>
