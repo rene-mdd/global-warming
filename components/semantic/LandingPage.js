@@ -23,6 +23,7 @@ const LandingPage = () => (
         component="img"
         image="images/icons8-stocks-64.png"
         className="landing-page-logo"
+        alt="green energy"
       />
       <Typography align="center" className="h2-landing" maxWidth="80%">
         This site delivers up to date information and APIs about the

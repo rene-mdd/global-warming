@@ -37,6 +37,7 @@ function Business() {
             component="img"
             image="images/statistic-icon.png"
             className="landing-page-logo"
+            alt="statistic"
           />
           <Typography
             component="h2"

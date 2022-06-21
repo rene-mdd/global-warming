@@ -87,6 +87,7 @@ function SemanticDeforestation(props) {
             component="img"
             image="images/forest.png"
             className="landing-page-logo"
+            alt="forest logo"
           />
           <Typography
             component="h2"

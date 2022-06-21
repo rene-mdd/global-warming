@@ -42,6 +42,7 @@ function About() {
             component="img"
             image="images/logo-planet-image.png"
             className="landing-page-logo"
+            alt="planet dying logo"
           />
           <Typography
             component="h2"
@@ -61,6 +62,7 @@ function About() {
               style={{ border: "none", width: "100%" }}
               height="125"
               width="300"
+              loading="lazy"
             ></iframe>
           </Grid>
           <Grid item>
@@ -70,6 +72,7 @@ function About() {
               style={{ border: "none", width: "100%" }}
               height="125"
               width="300"
+              loading="lazy"
             ></iframe>
           </Grid>
         </Grid>
