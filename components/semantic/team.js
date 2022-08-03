@@ -116,7 +116,7 @@ export default function Team(props) {
               </Typography>
             </Grid>
            
-            <Grid item xs={12} sm={6} md={3}>
+            {/* <Grid item xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["05_image"]}
@@ -132,7 +132,7 @@ export default function Team(props) {
                 >
                   {content["05_job"]}
                 </Typography>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
