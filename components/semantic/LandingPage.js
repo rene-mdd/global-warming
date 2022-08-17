@@ -33,7 +33,7 @@ const LandingPage = () => (
     </Grid>
     <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
       <Scroll.Link spy smooth duration={1000} to="jump-to-temperature" Ref="nofollow">
-        <Button className="icon-style" basic>
+        <Button className="icon-style">
           <CardMedia
             image="/images/icons-double-down.png"
             component="img"
