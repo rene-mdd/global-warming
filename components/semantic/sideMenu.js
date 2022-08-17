@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Container,
   Grid,
@@ -14,6 +14,8 @@ export default function SideBar() {
   const [activeItem, setActiveItem] = useState("");
   // const [menuVisible, setMenuVisible] = useState(true);
   const [rotate, setRotate] = useState(false);
+
+  const scrollRef = useRef("nofollow");
 
   const handleClick = () => {
     // setMenuVisible((prevState) => !prevState);
@@ -43,7 +45,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
-                Ref="nofollow"
+                ref={scrollRef}
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "temperature" ? "0.7" : "1" }}
@@ -59,7 +61,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
-                Ref="nofollow"
+                ref={scrollRef}
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "co2" ? "0.7" : "1" }}
@@ -75,7 +77,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
-                Ref="nofollow"
+                ref={scrollRef}
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "methane" ? "0.7" : "1" }}
@@ -91,7 +93,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
-                Ref="nofollow"
+                ref={scrollRef}
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "nitrous" ? "0.7" : "1" }}
@@ -107,7 +109,7 @@ export default function SideBar() {
                 smooth
                 offset={0}
                 duration={1000}
-                Ref="nofollow"
+                ref={scrollRef}
               >
                 <MenuItem
                   sx={{ opacity: activeItem === "arctic" ? "0.7" : "1" }}
