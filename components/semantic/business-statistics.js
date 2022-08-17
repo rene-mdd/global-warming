@@ -164,17 +164,18 @@ Row.propTypes = {
     impact: PropTypes.string.isRequired,
     profile: PropTypes.shape({
       logo: PropTypes.string.isRequired,
-      details: PropTypes.string.isRequired,
-      sources: PropTypes.string.isRequired,
+      details: PropTypes.arrayOf(PropTypes.string),
+      sources: PropTypes.arrayOf(
+        PropTypes.shape({ name: PropTypes.string, link: PropTypes.string })
+      ),
     }).isRequired,
     name: PropTypes.string.isRequired,
-    offset: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired,
+    offset: PropTypes.string.isRequired,
   }).isRequired,
 };
 
 const rows = [
-  createData("Volkswagen AG", "4 / -1", 1, 0, 0, 0, 4, {
+  createData("Volkswagen AG", "4 / -1", "1", "0", "0", "0", "4", {
     logo: "images/volkswagen_logo_2019.svg.png",
     details: [
       "They offer one cabon neutral vehicle model, the ID.3",
@@ -269,7 +270,7 @@ const rows = [
       "Volkswagen Vanagon/Camper 2WD",
     ],
   }),
-  createData("JBS SA", "3 / 3", 1, "-1", 0, "-3", 3, {
+  createData("JBS SA", "3 / 3", "1", "-1", "0", "-3", "3", {
     logo: "images/JBS_S.A.png",
     details: [
       "This corporation is a good example of greenwashing. They have dozens of promises and projects related to environmental conservation and offsetting, but none of them are up and running. On the contrary, their emissions, and deforestation have been growing every year.",
@@ -422,7 +423,7 @@ const rows = [
       "Zap!",
     ],
   }),
-  createData("Apple Inc.", "4 / No data", 3, 2, 1, "No data", 10, {
+  createData("Apple Inc.", "4 / No data", "3", "2", "1", "No data", "10", {
     logo: "images/Apple_logo_black.svg.png",
     details: [
       "Apple Inc. together with Conservation International created a $200 million fund for timber producing managed forest. This kind of projects suck carbon from the atmosphere. That’s why we scored this as partial, in the climate contribution field.",
@@ -458,7 +459,7 @@ const rows = [
       "MacBook Pro",
     ],
   }),
-  createData("Amazon.com Inc.", "-1 / -1", 2, "-1", 0, "-1", "-2", {
+  createData("Amazon.com Inc.", "-1 / -1", "2", "-1", "0", "-1", "-2", {
     logo: "images/amazon-logo.png",
     details: [
       "Amazon is another example of greenwashing. The only climate contribution Amazon have promised to do is a $10 million donation for the conservation of forests in different US regions. This amount seems ridiculously small for a company of this size.",
@@ -477,7 +478,7 @@ const rows = [
     ],
     products: ["everything in amazon.com"],
   }),
-  createData("Siemens AG", "4 / No data", 3, 1, 1, "No data", 9, {
+  createData("Siemens AG", "4 / No data", "3", "1", "1", "No data", "9", {
     logo: "images/siemens-logo.png",
     details: [
       "Siemens has around 65,000 suppliers around the world. This make the process of measuring and lowering their carbon emissions more complex.",
@@ -494,7 +495,7 @@ const rows = [
     ],
     products: ["Products catalog"],
   }),
-  createData("Adidas AG", "3 / -1", 1, 0, 0, 0, 3, {
+  createData("Adidas AG", "3 / -1", "1", "0", "0", "0", "3", {
     logo: "images/Adidas_Logo.svg.png",
     details: [
       "Adidas has committed to achieving climate neutrality (GHG - greenhouse gases) across its operations by 2025, reducing absolute GHG emissions across its entire value chain by 30% by 2030, measured against a baseline of 2017. But there is still not an official commitment to net-zero emissions.",
@@ -559,8 +560,8 @@ export default function BusinessStatistics() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {rows.map((row, index) => (
+            <Row key={row.name + index} index={index} row={row} />
           ))}
         </TableBody>
       </Table>
