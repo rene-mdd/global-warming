@@ -514,7 +514,7 @@ const rows = [
   }),
 ];
 
-export default function CollapsibleTable() {
+export default function BusinessStatistics() {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

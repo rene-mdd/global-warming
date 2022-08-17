@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
-import CollapsibleTable from "../../components/semantic/business-statistics";
+import BusinessStatistics from "../../components/semantic/business-statistics";
 
 function Business() {
   // not ready
@@ -50,7 +50,7 @@ function Business() {
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>
             <Grid item xs={12} md={12} lg={8} mb={6}>
-            <CollapsibleTable />
+            <BusinessStatistics />
             </Grid>
         </Grid>
       </Grid>

@@ -16,7 +16,7 @@ const LandingPage = () => (
     columns={12}
   >
     <Typography component="h1" align="center" className="h1-landing">
-      Global Warming live graphs and API
+      Global Warming and Climate Change API
     </Typography>
     <Grid align="center">
       <CardMedia
@@ -26,10 +26,9 @@ const LandingPage = () => (
         alt="green energy"
       />
       <Typography align="center" className="h2-landing" maxWidth="80%">
-        This site delivers up to date information and APIs about the
-        earth&quot;s current temperature, the concentration of greenhouse gases
-        in the atmosphere, and worldwide news about global warming and
-        deforestation.
+        This page delivers up to date information and APIs about the
+        earth&quot;s current temperature and the concentration of greenhouse gases (GHG)
+        in the atmosphere.
       </Typography>
     </Grid>
     <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
