@@ -12,15 +12,15 @@ function Business() {
   // not ready
   const aboutTitle = "Business environmental impact";
   const aboutMetaDescription =
-    "List of business and organization with their environmental impact";
+    "List of business and organization by their environmental impact";
   const aboutKeywords =
     "Global warming, environment, impact, pollution, climate change, business";
 
   return (
     <>
       <SiteHeader
-        description={aboutTitle}
-        title={aboutMetaDescription}
+        description={aboutMetaDescription}
+        title={aboutTitle}
         keywords={aboutKeywords}
       />
       <StickyMenu />
