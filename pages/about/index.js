@@ -23,8 +23,8 @@ function About() {
   return (
     <>
       <SiteHeader
-        description={aboutTitle}
-        title={aboutMetaDescription}
+        description={aboutMetaDescription}
+        title={aboutTitle}
         keywords={aboutKeywords}
       />
       <StickyMenu />
