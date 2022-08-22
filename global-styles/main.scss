@@ -86,7 +86,7 @@ footer {
   font-size: 2.2em !important;
   padding: 10vh !important;
 }
-.sideBar {
+.position-relative {
   position: relative !important;
 }
 .landing-page-deforestation {
@@ -226,7 +226,7 @@ nav {
 .menu {
   font-size: 110%;
 }
-.side-menu-text {
+.color-white {
   color: white;
 }
 .side-menu-icon {
@@ -333,4 +333,15 @@ nav {
   max-height: 200px;
   overflow: hidden;
   overflow-y: scroll;
+}
+.sticky-column {
+  position: sticky;
+  background-color: #343837;
+  color: white;
+}
+.sticky-accordion {
+  left: 0;
+}
+.sticky-company {
+  left: 66px;
 }

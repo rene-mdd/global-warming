@@ -38,7 +38,7 @@ export default function SideBar() {
             component="nav"
             className={rotate ? "sidebar-config-out" : "sidebar-config-in"}
           >
-            <MenuList className="sideBar">
+            <MenuList className="position-relative">
               <Scroll.Link
                 to="jump-to-temperature"
                 spy
@@ -50,7 +50,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "temperature" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("temperature")}
-                  className="side-menu-text"
+                  className="color-white"
                 >
                   Temperature
                 </MenuItem>
@@ -66,7 +66,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "co2" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("co2")}
-                  className="side-menu-text"
+                  className="color-white"
                 >
                   Carbon Dioxide
                 </MenuItem>
@@ -82,7 +82,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "methane" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("methane")}
-                  className="side-menu-text"
+                  className="color-white"
                 >
                   Methane
                 </MenuItem>
@@ -98,7 +98,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "nitrous" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("nitrous")}
-                  className="side-menu-text"
+                  className="color-white"
                 >
                   Nitrous Oxide
                 </MenuItem>
@@ -114,7 +114,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "arctic" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("arctic")}
-                  className="side-menu-text"
+                  className="color-white"
                 >
                   Polar Ice
                 </MenuItem>

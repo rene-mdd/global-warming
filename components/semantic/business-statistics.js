@@ -47,16 +47,17 @@ function Row(props) {
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        <TableCell className="sticky-column sticky-accordion">
           <IconButton
             aria-label="expand row"
             size="small"
+            className="color-white"
             onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" className="sticky-column sticky-company">
           {row.name}
         </TableCell>
         <TableCell align="right">{row.disclosure}</TableCell>
@@ -518,11 +519,11 @@ const rows = [
 export default function BusinessStatistics() {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table aria-label="collapsible table" className="position-relative">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>
+            <TableCell className="sticky-column sticky-accordion" />
+            <TableCell className="sticky-column sticky-company">
               <Typography variant="span" fontWeight="bold">
                 Company
               </Typography>
