@@ -15,27 +15,6 @@ export default function SiteHeader({ title, description, keyword }) {
         <meta name="description" content={description} />
         <meta name="keywords" content={keyword} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <link
-              rel="shortcut icon"
-              type="image/gif"
-              href="favicon/favicon.ico"
-            />
-            <link
-              media="print"
-              onLoad="this.onload=null;this.removeAttribute('media');"
-              href="https://fonts.googleapis.com/css2?family=Play&display=swap"
-              rel="stylesheet"
-            />
-            <link
-              media="print"
-              onLoad="this.onload=null;this.removeAttribute('media');"
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            />
-          </>
-        ) : null}
       </Head>
     </>
   );

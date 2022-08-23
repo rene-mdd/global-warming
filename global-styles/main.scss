@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Play";
+  src: url('../fonts/Play/Play-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+  
+@font-face {
+  font-family: "Play";
+  src: url('../fonts/Play/Play-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
 html * {
   padding: 0;
   font-family: "Play", sans-serif !important;
