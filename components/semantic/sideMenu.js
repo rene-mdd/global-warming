@@ -50,7 +50,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "temperature" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("temperature")}
-                  className="color-white"
+                  className="white-color"
                 >
                   Temperature
                 </MenuItem>
@@ -66,7 +66,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "co2" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("co2")}
-                  className="color-white"
+                  className="white-color"
                 >
                   Carbon Dioxide
                 </MenuItem>
@@ -82,7 +82,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "methane" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("methane")}
-                  className="color-white"
+                  className="white-color"
                 >
                   Methane
                 </MenuItem>
@@ -98,7 +98,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "nitrous" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("nitrous")}
-                  className="color-white"
+                  className="white-color"
                 >
                   Nitrous Oxide
                 </MenuItem>
@@ -114,7 +114,7 @@ export default function SideBar() {
                 <MenuItem
                   sx={{ opacity: activeItem === "arctic" ? "0.7" : "1" }}
                   onClick={() => setActiveItem("arctic")}
-                  className="color-white"
+                  className="white-color"
                 >
                   Polar Ice
                 </MenuItem>
