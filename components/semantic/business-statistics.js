@@ -15,6 +15,15 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+    },
+  },
+});
 
 function createData(
   name,
@@ -46,17 +55,19 @@ function Row(props) {
 
   return (
     <>
+    <ThemeProvider theme={theme}>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        <TableCell className="sticky-column sticky-accordion">
           <IconButton
             aria-label="expand row"
             size="small"
+            color="primary"
             onClick={() => setOpen(!open)}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
+        <TableCell component="th" scope="row" className="sticky-column sticky-company white-color">
           {row.name}
         </TableCell>
         <TableCell align="right">{row.disclosure}</TableCell>
@@ -151,6 +162,7 @@ function Row(props) {
           </Collapse>
         </TableCell>
       </TableRow>
+      </ThemeProvider>
     </>
   );
 }
@@ -518,12 +530,12 @@ const rows = [
 export default function BusinessStatistics() {
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table aria-label="collapsible table" className="position-relative">
         <TableHead>
           <TableRow>
-            <TableCell />
-            <TableCell>
-              <Typography variant="span" fontWeight="bold">
+            <TableCell className="sticky-column sticky-accordion" />
+            <TableCell className="sticky-column sticky-company">
+              <Typography variant="span" fontWeight="bold" className="white-color">
                 Company
               </Typography>
             </TableCell>

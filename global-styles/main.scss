@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Play";
+  src: url('../fonts/Play/Play-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+  
+@font-face {
+  font-family: "Play";
+  src: url('../fonts/Play/Play-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
 html * {
   padding: 0;
   font-family: "Play", sans-serif !important;
@@ -86,7 +100,7 @@ footer {
   font-size: 2.2em !important;
   padding: 10vh !important;
 }
-.sideBar {
+.position-relative {
   position: relative !important;
 }
 .landing-page-deforestation {
@@ -226,8 +240,8 @@ nav {
 .menu {
   font-size: 110%;
 }
-.side-menu-text {
-  color: white;
+.white-color {
+  color: white !important;
 }
 .side-menu-icon {
   transform: translate(-10px);
@@ -333,4 +347,14 @@ nav {
   max-height: 200px;
   overflow: hidden;
   overflow-y: scroll;
+}
+.sticky-column {
+  position: sticky;
+  background-color: #343837;
+}
+.sticky-accordion {
+  left: 0;
+}
+.sticky-company {
+  left: 66px;
 }
