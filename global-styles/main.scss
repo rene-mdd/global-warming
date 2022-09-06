@@ -346,7 +346,12 @@ nav {
 .text-container {
   max-height: 200px;
   overflow: hidden;
-  overflow-y: scroll;
+  overflow-wrap: break-word;
+  & p, li {
+    font-size: small;
+    overflow-y: scroll;
+
+  } 
 }
 .sticky-column {
   position: sticky;
@@ -357,4 +362,7 @@ nav {
 }
 .sticky-company {
   left: 66px;
+}
+.bold-class {
+  font-weight: bold;
 }
