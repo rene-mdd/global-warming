@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { CardMedia, Container } from "@mui/material";
+import { CardMedia, Container, TextField } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -27,16 +28,20 @@ const theme = createTheme({
     primary: {
       main: "#ffffff",
     },
+    pepe: {
+      main: "#343837",
+    },
   },
 });
 
 function Row(props) {
+  const [open, setOpen] = useState(false);
   const { included, index } = props;
   const {
     row: { attributes },
   } = props;
   const apiHost = process.env.NEXT_PUBLIC_LOCAL_HOST;
-  const [open, setOpen] = useState(false);
+  const logoUrl = included[index]?.attributes.uri.url;
   const colorImpact =
     attributes.environmental_impact <= 5
       ? "red"
@@ -98,9 +103,15 @@ function Row(props) {
                 </Typography>
                 <Table>
                   <TableRow>
-                    <TableCell align="center" className="bold-class">logo</TableCell>
-                    <TableCell className="bold-class">Additional details</TableCell>
-                    <TableCell className="bold-class">Products & services</TableCell>
+                    <TableCell align="center" className="bold-class">
+                      logo
+                    </TableCell>
+                    <TableCell className="bold-class">
+                      Additional details
+                    </TableCell>
+                    <TableCell className="bold-class">
+                      Products & services
+                    </TableCell>
                     <TableCell className="bold-class">Sources</TableCell>
                   </TableRow>
                   <TableRow>
@@ -109,7 +120,7 @@ function Row(props) {
                         className="brands-logo"
                         component="img"
                         alt={attributes?.title}
-                        image={apiHost + included[index]?.attributes.uri.url}
+                        src={logoUrl ? (apiHost + logoUrl) : "/images/no-logo.png"}
                       />
                     </TableCell>
                     <TableCell align="left" width="100%">
@@ -128,7 +139,7 @@ function Row(props) {
                         disableGutters
                         component="div"
                         className="text-container"
-                        sx={{fontSize: 1}}
+                        sx={{ fontSize: 1 }}
                       >
                         {ReactHtmlParser(
                           attributes?.products_services.processed
@@ -173,80 +184,120 @@ export default function BusinessStatistics() {
   const [businessData, setBusinessData] = useState([]);
   // media and files api data
   const [includedData, setIncludedData] = useState([]);
+  // get search value
+  const [input, setInput] = useState("");
+  // loading search bar
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    const businessApiUrl =
-      "http://global-warming-drupal.docksal/jsonapi/business?include=logo";
-    let header = new Headers({
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/vnd.api+json",
-      "Content-Type": "application/vnd.api+json",
-    });
-    async function fetchBusinessData() {
-      try {
-        const response = await fetch(businessApiUrl, header);
-        const business = await response.json();
-        setBusinessData(() => business.data);
-        setIncludedData(() => business.included)
-      } catch (error) {
-        console.error(error);
-      }
+    if(input.length > 0) {
+      setLoading(true)
     }
-    fetchBusinessData();
-  }, []);
+    const delayDebounceFn = setTimeout(() => {
+      const businessApiUrl = `http://global-warming-drupal.docksal/jsonapi/business?include=logo&filter[title][operator]=CONTAINS&filter[title][value]=${input}`;
+      let header = new Headers({
+        "Access-Control-Allow-Origin": "https://global-warming.org/",
+        Accept: "application/vnd.api+json",
+        "Content-Type": "application/vnd.api+json",
+      });
+      async function fetchBusinessData() {
+        try {
+          const response = await fetch(businessApiUrl, header);
+          const business = await response.json();
+          setBusinessData(() => business.data);
+          setIncludedData(() => business.included);
+          console.log(includedData)
+          setLoading(false);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchBusinessData();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [input]);
+
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table" className="position-relative">
-        <TableHead>
-          <TableRow>
-            <TableCell className="sticky-column sticky-accordion" />
-            <TableCell className="sticky-column sticky-company">
-              <Typography
-                variant="span"
-                fontWeight="bold"
-                className="white-color"
+    <>
+      <Container maxWidth={false} align="center" sx={{marginBottom: 1}}>
+        <TextField
+          label="Search"
+          size="medium"
+          autoComplete="off"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <LoadingButton
+                size="small"
+                loading={loading}
+                color="primary"
+                disabled
               >
-                Company
-              </Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography variant="span" fontWeight="bold">
-                Disclosure: GHG Emission / Deforestation
-              </Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography variant="span" fontWeight="bold">
-                Commitment status
-              </Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography variant="span" fontWeight="bold">
-                Net emission reduction
-              </Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography variant="span" fontWeight="bold">
-                Climate contribution / Offsetting
-              </Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography variant="span" fontWeight="bold">
-                Deforestation
-              </Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography variant="span" fontWeight="bold">
-                Environmental impact
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {businessData.map((row, index) => (
-            <Row row={row} included={includedData} index={index} key={row.id} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+              </LoadingButton>
+            ),
+          }}
+        ></TextField>
+      </Container>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table" className="position-relative">
+          <TableHead>
+            <TableRow>
+              <TableCell className="sticky-column sticky-accordion" />
+              <TableCell className="sticky-column sticky-company">
+                <Typography
+                  variant="span"
+                  fontWeight="bold"
+                  className="white-color"
+                >
+                  Company
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="span" fontWeight="bold">
+                  Disclosure: GHG Emission / Deforestation
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="span" fontWeight="bold">
+                  Commitment status
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="span" fontWeight="bold">
+                  Net emission reduction
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="span" fontWeight="bold">
+                  Climate contribution / Offsetting
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="span" fontWeight="bold">
+                  Deforestation
+                </Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography variant="span" fontWeight="bold">
+                  Environmental impact
+                </Typography>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {businessData.map((row, index) => (
+              <Row
+                row={row}
+                included={includedData}
+                index={index}
+                key={row.id}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
