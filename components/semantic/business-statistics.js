@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { CardMedia, Container, TextField } from "@mui/material";
+import { CardMedia, Container, TextField, Alert } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -17,11 +17,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2,
-} from "react-html-parser";
+import ReactHtmlParser from "react-html-parser";
 
 const theme = createTheme({
   palette: {
@@ -38,10 +34,14 @@ function Row(props) {
   const [open, setOpen] = useState(false);
   const { included, index } = props;
   const {
-    row: { attributes },
+    row: { attributes, relationships },
   } = props;
   const apiHost = process.env.NEXT_PUBLIC_LOCAL_HOST;
-  const logoUrl = included[index]?.attributes.uri.url;
+  const logoImgUrl = included.filter(function (o1) {
+    // return the logo with equal id
+    return relationships.logo.data?.id == o1.id;
+  });
+  const logoUrl = logoImgUrl[0]?.attributes?.uri?.url;
   const colorImpact =
     attributes.environmental_impact <= 5
       ? "red"
@@ -120,7 +120,9 @@ function Row(props) {
                         className="brands-logo"
                         component="img"
                         alt={attributes?.title}
-                        src={logoUrl ? (apiHost + logoUrl) : "/images/no-logo.png"}
+                        src={
+                          logoUrl ? apiHost + logoUrl : "/images/no-logo.png"
+                        }
                       />
                     </TableCell>
                     <TableCell align="left" width="100%">
@@ -188,9 +190,13 @@ export default function BusinessStatistics() {
   const [input, setInput] = useState("");
   // loading search bar
   const [loading, setLoading] = useState(false);
+  // loading initial data request
+  const [initialLoading, setInitialLoading] = useState(true);
+  // error message
+  const [errorMsg, setError] = useState(false);
   useEffect(() => {
-    if(input.length > 0) {
-      setLoading(true)
+    if (input.length > 0) {
+      setLoading(true);
     }
     const delayDebounceFn = setTimeout(() => {
       const businessApiUrl = `http://global-warming-drupal.docksal/jsonapi/business?include=logo&filter[title][operator]=CONTAINS&filter[title][value]=${input}`;
@@ -205,9 +211,10 @@ export default function BusinessStatistics() {
           const business = await response.json();
           setBusinessData(() => business.data);
           setIncludedData(() => business.included);
-          console.log(includedData)
           setLoading(false);
+          setInitialLoading(false);
         } catch (error) {
+          setError(true);
           console.error(error);
         }
       }
@@ -219,7 +226,7 @@ export default function BusinessStatistics() {
 
   return (
     <>
-      <Container maxWidth={false} align="center" sx={{marginBottom: 1}}>
+      <Container maxWidth={false} align="center" sx={{ marginBottom: 1 }}>
         <TextField
           label="Search"
           size="medium"
@@ -231,10 +238,9 @@ export default function BusinessStatistics() {
               <LoadingButton
                 size="small"
                 loading={loading}
-                color="primary"
+                className="search-loading"
                 disabled
-              >
-              </LoadingButton>
+              ></LoadingButton>
             ),
           }}
         ></TextField>
@@ -297,6 +303,16 @@ export default function BusinessStatistics() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Container align="center">
+      <LoadingButton
+          loading={initialLoading}
+          className="loading-button"
+          disabled
+        />
+      {errorMsg && (
+        <Alert severity="error">There was an error trying to fetch the information. If the problem persist, please contact us.</Alert>
+      )}
+      </Container>
     </>
   );
 }
@@ -336,12 +352,6 @@ Row.propTypes = {
     relationships: PropTypes.shape({
       category: PropTypes.shape({
         data: PropTypes.arrayOf(PropTypes.object),
-        links: PropTypes.shape({
-          self: PropTypes.shape({ href: PropTypes.string }),
-        }),
-      }),
-      logo: PropTypes.shape({
-        data: PropTypes.string,
         links: PropTypes.shape({
           self: PropTypes.shape({ href: PropTypes.string }),
         }),
