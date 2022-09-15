@@ -1,24 +1,23 @@
 /* eslint-disable */
 import * as Scroll from "react-scroll";
-import {
-  CardMedia,
-  Grid,
-  Typography,
-  Button,
-  Divider,
-} from "@mui/material";
+import { CardMedia, Grid, Typography, Button, Divider } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
+import aboutData from "../../public/SSG/about.json"
 
-function About() {
-  // not ready
-  const aboutTitle = "About Global Warming";
-  const aboutMetaDescription =
-    "Our mission is to provide the public with information related to every organization carbon footprint";
-  const aboutKeywords =
-    "Global warming, about, carbon footprint, climate change, environment";
+function About(props) {
+  const {
+    aboutData: {
+      aboutTitle,
+      aboutMetaDescription,
+      aboutKeywords,
+      pageTitle,
+      subTitle,
+      timelineTitle,
+    },
+  } = props;
 
   return (
     <>
@@ -35,7 +34,7 @@ function About() {
         className="landing-page-about"
       >
         <Typography paragraph align="center" className="h1-about">
-          About Us
+          {pageTitle}
         </Typography>
         <Grid align="center">
           <CardMedia
@@ -50,8 +49,7 @@ function About() {
             align="center"
             gutterBottom
           >
-            We are developing the most complete and reliable platform for
-            worldwide environmental accountability.
+            {subTitle}
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center">
@@ -92,7 +90,7 @@ function About() {
       <Divider name="jump-news" className="hide-divider" />
       <Grid container className="timeline">
         <Typography variant="h2" className="timeline-title">
-          Project Timeline
+          {timelineTitle}
         </Typography>
         <CustomizedTimeline />
       </Grid>
@@ -101,6 +99,14 @@ function About() {
       </Grid>
     </>
   );
+}
+
+export async function getStaticProps(context) {
+ 
+  return {
+    // this data comes from SSG folder (static site generation)
+    props: { aboutData },
+  };
 }
 
 export default About;
