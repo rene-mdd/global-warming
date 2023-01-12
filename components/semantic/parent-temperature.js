@@ -5,7 +5,7 @@ import Temperature from "../charts/temperature";
 import { AccordionTemp, AccordionShare } from "./accordion";
 import { Container, Grid, Typography } from "@mui/material";
 
-function SemanticTemperature() {
+function ParentTemperature() {
   const [todayValue, setTodayValue] = useState({});
 
   useEffect(() => {
@@ -134,4 +134,4 @@ function SemanticTemperature() {
     </Container>
   );
 }
-export default SemanticTemperature;
+export default ParentTemperature;

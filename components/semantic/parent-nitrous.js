@@ -15,7 +15,7 @@ const theme = createTheme({
   },
 });
 
-function SemanticNitrous() {
+function ParentNitrous() {
   const [nitrous, setNitrous] = useState(false);
   const [nitrousLoading, setNitrousLoading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
@@ -101,4 +101,4 @@ function SemanticNitrous() {
   );
 }
 
-export default SemanticNitrous;
+export default ParentNitrous;
