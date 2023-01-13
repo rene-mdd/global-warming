@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
@@ -19,17 +19,12 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-// const CognitiveServicesCredentials =
-//   require("ms-rest-azure").CognitiveServicesCredentials;
-  const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
-
+const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
 
 const azureEnvKey = process.env.API_KEY_AZURE;
 const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
 const searchTerm = "global warming";
-// const NewsSearchAPIClient = require("azure-cognitiveservices-newssearch");
 const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
-
 
 const client = new NewsSearchClient(credentials);
 function News(props) {
@@ -38,7 +33,7 @@ function News(props) {
     /* Optional options */
     threshold: 0,
     onChange: (inView, entry) => setIntersecting(inView),
-    triggerOnce: true
+    triggerOnce: true,
   });
 
   const { googleNewsJson, jsonAzure } = props;
@@ -164,8 +159,7 @@ function News(props) {
               </Grid>
             </Paper>
           ))}
-          <Container ref={ref}>
-          </Container>
+          <Container ref={ref}></Container>
           {intersecting &&
             duplicateRemovalBing.map((obj) => (
               <Paper key={obj.name} elevation={2} className="news-wrapper">
@@ -268,11 +262,11 @@ export async function getServerSideProps({ res }) {
   const options = {
     count: 20,
     freshness: "Month",
-    safeSearch: "Strict"
+    safeSearch: "Strict",
   };
   const resp = await client.news.search(searchTerm, options);
-
   const jsonAzure = await JSON.parse(JSON.stringify(resp));
+  
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
     `https://gnews.io/api/v4/search?q=%22climate%20change%22&lang=en&image=required&token=${gNewsVariable}`
