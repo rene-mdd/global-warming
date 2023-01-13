@@ -9,6 +9,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@azure/cognitiveservices-newssearch": "^3.0.1",
+    "@azure/ms-rest-azure-js": "^2.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.8.4",
@@ -20,7 +22,6 @@
     "@react-rxjs/core": "^0.9.8",
     "@react-rxjs/utils": "^0.9.5",
     "axios": "^0.21.4",
-    "azure-cognitiveservices-newssearch": "^2.0.0",
     "chart.js": "^2.9.4",
     "csvtojson": "^2.0.10",
     "dotenv": "^8.6.0",
@@ -28,7 +29,6 @@
     "ftp": "^0.3.10",
     "i": "^0.3.7",
     "lodash": "^4.17.21",
-    "ms-rest-azure": "^3.0.2",
     "next": "^12.2.3",
     "next-images": "^1.8.4",
     "nextjs-progressbar": "^0.0.14",
