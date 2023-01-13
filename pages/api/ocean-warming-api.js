@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const line2Array = (line) => line.split(" ").filter((ele) => ele);
+// const line2Array = (line) => line.split(" ").filter((ele) => ele);
 
-const convertToObject = (valueArray2d) =>
-  valueArray2d.map(([time, station, land]) => ({ time, station, land }));
+// const convertToObject = (valueArray2d) =>
+//   valueArray2d.map(([time, station, land]) => ({ time, station, land }));
 
 export default async (req, res) => {
   try {
