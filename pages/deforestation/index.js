@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Observer from "@researchgate/react-intersection-observer";
 import * as Scroll from "react-scroll";
 import PublicIcon from "@mui/icons-material/Public";
+import { useInView } from "react-intersection-observer";
 import {
   Container,
   CardMedia,
@@ -19,29 +19,27 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-const CognitiveServicesCredentials =
-  require("ms-rest-azure").CognitiveServicesCredentials;
+const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
+
 
 const azureEnvKey = process.env.API_KEY_AZURE;
 const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
 const searchTerm = "deforestation";
-const NewsSearchAPIClient = require("azure-cognitiveservices-newssearch");
+const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
 
-const client = new NewsSearchAPIClient(credentials);
+const client = new NewsSearchClient(credentials);
 
 function SemanticDeforestation(props) {
   const [intersecting, setIntersecting] = useState(false);
 
-  const handleIntersection = (event) => {
-    if (event.isIntersecting) {
-      setIntersecting(true);
-    }
-  };
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+    onChange: (inView, entry) => setIntersecting(inView),
+    triggerOnce: true,
+  });
 
   const { googleNewsJson, azureJson } = props;
-  const options = {
-    onChange: handleIntersection,
-  };
 
   const parsedGNews = googleNewsJson.articles;
   const parsedBingNews = azureJson.value;
@@ -229,12 +227,10 @@ function SemanticDeforestation(props) {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Observer {...options}>
-                  <span />
-                </Observer>
               </Grid>
             </Paper>
           ))}
+           <Container ref={ref}></Container>
           {intersecting &&
             duplicateRemovalBing.map((obj) => (
               <Paper key={obj.name} elevation={2} className="news-wrapper">
@@ -334,17 +330,20 @@ SemanticDeforestation.defaultProps = {
 };
 
 export async function getServerSideProps({ res }) {
-  const resp = await client.newsOperations.search(searchTerm, {
-    market: "en-XA",
-    count: 100,
-  });
+  const options = {
+    count: 20,
+    freshness: "Month",
+    safeSearch: "Strict",
+  };
+  const resp = await client.news.search(searchTerm, options);
+  const azureJson = JSON.parse(JSON.stringify(resp));
+
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
     `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
   );
 
   const googleNewsJson = JSON.parse(JSON.stringify(gNewsResp.data));
-  const azureJson = JSON.parse(JSON.stringify(resp));
 
   res.setHeader(
     "Cache-Control",

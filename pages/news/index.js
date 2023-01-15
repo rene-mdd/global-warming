@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
 import PublicIcon from "@mui/icons-material/Public";
-import Observer from "@researchgate/react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import {
   CardMedia,
   Container,
@@ -19,30 +19,24 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-const CognitiveServicesCredentials =
-  require("ms-rest-azure").CognitiveServicesCredentials;
+const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
 
 const azureEnvKey = process.env.API_KEY_AZURE;
 const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
 const searchTerm = "global warming";
-const NewsSearchAPIClient = require("azure-cognitiveservices-newssearch");
+const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
 
-const client = new NewsSearchAPIClient(credentials);
-
+const client = new NewsSearchClient(credentials);
 function News(props) {
   const [intersecting, setIntersecting] = useState(false);
-
-  const handleIntersection = (event) => {
-    if (event.isIntersecting) {
-      setIntersecting(true);
-    }
-  };
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+    onChange: (inView, entry) => setIntersecting(inView),
+    triggerOnce: true,
+  });
 
   const { googleNewsJson, jsonAzure } = props;
-  const options = {
-    onChange: handleIntersection,
-  };
-
   const parsedGNews = googleNewsJson.articles;
   const parsedBingNews = jsonAzure.value;
   const duplicateRemovalBing = parsedBingNews.filter(
@@ -110,11 +104,7 @@ function News(props) {
         <Typography component="h3" className="list-news" align="center">
           News List
         </Typography>
-        <Typography component="h4" className="date">
-          <Observer {...options}>
-            <span> {`Live: ${new Date().toString()}`}</span>
-          </Observer>
-        </Typography>
+        <Typography component="h4" className="date"></Typography>
         <List sx={{ width: "100%" }}>
           {duplicateRemovalGNews.map((obj) => (
             <Paper key={obj.title} elevation={2} className="news-wrapper">
@@ -166,12 +156,10 @@ function News(props) {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Observer {...options}>
-                  <span></span>
-                </Observer>
               </Grid>
             </Paper>
           ))}
+          <Container ref={ref}></Container>
           {intersecting &&
             duplicateRemovalBing.map((obj) => (
               <Paper key={obj.name} elevation={2} className="news-wrapper">
@@ -271,13 +259,14 @@ News.defaultProps = {
 };
 
 export async function getServerSideProps({ res }) {
-  const resp = await client.newsOperations.search(searchTerm, {
-    market: "en-XA",
-    count: 100,
-  });
-
+  const options = {
+    count: 20,
+    freshness: "Month",
+    safeSearch: "Strict",
+  };
+  const resp = await client.news.search(searchTerm, options);
   const jsonAzure = await JSON.parse(JSON.stringify(resp));
-
+  
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
     `https://gnews.io/api/v4/search?q=%22climate%20change%22&lang=en&image=required&token=${gNewsVariable}`

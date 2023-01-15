@@ -19,7 +19,7 @@ const theme = createTheme({
   },
 });
 
-function SemanticMethane() {
+function ParentMethane() {
   const [methane, setMethane] = useState(false);
   const [methaneLoading, setMethaneLoading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
@@ -123,4 +123,4 @@ function SemanticMethane() {
   );
 }
 
-export default SemanticMethane;
+export default ParentMethane;

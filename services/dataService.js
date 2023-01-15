@@ -35,3 +35,9 @@ export const nitrousService = {
   clearData: () => nitrousSubject.next(),
   getData: () => nitrousSubject.asObservable(),
 };
+
+export const oceanService = {
+  setData: (data) => oceanSubject.next({ value: data }),
+  clearData: () => oceanSubject.next(),
+  getData: () => oceanSubject.asObservable(),
+};

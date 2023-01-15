@@ -19,7 +19,7 @@ const theme = createTheme({
   },
 });
 
-function SemanticCo2() {
+function ParentCo2() {
   const [co2, setCo2] = useState(false);
   const [co2Loading, setCo2Loading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
@@ -102,4 +102,4 @@ function SemanticCo2() {
   );
 }
 
-export default SemanticCo2;
+export default ParentCo2;

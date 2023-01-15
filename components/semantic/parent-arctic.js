@@ -15,7 +15,7 @@ const theme = createTheme({
   },
 });
 
-function SemanticArctic() {
+function ParentArctic() {
   const [arctic, setArctic] = useState(false);
   const [arcticLoading, setArcticLoading] = useState(false);
   const [todayValue, setTodayValue] = useState({});
@@ -116,4 +116,4 @@ function SemanticArctic() {
   );
 }
 
-export default SemanticArctic;
+export default ParentArctic;
