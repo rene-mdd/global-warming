@@ -39,6 +39,7 @@ function Home() {
       <ParentArctic />
       <Divider name="jump-to-arctic" />
       <ParentOcean />
+      <Divider name="jump-to-ocean"  />
       <Footer />
     </>
   );
