@@ -106,12 +106,6 @@ function ParentArctic() {
           </Container>
         </Grid>
       </Container>
-      <Container component="footer" align="center">
-        <p>
-          {`Copyright ©${new Date().getFullYear()}
-              René Rodríguez. All Rights Reserved`}
-        </p>
-      </Container>
     </Container>
   );
 }

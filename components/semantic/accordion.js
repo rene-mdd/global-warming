@@ -278,6 +278,39 @@ const AccordionArctic = () => (
   </Accordion>
 );
 
+const AccordionOcean = (props) => (
+  <Accordion>
+    <AccordionSummary
+      expandIcon={<ExpandMoreIcon />}
+      aria-controls="panel3a-header"
+      sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
+    >
+      <Typography sx={{ fontSize: "22px", color: "white" }}>Get API</Typography>
+    </AccordionSummary>
+    <AccordionDetails>
+      <Typography
+        gutterBottom
+        variant="h5"
+        sx={{ color: "#215a6d", fontWeight: "bold" }}
+      >
+        {props.props}
+      </Typography>
+      <Typography paragraph sx={{ fontSize: "18px" }}>
+        The Extended Reconstructed Sea Surface Temperature (ERSST) dataset is a
+        global monthly analysis of SST data derived from the International
+        Comprehensive Ocean–Atmosphere Dataset (
+        <a href="https://journals.ametsoc.org/view/journals/bams/93/11/bams-d-11-00241.1.xml">
+          ICOADS
+        </a>
+        ). The dataset can be used for long-term global and basin-wide studies
+        and incorporates smoothed local and short-term variations. Fetch this
+        endpoint <b> https://global-warming.org/api/ocean-warming-api </b>
+        and you will get the info in JSON format.
+      </Typography>
+    </AccordionDetails>
+  </Accordion>
+);
+
 // const AccordionCo2 = () => (
 //   <Accordion defaultActiveIndex={1} panels={panelCo2} />
 // );
@@ -318,4 +351,5 @@ export {
   AccordionMethane,
   AccordionNitrous,
   AccordionArctic,
+  AccordionOcean,
 };
