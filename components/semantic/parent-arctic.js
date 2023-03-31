@@ -15,7 +15,7 @@ const theme = createTheme({
   },
 });
 
-function SemanticArctic() {
+function ParentArctic() {
   const [arctic, setArctic] = useState(false);
   const [arcticLoading, setArcticLoading] = useState(false);
   const [todayValue, setTodayValue] = useState({});
@@ -106,14 +106,8 @@ function SemanticArctic() {
           </Container>
         </Grid>
       </Container>
-      <Container component="footer" align="center">
-        <p>
-          {`Copyright ©${new Date().getFullYear()}
-              René Rodríguez. All Rights Reserved`}
-        </p>
-      </Container>
     </Container>
   );
 }
 
-export default SemanticArctic;
+export default ParentArctic;

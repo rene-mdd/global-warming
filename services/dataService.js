@@ -5,6 +5,7 @@ const arcticSubject = new Subject({});
 const co2Subject = new Subject({});
 const methaneSubject = new Subject({});
 const nitrousSubject = new Subject({});
+const oceanSubject = new Subject({});
 
 export const temperatureService = {
   setData: (data) => temperatureSubject.next({ value: data }),
@@ -34,4 +35,10 @@ export const nitrousService = {
   setData: (data) => nitrousSubject.next({ value: data }),
   clearData: () => nitrousSubject.next(),
   getData: () => nitrousSubject.asObservable(),
+};
+
+export const oceanService = {
+  setData: (data) => oceanSubject.next({ value: data }),
+  clearData: () => oceanSubject.next(),
+  getData: () => oceanSubject.asObservable(),
 };

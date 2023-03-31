@@ -3,13 +3,14 @@ import { Divider } from "@mui/material";
 import StickyMenu from "../components/semantic/menu";
 import SideMenu from "../components/semantic/sideMenu";
 import LandingPage from "../components/semantic/LandingPage";
-import SemanticTemperature from "../components/semantic/parent-temperature";
-import SemanticCo2 from "../components/semantic/parent-co2";
-import SemanticMethane from "../components/semantic/parent-methane";
-import SemanticNitrous from "../components/semantic/parent-nitrous";
-import SemanticArctic from "../components/semantic/parent-arctic";
+import ParentTemperature from "../components/semantic/parent-temperature";
+import ParentCo2 from "../components/semantic/parent-co2";
+import ParentMethane from "../components/semantic/parent-methane";
+import ParentNitrous from "../components/semantic/parent-nitrous";
+import ParentArctic from "../components/semantic/parent-arctic";
 import SiteHeader from "../components/siteHeader";
 import Footer from "../components/semantic/footer";
+import ParentOcean from "../components/semantic/parent-ocean";
 
 function Home() {
   const homeTitle = "Global Warming API";
@@ -27,15 +28,18 @@ function Home() {
       <SideMenu />
       <LandingPage />
       <Divider name="jump-to-temperature" />
-      <SemanticTemperature />
+      <ParentTemperature />
       <Divider name="jump-to-co2" />
-      <SemanticCo2 />
+      <ParentCo2 />
       <Divider name="jump-to-methane" />
-      <SemanticMethane />
+      <ParentMethane />
       <Divider name="jump-to-nitrous" />
-      <SemanticNitrous />
+      <ParentNitrous />
       <Divider name="jump-to-arctic" />
-      <SemanticArctic />
+      <ParentArctic />
+      <Divider name="jump-to-arctic" />
+      <ParentOcean />
+      <Divider name="jump-to-ocean"  />
       <Footer />
     </>
   );

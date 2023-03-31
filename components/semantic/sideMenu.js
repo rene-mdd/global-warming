@@ -119,6 +119,22 @@ export default function SideBar() {
                   Polar Ice
                 </MenuItem>
               </Scroll.Link>
+              <Scroll.Link
+                to="jump-to-ocean"
+                spy
+                smooth
+                offset={0}
+                duration={1000}
+                ref={scrollRef}
+              >
+                <MenuItem
+                  sx={{ opacity: activeItem === "ocean" ? "0.7" : "1" }}
+                  onClick={() => setActiveItem("ocean")}
+                  className="white-color"
+                >
+                  Ocean warming
+                </MenuItem>
+              </Scroll.Link>
             </MenuList>
           </Paper>
         </Grid>
