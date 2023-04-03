@@ -17,7 +17,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ReactHtmlParser from "react-html-parser";
+import ReactHtmlParser from "html-react-parser";
 
 const theme = createTheme({
   palette: {
@@ -67,26 +67,26 @@ function Row(props) {
             scope="row"
             className="sticky-column sticky-company white-color"
           >
-            {attributes?.title}
+            {/* {attributes?.title} */}
           </TableCell>
           <TableCell align="right">
-            {attributes?.disclosure_ghg_emission ?? "No data"} /{" "}
-            {attributes?.disclosure_deforestation ?? "No data"}
+            {/* {attributes?.disclosure_ghg_emission ?? "No data"} /{" "}
+            {attributes?.disclosure_deforestation ?? "No data"} */}
           </TableCell>
           <TableCell align="right">
-            {attributes?.commitment_status ?? "No data"}
+            {/* {attributes?.commitment_status ?? "No data"} */}
           </TableCell>
           <TableCell align="right">
-            {attributes?.net_emission_reduction ?? "No data"}
+            {/* {attributes?.net_emission_reduction ?? "No data"} */}
           </TableCell>
           <TableCell align="right">
-            {attributes?.climate_contribution_offset ?? "No data"}
+            {/* {attributes?.climate_contribution_offset ?? "No data"} */}
           </TableCell>
           <TableCell align="right">
-            {attributes?.deforestation ?? "No data"}
+            {/* {attributes?.deforestation ?? "No data"} */}
           </TableCell>
           <TableCell align="right" sx={{ color: colorImpact }}>
-            {attributes?.environmental_impact ?? "No data"}
+            {/* {attributes?.environmental_impact ?? "No data"} */}
           </TableCell>
         </TableRow>
         <TableRow>
@@ -116,14 +116,14 @@ function Row(props) {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      <CardMedia
+                      {/* <CardMedia
                         className="brands-logo"
                         component="img"
                         alt={attributes?.title}
                         src={
                           logoUrl ? apiHost + logoUrl : "/images/no-logo.png"
                         }
-                      />
+                      /> */}
                     </TableCell>
                     <TableCell align="left" width="100%">
                       <Container
@@ -131,9 +131,9 @@ function Row(props) {
                         component="div"
                         className="text-container"
                       >
-                        {ReactHtmlParser(
+                        {/* {ReactHtmlParser(
                           attributes?.additional_details.processed
-                        ) ?? "No data"}
+                        ) ?? "No data"} */}
                       </Container>
                     </TableCell>
                     <TableCell align="left">
@@ -143,9 +143,9 @@ function Row(props) {
                         className="text-container"
                         sx={{ fontSize: 1 }}
                       >
-                        {ReactHtmlParser(
+                        {/* {ReactHtmlParser(
                           attributes?.products_services.processed
-                        ) ?? "No data"}
+                        ) ?? "No data"} */}
                       </Container>
                     </TableCell>
                     <TableCell align="left">
@@ -154,7 +154,7 @@ function Row(props) {
                         component="div"
                         className="text-container"
                       >
-                        {attributes?.source?.map((data, index) => {
+                        {/* {attributes?.source?.map((data, index) => {
                           return (
                             <Typography
                               textAlign="left"
@@ -167,7 +167,7 @@ function Row(props) {
                               </Typography>
                             </Typography>
                           );
-                        })}
+                        })} */}
                       </Container>
                     </TableCell>
                   </TableRow>
@@ -191,28 +191,28 @@ export default function BusinessStatistics() {
   // loading search bar
   const [loading, setLoading] = useState(false);
   // loading initial data request
-  const [initialLoading, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(false);
   // error message
   const [errorMsg, setError] = useState(false);
   useEffect(() => {
-    if (input.length > 0) {
-      setLoading(true);
-    }
+    // if (input.length > 0) {
+    //   setLoading(true);
+    // }
     const delayDebounceFn = setTimeout(() => {
       const businessApiUrl = `http://global-warming-drupal.docksal/jsonapi/business?include=logo&filter[title][operator]=CONTAINS&filter[title][value]=${input}`;
-      let header = new Headers({
-        "Access-Control-Allow-Origin": "https://global-warming.org/",
-        Accept: "application/vnd.api+json",
-        "Content-Type": "application/vnd.api+json",
-      });
+      // let header = new Headers({
+      //   "Access-Control-Allow-Origin": "https://global-warming.org/",
+      //   Accept: "application/vnd.api+json",
+      //   "Content-Type": "application/vnd.api+json",
+      // });
       async function fetchBusinessData() {
         try {
-          const response = await fetch(businessApiUrl, header);
-          const business = await response.json();
-          setBusinessData(() => business.data);
-          setIncludedData(() => business.included);
+          // const response = await fetch(businessApiUrl, header);
+          // const business = await response.json();
+          // setBusinessData(() => business.data);
+          // setIncludedData(() => business.included);
           setLoading(false);
-          setInitialLoading(false);
+          // setInitialLoading(false);
         } catch (error) {
           setError(true);
           console.error(error);
@@ -292,18 +292,19 @@ export default function BusinessStatistics() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {businessData.map((row, index) => (
+            {/* {businessData.map((row, index) => (
               <Row
                 row={row}
                 included={includedData}
                 index={index}
                 key={row.id}
               />
-            ))}
+            ))} */}
           </TableBody>
         </Table>
       </TableContainer>
       <Container align="center">
+        <strong>TBA</strong>
       <LoadingButton
           loading={initialLoading}
           className="loading-button"
