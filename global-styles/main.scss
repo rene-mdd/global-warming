@@ -1,13 +1,13 @@
 @font-face {
   font-family: "Play";
-  src: url('../fonts/Play/Play-Regular.ttf');
+  src: url("../fonts/Play/Play-Regular.ttf");
   font-weight: normal;
   font-style: normal;
 }
-  
+
 @font-face {
   font-family: "Play";
-  src: url('../fonts/Play/Play-Bold.ttf');
+  src: url("../fonts/Play/Play-Bold.ttf");
   font-weight: bold;
   font-style: normal;
 }
@@ -345,8 +345,13 @@ nav {
 }
 .text-container {
   max-height: 200px;
-  overflow: hidden;
   overflow-y: scroll;
+  overflow-wrap: break-word;
+  & p,
+  li {
+    font-size: small;
+    overflow: hidden;
+  }
 }
 .sticky-column {
   position: sticky;
@@ -357,4 +362,21 @@ nav {
 }
 .sticky-company {
   left: 66px;
+}
+.bold-class {
+  font-weight: bold;
+}
+.loading-button {
+  width: 100px;
+  height: 100px;
+  span {
+    width: 50px !important;
+    height: 50px !important;
+    color: #343837 !important;
+  }
+}
+.search-loading {
+  span {
+    color: #343837 !important;
+  }
 }

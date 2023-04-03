@@ -126,7 +126,7 @@ function SemanticDeforestation(props) {
           Global forest loss map
         </Typography>
         <Grid container justifyContent="center">
-          <Grid item sm={12} md={10}>
+          <Grid item sm={12} md={10} xl={8}>
             <Container>
               <Container
                 className="deforestation-iframe"

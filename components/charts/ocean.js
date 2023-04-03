@@ -4,16 +4,21 @@ import { Container, Grid } from "@mui/material";
 import fetch from "unfetch";
 import Chart from "chart.js";
 import { oceanService } from "../../services/dataService";
+import PropTypes from "prop-types";
 
-function Ocean() {
+function Ocean(props) {
   const url = "api/ocean-warming-api";
 
   useEffect(() => {
+    props.parentCallBack(true);
     async function fetchData() {
       try {
         const response = await fetch(url);
         const oceanWarmingData = await response.json();
-        displayOceanGraph(oceanWarmingData);
+        if (oceanWarmingData) {
+          props.parentCallBack(false);
+          displayOceanGraph(oceanWarmingData);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -123,5 +128,13 @@ function Ocean() {
     </>
   );
 }
+
+Ocean.propTypes = {
+  parentCallBack: PropTypes.func,
+};
+
+Ocean.defaultProps = {
+  parentCallBack: true,
+};
 
 export default Ocean;
