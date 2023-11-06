@@ -90,7 +90,7 @@ function Methane(props) {
                     stacked: true,
                     scaleLabel: {
                       display: true,
-                      labelString: "Part Per million (ppm)",
+                      labelString: "Part Per billion (ppb)",
                     },
                   },
                 ],
