@@ -1,7 +1,8 @@
 /* eslint-disable */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Co2 from "../charts/co2";
+import Co2Prehistoric from "../charts/co2Prehistoric";
 import { AccordionCo2, AccordionShare } from "./accordion";
 import { co2Service } from "../../services/dataService";
 import {
@@ -21,8 +22,12 @@ const theme = createTheme({
 
 function ParentCo2() {
   const [co2, setCo2] = useState(false);
+  const [co2Prehistoric, setCo2Prehistoric] = useState(false);
   const [co2Loading, setCo2Loading] = useState(false);
+  const [co2LoadingPrehistoric, setCo2LoadingPrehistoric] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
+  const [graphOldData, setGraphOldData] = useState(false);
+  console.log(co2Prehistoric)
 
   useEffect(() => {
     const subscription = co2Service.getData().subscribe((data) => {
@@ -31,6 +36,7 @@ function ParentCo2() {
     return subscription.unsubscribe.bind(subscription);
   }, []);
 
+
   return (
     <Container component="section">
       <Container>
@@ -38,17 +44,27 @@ function ParentCo2() {
           Carbon Dioxide levels from 800,000 years ago to present
         </Typography>
         <Grid container >
-            {co2 ? (
-              <Co2 parentCallBack={(loading) => setCo2Loading(loading)} />
-            ) : null}
-          <Grid container justifyContent="center" sx={{margin: "20px 0"}}>
+          {co2 ? (
+            <Co2 parentCallBack={(loading) => setCo2Loading(loading)} />
+          ) : null}
+          {co2Prehistoric ? (
+            <Co2Prehistoric parentCallBackPrehist={(loading) => setCo2LoadingPrehistoric(loading)} />
+          ) : null}
+          <Grid container justifyContent="center" sx={{ margin: "20px 0" }}>
             <ThemeProvider theme={theme}>
-            <LoadingButton
+              <LoadingButton
                 onClick={() => setCo2((prevState) => !prevState)}
                 loading={co2Loading ? true : false}
                 variant="contained"
               >
-                {co2 ? "Hide graph" : "Load graph"}
+                {co2 ? "Hide graph" : "2014 - present"}
+              </LoadingButton>
+              <LoadingButton
+                onClick={() => { setCo2Prehistoric((prevState) => !prevState); }}
+                loading={co2LoadingPrehistoric ? true : false}
+                variant="contained"
+              >
+                {co2Prehistoric ? "Hide graph" : "-800,000 - 2009"}
               </LoadingButton>
             </ThemeProvider>
           </Grid>
@@ -92,7 +108,7 @@ function ParentCo2() {
                 <AccordionCo2 />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
-              <AccordionShare />
+                <AccordionShare />
               </Grid>
             </Grid>
           </Container>
