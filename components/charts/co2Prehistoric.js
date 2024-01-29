@@ -33,7 +33,7 @@ function Co2Prehistoric(props) {
         try {
             if (prehistoricData) {
                 props.parentCallBackPrehist(false);
-                const ctx = document.getElementById("myCo2Chart");
+                const ctx = document.getElementById("myPrehistoricCo2Chart");
                 (() =>
                     new Chart(ctx, {
                         type: "line",
@@ -99,7 +99,7 @@ function Co2Prehistoric(props) {
     return (
         <>
             <Container className="chart-container">
-                <canvas id="myCo2Chart" />
+                <canvas id="myPrehistoricCo2Chart" />
             </Container>
             <Grid container columns={10} justifyContent="center">
                 <Grid item xs={9}>
@@ -108,16 +108,7 @@ function Co2Prehistoric(props) {
                             <span style={{ color: "#FD4659" }}>{graphError}</span>
                         </p>
                         <p>
-                            From 1958, the measurements of carbon dioxide concentrations are
-                            done by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter
-                            Tans, NOAA/GML (
-                            <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
-                                <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
-                            </a>
-                            )
-                        </p>
-                        <p>
-                            Data source: 800,000 years ago to 1958
+                            Data source: 800,000 years ago to 2021
                             <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                                 <em>
                                     {" "}
@@ -127,7 +118,7 @@ function Co2Prehistoric(props) {
                         </p>
                         <p>
                             <b>
-                                From 2010.01.01 the data is measured on a quasi daily basis
+                                From 10 years ago to present, the data is measured on a quasi daily basis
                             </b>
                         </p>
                     </Container>

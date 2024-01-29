@@ -23,8 +23,10 @@ const theme = createTheme({
 function ParentCo2() {
   const [co2, setCo2] = useState(false);
   const [co2Prehistoric, setCo2Prehistoric] = useState(false);
+  const [co2recent, setCo2Recent] = useState(false);
   const [co2Loading, setCo2Loading] = useState(false);
   const [co2LoadingPrehistoric, setCo2LoadingPrehistoric] = useState(false);
+  const [co2RecentLoading, setRecentCo2Loading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
   const [graphOldData, setGraphOldData] = useState(false);
   console.log(co2Prehistoric)
@@ -65,6 +67,13 @@ function ParentCo2() {
                 variant="contained"
               >
                 {co2Prehistoric ? "Hide graph" : "-800,000 - 2009"}
+              </LoadingButton>
+              <LoadingButton
+                onClick={() => { setCo2Recent((prevState) => !prevState); }}
+                loading={co2recent ? true : false}
+                variant="contained"
+              >
+                {co2RecentLoading ? "Hide graph" : "-800,000 - 2009"}
               </LoadingButton>
             </ThemeProvider>
           </Grid>

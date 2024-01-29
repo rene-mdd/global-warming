@@ -130,7 +130,7 @@ function Co2(props) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              From 1958, the measurements of carbon dioxide concentrations are
+              From 10 years ago to present, the measurements of carbon dioxide concentrations are
               done by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter
               Tans, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
@@ -139,7 +139,7 @@ function Co2(props) {
               )
             </p>
             <p>
-              Data source: 800,000 years ago to 1958
+              Data source: 800,000 years ago to 2021
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 <em>
                   {" "}
@@ -149,7 +149,7 @@ function Co2(props) {
             </p>
             <p>
               <b>
-                From 2010.01.01 the data is measured on a quasi daily basis
+                From 10 years ago to present the data is measured on a quasi daily basis
               </b>
             </p>
           </Container>
