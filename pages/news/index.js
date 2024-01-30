@@ -19,14 +19,14 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
+// const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
 
-const azureEnvKey = process.env.API_KEY_AZURE;
-const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
-const searchTerm = "global warming";
-const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
+// const azureEnvKey = process.env.API_KEY_AZURE;
+// const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
+// const searchTerm = "global warming";
+// const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
 
-const client = new NewsSearchClient(credentials);
+// const client = new NewsSearchClient(credentials);
 function News(props) {
   const [intersecting, setIntersecting] = useState(false);
   const { ref, inView, entry } = useInView({
@@ -36,16 +36,16 @@ function News(props) {
     triggerOnce: true,
   });
 
-  const { googleNewsJson, jsonAzure } = props;
+  const { googleNewsJson } = props;
   const parsedGNews = googleNewsJson.articles;
-  const parsedBingNews = jsonAzure.value;
-  const duplicateRemovalBing = parsedBingNews.filter(
-    (thing, index, self) =>
-      index ===
-      self.findIndex(
-        (t) => t.description === thing.description || t.name === thing.name
-      )
-  );
+  // const parsedBingNews = jsonAzure.value;
+  // const duplicateRemovalBing = parsedBingNews.filter(
+  //   (thing, index, self) =>
+  //     index ===
+  //     self.findIndex(
+  //       (t) => t.description === thing.description || t.name === thing.name
+  //     )
+  // );
   const duplicateRemovalGNews = parsedGNews.filter(
     (thing, index, self) =>
       index ===
@@ -160,7 +160,7 @@ function News(props) {
             </Paper>
           ))}
           <Container ref={ref}></Container>
-          {intersecting &&
+          {/* {intersecting &&
             duplicateRemovalBing.map((obj) => (
               <Paper key={obj.name} elevation={2} className="news-wrapper">
                 <Grid container justifyContent="center" alignItems="center">
@@ -226,7 +226,7 @@ function News(props) {
                   </Grid>
                 </Grid>
               </Paper>
-            ))}
+            ))} */}
         </List>
       </Container>
     </>
@@ -238,11 +238,11 @@ News.propTypes = {
     articles: PropTypes.arrayOf(PropTypes.shape({})),
     timestamp: PropTypes.number,
   }),
-  jsonAzure: PropTypes.shape({
-    totalEstimatedMatches: PropTypes.number,
-    value: PropTypes.arrayOf(PropTypes.shape({})),
-    _type: PropTypes.string,
-  }),
+  // jsonAzure: PropTypes.shape({
+  //   totalEstimatedMatches: PropTypes.number,
+  //   value: PropTypes.arrayOf(PropTypes.shape({})),
+  //   _type: PropTypes.string,
+  // }),
 };
 
 News.defaultProps = {
@@ -251,11 +251,11 @@ News.defaultProps = {
     articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
-  jsonAzure: PropTypes.shape({
-    totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.png"),
-    _type: "",
-  }),
+  // jsonAzure: PropTypes.shape({
+  //   totalEstimatedMatches: 0,
+  //   value: PropTypes.arrayOf("/images/breaking-news.png"),
+  //   _type: "",
+  // }),
 };
 
 export async function getServerSideProps({ res }) {
@@ -264,8 +264,8 @@ export async function getServerSideProps({ res }) {
     freshness: "Month",
     safeSearch: "Strict",
   };
-  const resp = await client.news.search(searchTerm, options);
-  const jsonAzure = await JSON.parse(JSON.stringify(resp));
+  // const resp = await client.news.search(searchTerm, options);
+  // const jsonAzure = await JSON.parse(JSON.stringify(resp));
   
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
@@ -280,7 +280,7 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
-      jsonAzure,
+      // jsonAzure,
       googleNewsJson,
     },
   };
