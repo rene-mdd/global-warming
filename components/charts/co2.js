@@ -1,4 +1,4 @@
-/* eslint-disable */ 
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
@@ -7,7 +7,7 @@ import {
   Grid,
 } from "@mui/material";
 import PropTypes from "prop-types";
-import localCo2Data from "../../public/data/csvjson-co2.json";
+import localCo2Data from "../../public/data/csvjson-co2-prehistoric.json";
 import { co2Service } from "../../services/dataService";
 
 function Co2(props) {
@@ -122,39 +122,39 @@ function Co2(props) {
     <>
       <Container className="chart-container">
         <canvas id="myCo2Chart" />
-        </Container>
-        <Grid container columns={10} justifyContent="center">
-          <Grid item xs={9}>
-            <Container component="footer" sx={{ marginTop: "-5px" }}>
-              <p>
-                <span style={{ color: "#FD4659" }}>{graphError}</span>
-              </p>
-              <p>
-                From 1958, the measurements of carbon dioxide concentrations are
-                done by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter
-                Tans, NOAA/GML (
-                <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
-                  <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
-                </a>
-                )
-              </p>
-              <p>
-                Data source: 800,000 years ago to 1958
-                <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                  <em>
-                    {" "}
-                    https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
-                  </em>
-                </a>
-              </p>
-              <p>
-                <b>
-                  From 2010.01.01 the data is measured on a quasi daily basis
-                </b>
-              </p>
-            </Container>
-          </Grid>
+      </Container>
+      <Grid container columns={10} justifyContent="center">
+        <Grid item xs={9}>
+          <Container component="footer" sx={{ marginTop: "-5px" }}>
+            <p>
+              <span style={{ color: "#FD4659" }}>{graphError}</span>
+            </p>
+            <p>
+              From 10 years ago to present, the measurements of carbon dioxide concentrations are
+              done by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter
+              Tans, NOAA/GML (
+              <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
+                <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
+              </a>
+              )
+            </p>
+            <p>
+              Data source: 800,000 years ago to 2021
+              <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
+                <em>
+                  {" "}
+                  https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                </em>
+              </a>
+            </p>
+            <p>
+              <b>
+                From 10 years ago to present the data is measured on a quasi daily basis
+              </b>
+            </p>
+          </Container>
         </Grid>
+      </Grid>
     </>
   );
 }

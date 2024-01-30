@@ -184,7 +184,7 @@ const AccordionCo2 = () => (
       </Typography>
       <Typography paragraph sx={{ fontSize: "18px" }}>
         This API provides on a quasi-daily basis, the amount of carbon dioxide
-        (CO2) in the atmosphere from 2010.01.01 to the present. It is expressed
+        (CO2) in the atmosphere from 10 years go to the present. It is expressed
         as a mole fraction in dry air, parts per million (ppm). Fetch this
         endpoint
         <b> https://global-warming.org/api/co2-api </b>
