@@ -19,15 +19,15 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
+// const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
 
 
-const azureEnvKey = process.env.API_KEY_AZURE;
-const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
-const searchTerm = "deforestation";
-const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
+// const azureEnvKey = process.env.API_KEY_AZURE;
+// const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
+// const searchTerm = "deforestation";
+// const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
 
-const client = new NewsSearchClient(credentials);
+// const client = new NewsSearchClient(credentials);
 
 function SemanticDeforestation(props) {
   const [intersecting, setIntersecting] = useState(false);
@@ -39,17 +39,17 @@ function SemanticDeforestation(props) {
     triggerOnce: true,
   });
 
-  const { googleNewsJson, azureJson } = props;
+  const { googleNewsJson } = props;
 
   const parsedGNews = googleNewsJson.articles;
-  const parsedBingNews = azureJson.value;
-  const duplicateRemovalBing = parsedBingNews.filter(
-    (thing, index, self) =>
-      index ===
-      self.findIndex(
-        (t) => t.description === thing.description || t.name === thing.name
-      )
-  );
+  // const parsedBingNews = azureJson.value;
+  // const duplicateRemovalBing = parsedBingNews.filter(
+  //   (thing, index, self) =>
+  //     index ===
+  //     self.findIndex(
+  //       (t) => t.description === thing.description || t.name === thing.name
+  //     )
+  // );
   const duplicateRemovalGNews = parsedGNews.filter(
     (thing, index, self) =>
       index ===
@@ -231,7 +231,7 @@ function SemanticDeforestation(props) {
             </Paper>
           ))}
            <Container ref={ref}></Container>
-          {intersecting &&
+          {/* {intersecting &&
             duplicateRemovalBing.map((obj) => (
               <Paper key={obj.name} elevation={2} className="news-wrapper">
                 <Grid container justifyContent="center" alignItems="center">
@@ -297,7 +297,7 @@ function SemanticDeforestation(props) {
                   </Grid>
                 </Grid>
               </Paper>
-            ))}
+            ))} */}
         </List>
       </Container>
     </>
@@ -309,11 +309,11 @@ SemanticDeforestation.propTypes = {
     articles: PropTypes.arrayOf(PropTypes.shape({})),
     timestamp: PropTypes.number,
   }),
-  azureJson: PropTypes.shape({
-    totalEstimatedMatches: PropTypes.number,
-    value: PropTypes.arrayOf(PropTypes.shape({})),
-    _type: PropTypes.string,
-  }),
+  // azureJson: PropTypes.shape({
+  //   totalEstimatedMatches: PropTypes.number,
+  //   value: PropTypes.arrayOf(PropTypes.shape({})),
+  //   _type: PropTypes.string,
+  // }),
 };
 
 SemanticDeforestation.defaultProps = {
@@ -322,11 +322,11 @@ SemanticDeforestation.defaultProps = {
     articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
-  azureJson: PropTypes.shape({
-    totalEstimatedMatches: 0,
-    value: PropTypes.arrayOf("/images/breaking-news.png"),
-    _type: "",
-  }),
+  // azureJson: PropTypes.shape({
+  //   totalEstimatedMatches: 0,
+  //   value: PropTypes.arrayOf("/images/breaking-news.png"),
+  //   _type: "",
+  // }),
 };
 
 export async function getServerSideProps({ res }) {
@@ -335,8 +335,8 @@ export async function getServerSideProps({ res }) {
     freshness: "Month",
     safeSearch: "Strict",
   };
-  const resp = await client.news.search(searchTerm, options);
-  const azureJson = JSON.parse(JSON.stringify(resp));
+  // const resp = await client.news.search(searchTerm, options);
+  // const azureJson = JSON.parse(JSON.stringify(resp));
 
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const gNewsResp = await axios.get(
@@ -353,7 +353,7 @@ export async function getServerSideProps({ res }) {
   return {
     props: {
       googleNewsJson,
-      azureJson,
+      // azureJson,
     },
   };
 }
