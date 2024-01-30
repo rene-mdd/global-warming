@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Co2 from "../charts/co2";
 import Co2Prehistoric from "../charts/co2Prehistoric";
+import Co2Recent from "../charts/co2Recent";
 import { AccordionCo2, AccordionShare } from "./accordion";
 import { co2Service } from "../../services/dataService";
 import {
@@ -28,8 +29,6 @@ function ParentCo2() {
   const [co2LoadingPrehistoric, setCo2LoadingPrehistoric] = useState(false);
   const [co2RecentLoading, setRecentCo2Loading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
-  const [graphOldData, setGraphOldData] = useState(false);
-  console.log(co2Prehistoric)
 
   useEffect(() => {
     const subscription = co2Service.getData().subscribe((data) => {
@@ -52,15 +51,11 @@ function ParentCo2() {
           {co2Prehistoric ? (
             <Co2Prehistoric parentCallBackPrehist={(loading) => setCo2LoadingPrehistoric(loading)} />
           ) : null}
+          {co2recent ? (
+            <Co2Recent parentCallBackRecent={(loading) => setRecentCo2Loading(loading)} />
+          ) : null}
           <Grid container justifyContent="center" sx={{ margin: "20px 0" }}>
             <ThemeProvider theme={theme}>
-              <LoadingButton
-                onClick={() => setCo2((prevState) => !prevState)}
-                loading={co2Loading ? true : false}
-                variant="contained"
-              >
-                {co2 ? "Hide graph" : "2014 - present"}
-              </LoadingButton>
               <LoadingButton
                 onClick={() => { setCo2Prehistoric((prevState) => !prevState); }}
                 loading={co2LoadingPrehistoric ? true : false}
@@ -69,11 +64,20 @@ function ParentCo2() {
                 {co2Prehistoric ? "Hide graph" : "-800,000 - 2009"}
               </LoadingButton>
               <LoadingButton
-                onClick={() => { setCo2Recent((prevState) => !prevState); }}
-                loading={co2recent ? true : false}
+                onClick={() => setCo2((prevState) => !prevState)}
+                loading={co2Loading ? true : false}
                 variant="contained"
+                sx={{ ml: 1 }}
               >
-                {co2RecentLoading ? "Hide graph" : "-800,000 - 2009"}
+                {co2 ? "Hide graph" : "-800,000 - present"}
+              </LoadingButton>
+              <LoadingButton
+                onClick={() => { setCo2Recent((prevState) => !prevState); }}
+                loading={co2RecentLoading ? true : false}
+                variant="contained"
+                sx={{ ml: 1 }}
+              >
+                {co2recent ? "Hide graph" : "2014 - 2024"}
               </LoadingButton>
             </ThemeProvider>
           </Grid>

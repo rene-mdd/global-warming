@@ -9,12 +9,12 @@ import {
 import PropTypes from "prop-types";
 import { co2Service } from "../../services/dataService";
 
-function Co2(props) {
+function Co2Recent(props) {
   const [graphError, setGraphError] = useState("");
   const url = "api/co2-api";
 
   useEffect(() => {
-    props.parentCallBack(true);
+    props.parentCallBackRecent(true);
 
     async function fetchData() {
       try {
@@ -23,7 +23,7 @@ function Co2(props) {
         if (data) {
           displayCo2Graph(data);
           co2Service.setData(data.co2.pop());
-          props.parentCallBack(false);
+          props.parentCallBackRecent(false);
         }
       } catch (error) {
         console.error(error);
@@ -49,11 +49,11 @@ function Co2(props) {
           new Chart(ctx, {
             type: "line",
             data: {
-              labels: prehistoricData.date.concat(date),
+              labels: date,
               datasets: [
                 {
                   label: "Carbon Dioxide",
-                  data: prehistoricData.amount.concat(amount),
+                  data: amount,
                   fill: false,
                   borderColor: "#4984B8",
                   backgroundColor: "black",
@@ -70,16 +70,16 @@ function Co2(props) {
             options: {
               scales: {
                 bounds: "ticks",
-                ticks: {
-                  suggestedMax: 800000,
-                  suggestedMin: -800000,
-                },
                 yAxes: [
                   {
                     stacked: true,
                     scaleLabel: {
                       display: true,
                       labelString: "Part Per million (ppm)",
+                    },
+                    ticks: {
+                      min: 390,
+                      max: 440,
                     },
                   },
                 ],
@@ -148,12 +148,12 @@ function Co2(props) {
   );
 }
 
-Co2.propTypes = {
-  parentCallBack: PropTypes.func,
+Co2Recent.propTypes = {
+  parentCallBackRecent: PropTypes.func,
 };
 
-Co2.defaultProps = {
-  parentCallBack: true,
+Co2Recent.defaultProps = {
+  parentCallBackRecent: true,
 };
 
-export default Co2;
+export default Co2Recent;

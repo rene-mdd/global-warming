@@ -10,7 +10,6 @@ import localCo2Data from "../../public/data/csvjson-co2-prehistoric.json";
 
 function Co2Prehistoric(props) {
     const [graphError, setGraphError] = useState("");
-    const url = "api/co2-api";
 
     useEffect(() => {
         props.parentCallBackPrehist(true);
