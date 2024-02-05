@@ -16,19 +16,24 @@ html * {
   padding: 0;
   font-family: "Play", sans-serif !important;
 }
+
 body {
   background: linear-gradient(90deg, hsla(120, 100%, 99%, 1) 0%, hsla(0, 0%, 100%, 1)) 100% !important;
 }
+
 a {
   text-decoration: none;
 }
+
 .mini-icon {
   width: 20px;
   height: 20px;
 }
+
 p {
   font-size: 22px;
 }
+
 .landing-background {
   min-height: 100vh !important;
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
@@ -36,42 +41,50 @@ p {
   background-size: cover !important;
   flex-wrap: nowrap;
 }
+
 .h2-landing {
   color: white !important;
   font-size: 1.5em !important;
   width: 70%;
 }
+
 .h2-deforestation {
   color: white !important;
   font-size: 1.5em !important;
   width: 70%;
 }
+
 .h1-landing {
   margin-top: 25vh !important;
   font-size: 2.5em !important;
   color: white !important;
 }
+
 .h1-about {
   margin-top: 25vh !important;
   font-size: 2.5em !important;
   color: black !important;
 }
+
 .h2-general {
   padding: 20vh 0 10vh !important;
   font-size: 2em !important;
   color: #343837 !important;
 }
+
 footer {
   p {
     margin: 0;
     font-size: 0.8em;
   }
 }
+
 .down-icon {
   margin: 20px 0;
   width: 142px;
   height: 142px;
 }
+
 .api-segment {
   i::before {
     position: relative;
@@ -79,51 +92,62 @@ footer {
     bottom: -7px !important;
   }
 }
+
 .landing-page-news {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
   background-size: cover !important;
   min-height: 100vh !important;
+
   .arrow-icon {
     width: 100px;
     height: 100px;
   }
+
   .down-icon-wrapper:hover {
     background-color: white;
   }
 }
+
 .h2-landing-about {
   font-size: 1.5em !important;
   font-weight: 400 !important;
   width: 70% !important;
 }
+
 .list-news {
   font-size: 2.2em !important;
   padding: 10vh !important;
 }
+
 .position-relative {
   position: relative !important;
 }
+
 .landing-page-deforestation {
   background-color: #1fa774;
   min-height: 100vh !important;
   overflow: auto;
 }
+
 .landing-page-about {
   overflow: auto;
   min-height: 100vh !important;
 }
+
 .sidebar-config-out {
   transform: translateX(-150px);
   transition-duration: 1s !important;
   background-color: rgb(26, 26, 26) !important;
   color: white !important;
 }
+
 .sidebar-config-in {
   transform: translateX(0px);
   transition-duration: 1s !important;
   background-color: rgb(26, 26, 26) !important;
   color: white !important;
 }
+
 .fix {
   position: fixed !important;
   width: 10em !important;
@@ -132,20 +156,25 @@ footer {
   opacity: 1 !important;
   height: 50px !important;
 }
+
 #rotate-left {
   transform: rotate(180deg);
   transition-duration: 1s;
 }
+
 #rotate-right {
   transform: rotate(1deg);
   transition-duration: 1s;
 }
+
 .deforestation-text {
   padding-top: 50px !important;
 }
+
 .display-none {
   display: none !important;
 }
+
 .contact-title {
   font-size: 3em !important;
   margin-top: 25vh !important;
@@ -155,30 +184,36 @@ footer {
 .contact-earth-logo {
   margin-bottom: 30px;
 }
+
 .contact-info {
   padding: 10px;
   margin: 20px 0;
   background-color: #dbecffc4;
+
   .contact-segment {
     font-size: 1.2em !important;
   }
 }
+
 .header {
   p {
     font-size: 1.3em !important;
   }
 }
+
 .api-content {
   p {
     font-size: 1.1em !important;
   }
 }
+
 .submit-button {
   background-color: #47c072 !important;
   color: white !important;
   font-size: 16px !important;
   margin: 20px 0 !important;
 }
+
 nav {
   a:hover {
     background-color: #6db629 !important;
@@ -188,30 +223,36 @@ nav {
 .hide-divider {
   opacity: 0;
 }
+
 .today-value,
 .arctic-value {
   margin: 10px 0;
 }
+
 .primary-color {
   color: #2c82c9;
 }
+
 .today-value {
   p {
     font-weight: bold;
     font-size: medium;
   }
 }
+
 .arctic-value {
   p {
     font-weight: bold;
     font-size: medium;
   }
 }
+
 .today-value {
   p span {
     color: rgba(255, 99, 132, 1);
   }
 }
+
 .arctic-value {
   p {
     span {
@@ -219,6 +260,7 @@ nav {
     }
   }
 }
+
 .hide-element {
   display: none !important;
 }
@@ -228,34 +270,42 @@ nav {
   height: 600px;
   padding: 0;
 }
+
 .landing-page-logo {
   width: 80px !important;
   height: 80px;
   margin: 20px 0;
 }
+
 .menu-icon {
   cursor: pointer;
   margin-right: auto;
 }
+
 .menu {
   font-size: 110%;
 }
+
 .white-color {
   color: white !important;
 }
+
 .side-menu-icon {
   transform: translate(-10px);
   width: 50px;
   height: 50px;
   cursor: pointer;
 }
+
 .team-picture {
   margin: 0 auto;
   width: 100px !important;
   height: 100px !important;
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  -webkit-filter: grayscale(100%);
+  /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
+
 .timeline {
   justify-content: center;
   align-content: center;
@@ -263,6 +313,7 @@ nav {
   flex-direction: column;
   background-color: #016795;
   min-height: 100vh;
+
   .timeline-title {
     margin-top: 25vh;
     color: white;
@@ -270,112 +321,152 @@ nav {
     margin-bottom: 30px;
   }
 }
+
 .timeline-q {
   font-size: 22px;
   margin: auto 0;
 }
+
 @media only screen and (max-width: 700px) {
   i {
     display: none !important;
   }
+
   .h1-class {
     padding: 15vh 0 0 !important;
     color: white !important;
     font-size: 2em !important;
   }
+
   .h1-landing {
     font-size: 2em !important;
   }
+
   .fix {
     display: none !important;
   }
+
   .h2-deforestation {
     width: 90%;
   }
+
   .h2-landing {
     width: 90%;
   }
+
   .timeline {
     .timeline-title {
       font-size: 2.2em !important;
     }
   }
+
   .h2-landing-about {
     font-size: 1.2em !important;
   }
 }
+
 .timeline-content,
 .timeline-item {
   width: 100%;
 }
+
 .date {
   text-decoration: underline;
   font-size: 1.5em !important;
   margin-bottom: 40px !important;
   text-align: center;
 }
+
 .gnews-image {
   border-radius: 10px;
   margin: auto;
-  width: 80% !important;
+  width: 307px;
+  height: 204px;
+  // width: 80% !important;
 }
-.bing-image {
+
+.catch-image {
   border-radius: 10px;
-  max-width: 100px;
+  width: 307px;
+  height: 204px;
   margin: auto;
 }
+
 .team-wrapper {
   min-height: 100vh;
 }
+
 .news-wrapper {
   padding: 15px 0 !important;
   border-radius: 10px !important;
   width: 100% !important;
   justify-content: center !important;
   margin: 30px 0px !important;
-  background-color: #e9ffeb !important;
+  background-color: #343837 !important;
+  .news-info-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
 }
+
 .new-source {
   word-break: break-all !important;
+
+  span {
+    max-width: 250px;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
+  }
 }
+
 .brands-logo {
   height: 100px !important;
   width: 100px !important;
   margin: auto !important;
   object-fit: contain !important;
 }
+
 .text-container {
   max-height: 200px;
   overflow-y: scroll;
   overflow-wrap: break-word;
+
   & p,
   li {
     font-size: small;
     overflow: hidden;
   }
 }
+
 .sticky-column {
   position: sticky;
   background-color: #343837;
 }
+
 .sticky-accordion {
   left: 0;
 }
+
 .sticky-company {
   left: 66px;
 }
+
 .bold-class {
   font-weight: bold;
 }
+
 .loading-button {
   width: 100px;
   height: 100px;
+
   span {
     width: 50px !important;
     height: 50px !important;
     color: #343837 !important;
   }
 }
+
 .search-loading {
   span {
     color: #343837 !important;

@@ -19,16 +19,6 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-// const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
-
-
-// const azureEnvKey = process.env.API_KEY_AZURE;
-// const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
-// const searchTerm = "deforestation";
-// const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
-
-// const client = new NewsSearchClient(credentials);
-
 function SemanticDeforestation(props) {
   const [intersecting, setIntersecting] = useState(false);
 
@@ -39,9 +29,9 @@ function SemanticDeforestation(props) {
     triggerOnce: true,
   });
 
-  const { googleNewsJson } = props;
+  const { newsCatcherParseJson, googleNewsParseJson } = props;
 
-  const parsedGNews = googleNewsJson.articles;
+  const parsedGNews = googleNewsParseJson.articles;
   // const parsedBingNews = azureJson.value;
   // const duplicateRemovalBing = parsedBingNews.filter(
   //   (thing, index, self) =>
@@ -231,21 +221,20 @@ function SemanticDeforestation(props) {
             </Paper>
           ))}
            <Container ref={ref}></Container>
-          {/* {intersecting &&
-            duplicateRemovalBing.map((obj) => (
-              <Paper key={obj.name} elevation={2} className="news-wrapper">
+           {intersecting &&
+            newsCatcherParseJson.map((obj) => (
+              <Paper key={obj._id} elevation={2} className="news-wrapper">
                 <Grid container justifyContent="center" alignItems="center">
                   <Grid item md={4} xs={10}>
                     <ListItemAvatar>
                       <CardMedia
                         image={
-                          obj?.image?.thumbnail?.contentUrl ??
-                          obj?.provider[0]?.image?.thumbnail?.contentUrl ??
+                          obj?.media ??
                           "/images/breaking-news.png"
                         }
                         component="img"
-                        alt="Breaking news"
-                        className="bing-image"
+                        alt="News image"
+                        className="catch-image"
                       />
                     </ListItemAvatar>
                   </Grid>
@@ -256,17 +245,17 @@ function SemanticDeforestation(props) {
                       container
                       direction="column"
                     >
-                      <a href={obj.url}>
+                      <a href={obj.link}>
                         <Typography
                           component="h5"
                           variant="h5"
                           sx={{ color: "#4183c4" }}
                         >
-                          {obj.name}
+                          {obj.title}
                         </Typography>
                       </a>
                       <Typography paragraph color="text.secondary">
-                        {obj.description}
+                        {obj.summary}
                       </Typography>
                       <Grid
                         container
@@ -279,17 +268,17 @@ function SemanticDeforestation(props) {
                             sx={{ padding: "6px 16px", fontWeight: "bold" }}
                             variant="outlined"
                           >
-                            Date: {obj.datePublished}
+                            Date: {obj.published_date}
                           </Paper>
                         </Grid>
-                        <Grid item >
+                        <Grid item>
                           <Button
                             href={obj.url}
                             variant="contained"
                             endIcon={<PublicIcon />}
                             className="new-source"
                           >
-                            {obj?.provider[0]?.name ?? "News"}
+                            {obj?.authors ?? "News"}
                           </Button>
                         </Grid>
                       </Grid>
@@ -297,7 +286,7 @@ function SemanticDeforestation(props) {
                   </Grid>
                 </Grid>
               </Paper>
-            ))} */}
+            ))}
         </List>
       </Container>
     </>
@@ -309,11 +298,9 @@ SemanticDeforestation.propTypes = {
     articles: PropTypes.arrayOf(PropTypes.shape({})),
     timestamp: PropTypes.number,
   }),
-  // azureJson: PropTypes.shape({
-  //   totalEstimatedMatches: PropTypes.number,
-  //   value: PropTypes.arrayOf(PropTypes.shape({})),
-  //   _type: PropTypes.string,
-  // }),
+  newsCatcherParseJson: PropTypes.shape({
+    articles: PropTypes.arrayOf(PropTypes.shape({})),
+  }),
 };
 
 SemanticDeforestation.defaultProps = {
@@ -322,28 +309,34 @@ SemanticDeforestation.defaultProps = {
     articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
-  // azureJson: PropTypes.shape({
-  //   totalEstimatedMatches: 0,
-  //   value: PropTypes.arrayOf("/images/breaking-news.png"),
-  //   _type: "",
-  // }),
+  newsCatcherParseJson: PropTypes.shape({
+    articleCount: 0,
+    articles: PropTypes.arrayOf("/images/breaking-news.png"),
+    timestamp: 0,
+  }),
 };
 
 export async function getServerSideProps({ res }) {
-  const options = {
-    count: 20,
-    freshness: "Month",
-    safeSearch: "Strict",
-  };
-  // const resp = await client.news.search(searchTerm, options);
-  // const azureJson = JSON.parse(JSON.stringify(resp));
-
+  
   const gNewsVariable = process.env.API_KEY_GOOGLE;
+  const newsCatcherApi = process.env.API_CATCHER_NEWS;
+
+  var options = {
+    method: 'GET',
+    url: 'https://api.newscatcherapi.com/v2/search',
+    params: {q: 'deforestation', lang: 'en', sort_by: 'relevancy'},
+    headers: {
+      'x-api-key': newsCatcherApi
+    }
+  };
+
   const gNewsResp = await axios.get(
-    `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
+    `https://gnews.io/api/v4/search?q=%22drought OR "forest fire"%22&lang=en&image=required&token=${gNewsVariable}`
   );
+  const newsCatcherResp = await axios.request(options);
 
   const googleNewsJson = JSON.parse(JSON.stringify(gNewsResp.data));
+  const newsCatcherParseJson = JSON.parse(JSON.stringify(newsCatcherResp.data.articles));
 
   res.setHeader(
     "Cache-Control",
@@ -353,7 +346,7 @@ export async function getServerSideProps({ res }) {
   return {
     props: {
       googleNewsJson,
-      // azureJson,
+      newsCatcherParseJson,
     },
   };
 }

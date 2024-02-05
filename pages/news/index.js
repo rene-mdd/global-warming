@@ -19,14 +19,6 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-// const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
-
-// const azureEnvKey = process.env.API_KEY_AZURE;
-// const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
-// const searchTerm = "global warming";
-// const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
-
-// const client = new NewsSearchClient(credentials);
 function News(props) {
   const [intersecting, setIntersecting] = useState(false);
   const { ref, inView, entry } = useInView({
@@ -36,10 +28,10 @@ function News(props) {
     triggerOnce: true,
   });
 
-  const { googleNewsJson } = props;
-  const parsedGNews = googleNewsJson.articles;
-  // const parsedBingNews = jsonAzure.value;
-  // const duplicateRemovalBing = parsedBingNews.filter(
+  const { newsCatcherParseJson, googleNewsParseJson } = props;
+  const parsedGNews = googleNewsParseJson.articles;
+
+  // const duplicateRemovalCatcher = newsCatcherParseJson.filter(
   //   (thing, index, self) =>
   //     index ===
   //     self.findIndex(
@@ -108,7 +100,7 @@ function News(props) {
         <List sx={{ width: "100%" }}>
           {duplicateRemovalGNews.map((obj) => (
             <Paper key={obj.title} elevation={2} className="news-wrapper">
-              <Grid container justifyContent="center" alignItems="center">
+              <Grid pr={4} container justifyContent="center" alignItems="center">
                 <Grid item md={4} xs={10}>
                   <ListItemAvatar>
                     <CardMedia
@@ -129,7 +121,7 @@ function News(props) {
                       {obj.title}
                     </Typography>
                   </a>
-                  <Typography paragraph>{obj.description}</Typography>
+                  <Typography paragraph sx={{ color: "white" }}>{obj.description}</Typography>
                   <Grid
                     container
                     justifyContent="space-around"
@@ -160,21 +152,20 @@ function News(props) {
             </Paper>
           ))}
           <Container ref={ref}></Container>
-          {/* {intersecting &&
-            duplicateRemovalBing.map((obj) => (
-              <Paper key={obj.name} elevation={2} className="news-wrapper">
-                <Grid container justifyContent="center" alignItems="center">
+          {intersecting &&
+            newsCatcherParseJson.map((obj) => (
+              <Paper key={obj._id} elevation={2} className="news-wrapper">
+                <Grid pr={4} container justifyContent="center" alignItems="center">
                   <Grid item md={4} xs={10}>
                     <ListItemAvatar>
                       <CardMedia
                         image={
-                          obj?.image?.thumbnail?.contentUrl ??
-                          obj?.provider[0]?.image?.thumbnail?.contentUrl ??
+                          obj?.media ??
                           "/images/breaking-news.png"
                         }
                         component="img"
                         alt="News image"
-                        className="bing-image"
+                        className="catch-image"
                       />
                     </ListItemAvatar>
                   </Grid>
@@ -184,18 +175,19 @@ function News(props) {
                       sx={{ justifyContent: "end" }}
                       container
                       direction="column"
+                      className="news-info-wrapper"
                     >
-                      <a href={obj.url}>
+                      <a href={obj.link}>
                         <Typography
                           component="h5"
                           variant="h5"
                           sx={{ color: "#4183c4" }}
                         >
-                          {obj.name}
+                          {obj.title}
                         </Typography>
                       </a>
                       <Typography paragraph color="text.secondary">
-                        {obj.description}
+                        {obj.summary}
                       </Typography>
                       <Grid
                         container
@@ -208,7 +200,7 @@ function News(props) {
                             sx={{ padding: "6px 16px", fontWeight: "bold" }}
                             variant="outlined"
                           >
-                            Date: {obj.datePublished}
+                            Date: {obj.published_date}
                           </Paper>
                         </Grid>
                         <Grid item>
@@ -218,7 +210,7 @@ function News(props) {
                             endIcon={<PublicIcon />}
                             className="new-source"
                           >
-                            {obj?.provider[0]?.name ?? "News"}
+                           <span> {obj?.authors ?? "News"} </span>
                           </Button>
                         </Grid>
                       </Grid>
@@ -226,7 +218,7 @@ function News(props) {
                   </Grid>
                 </Grid>
               </Paper>
-            ))} */}
+            ))}
         </List>
       </Container>
     </>
@@ -238,40 +230,46 @@ News.propTypes = {
     articles: PropTypes.arrayOf(PropTypes.shape({})),
     timestamp: PropTypes.number,
   }),
-  // jsonAzure: PropTypes.shape({
-  //   totalEstimatedMatches: PropTypes.number,
-  //   value: PropTypes.arrayOf(PropTypes.shape({})),
-  //   _type: PropTypes.string,
-  // }),
+  newsCatcherParseJson: PropTypes.shape({
+    articles: PropTypes.arrayOf(PropTypes.shape({})),
+  }),
 };
 
 News.defaultProps = {
-  googleNewsJson: PropTypes.shape({
+  googleNewsParseJson: PropTypes.shape({
     articleCount: 0,
     articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
-  // jsonAzure: PropTypes.shape({
-  //   totalEstimatedMatches: 0,
-  //   value: PropTypes.arrayOf("/images/breaking-news.png"),
-  //   _type: "",
-  // }),
+  newsCatcherParseJson: PropTypes.shape({
+    articleCount: 0,
+    articles: PropTypes.arrayOf("/images/breaking-news.png"),
+    timestamp: 0,
+  }),
 };
 
 export async function getServerSideProps({ res }) {
-  const options = {
-    count: 20,
-    freshness: "Month",
-    safeSearch: "Strict",
-  };
-  // const resp = await client.news.search(searchTerm, options);
-  // const jsonAzure = await JSON.parse(JSON.stringify(resp));
-  
+
   const gNewsVariable = process.env.API_KEY_GOOGLE;
+  const newsCatcherApi = process.env.API_CATCHER_NEWS;
+
+  var options = {
+    method: 'GET',
+    url: 'https://api.newscatcherapi.com/v2/search',
+    params: { q: 'climate change', lang: 'en', sort_by: 'relevancy' },
+    headers: {
+      'x-api-key': newsCatcherApi
+    }
+  };
+
   const gNewsResp = await axios.get(
-    `https://gnews.io/api/v4/search?q=%22climate%20change%22&lang=en&image=required&token=${gNewsVariable}`
+    `https://gnews.io/api/v4/search?q=%22global%20warming%22&lang=en&image=required&token=${gNewsVariable}`
   );
-  const googleNewsJson = JSON.parse(JSON.stringify(gNewsResp.data));
+  const newsCatcherResp = await axios.request(options);
+
+  const googleNewsParseJson = JSON.parse(JSON.stringify(gNewsResp.data));
+  const newsCatcherParseJson = JSON.parse(JSON.stringify(newsCatcherResp.data.articles));
+
 
   res.setHeader(
     "Cache-Control",
@@ -280,8 +278,8 @@ export async function getServerSideProps({ res }) {
 
   return {
     props: {
-      // jsonAzure,
-      googleNewsJson,
+      newsCatcherParseJson,
+      googleNewsParseJson,
     },
   };
 }
