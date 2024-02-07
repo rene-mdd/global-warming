@@ -21,7 +21,6 @@ import SiteHeader from "../../components/siteHeader";
 
 function SemanticDeforestation(props) {
   const [intersecting, setIntersecting] = useState(false);
-
   const { ref, inView, entry } = useInView({
     /* Optional options */
     threshold: 0,
@@ -30,6 +29,7 @@ function SemanticDeforestation(props) {
   });
 
   const { newsCatcherParseJson, googleNewsParseJson } = props;
+  console.log(newsCatcherParseJson)
 
   const parsedGNews = googleNewsParseJson.articles;
   // const parsedBingNews = azureJson.value;
@@ -167,8 +167,8 @@ function SemanticDeforestation(props) {
           {`Live: ${new Date().toString()}`}
         </Typography>
         <List sx={{ width: "100%" }}>
-          {duplicateRemovalGNews.map((obj) => (
-            <Paper key={obj.title} elevation={2} className="news-wrapper">
+          {duplicateRemovalGNews.map((obj, index) => (
+            <Paper key={index} elevation={2} className="news-wrapper">
               <Grid container justifyContent="center" alignItems="center">
                 <Grid item md={4} xs={10}>
                   <ListItemAvatar>
@@ -337,6 +337,8 @@ export async function getServerSideProps({ res }) {
 
   const googleNewsJson = JSON.parse(JSON.stringify(gNewsResp.data));
   const newsCatcherParseJson = JSON.parse(JSON.stringify(newsCatcherResp.data.articles));
+  console.log(googleNewsJson)
+  console.log(newsCatcherParseJson)
 
   res.setHeader(
     "Cache-Control",

@@ -3,24 +3,44 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
+import IconButton from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
 import PublicIcon from "@mui/icons-material/Public";
 import { useInView } from "react-intersection-observer";
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+
 import {
   CardMedia,
   Container,
   Divider,
-  Grid,
   Typography,
   Paper,
   Button,
   List,
   ListItemAvatar,
+  Card,
+  CardContent,
+  CardActions,
 } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
+import Box from '@mui/material/Box';
+import Switch from '@mui/material/Switch';
+import Fade from '@mui/material/Fade';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Collapse from '@mui/material/Collapse';
+
 
 function News(props) {
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
+
   const [intersecting, setIntersecting] = useState(false);
+
   const { ref, inView, entry } = useInView({
     /* Optional options */
     threshold: 0,
@@ -31,13 +51,14 @@ function News(props) {
   const { newsCatcherParseJson, googleNewsParseJson } = props;
   const parsedGNews = googleNewsParseJson.articles;
 
-  // const duplicateRemovalCatcher = newsCatcherParseJson.filter(
-  //   (thing, index, self) =>
-  //     index ===
-  //     self.findIndex(
-  //       (t) => t.description === thing.description || t.name === thing.name
-  //     )
-  // );
+  const duplicateRemovalCatcher = newsCatcherParseJson.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex(
+        (t) => t.summary === thing.summary || t.title === thing.title
+      )
+  );
+
   const duplicateRemovalGNews = parsedGNews.filter(
     (thing, index, self) =>
       index ===
@@ -45,6 +66,7 @@ function News(props) {
         (t) => t.description === thing.description || t.title === thing.title
       )
   );
+
   const newsMetaTitle = "Global warming & climate change news.";
   const newsMetaDescription =
     "Live worldwide news about global warming and climate change.";
@@ -67,18 +89,20 @@ function News(props) {
         <Typography component="h2" textAlign="center" className="h1-landing">
           Global Warming & Climate Change World News
         </Typography>
-        <Grid align="center">
-          <CardMedia
-            component="img"
-            image="images/icons8-news-256.png"
-            className="landing-page-logo"
-            alt="news logo"
-          />
-          <Typography component="h2" className="h2-landing">
-            Up to date worldwide news about global warming and climate change.
-          </Typography>
+        <Grid container>
+          <Grid xs display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+            <CardMedia
+              component="img"
+              image="images/icons8-news-256.png"
+              className="landing-page-logo"
+              alt="news logo"
+            />
+            <Typography component="h2" className="h2-landing">
+              Up to date worldwide news about global warming and climate change.
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
+        <Grid xs display="flex" justifyContent="center" alignItems="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
           <Scroll.Link spy smooth duration={1000} to="jump-to-news">
             <Button className="down-icon-wrapper">
               <CardMedia
@@ -92,134 +116,128 @@ function News(props) {
         </Grid>
       </Grid>
       <Divider name="jump-to-news" className="hide-divider" />
-      <Container>
+      <Container maxWidth={false} disableGutters={true} className="news-wrapper">
         <Typography component="h3" className="list-news" align="center">
           News List
         </Typography>
         <Typography component="h4" className="date"></Typography>
-        <List sx={{ width: "100%" }}>
-          {duplicateRemovalGNews.map((obj) => (
-            <Paper key={obj.title} elevation={2} className="news-wrapper">
-              <Grid pr={4} container justifyContent="center" alignItems="center">
-                <Grid item md={4} xs={10}>
-                  <ListItemAvatar>
-                    <CardMedia
-                      image={obj?.image ?? "/images/breaking-news.png"}
-                      component="img"
-                      alt="breaking news"
-                      className="gnews-image"
-                    />
-                  </ListItemAvatar>
-                </Grid>
-                <Grid item mt={2} md={8} xs={10} alignSelf="end">
-                  <a href={obj.url}>
-                    <Typography
-                      component="h5"
-                      variant="h5"
-                      sx={{ color: "#4183c4" }}
-                    >
-                      {obj.title}
-                    </Typography>
-                  </a>
-                  <Typography paragraph sx={{ color: "white" }}>{obj.description}</Typography>
-                  <Grid
-                    container
-                    justifyContent="space-around"
-                    alignItems="center"
-                    spacing={2}
+        <Grid container spacing={2} justifyContent="center">
+          {duplicateRemovalGNews.map((obj, index) => (
+            <Grid xs="auto" key={index}>
+              <Card elevation={5} className="news-card-component" sx={{ maxWidth: 500 }}>
+                <a href={obj?.url}>
+                  <CardMedia
+                    component="img"
+                    height="262px"
+                    image={obj?.image ?? "/images/breaking-news.png"}
+                    alt="Paella dish"
+
+                  />
+                  <Typography component="h5" className="overlay overlay_1">
+                    {obj.title}
+                  </Typography>
+                </a>
+                <CardContent>
+                  <Typography variant="subtitle1" color="black">
+                    <Box sx={{ height: checked ? 300 : 75 }}>
+
+                      <Box
+                        sx={{
+                          '& > :not(style)': {
+                            display: 'flex',
+                            justifyContent: 'space-around',
+                            height: 120,
+                            width: '100%',
+                          },
+                        }}
+                      >
+                        <div>
+                          <Collapse in={checked} collapsedSize={85} timeout={1} sx={{ "text-align": "justify" }}>
+                            {obj.description}
+                          </Collapse>
+                        </div>
+                      </Box>
+                    </Box>
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ "justify-content": "space-around" }} disableSpacing>
+                  <Button
+                    href={obj.url}
+                    variant="contained"
+                    endIcon={<PublicIcon />}
+                    className="new-source"
                   >
-                    <Grid item>
-                      <Paper
-                        sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                        variant="outlined"
-                      >
-                        Date: {obj.publishedAt}
-                      </Paper>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        href={obj.url}
-                        variant="contained"
-                        endIcon={<PublicIcon />}
-                        className="new-source"
-                      >
-                        {obj.source.name ?? "News"}
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Paper>
+                    <span>{obj?.source?.name ?? "News"}</span>
+                  </Button>
+                  <Paper variant="outlined"
+                    sx={{ padding: "9px 10px", margin: "0 10px", fontWeight: "bold" }}
+                  >
+                    {obj.publishedAt}
+                  </Paper>
+
+                  <Button variant="contained" checked={checked} onClick={handleChange}>{checked ? "Read less" : "Read more"}</Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
           <Container ref={ref}></Container>
           {intersecting &&
-            newsCatcherParseJson.map((obj) => (
-              <Paper key={obj._id} elevation={2} className="news-wrapper">
-                <Grid pr={4} container justifyContent="center" alignItems="center">
-                  <Grid item md={4} xs={10}>
-                    <ListItemAvatar>
-                      <CardMedia
-                        image={
-                          obj?.media ??
-                          "/images/breaking-news.png"
-                        }
-                        component="img"
-                        alt="News image"
-                        className="catch-image"
-                      />
-                    </ListItemAvatar>
-                  </Grid>
-                  <Grid item md={8} xs={10} mt={2}>
-                    <Grid
-                      item
-                      sx={{ justifyContent: "end" }}
-                      container
-                      direction="column"
-                      className="news-info-wrapper"
-                    >
-                      <a href={obj.link}>
-                        <Typography
-                          component="h5"
-                          variant="h5"
-                          sx={{ color: "#4183c4" }}
+            duplicateRemovalCatcher.map((obj) => (
+              <Grid xs="auto" key={obj._id}>
+                <Card elevation={5} className="news-card-component" sx={{ maxWidth: 500 }}>
+                  <a href={obj?.link}>
+                    <CardMedia
+                      component="img"
+                      height="262px"
+                      image={obj?.media ?? "/images/breaking-news.png"}
+                      alt="Paella dish"
+                    />
+                    <Typography component="h5" className="overlay overlay_1">
+                      {obj.title}
+                    </Typography>
+                  </a>
+                  <CardContent>
+                    <Typography variant="subtitle1" color="black">
+                      <Box sx={{ height: checked ? 300 : 75 }}>
+                        <Box
+                          sx={{
+                            '& > :not(style)': {
+                              display: 'flex',
+                              justifyContent: 'space-around',
+                              height: 120,
+                              width: '100%',
+                            },
+                          }}
                         >
-                          {obj.title}
-                        </Typography>
-                      </a>
-                      <Typography paragraph color="text.secondary">
-                        {obj.summary}
-                      </Typography>
-                      <Grid
-                        container
-                        justifyContent="space-around"
-                        alignItems="center"
-                        spacing={2}
-                      >
-                        <Grid item>
-                          <Paper
-                            sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                            variant="outlined"
-                          >
-                            Date: {obj.published_date}
-                          </Paper>
-                        </Grid>
-                        <Grid item>
-                          <Button
-                            href={obj.url}
-                            variant="contained"
-                            endIcon={<PublicIcon />}
-                            className="new-source"
-                          >
-                           <span> {obj?.authors ?? "News"} </span>
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Paper>
+                          <div>
+                            <Collapse in={checked} collapsedSize={85} timeout={1} sx={{ "text-align": "justify" }}>
+                              {obj.summary}
+                            </Collapse>
+                          </div>
+                        </Box>
+                      </Box>
+                    </Typography>
+                  </CardContent>
+                  <CardActions sx={{ "justify-content": "space-around" }} disableSpacing>
+                    <Button
+                      href={obj.url}
+                      variant="contained"
+                      endIcon={<PublicIcon />}
+                      className="new-source"
+                    >
+                      <span>{obj?.authors ? obj?.authors : "News"}</span>
+                    </Button>
+                    <Paper variant="outlined"
+                      sx={{ padding: "9px 10px", margin: "0 10px", fontWeight: "bold" }}
+                    >
+                      {obj.published_date}
+                    </Paper>
+                    <Button variant="contained" checked={checked} onClick={handleChange}>{checked ? "Read less" : "Read more"}</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
             ))}
-        </List>
+        </Grid>
       </Container>
     </>
   );
@@ -269,7 +287,8 @@ export async function getServerSideProps({ res }) {
 
   const googleNewsParseJson = JSON.parse(JSON.stringify(gNewsResp.data));
   const newsCatcherParseJson = JSON.parse(JSON.stringify(newsCatcherResp.data.articles));
-
+  console.log(googleNewsParseJson)
+  console.log(newsCatcherParseJson)
 
   res.setHeader(
     "Cache-Control",

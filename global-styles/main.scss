@@ -46,6 +46,7 @@ p {
   color: white !important;
   font-size: 1.5em !important;
   width: 70%;
+  text-align: center;
 }
 
 .h2-deforestation {
@@ -117,6 +118,7 @@ footer {
 .list-news {
   font-size: 2.2em !important;
   padding: 10vh !important;
+  color: white !important;
 }
 
 .position-relative {
@@ -222,6 +224,7 @@ nav {
 
 .hide-divider {
   opacity: 0;
+  background-color: #3C4142;
 }
 
 .today-value,
@@ -397,23 +400,47 @@ nav {
 }
 
 .news-wrapper {
-  padding: 15px 0 !important;
-  border-radius: 10px !important;
-  width: 100% !important;
-  justify-content: center !important;
-  margin: 30px 0px !important;
-  background-color: #343837 !important;
-  .news-info-wrapper {
-    display: flex;
-    flex-direction: column;
+  background-color: #3C4142 !important;
+  // padding: 15px 0 !important;
+  // border-radius: 10px !important;
+  // width: 100% !important;
+  // justify-content: center !important;
+  // margin: 30px 0px !important;
+  // background-color: #343837 !important;
+
+  // .news-info-wrapper {
+  //   display: flex;
+  //   flex-direction: column;
+  // }
+}
+
+.news-card-component {
+  position: relative !important;
+
+  .overlay {
+    position: absolute !important;
+    background: rgba(57, 57, 57, 0.5);
+    /* center overlay text */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .overlay_1 {
+    left: 0;
+    top: 0;
+    width: calc(100% - 20px);
+    padding: 10px;
+    color: white;
+    font-weight: bold;
   }
 }
 
 .new-source {
   word-break: break-all !important;
-
+  width: 154px !important;
   span {
-    max-width: 250px;
+    max-width: 100px;
     text-overflow: ellipsis;
     text-wrap: nowrap;
     overflow: hidden;
