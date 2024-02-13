@@ -107,7 +107,7 @@ function SemanticDeforestation(props) {
               <CardMedia
                 image="/images/icons-double-down-white.png"
                 component="img"
-                className="down-icon"
+                className="down-arrow-icon"
                 alt="move to next section"
               />
             </Button>

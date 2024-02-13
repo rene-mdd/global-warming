@@ -80,7 +80,7 @@ footer {
   }
 }
 
-.down-icon {
+.down-arrow-icon {
   margin: 20px 0;
   width: 142px;
   height: 142px;
@@ -99,13 +99,13 @@ footer {
   background-size: cover !important;
   min-height: 100vh !important;
 
-  .arrow-icon {
+  .down-arrow-icon {
     width: 100px;
     height: 100px;
   }
 
   .down-icon-wrapper:hover {
-    background-color: white;
+    background-color: #34383778;
   }
 }
 

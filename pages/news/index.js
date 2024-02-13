@@ -97,7 +97,7 @@ function News(props) {
               <CardMedia
                 component="img"
                 image="/images/icons-double-down-white.png"
-                className="arrow-icon"
+                className="down-arrow-icon"
                 alt="move to next section"
               />
             </Button>
