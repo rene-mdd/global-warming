@@ -24,7 +24,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q4 2022
+          Q4 2023
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -41,7 +41,7 @@ export default function CustomizedTimeline() {
             Legal
           </Typography>
           <Typography color="white">
-            Registration and paperwork of the nonprofit organization
+            Registration and paperwork of the nonprofit
           </Typography>
         </TimelineContent>
       </TimelineItem>
@@ -52,7 +52,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q1 2023
+          Q1 2024
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -66,7 +66,7 @@ export default function CustomizedTimeline() {
             Kick off
           </Typography>
           <Typography color="white">
-            Start of data collection and funding campaign
+            Data collection for the MVP
           </Typography>
         </TimelineContent>
       </TimelineItem>
@@ -77,7 +77,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q2 2023
+          Q2 2024
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -91,11 +91,11 @@ export default function CustomizedTimeline() {
             Engagement
           </Typography>
           <Typography color="white">
-            - Development of website additional features to save and publish the
-            data
+            - Start of funding campaign
           </Typography>
           <Typography color="white">
-            - Promotion of the platform through multiple media channels
+            - Development of website additional features to save and publish the
+            data
           </Typography>
         </TimelineContent>
       </TimelineItem>
@@ -106,7 +106,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q3 2023
+          Q3 2024
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -120,8 +120,11 @@ export default function CustomizedTimeline() {
             Expansion
           </Typography>
           <Typography color="white">
-            Development of additional web technologies to increase traffic and
-            networking. E.g. chat room, public wall
+            - Development of additional web technologies to increase traffic and
+            networking
+          </Typography>
+          <Typography color="white">
+            - Promotion of the platform through multiple media channels
           </Typography>
         </TimelineContent>
       </TimelineItem>

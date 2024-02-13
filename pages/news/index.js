@@ -5,30 +5,36 @@ import axios from "axios";
 import * as Scroll from "react-scroll";
 import PublicIcon from "@mui/icons-material/Public";
 import { useInView } from "react-intersection-observer";
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import {
   CardMedia,
   Container,
   Divider,
-  Grid,
   Typography,
-  Paper,
   Button,
-  List,
-  ListItemAvatar,
+  Card,
+  CardContent,
+  CardActions,
 } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
 
-// const { CognitiveServicesCredentials } = require("@azure/ms-rest-azure-js");
 
-// const azureEnvKey = process.env.API_KEY_AZURE;
-// const credentials = new CognitiveServicesCredentials(`${azureEnvKey}`);
-// const searchTerm = "global warming";
-// const { NewsSearchClient } = require("@azure/cognitiveservices-newssearch");
-
-// const client = new NewsSearchClient(credentials);
 function News(props) {
+  const [isOpen, setToggle] = useState({ titleText: "" });
+
+  const handleChange = (title) => {
+    if (isOpen.titleText === title) {
+      setToggle(() => ({ titleText: "" }));
+    } else {
+      setToggle(() => ({ titleText: title }));
+    }
+  };
+
   const [intersecting, setIntersecting] = useState(false);
+
   const { ref, inView, entry } = useInView({
     /* Optional options */
     threshold: 0,
@@ -36,16 +42,17 @@ function News(props) {
     triggerOnce: true,
   });
 
-  const { googleNewsJson } = props;
-  const parsedGNews = googleNewsJson.articles;
-  // const parsedBingNews = jsonAzure.value;
-  // const duplicateRemovalBing = parsedBingNews.filter(
+  const { newsCatcherParseJson, googleNewsParseJson } = props;
+  const parsedGNews = googleNewsParseJson.articles;
+
+  // const duplicateRemovalCatcher = newsCatcherParseJson.filter(
   //   (thing, index, self) =>
   //     index ===
   //     self.findIndex(
-  //       (t) => t.description === thing.description || t.name === thing.name
+  //       (t) => t.summary === thing.summary || t.title === thing.title
   //     )
   // );
+
   const duplicateRemovalGNews = parsedGNews.filter(
     (thing, index, self) =>
       index ===
@@ -53,6 +60,7 @@ function News(props) {
         (t) => t.description === thing.description || t.title === thing.title
       )
   );
+
   const newsMetaTitle = "Global warming & climate change news.";
   const newsMetaDescription =
     "Live worldwide news about global warming and climate change.";
@@ -66,16 +74,13 @@ function News(props) {
         keywords={newsKeywords}
       />
       <StickyMenu />
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        className="landing-page-news"
-      >
-        <Typography component="h2" textAlign="center" className="h1-landing">
-          Global Warming & Climate Change World News
-        </Typography>
-        <Grid align="center">
+      <Grid container className="landing-page-news">
+        <Grid xs={12} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+          <Typography component="h2" textAlign="center" className="h1-landing">
+            Global Warming & Climate Change World News
+          </Typography>
+        </Grid>
+        <Grid xs={12} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
           <CardMedia
             component="img"
             image="images/icons8-news-256.png"
@@ -86,12 +91,12 @@ function News(props) {
             Up to date worldwide news about global warming and climate change.
           </Typography>
         </Grid>
-        <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
+        <Grid xs={12} display="flex" justifyContent="center" alignItems="center">
           <Scroll.Link spy smooth duration={1000} to="jump-to-news">
             <Button className="down-icon-wrapper">
               <CardMedia
                 component="img"
-                image="/images/icons-double-down.png"
+                image="/images/icons-double-down-white.png"
                 className="arrow-icon"
                 alt="move to next section"
               />
@@ -99,135 +104,116 @@ function News(props) {
           </Scroll.Link>
         </Grid>
       </Grid>
-      <Divider name="jump-to-news" className="hide-divider" />
-      <Container>
-        <Typography component="h3" className="list-news" align="center">
+      <Divider name="jump-to-news" className="hide-news-divider" />
+      <Container maxWidth="1920px" disableGutters={true} className="news-wrapper">
+        <Typography component="h3" className="news-title" align="center">
           News List
         </Typography>
         <Typography component="h4" className="date"></Typography>
-        <List sx={{ width: "100%" }}>
-          {duplicateRemovalGNews.map((obj) => (
-            <Paper key={obj.title} elevation={2} className="news-wrapper">
-              <Grid container justifyContent="center" alignItems="center">
-                <Grid item md={4} xs={10}>
-                  <ListItemAvatar>
+        <Grid container spacing={2} justifyContent="center">
+          {duplicateRemovalGNews.map((obj, index) => (
+            <Grid xs="auto" key={index}>
+              <Card elevation={5} className="news-card-component" sx={{ maxWidth: 500 }}>
+                <a href={obj?.url}>
+                  <CardMedia
+                    component="img"
+                    height="262px"
+                    image={obj?.image ?? "/images/breaking-news.png"}
+                    alt="News image"
+                  />
+                  <Typography component="h5" className="overlay overlay_1">
+                    {obj?.title}
+                  </Typography>
+                </a>
+                <CardContent>
+                  <Typography variant="subtitle1" color="black" className="card-content-container">
+                    <Box sx={{ height: isOpen.titleText === obj?.title ? 300 : 75 }}>
+                      <Box
+                        sx={{
+                          '& > :not(style)': {
+                            display: 'flex',
+                            justifyContent: 'space-around',
+                            height: 120,
+                            width: '100%',
+                          },
+                        }}
+                      >
+                        <div>
+                          <Collapse in={isOpen.titleText === obj?.title} collapsedSize={85} timeout={1} sx={{ "textAlign": "justify" }}>
+                            {obj?.content}
+                          </Collapse>
+                        </div>
+                      </Box>
+                    </Box>
+                  </Typography>
+                </CardContent>
+                <CardActions className="card-content-footer" disableSpacing>
+                  <Button
+                    href={obj?.url}
+                    variant="contained"
+                    endIcon={<PublicIcon />}
+                    className="new-source"
+                  >
+                    <span>{obj?.source?.name ?? "News"}</span>
+                  </Button>
+                  <Button variant="contained" checked={isOpen.titleText === obj?.title} onClick={() => handleChange(obj?.title)}>{isOpen.titleText === obj?.title ? "Read less" : "Read more"}</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+          {/* {intersecting &&
+            duplicateRemovalCatcher.map((obj) => (
+              <Grid xs="auto" key={obj._id}>
+                <Card elevation={5} className="news-card-component" sx={{ maxWidth: 500 }}>
+                  <a href={obj?.link}>
                     <CardMedia
-                      image={obj?.image ?? "/images/breaking-news.png"}
                       component="img"
-                      alt="breaking news"
-                      className="gnews-image"
+                      height="262px"
+                      image={obj?.media ?? "/images/breaking-news.png"}
+                      alt="news image"
                     />
-                  </ListItemAvatar>
-                </Grid>
-                <Grid item mt={2} md={8} xs={10} alignSelf="end">
-                  <a href={obj.url}>
-                    <Typography
-                      component="h5"
-                      variant="h5"
-                      sx={{ color: "#4183c4" }}
-                    >
+                    <Typography component="h5" className="overlay overlay_1">
                       {obj.title}
                     </Typography>
                   </a>
-                  <Typography paragraph>{obj.description}</Typography>
-                  <Grid
-                    container
-                    justifyContent="space-around"
-                    alignItems="center"
-                    spacing={2}
-                  >
-                    <Grid item>
-                      <Paper
-                        sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                        variant="outlined"
-                      >
-                        Date: {obj.publishedAt}
-                      </Paper>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        href={obj.url}
-                        variant="contained"
-                        endIcon={<PublicIcon />}
-                        className="new-source"
-                      >
-                        {obj.source.name ?? "News"}
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Paper>
-          ))}
-          <Container ref={ref}></Container>
-          {/* {intersecting &&
-            duplicateRemovalBing.map((obj) => (
-              <Paper key={obj.name} elevation={2} className="news-wrapper">
-                <Grid container justifyContent="center" alignItems="center">
-                  <Grid item md={4} xs={10}>
-                    <ListItemAvatar>
-                      <CardMedia
-                        image={
-                          obj?.image?.thumbnail?.contentUrl ??
-                          obj?.provider[0]?.image?.thumbnail?.contentUrl ??
-                          "/images/breaking-news.png"
-                        }
-                        component="img"
-                        alt="News image"
-                        className="bing-image"
-                      />
-                    </ListItemAvatar>
-                  </Grid>
-                  <Grid item md={8} xs={10} mt={2}>
-                    <Grid
-                      item
-                      sx={{ justifyContent: "end" }}
-                      container
-                      direction="column"
-                    >
-                      <a href={obj.url}>
-                        <Typography
-                          component="h5"
-                          variant="h5"
-                          sx={{ color: "#4183c4" }}
+                  <CardContent>
+                    <Typography variant="subtitle1" color="black">
+                      <Box sx={{ height: isOpen.titleText === obj.title ? 300 : 75 }}>
+                        <Box
+                          sx={{
+                            '& > :not(style)': {
+                              display: 'flex',
+                              justifyContent: 'space-around',
+                              height: 120,
+                              width: '100%',
+                            },
+                          }}
                         >
-                          {obj.name}
-                        </Typography>
-                      </a>
-                      <Typography paragraph color="text.secondary">
-                        {obj.description}
-                      </Typography>
-                      <Grid
-                        container
-                        justifyContent="space-around"
-                        alignItems="center"
-                        spacing={2}
-                      >
-                        <Grid item>
-                          <Paper
-                            sx={{ padding: "6px 16px", fontWeight: "bold" }}
-                            variant="outlined"
-                          >
-                            Date: {obj.datePublished}
-                          </Paper>
-                        </Grid>
-                        <Grid item>
-                          <Button
-                            href={obj.url}
-                            variant="contained"
-                            endIcon={<PublicIcon />}
-                            className="new-source"
-                          >
-                            {obj?.provider[0]?.name ?? "News"}
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Paper>
+                          <div>
+                            <Collapse in={isOpen.titleText === obj.title} collapsedSize={85} timeout={1} sx={{ "textAlign": "justify" }}>
+                              {obj.summary}
+                            </Collapse>
+                          </div>
+                        </Box>
+                      </Box>
+                    </Typography>
+                  </CardContent>
+                  <CardActions className="card-content-footer" disableSpacing>
+                    <Button
+                      href={obj.url}
+                      variant="contained"
+                      endIcon={<PublicIcon />}
+                      className="new-source"
+                    >
+                      <span>{obj?.authors ? obj?.authors : "News"}</span>
+                    </Button>
+                    <Button variant="contained" checked={isOpen.titleText === obj.title} onClick={() => handleChange(obj.title)}>{isOpen.titleText === obj.title ? "Read less" : "Read more"}</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
             ))} */}
-        </List>
+        </Grid>
+        <Container ref={ref} className="hide-intersecter" />
       </Container>
     </>
   );
@@ -238,52 +224,61 @@ News.propTypes = {
     articles: PropTypes.arrayOf(PropTypes.shape({})),
     timestamp: PropTypes.number,
   }),
-  // jsonAzure: PropTypes.shape({
-  //   totalEstimatedMatches: PropTypes.number,
-  //   value: PropTypes.arrayOf(PropTypes.shape({})),
-  //   _type: PropTypes.string,
-  // }),
+  newsCatcherParseJson: PropTypes.shape({
+    articles: PropTypes.objectOf(PropTypes.shape({})),
+  }),
 };
 
 News.defaultProps = {
-  googleNewsJson: PropTypes.shape({
+  googleNewsParseJson: PropTypes.shape({
     articleCount: 0,
     articles: PropTypes.arrayOf("/images/breaking-news.png"),
     timestamp: 0,
   }),
-  // jsonAzure: PropTypes.shape({
-  //   totalEstimatedMatches: 0,
-  //   value: PropTypes.arrayOf("/images/breaking-news.png"),
-  //   _type: "",
-  // }),
+  newsCatcherParseJson: PropTypes.shape({
+    articleCount: 0,
+    articles: PropTypes.arrayOf("/images/breaking-news.png"),
+    timestamp: 0,
+  }),
 };
 
 export async function getServerSideProps({ res }) {
-  const options = {
-    count: 20,
-    freshness: "Month",
-    safeSearch: "Strict",
-  };
-  // const resp = await client.news.search(searchTerm, options);
-  // const jsonAzure = await JSON.parse(JSON.stringify(resp));
-  
-  const gNewsVariable = process.env.API_KEY_GOOGLE;
-  const gNewsResp = await axios.get(
-    `https://gnews.io/api/v4/search?q=%22climate%20change%22&lang=en&image=required&token=${gNewsVariable}`
-  );
-  const googleNewsJson = JSON.parse(JSON.stringify(gNewsResp.data));
 
+  const gNewsVariable = process.env.API_KEY_GOOGLE;
+  // const newsCatcherApi = process.env.API_CATCHER_NEWS;
+  let googleNewsParseJson;
+  // let newsCatcherParseJson;
+  // var options = {
+  //   method: 'GET',
+  //   url: 'https://api.newscatcherapi.com/v2/search',
+  //   params: { q: 'climate change', lang: 'en', sort_by: 'relevancy' },
+  //   headers: {
+  //     'x-api-key': newsCatcherApi
+  //   }
+  // };
+  try {
+    const gNewsResp = await axios.get(
+      `https://gnews.io/api/v4/search?q=%22global%20warming%22&lang=en&image=required&token=${gNewsVariable}`
+    );
+    // const newsCatcherResp = await axios.request(options);
+    if(gNewsResp) 
+     googleNewsParseJson = JSON.parse(JSON.stringify(gNewsResp.data));
+    // if(newsCatcherResp)
+    //  newsCatcherParseJson = JSON.parse(JSON.stringify(newsCatcherResp.data.articles));
+  } catch (error) {
+    console.error(error);
+  }
   res.setHeader(
     "Cache-Control",
     "maxage=43200, s-maxage=43200, stale-while-revalidate"
   ); // Vercel Cache (Network)
-
   return {
     props: {
-      // jsonAzure,
-      googleNewsJson,
+      // newsCatcherParseJson,
+      googleNewsParseJson,
     },
   };
+
 }
 
 export default News;
