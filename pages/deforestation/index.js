@@ -273,6 +273,9 @@ function SemanticDeforestation(props) {
         </Grid>
         <Container ref={ref} className="hide-intersecter" />
       </Container>
+      <Container component="footer" align="center">
+        News API sources: <a href="https://www.newscatcherapi.com/">NewsCatcher</a> & <a href="https://gnews.io/">GNews</a>
+      </Container>
     </>
   );
 }
