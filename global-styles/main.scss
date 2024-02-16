@@ -18,7 +18,12 @@ html * {
 }
 
 body {
-  background: linear-gradient(90deg, hsla(120, 100%, 99%, 1) 0%, hsla(0, 0%, 100%, 1)) 100% !important;
+  background: linear-gradient(
+      90deg,
+      hsla(120, 100%, 99%, 1) 0%,
+      hsla(0, 0%, 100%, 1)
+    )
+    100% !important;
 }
 
 a {
@@ -79,7 +84,7 @@ p {
     font-size: 15px;
   }
   .MuiTableCell-body {
-    font-size: 15px
+    font-size: 15px;
   }
 }
 
@@ -89,10 +94,19 @@ p {
   color: #343837 !important;
 }
 
-footer {
+.ocean-footer {
   p {
     margin: 0;
     font-size: 0.8em;
+  }
+}
+
+.about-footer {
+  a {
+    all: unset;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -111,7 +125,8 @@ footer {
 }
 
 .landing-page-news {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("/images/newspaper-background.jpg") !important;
   background-size: cover !important;
   min-height: 100vh !important;
 
@@ -239,7 +254,7 @@ nav {
 }
 
 .hide-news-divider {
-  background-color: #3C4142;
+  background-color: #3c4142;
 }
 
 .hide-deforestation-divider {

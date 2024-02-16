@@ -8,10 +8,22 @@ import {
   TableBody,
   TableRow,
   Paper,
+  Container
 } from "@mui/material";
 import PropTypes from "prop-types";
+import dayjs from "dayjs";
 
 function Git({ githubApiResponse }) {
+  function parseDate(commitDate) {
+    const year = dayjs(commitDate).get("year");
+    const month = dayjs(commitDate).get("month") + 1;
+    const day = dayjs(commitDate).get("date");
+    const hour = dayjs(commitDate).get("hour");
+    const minutes = dayjs(commitDate).get("minute");
+    /* eslint-disable */
+    return `${year}-${month}-${day} at ${hour}:${minutes}`;
+  }
+
   return (
     <>
       <Grid
@@ -36,8 +48,9 @@ function Git({ githubApiResponse }) {
           display="flex"
           justifyContent="center"
           alignItems="flex-end"
+          mt="auto"
         >
-          <Typography variant="subtitle1" color="white" borderBottom={1}>
+          <Typography variant="h5" color="white" borderBottom={1}>
             Design / Frontend
           </Typography>
         </Grid>
@@ -51,7 +64,6 @@ function Git({ githubApiResponse }) {
           <TableContainer
             component={Paper}
             sx={{ minWidth: 320, maxHeight: 600 }}
-            m="auto"
           >
             <Table aria-label="simple table">
               <TableHead>
@@ -61,7 +73,7 @@ function Git({ githubApiResponse }) {
                     Author
                   </TableCell>
                   <TableCell className="bold-class" align="right">
-                    Date
+                    Date / Time
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -80,7 +92,7 @@ function Git({ githubApiResponse }) {
                         {commit.author.name}
                       </TableCell>
                       <TableCell variant="head" align="right">
-                        {commit.author.date}
+                        {parseDate(commit.author.date)}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -94,9 +106,19 @@ function Git({ githubApiResponse }) {
           justifyContent="center"
           alignItems="flex-start"
         >
-          <Typography variant="subtitle1" color="white" borderBottom={1}>
+          <Typography variant="h5" color="white" borderBottom={1}>
             Database / Backend
           </Typography>
+        </Grid>
+        <Grid xs={12}>
+          <Container component="footer" align="center" className="about-footer">
+            <Typography paragraph color="white">
+              Source:{" "}
+              <a href="https://github.com/rene-mdd/global-warming">
+                https://github.com/rene-mdd/global-warming
+              </a>
+            </Typography>
+          </Container>
         </Grid>
       </Grid>
     </>

@@ -23,8 +23,6 @@ function About(props) {
     githubApiResponse,
   } = props;
 
-  console.log(githubApiResponse);
-
   return (
     <>
       <SiteHeader
@@ -109,14 +107,6 @@ function About(props) {
         <Grid xs={12}>
           <Git githubApiResponse={githubApiResponse} />
         </Grid>
-        <Grid xs={12}>
-          <Typography paragraph>
-            Source:{" "}
-            <a href="https://github.com/rene-mdd/global-warming">
-              https://github.com/rene-mdd/global-warming
-            </a>
-          </Typography>
-        </Grid>
       </Grid>
     </>
   );
@@ -151,13 +141,13 @@ export async function getServerSideProps({ res }) {
         owner: "rene-mdd",
         repo: "global-warming",
         since: "2019-01-01000:00:000",
-        per_page: 100,
+        per_page: 30,
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },
       }
     );
-    if (githubApiResponse.data) console.log(githubApiResponse);
+    if (githubApiResponse.data)
     githubApiResponse;
   } catch (error) {
     console.log(error);
