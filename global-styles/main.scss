@@ -61,10 +61,26 @@ p {
   color: white !important;
 }
 
-.h1-about {
+.about-title {
   margin-top: 25vh !important;
   font-size: 2.5em !important;
   color: black !important;
+}
+
+.git-main-wrapper {
+  background-color: #016795;
+  min-height: 100vh !important;
+  .git-title {
+    color: white;
+    font-size: 2.5em !important;
+    // margin-top: 25vh;
+  }
+  .MuiTableRow-head {
+    font-size: 15px;
+  }
+  .MuiTableCell-body {
+    font-size: 15px
+  }
 }
 
 .h2-general {

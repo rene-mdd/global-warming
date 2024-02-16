@@ -1,11 +1,14 @@
 /* eslint-disable */
 import * as Scroll from "react-scroll";
-import { CardMedia, Grid, Typography, Button, Divider } from "@mui/material";
+import { CardMedia, Typography, Button, Divider, Grid } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import aboutData from "../../public/SSG/about.json"
+import Git from "../../components/semantic/git";
+import { Octokit } from "octokit";
+
 
 function About(props) {
   const {
@@ -17,7 +20,10 @@ function About(props) {
       subTitle,
       timelineTitle,
     },
+    githubApiResponse
   } = props;
+
+  console.log(githubApiResponse)
 
   return (
     <>
@@ -33,7 +39,7 @@ function About(props) {
         justifyContent="center"
         className="landing-page-about"
       >
-        <Typography paragraph align="center" className="h1-about">
+        <Typography paragraph align="center" className="about-title ">
           {pageTitle}
         </Typography>
         <Grid align="center">
@@ -94,19 +100,60 @@ function About(props) {
         </Typography>
         <CustomizedTimeline />
       </Grid>
-      <Grid className="team-wrapper">
-        <Team />
+      <Grid container className="team-wrapper">
+        <Grid xs={12}>
+          <Team />
+        </Grid>
+      </Grid>
+      <Grid container className="team-wrapper">
+        <Grid xs={12}>
+          <Git githubApiResponse={githubApiResponse} />
+        </Grid>
       </Grid>
     </>
   );
 }
 
-export async function getStaticProps(context) {
- 
+// export async function getStaticProps(context) {
+
+//   return {
+//     // this data comes from SSG folder (static site generation)
+//     props: { aboutData },
+//   };
+// }
+
+export async function getServerSideProps({ res }) {
+  const GithubToken = process.env.API_GITHUB;
+  let githubApiResponse;
+  const octokit = new Octokit({ auth: GithubToken });
+  try {
+    githubApiResponse = await octokit.request("GET /repos/rene-mdd/global-warming/commits", {
+      owner: "rene-mdd",
+      repo: "global-warming",
+      since: "2019-01-01000:00:000",
+      per_page: 100,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
+    if (githubApiResponse.data)
+      console.log(githubApiResponse)
+    githubApiResponse;
+  } catch (error) {
+    console.log(error);
+  }
+
+  res.setHeader(
+    "Cache-Control",
+    "maxage=43200, s-maxage=43200, stale-while-revalidate"
+  ); // Vercel Cache (Network)
   return {
-    // this data comes from SSG folder (static site generation)
-    props: { aboutData },
+    props: {
+      githubApiResponse,
+      aboutData
+    },
   };
 }
+
 
 export default About;
