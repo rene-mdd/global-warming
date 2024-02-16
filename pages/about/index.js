@@ -5,10 +5,10 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
-import aboutData from "../../public/SSG/about.json"
+import aboutData from "../../public/SSG/about.json";
 import Git from "../../components/semantic/git";
 import { Octokit } from "octokit";
-
+import PropTypes from "prop-types";
 
 function About(props) {
   const {
@@ -20,10 +20,10 @@ function About(props) {
       subTitle,
       timelineTitle,
     },
-    githubApiResponse
+    githubApiResponse,
   } = props;
 
-  console.log(githubApiResponse)
+  console.log(githubApiResponse);
 
   return (
     <>
@@ -109,35 +109,55 @@ function About(props) {
         <Grid xs={12}>
           <Git githubApiResponse={githubApiResponse} />
         </Grid>
+        <Grid xs={12}>
+          <Typography paragraph>
+            Source:{" "}
+            <a href="https://github.com/rene-mdd/global-warming">
+              https://github.com/rene-mdd/global-warming
+            </a>
+          </Typography>
+        </Grid>
       </Grid>
     </>
   );
 }
 
-// export async function getStaticProps(context) {
-
-//   return {
-//     // this data comes from SSG folder (static site generation)
-//     props: { aboutData },
-//   };
-// }
+About.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      sha: PropTypes.string.isRequired,
+      commit: PropTypes.shape({
+        author: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          date: PropTypes.string.isRequired, // Assuming date is a string
+        }).isRequired,
+        message: PropTypes.string.isRequired,
+      }).isRequired,
+    })
+  ).isRequired,
+  headers: PropTypes.objectOf({}).isRequired,
+  status: PropTypes.number.isRequired,
+  url: PropTypes.string.isRequired,
+};
 
 export async function getServerSideProps({ res }) {
   const GithubToken = process.env.API_GITHUB;
   let githubApiResponse;
   const octokit = new Octokit({ auth: GithubToken });
   try {
-    githubApiResponse = await octokit.request("GET /repos/rene-mdd/global-warming/commits", {
-      owner: "rene-mdd",
-      repo: "global-warming",
-      since: "2019-01-01000:00:000",
-      per_page: 100,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
+    githubApiResponse = await octokit.request(
+      "GET /repos/rene-mdd/global-warming/commits",
+      {
+        owner: "rene-mdd",
+        repo: "global-warming",
+        since: "2019-01-01000:00:000",
+        per_page: 100,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
       }
-    })
-    if (githubApiResponse.data)
-      console.log(githubApiResponse)
+    );
+    if (githubApiResponse.data) console.log(githubApiResponse);
     githubApiResponse;
   } catch (error) {
     console.log(error);
@@ -150,10 +170,9 @@ export async function getServerSideProps({ res }) {
   return {
     props: {
       githubApiResponse,
-      aboutData
+      aboutData,
     },
   };
 }
-
 
 export default About;
