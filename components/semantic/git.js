@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import dayjs from "dayjs";
 
 function Git({ githubApiResponse }) {
+  console.log(githubApiResponse)
   function parseDate(commitDate) {
     const year = dayjs(commitDate).get("year");
     const month = dayjs(commitDate).get("month") + 1;
@@ -79,7 +80,7 @@ function Git({ githubApiResponse }) {
               </TableHead>
               <TableBody>
                 {githubApiResponse &&
-                  githubApiResponse.data.map(({ sha, commit }) => (
+                  githubApiResponse.map(({ sha, commit }) => (
                     <TableRow
                       variant="head"
                       key={sha}
