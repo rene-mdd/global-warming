@@ -7,39 +7,17 @@ import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import aboutData from "../../public/SSG/about.json";
 import Git from "../../components/semantic/git";
-import { Octokit } from "octokit";
 import PropTypes from "prop-types";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRouter } from 'next/router';
 
-
-function About(props) {
-  const router = useRouter();
-  console.log(props);
-  // const [loadMoreCommits, setCommit] = useState(13);
-
+function About() {
   const {
-    aboutData: {
-      aboutTitle,
-      aboutMetaDescription,
-      aboutKeywords,
-      pageTitle,
-      subTitle,
-      timelineTitle,
-    },
-    githubApiResponse,
-  } = props;
-
-  useEffect(() => {
-    router.replace(router.asPath);
-    console.log(router.replace(router.asPath));
-
-  }, []);
-
-  // const loadMorePages = (() => {
-  //   return test;
-  // });
+    aboutTitle,
+    aboutMetaDescription,
+    aboutKeywords,
+    pageTitle,
+    subTitle,
+    timelineTitle,
+  } = aboutData;
 
   return (
     <>
@@ -123,10 +101,7 @@ function About(props) {
       </Grid>
       <Grid container className="team-wrapper">
         <Grid xs={12}>
-          <Git githubApiResponse={githubApiResponse} />
-          <Button variant="text">
-            Text
-          </Button>
+          <Git />
         </Grid>
       </Grid>
     </>
@@ -150,42 +125,5 @@ About.propTypes = {
   status: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
 };
-
-export async function getServerSideProps({ res, query }) {
-  const GithubToken = process.env.API_GITHUB;
-  let githubApiResponse = [];
-  console.log("hello")
-  console.log(query)
-  const octokit = new Octokit({ auth: GithubToken });
-
-  try {
-    const response = await octokit.paginate(
-      "GET /repos/rene-mdd/global-warming/commits",
-      {
-        owner: "rene-mdd",
-        repo: "global-warming",
-        per_page: 30,
-        page: 13,
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
-        },
-      }
-    );
-    githubApiResponse = response;
-  } catch (error) {
-    console.error(error);
-  }
-
-  res.setHeader(
-    "Cache-Control",
-    "maxage=43200, s-maxage=43200, stale-while-revalidate"
-  ); // Vercel Cache (Network)
-  return {
-    props: {
-      githubApiResponse,
-      aboutData,
-    },
-  };
-}
 
 export default About;

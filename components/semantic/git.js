@@ -8,13 +8,15 @@ import {
   TableBody,
   TableRow,
   Paper,
-  Container
+  Container,
+  Button,
 } from "@mui/material";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import { Octokit } from "octokit";
 
-function Git({ githubApiResponse }) {
-  console.log(githubApiResponse)
+function Git() {
   function parseDate(commitDate) {
     const year = dayjs(commitDate).get("year");
     const month = dayjs(commitDate).get("month") + 1;
@@ -23,6 +25,42 @@ function Git({ githubApiResponse }) {
     const minutes = dayjs(commitDate).get("minute");
     /* eslint-disable */
     return `${year}-${month}-${day} at ${hour}:${minutes}`;
+  }
+
+  const [commitsPages, setCommit] = useState(13);
+  const [gitResp, setGitResp] = useState(null);
+
+  useEffect(() => {
+    async function fetchCommits() {
+      const GithubToken = process.env.API_GITHUB;
+      const octokit = new Octokit({ auth: GithubToken });
+      try {
+        if (commitsPages > 0) {
+          const gitResponse = await octokit.paginate(
+            "GET /repos/rene-mdd/global-warming/commits",
+            {
+              owner: "rene-mdd",
+              repo: "global-warming",
+              per_page: 30,
+              page: commitsPages,
+              headers: {
+                "X-GitHub-Api-Version": "2022-11-28",
+              },
+            }
+          );
+          if (gitResponse) {
+            setGitResp(() => gitResponse);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchCommits();
+  }, [commitsPages]);
+
+  function fetchMoreCommits() {
+    setCommit(() => commitsPages - 1);
   }
 
   return (
@@ -79,8 +117,8 @@ function Git({ githubApiResponse }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {githubApiResponse &&
-                  githubApiResponse.map(({ sha, commit }) => (
+                {gitResp &&
+                  gitResp.map(({ sha, commit }) => (
                     <TableRow
                       variant="head"
                       key={sha}
@@ -100,6 +138,23 @@ function Git({ githubApiResponse }) {
               </TableBody>
             </Table>
           </TableContainer>
+        </Grid>
+        <Grid
+          xs={12}
+          display="flex"
+          justifyContent="center"
+          alignItems="flex-start"
+        >
+          <Button
+            className="commits-button"
+            size="large"
+            color="warning"
+            variant="outlined"
+            sx={{ color: "white" }}
+            onClick={fetchMoreCommits}
+          >
+            Load more commits
+          </Button>
         </Grid>
         <Grid
           xs={12}
