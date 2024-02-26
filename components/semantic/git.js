@@ -28,7 +28,7 @@ function Git() {
   }
 
   const [commitsPages, setCommit] = useState(13);
-  const [gitResp, setGitResp] = useState(null);
+  const [gitResp, setGitResp] = useState([]);
 
   useEffect(() => {
     async function fetchCommits() {
@@ -50,6 +50,7 @@ function Git() {
           );
           if (gitResponse) {
             setGitResp(() => gitResponse);
+            console.log(gitResp);
           }
         }
       } catch (error) {
@@ -117,7 +118,7 @@ function Git() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {gitResp &&
+                {gitResp.length > 0 ? (
                   gitResp.map(({ sha, commit }) => (
                     <TableRow
                       variant="head"
@@ -134,7 +135,14 @@ function Git() {
                         {parseDate(commit.author.date)}
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={3} align="center">
+                      No commits.
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </TableContainer>

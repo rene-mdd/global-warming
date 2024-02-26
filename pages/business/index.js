@@ -29,7 +29,7 @@ function Business() {
         direction="column"
         className="landing-page-about"
       >
-        <Typography paragraph align="center" className="h1-about">
+        <Typography paragraph align="center" className="h1-business">
           Business Data
         </Typography>
         <Grid align="center">
