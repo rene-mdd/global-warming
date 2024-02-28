@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import fetch from "unfetch";
 import Chart from "chart.js";
@@ -6,19 +5,19 @@ import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { arcticService } from "../../services/dataService";
 
-function Arctic(props) {
+function Arctic({ parentCallBack }) {
   const url = "api/arctic-api";
   const [graphError, setGraphError] = useState("");
 
   useEffect(() => {
-    props.parentCallBack(true);
+    parentCallBack(true);
     async function fetchArcticData() {
       try {
         const response = await fetch(url);
         const data = await response.json();
         if (data) {
           displayArcticGraph(data.arcticData);
-          props.parentCallBack(false);
+          parentCallBack(false);
           arcticService.setData(data.arcticData);
         }
       } catch (error) {

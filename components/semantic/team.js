@@ -1,8 +1,7 @@
-/* eslint-disable */
-import { Container, Grid, Box, Typography, Avatar } from "@mui/material";
+import { Container, Box, Typography, Avatar } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 
-export default function Team(props) {
-
+export default function Team() {
   const content = {
     badge: "GWO",
     "header-p1": "Join our organization",
@@ -37,7 +36,6 @@ export default function Team(props) {
     "08_image": "images/empty-profile.jpeg",
     "08_name": "Team Member",
     "08_job": "Join us",
-    ...props.content,
   };
 
   return (
@@ -64,7 +62,7 @@ export default function Team(props) {
             </Container>
           </Box>
           <Grid container spacing={6} justifyContent="center">
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["01_image"]}
@@ -81,7 +79,7 @@ export default function Team(props) {
                 {content["01_job"]}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["02_image"]}
@@ -98,7 +96,7 @@ export default function Team(props) {
                 {content["02_job"]}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["03_image"]}
@@ -116,7 +114,7 @@ export default function Team(props) {
               </Typography>
             </Grid>
 
-            {/* <Grid item xs={12} sm={6} md={3}>
+            {/* <Grid xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["05_image"]}
@@ -133,7 +131,7 @@ export default function Team(props) {
                   {content["05_job"]}
                 </Typography>
               </Grid> */}
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["04_image"]}
@@ -150,18 +148,25 @@ export default function Team(props) {
                 {content["04_job"]}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid xs={12}>
               <Typography paragraph mt={10} fontSize="1.2em">
                 If you want to be part of the organization write us at
-                <Typography color="primary" variant="a" component="a" href="mailto: help@global-warming.org" target="_blank">
+                <Typography
+                  color="primary"
+                  variant="a"
+                  component="a"
+                  href="mailto: help@global-warming.org"
+                  target="_blank"
+                >
                   &nbsp;help@global-warming.org
                 </Typography>
               </Typography>
               <Typography paragraph color="textSecondary" fontSize="1em">
-                We are currently only offering volunteer opportunities. By mid-2024, we hope to begin hiring interns and full-time staff.
+                We are currently only offering volunteer opportunities. By
+                mid-2024, we hope to begin hiring interns and full-time staff.
               </Typography>
             </Grid>
-            {/* <Grid item xs={12} sm={6} md={3}>
+            {/* <Grid xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["06_image"]}
@@ -178,7 +183,7 @@ export default function Team(props) {
                   {content["06_job"]}
                 </Typography>
               </Grid> */}
-            {/* <Grid item xs={12} sm={6} md={3}>
+            {/* <Grid xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["07_image"]}
@@ -195,7 +200,7 @@ export default function Team(props) {
                   {content["07_job"]}
                 </Typography>
               </Grid> */}
-            {/* <Grid item xs={12} sm={6} md={3}>
+            {/* <Grid xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["08_image"]}

@@ -1,24 +1,18 @@
-/* eslint-disable */
 import * as Scroll from "react-scroll";
-import { CardMedia, Typography, Button, Divider, Grid } from "@mui/material";
+import { CardMedia, Typography, Button, Divider } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
-import aboutData from "../../public/SSG/about.json";
 import Git from "../../components/semantic/git";
-import PropTypes from "prop-types";
 
 function About() {
-  const {
-    aboutTitle,
-    aboutMetaDescription,
-    aboutKeywords,
-    pageTitle,
-    subTitle,
-    timelineTitle,
-  } = aboutData;
-
+  const aboutTitle = "Climate Accountability API About Us";
+  const aboutMetaDescription =
+    "Our mission is to provide the public with information related to every organization carbon footprint";
+  const aboutKeywords =
+    "Global warming, about, carbon footprint, climate change, environment";
   return (
     <>
       <SiteHeader
@@ -34,7 +28,7 @@ function About() {
         className="landing-page-about"
       >
         <Typography paragraph align="center" className="about-title ">
-          {pageTitle}
+          About Us
         </Typography>
         <Grid align="center">
           <CardMedia
@@ -49,11 +43,12 @@ function About() {
             align="center"
             gutterBottom
           >
-            {subTitle}
+            We are developing the most complete and reliable platform for
+            worldwide environmental accountability.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center">
-          <Grid item>
+          <Grid>
             <iframe
               title="Tons of CO2 emitted into the atmosphere"
               src="https://www.theworldcounts.com/embed/challenges/23?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
@@ -61,9 +56,9 @@ function About() {
               height="125"
               width="300"
               loading="lazy"
-            ></iframe>
+            />
           </Grid>
-          <Grid item>
+          <Grid>
             <iframe
               title="World average temperature (°C)"
               src="https://www.theworldcounts.com/embed/challenges/21?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
@@ -71,11 +66,11 @@ function About() {
               height="125"
               width="300"
               loading="lazy"
-            ></iframe>
+            />
           </Grid>
         </Grid>
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
-          <Scroll.Link spy smooth duration={1000} to="jump-news" Ref="nofollow">
+          <Scroll.Link spy smooth duration={1000} to="jump-news">
             <Button className="down-icon-wrapper">
               <CardMedia
                 image="/images/icons-double-down.png"
@@ -90,7 +85,7 @@ function About() {
       <Divider name="jump-news" className="hide-divider" />
       <Grid container className="timeline">
         <Typography variant="h2" className="timeline-title">
-          {timelineTitle}
+          Project Timeline
         </Typography>
         <CustomizedTimeline />
       </Grid>
@@ -107,23 +102,5 @@ function About() {
     </>
   );
 }
-
-About.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      sha: PropTypes.string.isRequired,
-      commit: PropTypes.shape({
-        author: PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          date: PropTypes.string.isRequired, // Assuming date is a string
-        }).isRequired,
-        message: PropTypes.string.isRequired,
-      }).isRequired,
-    })
-  ).isRequired,
-  headers: PropTypes.objectOf({}).isRequired,
-  status: PropTypes.number.isRequired,
-  url: PropTypes.string.isRequired,
-};
 
 export default About;

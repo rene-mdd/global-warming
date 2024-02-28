@@ -1,11 +1,10 @@
-/* eslint-disable */
 import { Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { LoadingButton } from "@mui/lab";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Arctic from "../charts/arctic";
 import { AccordionArctic, AccordionShare } from "./accordion";
 import { arcticService } from "../../services/dataService";
-import { LoadingButton } from "@mui/lab";
 
 const theme = createTheme({
   palette: {
@@ -43,7 +42,7 @@ function ParentArctic() {
             <ThemeProvider theme={theme}>
               <LoadingButton
                 onClick={() => setArctic((prevState) => !prevState)}
-                loading={arcticLoading ? true : false}
+                loading={arcticLoading}
                 variant="contained"
               >
                 {arctic ? "Hide graph" : "Load graph"}
@@ -97,10 +96,10 @@ function ParentArctic() {
               mb={10}
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-              <AccordionArctic />
+                <AccordionArctic />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
-              <AccordionShare />
+                <AccordionShare />
               </Grid>
             </Grid>
           </Container>

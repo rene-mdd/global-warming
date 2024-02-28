@@ -1,4 +1,3 @@
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import {
   Typography,
   TableContainer,
@@ -11,7 +10,8 @@ import {
   Container,
   Button,
 } from "@mui/material";
-import PropTypes from "prop-types";
+import Grid from "@mui/material/Unstable_Grid2";
+// import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { Octokit } from "octokit";
@@ -23,7 +23,6 @@ function Git() {
     const day = dayjs(commitDate).get("date");
     const hour = dayjs(commitDate).get("hour");
     const minutes = dayjs(commitDate).get("minute");
-    /* eslint-disable */
     return `${year}-${month}-${day} at ${hour}:${minutes}`;
   }
 
@@ -34,9 +33,13 @@ function Git() {
     async function fetchCommits() {
       const GithubToken = process.env.API_GITHUB;
       const octokit = new Octokit({ auth: GithubToken });
+      if (!GithubToken) {
+        console.error("Error with the github API token");
+        return;
+      }
       try {
         if (commitsPages > 0) {
-          const gitResponse = await octokit.paginate(
+          const response = await octokit.paginate(
             "GET /repos/rene-mdd/global-warming/commits",
             {
               owner: "rene-mdd",
@@ -48,10 +51,7 @@ function Git() {
               },
             }
           );
-          if (gitResponse) {
-            setGitResp(() => gitResponse);
-            console.log(gitResp);
-          }
+          if (response) setGitResp((prev) => [...prev, ...response]);
         }
       } catch (error) {
         console.error(error);
@@ -59,10 +59,6 @@ function Git() {
     }
     fetchCommits();
   }, [commitsPages]);
-
-  function fetchMoreCommits() {
-    setCommit(() => commitsPages - 1);
-  }
 
   return (
     <>
@@ -79,7 +75,7 @@ function Git() {
           justifyContent="center"
           alignItems="center"
         >
-          <Typography variant="h2" className="git-title">
+          <Typography variant="h2" textAlign="center" className="git-title">
             Git software development updates
           </Typography>
         </Grid>
@@ -90,7 +86,12 @@ function Git() {
           alignItems="flex-end"
           mt="auto"
         >
-          <Typography variant="h5" color="white" borderBottom={1}>
+          <Typography
+            marginBlock={2}
+            variant="h5"
+            color="white"
+            borderBottom={1}
+          >
             Design / Frontend
           </Typography>
         </Grid>
@@ -138,9 +139,7 @@ function Git() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={3} align="center">
-                      No commits.
-                    </TableCell>
+                    <TableCell align="center">No commits.</TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -152,6 +151,7 @@ function Git() {
           display="flex"
           justifyContent="center"
           alignItems="flex-start"
+          m={2}
         >
           <Button
             className="commits-button"
@@ -159,7 +159,7 @@ function Git() {
             color="warning"
             variant="outlined"
             sx={{ color: "white" }}
-            onClick={fetchMoreCommits}
+            onClick={() => setCommit(commitsPages - 1)}
           >
             Load more commits
           </Button>
@@ -174,7 +174,7 @@ function Git() {
             Database / Backend
           </Typography>
         </Grid>
-        <Grid xs={12}>
+        <Grid mt={2} xs={12}>
           <Container component="footer" align="center" className="about-footer">
             <Typography paragraph color="white">
               Source:{" "}
@@ -188,24 +188,5 @@ function Git() {
     </>
   );
 }
-Git.propTypes = {
-  githubApiResponse: PropTypes.shape({
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        sha: PropTypes.string.isRequired,
-        commit: PropTypes.shape({
-          author: PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            date: PropTypes.string.isRequired, // Assuming date is a string
-          }).isRequired,
-          message: PropTypes.string.isRequired,
-        }).isRequired,
-      })
-    ).isRequired,
-    headers: PropTypes.objectOf({}).isRequired,
-    status: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default Git;
