@@ -74,7 +74,7 @@ export default class StickySideBar extends Component {
           <ThemeProvider theme={theme}>
             <Box>
               <AppBar position="fixed" color="primary">
-                <Toolbar sx={{ justifyContent: "center" }}>
+                <Toolbar sx={{ justifyContent: "space-between" }}>
                   <Link href="/">
                     <Avatar
                       sx={{ width: "50px" }}
@@ -84,34 +84,34 @@ export default class StickySideBar extends Component {
                   </Link>
                   <ButtonGroup variant="text" size="large">
                     <Link href="/">
-                      <Button color="inherit" className="menu">
+                      <Button className="menu">
                         Home
                       </Button>
                     </Link>
                     <Link href="/about">
-                      <Button color="inherit" className="menu">
+                      <Button className="menu">
                         About
                       </Button>
                     </Link>
                     <Link href="/business">
-                      <Button color="inherit" className="menu">
+                      <Button className="menu">
                         Business
                       </Button>
                     </Link>
                     <Link href="/news">
-                      <Button color="inherit" className="menu">
+                      <Button className="menu">
                         News
                       </Button>
                     </Link>
                     <Link href="/deforestation">
-                      <Button color="inherit" className="menu">
+                      <Button className="menu">
                         Deforestation
                       </Button>
                     </Link>
                   </ButtonGroup>
                   <Link href="/contact">
                     <Button
-                      color="inherit"
+                    
                       className="menu"
                       sx={{ marginLeft: "auto" }}
                     >

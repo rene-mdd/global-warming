@@ -33,10 +33,6 @@ function Git() {
     async function fetchCommits() {
       const GithubToken = process.env.API_GITHUB;
       const octokit = new Octokit({ auth: GithubToken });
-      if (!GithubToken) {
-        console.error("Error with the github API token");
-        return;
-      }
       try {
         if (commitsPages > 0) {
           const response = await octokit.paginate(

@@ -32,10 +32,10 @@ const LandingPage = () => (
       </Typography>
     </Grid>
     <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
-      <Scroll.Link spy smooth duration={1000} to="jump-to-temperature" Ref="nofollow">
+      <Scroll.Link spy smooth duration={1000} to="jump-to-temperature">
         <Button className="icon-style">
           <CardMedia
-            image="/images/icons-double-down.png"
+            image="/images/icons-double-down-white.png"
             component="img"
             className="down-icon"
             alt="move to next section"
