@@ -32,6 +32,7 @@
     "no-console": 1,
     "react/jsx-one-expression-per-line": "off",
     "react/no-unescaped-entities": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "no-underscore-dangle": "off"
   }
 }
