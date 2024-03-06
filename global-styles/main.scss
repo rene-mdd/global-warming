@@ -28,6 +28,7 @@ body {
 
 a {
   text-decoration: none;
+  word-wrap: break-word;
 }
 
 .mini-icon {
@@ -326,6 +327,7 @@ nav {
 .menu-icon {
   cursor: pointer;
   margin-right: auto;
+  width: 50px;
 }
 
 .menu {
@@ -484,10 +486,17 @@ nav {
     justify-content: space-between;
   }
 }
+@media only screen and (max-width: 700px) {
+  .card-content-footer {
+    .MuiButtonBase-root {
+      font-size: 11px !important;
+    }
+  }
+}
 
 .new-source {
   word-break: break-all !important;
-  width: 200px !important;
+  min-width: 160px !important;
 
   span {
     max-width: 145px;

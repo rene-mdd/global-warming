@@ -32,7 +32,7 @@ export default class StickySideBar extends Component {
   }
 
   componentDidMount() {
-    this.screenSize = window.matchMedia("(max-width: 600px)");
+    this.screenSize = window.matchMedia("(max-width: 800px)");
     this.setState({ mediaQuery: this.screenSize.matches });
     window.addEventListener("resize", this.checkFunc);
   }

@@ -21,8 +21,9 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
 function News(props) {
-  const [isOpen, setToggle] = useState({ titleText: "" });
-  console.log(props);
+  const [isOpen, setToggle] = useState("");
+  const [intersecting, setIntersecting] = useState(false);
+
   const handleChange = (title) => {
     if (isOpen.titleText === title) {
       setToggle(() => ({ titleText: "" }));
@@ -31,8 +32,6 @@ function News(props) {
     }
   };
 
-  const [intersecting, setIntersecting] = useState(false);
-
   const { ref } = useInView({
     /* Optional options */
     threshold: 0,
@@ -40,8 +39,11 @@ function News(props) {
     triggerOnce: true,
   });
 
+  const checkifImg = (e) => {
+    e.target.src = "/images/breaking-news.webp";
+  };
+
   const { newsCatcherParseJson, googleNewsParseJson } = props;
-  const parsedGNews = googleNewsParseJson.articles;
 
   const duplicateRemovalCatcher = newsCatcherParseJson.filter(
     (thing, index, self) =>
@@ -51,7 +53,7 @@ function News(props) {
       )
   );
 
-  const duplicateRemovalGNews = parsedGNews.filter(
+  const duplicateRemovalGNews = googleNewsParseJson.articles.filter(
     (thing, index, self) =>
       index ===
       self.findIndex(
@@ -78,7 +80,6 @@ function News(props) {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          flexDirection="column"
         >
           <Typography component="h2" textAlign="center" className="h1-landing">
             Global Warming & Climate Change World News
@@ -93,7 +94,7 @@ function News(props) {
         >
           <CardMedia
             component="img"
-            image="images/icons8-news-256.png"
+            image="/images/icons8-news-256.png"
             className="landing-page-logo"
             alt="news logo"
           />
@@ -120,14 +121,14 @@ function News(props) {
         </Grid>
       </Grid>
       <Divider name="jump-to-news" className="hide-news-divider" />
-      <Container maxWidth="1920px" disableGutters className="news-wrapper">
+      <Container disableGutters className="news-wrapper">
         <Typography component="h3" className="news-title" align="center">
           News List
         </Typography>
         <Typography component="h4" className="date" />
         <Grid container spacing={2} justifyContent="center">
           {duplicateRemovalGNews.map((obj) => (
-            <Grid xs="auto" key={obj?.title}>
+            <Grid key={obj?.title}>
               <Card
                 elevation={5}
                 className="news-card-component"
@@ -137,14 +138,16 @@ function News(props) {
                   <CardMedia
                     component="img"
                     height="262px"
-                    image={obj?.image ?? "/images/breaking-news.png"}
+                    image={obj?.image ?? "/images/breaking-news.webp"}
                     alt="News image"
+                    onError={checkifImg}
+                    loading="lazy"
                   />
                   <Typography component="h5" className="overlay overlay_1">
                     {obj?.title}
                   </Typography>
                 </a>
-                <CardContent>
+                <CardContent sx={{ overflow: "scroll" }}>
                   <Typography
                     variant="subtitle1"
                     color="black"
@@ -192,6 +195,7 @@ function News(props) {
                     variant="contained"
                     checked={isOpen.titleText === obj?.title}
                     onClick={() => handleChange(obj?.title)}
+                    ml={1}
                   >
                     {isOpen.titleText === obj?.title
                       ? "Read less"
@@ -203,7 +207,7 @@ function News(props) {
           ))}
           {intersecting &&
             duplicateRemovalCatcher.map((obj) => (
-              <Grid xs="auto" key={obj._id}>
+              <Grid key={obj._id}>
                 <Card
                   elevation={5}
                   className="news-card-component"
@@ -215,12 +219,14 @@ function News(props) {
                       height="262px"
                       image={obj?.media ?? "/images/breaking-news.png"}
                       alt="news image"
+                      onError={checkifImg}
+                      loading="lazy"
                     />
                     <Typography component="h5" className="overlay overlay_1">
                       {obj.title}
                     </Typography>
                   </a>
-                  <CardContent>
+                  <CardContent sx={{ overflow: "scroll" }}>
                     <Typography variant="subtitle1" color="black">
                       <Box
                         sx={{
@@ -264,6 +270,7 @@ function News(props) {
                       variant="contained"
                       checked={isOpen.titleText === obj.title}
                       onClick={() => handleChange(obj.title)}
+                      ml={1}
                     >
                       {isOpen.titleText === obj.title
                         ? "Read less"
@@ -337,12 +344,14 @@ export async function getServerSideProps({ res }) {
       `https://gnews.io/api/v4/search?q=%22global%20warming%22&lang=en&image=required&token=${gNewsVariable}`
     );
     const newsCatcherResp = await axios.request(options);
-    if (gNewsResp)
-      googleNewsParseJson = JSON.parse(JSON.stringify(gNewsResp.data));
-    if (newsCatcherResp) console.log(newsCatcherResp);
-    newsCatcherParseJson = JSON.parse(
-      JSON.stringify(newsCatcherResp.data.articles)
-    );
+    if (gNewsResp) {
+      googleNewsParseJson = gNewsResp.data;
+    }
+    if (newsCatcherResp) {
+      newsCatcherParseJson = JSON.parse(
+        JSON.stringify(newsCatcherResp.data.articles)
+      );
+    }
   } catch (error) {
     console.error(error);
   }
