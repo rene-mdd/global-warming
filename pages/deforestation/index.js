@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
@@ -21,7 +21,7 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
 // eslint-disable-next-line prefer-arrow-callback
-const SemanticDeforestation = memo(function SemanticDeforestation(props) {
+function SemanticDeforestation(props) {
   console.log(props)
   const [isOpen, setToggle] = useState("");
   const [intersecting, setIntersecting] = useState(false);
@@ -369,7 +369,7 @@ const SemanticDeforestation = memo(function SemanticDeforestation(props) {
       </Container>
     </>
   );
-});
+};
 SemanticDeforestation.propTypes = {
   googleNewsParseJson: PropTypes.arrayOf(
     PropTypes.shape({
