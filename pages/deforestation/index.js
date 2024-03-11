@@ -20,9 +20,7 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-// eslint-disable-next-line prefer-arrow-callback
 function SemanticDeforestation(props) {
-  console.log(props)
   const [isOpen, setToggle] = useState("");
   const [intersecting, setIntersecting] = useState(false);
   const handleChange = (title) => {
