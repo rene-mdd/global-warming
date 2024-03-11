@@ -22,6 +22,7 @@ import SiteHeader from "../../components/siteHeader";
 
 // eslint-disable-next-line prefer-arrow-callback
 const SemanticDeforestation = memo(function SemanticDeforestation(props) {
+  console.log(props)
   const [isOpen, setToggle] = useState("");
   const [intersecting, setIntersecting] = useState(false);
   const handleChange = (title) => {
@@ -394,11 +395,7 @@ SemanticDeforestation.propTypes = {
 };
 
 SemanticDeforestation.defaultProps = {
-  googleNewsParseJson: {
-    articleCount: 0,
-    articles: [],
-    timestamp: 0,
-  },
+  googleNewsParseJson: [],
   newsCatcherParseJson: [],
 };
 export async function getServerSideProps({ res }) {
