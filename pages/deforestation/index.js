@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
@@ -20,10 +20,10 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
-function SemanticDeforestation(props) {
+// eslint-disable-next-line prefer-arrow-callback
+const SemanticDeforestation = memo(function SemanticDeforestation(props) {
   const [isOpen, setToggle] = useState("");
   const [intersecting, setIntersecting] = useState(false);
-  console.log(props);
   const handleChange = (title) => {
     if (isOpen.titleText === title) {
       setToggle(() => ({ titleText: "" }));
@@ -53,7 +53,7 @@ function SemanticDeforestation(props) {
       )
   );
 
-  const duplicateRemovalGNews = googleNewsParseJson.articles.filter(
+  const duplicateRemovalGNews = googleNewsParseJson.filter(
     (thing, index, self) =>
       index ===
       self.findIndex(
@@ -198,85 +198,91 @@ function SemanticDeforestation(props) {
           News List
         </Typography>
         <Typography component="h4" className="date" />
-        <Grid container spacing={2} justifyContent="center">
-          {duplicateRemovalGNews.map((obj) => (
-            <Grid key={obj?.title}>
-              <Card
-                elevation={5}
-                className="news-card-component"
-                sx={{ maxWidth: 500 }}
-              >
-                <a href={obj?.url}>
-                  <CardMedia
-                    component="img"
-                    height="262px"
-                    image={obj?.image ?? "/images/breaking-news.png"}
-                    alt="News image"
-                    onError={checkifImg}
-                    loading="lazy"
-                  />
-                  <Typography component="h5" className="overlay overlay_1">
-                    {obj?.title}
-                  </Typography>
-                </a>
-                <CardContent sx={{ overflow: "scroll" }}>
-                  <Typography
-                    variant="subtitle1"
-                    color="black"
-                    className="card-content-container"
-                  >
-                    <Box
-                      sx={{
-                        height: isOpen.titleText === obj?.title ? 300 : 75,
-                      }}
+        <Grid
+          container
+          spacing={{ xs: 0, md: 2 }}
+          rowSpacing={2}
+          justifyContent="center"
+        >
+          {duplicateRemovalGNews &&
+            duplicateRemovalGNews.map((obj) => (
+              <Grid key={obj?.title}>
+                <Card
+                  elevation={5}
+                  className="news-card-component"
+                  sx={{ maxWidth: 500 }}
+                >
+                  <a href={obj?.url}>
+                    <CardMedia
+                      component="img"
+                      height="262px"
+                      image={obj?.image ?? "/images/breaking-news.png"}
+                      alt="News image"
+                      onError={checkifImg}
+                      loading="lazy"
+                    />
+                    <Typography component="h5" className="overlay overlay_1">
+                      {obj?.title}
+                    </Typography>
+                  </a>
+                  <CardContent sx={{ overflow: "scroll" }}>
+                    <Typography
+                      variant="subtitle1"
+                      color="black"
+                      className="card-content-container"
                     >
                       <Box
                         sx={{
-                          "& > :not(style)": {
-                            display: "flex",
-                            justifyContent: "space-around",
-                            height: 120,
-                            width: "100%",
-                          },
+                          height: isOpen.titleText === obj?.title ? 300 : 75,
                         }}
                       >
-                        <div>
-                          <Collapse
-                            in={isOpen.titleText === obj?.title}
-                            collapsedSize={85}
-                            timeout={1}
-                            sx={{ textAlign: "justify" }}
-                          >
-                            {obj?.content}
-                          </Collapse>
-                        </div>
+                        <Box
+                          sx={{
+                            "& > :not(style)": {
+                              display: "flex",
+                              justifyContent: "space-around",
+                              height: 120,
+                              width: "100%",
+                            },
+                          }}
+                        >
+                          <div>
+                            <Collapse
+                              in={isOpen.titleText === obj?.title}
+                              collapsedSize={85}
+                              timeout={1}
+                              sx={{ textAlign: "justify" }}
+                            >
+                              {obj?.content}
+                            </Collapse>
+                          </div>
+                        </Box>
                       </Box>
-                    </Box>
-                  </Typography>
-                </CardContent>
-                <CardActions className="card-content-footer" disableSpacing>
-                  <Button
-                    href={obj?.url}
-                    variant="contained"
-                    endIcon={<PublicIcon />}
-                    className="new-source"
-                  >
-                    <span>{obj?.source?.name ?? "News"}</span>
-                  </Button>
-                  <Button
-                    variant="contained"
-                    checked={isOpen.titleText === obj?.title}
-                    onClick={() => handleChange(obj?.title)}
-                    ml={1}
-                  >
-                    {isOpen.titleText === obj?.title
-                      ? "Read less"
-                      : "Read more"}
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+                    </Typography>
+                  </CardContent>
+                  <CardActions className="card-content-footer" disableSpacing>
+                    <Button
+                      href={obj?.url}
+                      variant="contained"
+                      endIcon={<PublicIcon />}
+                      className="new-source"
+                    >
+                      <span>{obj?.source?.name ?? "News"}</span>
+                    </Button>
+                    <Button
+                      variant="contained"
+                      checked={isOpen.titleText === obj?.title}
+                      onClick={() => handleChange(obj?.title)}
+                      ml={1}
+                    >
+                      {isOpen.titleText === obj?.title
+                        ? "Read less"
+                        : "Read more"}
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           {intersecting &&
             duplicateRemovalCatcher.map((obj) => (
               <Grid key={obj._id}>
@@ -362,23 +368,19 @@ function SemanticDeforestation(props) {
       </Container>
     </>
   );
-}
+});
 SemanticDeforestation.propTypes = {
-  googleNewsParseJson: PropTypes.shape({
-    articleCount: PropTypes.number,
-    articles: PropTypes.arrayOf(
-      PropTypes.shape({
-        url: PropTypes.string,
-        image: PropTypes.string,
-        title: PropTypes.string,
-        content: PropTypes.string,
-        source: PropTypes.shape({
-          name: PropTypes.string,
-        }),
-      })
-    ),
-    timestamp: PropTypes.number,
-  }),
+  googleNewsParseJson: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string,
+      image: PropTypes.string,
+      title: PropTypes.string,
+      content: PropTypes.string,
+      source: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+    })
+  ),
   newsCatcherParseJson: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
@@ -419,7 +421,7 @@ export async function getServerSideProps({ res }) {
     );
     const newsCatcherResp = await axios.request(options);
     if (gNewsResp) {
-      googleNewsParseJson = JSON.parse(JSON.stringify(gNewsResp.data));
+      googleNewsParseJson = gNewsResp.data.articles;
     }
     if (newsCatcherResp) {
       newsCatcherParseJson = newsCatcherResp.data.articles;
