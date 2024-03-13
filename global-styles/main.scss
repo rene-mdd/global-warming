@@ -120,6 +120,16 @@ p {
   }
 }
 
+.chart-footer {
+  p {
+    font-size: 14px;
+    margin: 1px 0;
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
 .down-arrow-icon {
   margin: 20px 0;
   width: 142px;

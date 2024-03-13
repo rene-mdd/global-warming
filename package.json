@@ -20,7 +20,7 @@
     "@react-rxjs/core": "^0.9.8",
     "@react-rxjs/utils": "^0.9.5",
     "axios": "^0.21.4",
-    "chart.js": "^2.9.4",
+    "chart.js": "4.4.2",
     "csvtojson": "^2.0.10",
     "dayjs": "^1.11.10",
     "dotenv": "^8.6.0",

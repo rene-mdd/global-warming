@@ -17,12 +17,13 @@ const theme = createTheme({
 function ParentArctic() {
   const [arctic, setArctic] = useState(false);
   const [arcticLoading, setArcticLoading] = useState(false);
-  const [todayValue, setTodayValue] = useState({});
+  const [todayValue, setTodayValue] = useState("");
 
   useEffect(() => {
-    const subscription = arcticService.getData().subscribe((data) => {
-      if (data) {
-        setTodayValue(data.value.pop());
+    const subscription = arcticService.getData().subscribe(({value}) => {
+      if (value) {
+        setTodayValue(value[0]);
+        console.log(value);
       }
     });
     return subscription.unsubscribe.bind(subscription);
@@ -32,7 +33,7 @@ function ParentArctic() {
     <Container component="section">
       <Container>
         <Typography component="h2" align="center" className="h2-general">
-          Melted Polar Ice Caps
+          Sea ice extent
         </Typography>
         <Grid container>
           {arctic ? (
@@ -54,12 +55,7 @@ function ParentArctic() {
           <Container align="center" className="today-value">
             <p>
               Today's value:
-              <span style={{ color: "#2c82c9" }}>
-                {" "}
-                {`Extent ${todayValue.extent ? todayValue.extent : 0}, Area ${
-                  todayValue.area ? todayValue.area : 0
-                }`}
-              </span>
+              <span style={{ color: "#2c82c9" }}>{todayValue}</span>
             </p>
           </Container>
           <Container id="scrolling-container">

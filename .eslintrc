@@ -34,6 +34,7 @@
     "react/no-unescaped-entities": "off",
     "react-hooks/exhaustive-deps": "off",
     "no-underscore-dangle": "off",
-    "prefer-arrow-callback": "warn"
+    "prefer-arrow-callback": "warn",
+    "no-restricted-syntax": "off"
   }
 }

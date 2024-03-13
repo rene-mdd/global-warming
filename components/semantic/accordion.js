@@ -265,12 +265,11 @@ const AccordionArctic = () => (
         variant="h5"
         sx={{ color: "#215a6d", fontWeight: "bold" }}
       >
-        Arctic averaged marine surface yearly mean data
+        Sea ice extent
       </Typography>
       <Typography paragraph sx={{ fontSize: "18px" }}>
-        This API provides the average monthly arctic sea ice extent each
-        September since 1979, derived from satellite observations. Fetch this
-        endpoint
+        Sea ice extent from 1979–2024 for the Globe, on a monthly basis, Northern Hemisphere, and
+        Southern Hemisphere. Fetch this endpoint
         <b> https://global-warming.org/api/arctic-api </b>
         and you will get the info in JSON format.
       </Typography>
