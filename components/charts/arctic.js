@@ -66,7 +66,6 @@ function Arctic({ parentCallBack }) {
               maintainAspectRatio: true,
               scales: {
                 y: {
-                  display: true,
                   stacked: true,
                   suggestedMax: 30,
                   suggestedMin: 10,
@@ -76,7 +75,6 @@ function Arctic({ parentCallBack }) {
                   },
                 },
                 x: {
-                  display: true,
                   stacked: true,
                   title: {
                     display: true,

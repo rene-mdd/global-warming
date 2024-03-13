@@ -1,21 +1,16 @@
-/* eslint-disable */
 import React, { useEffect, useState } from "react";
-import fetch from "unfetch";
-import Chart from "chart.js";
-import {
-  Container,
-  Grid,
-} from "@mui/material";
+import { Chart } from "chart.js/auto";
+import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import localCo2Data from "../../public/data/csvjson-co2-prehistoric.json";
 import { co2Service } from "../../services/dataService";
 
-function Co2(props) {
+function Co2({ parentCallBack }) {
   const [graphError, setGraphError] = useState("");
   const url = "api/co2-api";
 
   useEffect(() => {
-    props.parentCallBack(true);
+    parentCallBack(true);
     const date = [];
     const amount = [];
     localCo2Data.forEach((obj) => {
@@ -34,7 +29,7 @@ function Co2(props) {
         if (data) {
           displayCo2Graph(parsedToObject, data);
           co2Service.setData(data.co2.pop());
-          props.parentCallBack(false);
+          parentCallBack(false);
         }
       } catch (error) {
         console.error(error);
@@ -56,59 +51,54 @@ function Co2(props) {
           amount.push(obj.trend);
         });
         const ctx = document.getElementById("myCo2Chart");
-        (() =>
-          new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: prehistoricData.date.concat(date),
-              datasets: [
-                {
-                  label: "Carbon Dioxide",
-                  data: prehistoricData.amount.concat(amount),
-                  fill: false,
-                  borderColor: "#4984B8",
-                  backgroundColor: "black",
-                  pointRadius: false,
-                  pointHoverBorderWidth: 10,
-                  pointBackgroundColor: "rgba(255, 99, 132, 1)",
-                  pointHoverBackgroundColor: "rgba(255, 99, 132, 1)",
-                  pointHoverBorderColor: "black",
-                  borderWidth: 1,
-                  pointHoverRadius: 5,
-                },
-              ],
-            },
-            options: {
-              scales: {
-                bounds: "ticks",
-                ticks: {
-                  suggestedMax: 800000,
-                  suggestedMin: -800000,
-                },
-                yAxes: [
+        if (ctx) {
+          (() =>
+            new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: prehistoricData.date.concat(date),
+                datasets: [
                   {
-                    stacked: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Part Per million (ppm)",
-                    },
+                    label: "Carbon Dioxide",
+                    data: prehistoricData.amount.concat(amount),
+                    fill: false,
+                    borderColor: "#4984B8",
+                    backgroundColor: "black",
+                    pointRadius: false,
+                    pointHoverBorderWidth: 10,
+                    pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                    pointHoverBackgroundColor: "white",
+                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 0.5,
+                    pointHoverRadius: 10,
                   },
                 ],
-                xAxes: [
-                  {
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                  y: {
                     stacked: true,
-                    scaleLabel: {
+                    title: {
                       display: true,
-                      labelString: "Year",
+                      text: "Part Per million (ppm)",
+                    },
+                  },
+                  x: {
+                    stacked: true,
+                    title: {
+                      display: true,
+                      text: "Year",
                     },
                     ticks: {
                       maxRotation: 90,
                     },
                   },
-                ],
+                },
               },
-            },
-          }))();
+            }))();
+        }
       }
     } catch (error) {
       console.error(error);
@@ -125,14 +115,18 @@ function Co2(props) {
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
-          <Container component="footer" sx={{ marginTop: "-5px" }}>
+          <Container
+            component="footer"
+            className="chart-footer"
+            sx={{ marginTop: "-5px" }}
+          >
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              From 10 years ago to present, the measurements of carbon dioxide concentrations are
-              done by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter
-              Tans, NOAA/GML (
+              From 10 years ago to present, the measurements of carbon dioxide
+              concentrations are measured on a quasi daily basis by Mauna Loa
+              Observatory. Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
                 <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
               </a>
@@ -146,11 +140,6 @@ function Co2(props) {
                   https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
                 </em>
               </a>
-            </p>
-            <p>
-              <b>
-                From 10 years ago to present the data is measured on a quasi daily basis
-              </b>
             </p>
           </Container>
         </Grid>
