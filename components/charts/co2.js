@@ -19,9 +19,7 @@ function Co2({ parentCallBack }) {
         Number(parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1))
       );
     });
-
     const parsedToObject = { date, amount };
-
     async function fetchData() {
       try {
         const response = await fetch(url);
@@ -64,7 +62,7 @@ function Co2({ parentCallBack }) {
                     fill: false,
                     borderColor: "#4984B8",
                     backgroundColor: "black",
-                    pointRadius: false,
+                    pointRadius: 0.5,
                     pointHoverBorderWidth: 10,
                     pointBackgroundColor: "rgba(255, 99, 132, 1)",
                     pointHoverBackgroundColor: "white",
@@ -75,11 +73,8 @@ function Co2({ parentCallBack }) {
                 ],
               },
               options: {
-                responsive: true,
-                maintainAspectRatio: true,
                 scales: {
                   y: {
-                    stacked: true,
                     title: {
                       display: true,
                       text: "Part Per million (ppm)",

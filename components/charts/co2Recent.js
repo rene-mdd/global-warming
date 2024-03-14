@@ -66,6 +66,8 @@ function Co2Recent({ parentCallBackRecent }) {
                 maintainAspectRatio: true,
                 scales: {
                   y: {
+                    suggestedMax: 1000,
+                    suggestedMin: 0,
                     stacked: true,
                     title: {
                       display: true,
