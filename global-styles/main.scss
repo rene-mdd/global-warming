@@ -465,7 +465,7 @@ nav {
 
 .news-card-component {
   position: relative !important;
-
+  overflow: hidden;
   .overlay {
     position: absolute !important;
     background: rgba(57, 57, 57, 0.5);
@@ -485,7 +485,7 @@ nav {
   }
 
   .card-content-container {
-    overflow-y: scroll;
+    // overflow-y: scroll;
     padding: 0 10px 0 10px;
     box-sizing: content-box;
   }

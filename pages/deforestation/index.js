@@ -304,7 +304,7 @@ function SemanticDeforestation(props) {
                     </Typography>
                   </a>
                   <CardContent sx={{ overflow: "scroll" }}>
-                    <Typography variant="subtitle1" color="black">
+                    <Typography paragraph color="black">
                       <Box
                         sx={{
                           height: isOpen.titleText === obj.title ? 300 : 75,
@@ -360,10 +360,12 @@ function SemanticDeforestation(props) {
         </Grid>
         <Container ref={ref} className="hide-intersecter" />
       </Container>
-      <Container component="footer" align="center">
-        News API sources:{" "}
-        <a href="https://www.newscatcherapi.com/">NewsCatcher</a> &{" "}
-        <a href="https://gnews.io/">GNews</a>
+      <Container component="footer">
+        <Typography my={2} align="center">
+          News API sources:{" "}
+          <a href="https://www.newscatcherapi.com/">NewsCatcher</a> &{" "}
+          <a href="https://gnews.io/">GNews</a>
+        </Typography>
       </Container>
     </>
   );

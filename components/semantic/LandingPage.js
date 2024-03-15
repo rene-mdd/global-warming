@@ -30,7 +30,7 @@ const LandingPage = () => (
         in the atmosphere.
       </Typography>
     </Grid>
-    <Grid xs={12} align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
+    <Grid xs={12} align="center" sx={{ marginTop: "auto"}} mb={1}>
       <Scroll.Link spy smooth duration={1000} to="jump-to-temperature">
         <Button className="icon-style">
           <CardMedia

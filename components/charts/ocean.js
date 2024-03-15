@@ -76,7 +76,6 @@ function Ocean({ parentCallBack }) {
                       text: "Celsius",
                     },
                   },
-
                   x: {
                     stacked: true,
                     title: {
@@ -118,6 +117,9 @@ function Ocean({ parentCallBack }) {
                   https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series
                 </em>
               </a>
+            </p>
+            <p>
+              <span>Base period: </span>1901-2000
             </p>
           </Container>
         </Grid>

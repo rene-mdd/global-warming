@@ -132,7 +132,7 @@ function Nitrous({ parentCallBack }) {
               )
             </p>
             <p>
-              Ed Dlugokencky, NOAA/GML (
+              <span>2001 - present: </span>Ed Dlugokencky, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
                 https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
               </a>

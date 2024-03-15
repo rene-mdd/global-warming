@@ -113,7 +113,8 @@ function Arctic({ parentCallBack }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              <span>Title:</span> Global Sea Ice Extent (1979-2024)
+              <span>Title:</span> Global Sea Ice Extent 1979-2024 (on a monthly
+              basis)
             </p>
             <p>
               <span>Base period:</span> 1991-2020

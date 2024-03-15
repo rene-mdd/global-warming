@@ -37,9 +37,6 @@ function ParentOcean() {
         <Typography component="h2" align="center" className="h2-general">
           Global Ocean Temperature Anomalies, January-December
         </Typography>
-        <Typography component="h3" align="center">
-          Base period: 1901-2000
-        </Typography>
         <Grid container>
           {ocean ? (
             <Ocean parentCallBack={(loading) => setOceanLoading(loading)} />
