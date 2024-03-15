@@ -11,7 +11,6 @@ import {
   Button,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-// import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { Octokit } from "octokit";
@@ -28,7 +27,6 @@ function Git() {
 
   const [commitsPages, setCommit] = useState(13);
   const [gitResp, setGitResp] = useState([]);
-
   useEffect(() => {
     async function fetchCommits() {
       const GithubToken = process.env.API_GITHUB;
@@ -47,7 +45,7 @@ function Git() {
               },
             }
           );
-          if (response) setGitResp((prev) => [...prev, ...response]);
+          if (response) setGitResp(() => [...response]);
         }
       } catch (error) {
         console.error(error);
