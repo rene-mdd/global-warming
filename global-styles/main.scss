@@ -129,12 +129,6 @@ p {
   }
 }
 
-.down-arrow-icon {
-  margin: 20px 0;
-  width: 142px;
-  height: 142px;
-}
-
 .api-segment {
   i::before {
     position: relative;
@@ -148,11 +142,6 @@ p {
     url("/images/newspaper-background.jpg") !important;
   background-size: cover !important;
   min-height: 100vh !important;
-
-  .down-arrow-icon {
-    width: 100px;
-    height: 100px;
-  }
 
   .down-icon-wrapper:hover {
     background-color: #34383778;

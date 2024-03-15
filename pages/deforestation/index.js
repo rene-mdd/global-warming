@@ -122,7 +122,8 @@ function SemanticDeforestation(props) {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          flexDirection="column"
+          sx={{ marginTop: "auto" }}
+          mb={1}
         >
           <Scroll.Link spy smooth duration={1000} to="jump-news">
             <Button className="down-icon-wrapper">
@@ -196,7 +197,6 @@ function SemanticDeforestation(props) {
         <Typography component="h3" className="news-title" align="center">
           News List
         </Typography>
-        <Typography component="h4" className="date" />
         <Grid
           container
           spacing={{ xs: 0, md: 2 }}
@@ -369,7 +369,7 @@ function SemanticDeforestation(props) {
       </Container>
     </>
   );
-};
+}
 SemanticDeforestation.propTypes = {
   googleNewsParseJson: PropTypes.arrayOf(
     PropTypes.shape({

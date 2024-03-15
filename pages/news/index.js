@@ -107,6 +107,8 @@ function News(props) {
           display="flex"
           justifyContent="center"
           alignItems="center"
+          sx={{ marginTop: "auto" }}
+          mb={1}
         >
           <Scroll.Link spy smooth duration={1000} to="jump-to-news">
             <Button className="down-icon-wrapper">
@@ -125,7 +127,6 @@ function News(props) {
         <Typography component="h3" className="news-title" align="center">
           News List
         </Typography>
-        <Typography component="h4" className="date" />
         <Grid container spacing={2} justifyContent="center">
           {duplicateRemovalGNews &&
             duplicateRemovalGNews.map((obj) => (
