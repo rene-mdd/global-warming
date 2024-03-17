@@ -109,9 +109,13 @@ function Ocean({ parentCallBack }) {
             sx={{ marginTop: "-5px" }}
           >
             <p>
-              NOAA National Centers for Environmental information, Climate at a
-              Glance: Global Time Series, published January 2023, retrieved on
-              January 19, 2023 from &nbsp;
+              Please note, global and hemispheric anomalies are with respect to
+              the 1901-2000 average.
+            </p>
+            <p>
+              <span>Source: </span>NOAA National Centers for Environmental
+              information, Climate at a Glance: Global Time Series, published
+              January 2023, retrieved on January 19, 2023 from &nbsp;
               <a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series">
                 <em>
                   https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series

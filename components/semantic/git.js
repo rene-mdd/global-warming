@@ -8,12 +8,22 @@ import {
   TableRow,
   Paper,
   Container,
-  Button,
+  CircularProgress,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { Octokit } from "octokit";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+    },
+  },
+});
 
 function Git() {
   function parseDate(commitDate) {
@@ -27,12 +37,14 @@ function Git() {
 
   const [commitsPages, setCommit] = useState(13);
   const [gitResp, setGitResp] = useState([]);
+  const [loadingCommits, setloadingCommits] = useState(false);
   useEffect(() => {
     async function fetchCommits() {
       const GithubToken = process.env.API_GITHUB;
       const octokit = new Octokit({ auth: GithubToken });
       try {
         if (commitsPages > 0) {
+          setloadingCommits(true);
           const response = await octokit.paginate(
             "GET /repos/rene-mdd/global-warming/commits",
             {
@@ -45,7 +57,10 @@ function Git() {
               },
             }
           );
-          if (response) setGitResp(() => [...response]);
+          if (response) {
+            setGitResp(() => [...response]);
+            setloadingCommits(false);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -147,16 +162,20 @@ function Git() {
           alignItems="flex-start"
           m={2}
         >
-          <Button
-            className="commits-button"
-            size="large"
-            color="warning"
-            variant="outlined"
-            sx={{ color: "white" }}
-            onClick={() => setCommit(commitsPages - 1)}
-          >
-            Load more commits
-          </Button>
+          <ThemeProvider theme={theme}>
+            <LoadingButton
+              loadingIndicator={<CircularProgress color="primary" size={24} />}
+              className="commits-button"
+              size="large"
+              color="primary"
+              variant="outlined"
+              sx={{ color: "white" }}
+              onClick={() => setCommit(commitsPages - 1)}
+              loading={loadingCommits}
+            >
+              Load more commits
+            </LoadingButton>
+          </ThemeProvider>
         </Grid>
         <Grid
           xs={12}

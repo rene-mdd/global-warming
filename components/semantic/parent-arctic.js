@@ -23,7 +23,6 @@ function ParentArctic() {
     const subscription = arcticService.getData().subscribe(({value}) => {
       if (value) {
         setTodayValue(value[0]);
-        console.log(value);
       }
     });
     return subscription.unsubscribe.bind(subscription);

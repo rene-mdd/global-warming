@@ -16,7 +16,6 @@ export default async function fetchArcticApi(req, res) {
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     );
     res.setHeader("Cache-Control", "s-maxage=43200");
-    console.log(arcticData)
     res.status(200).json({ error: null, arcticData });
   } catch (error) {
     console.error(error);

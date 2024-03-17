@@ -3,7 +3,7 @@ import axios from "axios";
 export default async (req, res) => {
   try {
     const { data } = await axios.get(
-      "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series/globe/ocean/12/1/1880-2024.json?trend=true&trend_base=10&begtrendyear=1880&endtrendyear=2024"
+      "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series/globe/ocean/12/1/1850-2024.json?trend=true&trend_base=10&begtrendyear=1880&endtrendyear=2024"
     );
     // const lines = data.split("\n");
     const stringifyOceanObj = JSON.stringify(data.data);

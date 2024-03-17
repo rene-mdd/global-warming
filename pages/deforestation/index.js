@@ -224,9 +224,10 @@ function SemanticDeforestation(props) {
                       {obj?.title}
                     </Typography>
                   </a>
-                  <CardContent sx={{ overflow: "scroll" }}>
+                  <CardContent sx={{ overflowY: "scroll" }}>
                     <Typography
-                      variant="subtitle1"
+                      paragraph
+                      sx={{ overflowY: "scroll" }}
                       color="black"
                       className="card-content-container"
                     >
@@ -304,7 +305,11 @@ function SemanticDeforestation(props) {
                     </Typography>
                   </a>
                   <CardContent sx={{ overflow: "scroll" }}>
-                    <Typography paragraph color="black">
+                    <Typography
+                      paragraph
+                      color="black"
+                      sx={{ overflowY: "scroll" }}
+                    >
                       <Box
                         sx={{
                           height: isOpen.titleText === obj.title ? 300 : 75,
