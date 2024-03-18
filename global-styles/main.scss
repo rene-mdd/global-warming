@@ -24,7 +24,6 @@ body {
       hsla(0, 0%, 100%, 1)
     )
     100% !important;
-    overflow: hidden !important;
 }
 
 a {
@@ -474,11 +473,17 @@ nav {
     font-weight: bold;
   }
 
-  .card-content-container {
-    // overflow-y: scroll;
+  .card-content-child {
+    overflow-y: scroll;
     padding: 0 10px 0 10px;
     box-sizing: content-box;
-  }
+    max-height: 600px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    :-webkit-scrollbar {
+      display: none;
+    }
+}
 
   .card-content-footer {
     background-color: #343837;

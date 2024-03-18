@@ -152,9 +152,8 @@ function News(props) {
                   <CardContent sx={{ overflowY: "hidden" }}>
                     <Typography
                       paragraph
-                      sx={{ overflowY: "scroll" }}
                       color="black"
-                      className="card-content-container"
+                      className="card-content-child"
                     >
                       <Box
                         sx={{
@@ -233,7 +232,7 @@ function News(props) {
                     <Typography
                       paragraph
                       color="black"
-                      sx={{ overflowY: "scroll" }}
+                      className="card-content-child"
                     >
                       <Box
                         sx={{
