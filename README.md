@@ -13,7 +13,7 @@ Don't forget to install the node modules: npm install
 
 To run it on node js: npm run dev
 
-You need to get a microsoft azure and Gnews API key, in order to fetch the news.
+News API: Gnews - NewsCatcher
 
 Site: www.global-warming.org
 
