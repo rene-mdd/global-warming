@@ -1,11 +1,10 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import * as Scroll from "react-scroll";
 import PublicIcon from "@mui/icons-material/Public";
 import { useInView } from "react-intersection-observer";
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import {
   Container,
   CardMedia,
@@ -16,14 +15,14 @@ import {
   CardContent,
   Box,
   Collapse,
-  CardActions
+  CardActions,
 } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 
 function SemanticDeforestation(props) {
-  const [isOpen, setToggle] = useState({ titleText: "" });
-
+  const [isOpen, setToggle] = useState("");
+  const [intersecting, setIntersecting] = useState(false);
   const handleChange = (title) => {
     if (isOpen.titleText === title) {
       setToggle(() => ({ titleText: "" }));
@@ -32,27 +31,28 @@ function SemanticDeforestation(props) {
     }
   };
 
-  const [intersecting, setIntersecting] = useState(false);
-
-  const { ref, inView, entry } = useInView({
+  const { ref } = useInView({
     /* Optional options */
     threshold: 0,
-    onChange: (inView, entry) => setIntersecting(inView),
+    onChange: (inView) => setIntersecting(inView),
     triggerOnce: true,
   });
 
+  const checkifImg = (e) => {
+    e.target.src = "/images/breaking-news.webp";
+  };
+
   const { newsCatcherParseJson, googleNewsParseJson } = props;
-  const parsedGNews = googleNewsParseJson.articles;
 
-  // const duplicateRemovalCatcher = newsCatcherParseJson.filter(
-  //   (thing, index, self) =>
-  //     index ===
-  //     self.findIndex(
-  //       (t) => t.summary === thing.summary || t.title === thing.title
-  //     )
-  // );
+  const duplicateRemovalCatcher = newsCatcherParseJson.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex(
+        (t) => t.summary === thing.summary || t.title === thing.title
+      )
+  );
 
-  const duplicateRemovalGNews = parsedGNews.filter(
+  const duplicateRemovalGNews = googleNewsParseJson.filter(
     (thing, index, self) =>
       index ===
       self.findIndex(
@@ -74,22 +74,38 @@ function SemanticDeforestation(props) {
       />
       <StickyMenu />
       <Grid container className="landing-page-deforestation">
-        <Grid xs={12} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+        <Grid
+          xs={12}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Typography component="h2" textAlign="center" className="h1-landing">
             Global Deforestation
           </Typography>
         </Grid>
-        <Grid xs={12} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+        <Grid
+          xs={12}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+        >
           <CardMedia
             component="img"
             image="images/forest.png"
             className="landing-page-logo"
             alt="forest logo"
           />
-          <Typography align="center" component="h2" className="h2-deforestation">
-            This section is intended to collect data on the current status of global deforestation.
-            This is accomplished through the utilization of APIs, databases, news sources,
-            MapBuilders, and academic journals.
+          <Typography
+            align="center"
+            component="h2"
+            className="h2-deforestation"
+          >
+            This section is intended to collect data on the current status of
+            global deforestation. This is accomplished through the utilization
+            of APIs, databases, news sources, MapBuilders, and academic
+            journals.
           </Typography>
         </Grid>
         {/* <Container component="div" align="center" maxWidth={false}>
@@ -101,13 +117,20 @@ function SemanticDeforestation(props) {
             width="300"
           ></iframe>
         </Container> */}
-        <Grid xs={12} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
+        <Grid
+          xs={12}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          sx={{ marginTop: "auto" }}
+          mb={1}
+        >
           <Scroll.Link spy smooth duration={1000} to="jump-news">
             <Button className="down-icon-wrapper">
               <CardMedia
                 image="/images/icons-double-down-white.png"
                 component="img"
-                className="down-icon"
+                className="down-arrow-icon"
                 alt="move to next section"
               />
             </Button>
@@ -116,7 +139,14 @@ function SemanticDeforestation(props) {
       </Grid>
       <Divider name="jump-news" className="hide-deforestation-divider" />
       <Grid container>
-        <Grid xs display="flex" justifyContent="center" alignItems="center" flexDirection="column" className="temperature-background">
+        <Grid
+          xs
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+          className="temperature-background"
+        >
           <Typography component="h2" className="h2-general" align="center">
             Global forest loss map
           </Typography>
@@ -143,15 +173,15 @@ function SemanticDeforestation(props) {
                   characterizing forest extent and change.
                 </p>
                 <p>
-                  Trees are defined as vegetation taller than 5m in height and are
-                  expressed as a percentage per output grid cell as ‘2000 Percent
-                  Tree Cover’. ‘Forest Cover Loss’ is defined as a
+                  Trees are defined as vegetation taller than 5m in height and
+                  are expressed as a percentage per output grid cell as ‘2000
+                  Percent Tree Cover’. ‘Forest Cover Loss’ is defined as a
                   stand-replacement disturbance, or a change from a forest to
                   non-forest state, during the period 2000–2019. ‘Forest Cover
                   Gain’ is defined as the inverse of loss, or a non-forest to
-                  forest change entirely within the period 2000–2012. ‘Forest Loss
-                  Year’ is a disaggregation of total ‘Forest Loss’ to annual time
-                  scales.
+                  forest change entirely within the period 2000–2012. ‘Forest
+                  Loss Year’ is a disaggregation of total ‘Forest Loss’ to
+                  annual time scales.
                 </p>
                 <p>
                   Reference 2000 and 2019 imagery are median observations from a
@@ -163,92 +193,144 @@ function SemanticDeforestation(props) {
           <Divider sx={{ margin: "30px" }} />
         </Grid>
       </Grid>
-      <Container maxWidth="1920px" disableGutters={true} className="news-wrapper">
+      <Container disableGutters className="news-wrapper">
         <Typography component="h3" className="news-title" align="center">
           News List
         </Typography>
-        <Typography component="h4" className="date"></Typography>
-        <Grid container spacing={2} justifyContent="center">
-          {duplicateRemovalGNews.map((obj, index) => (
-            <Grid xs="auto" key={index}>
-              <Card elevation={5} className="news-card-component" sx={{ maxWidth: 500 }}>
-                <a href={obj?.url}>
-                  <CardMedia
-                    component="img"
-                    height="262px"
-                    image={obj?.image ?? "/images/breaking-news.png"}
-                    alt="News image"
-                  />
-                  <Typography component="h5" className="overlay overlay_1">
-                    {obj.title}
-                  </Typography>
-                </a>
-                <CardContent>
-                  <Typography variant="subtitle1" color="black" className="card-content-container">
-                    <Box sx={{ height: isOpen.titleText === obj?.title ? 300 : 75 }}>
+        <Grid
+          container
+          spacing={{ xs: 0, md: 2 }}
+          rowSpacing={2}
+          justifyContent="center"
+        >
+          {duplicateRemovalGNews &&
+            duplicateRemovalGNews.map((obj) => (
+              <Grid key={obj?.title}>
+                <Card
+                  elevation={5}
+                  className="news-card-component"
+                  sx={{ maxWidth: 500 }}
+                >
+                  <a href={obj?.url}>
+                    <CardMedia
+                      component="img"
+                      height="262px"
+                      image={obj?.image ?? "/images/breaking-news.png"}
+                      alt="News image"
+                      onError={checkifImg}
+                      loading="lazy"
+                    />
+                    <Typography component="h5" className="overlay overlay_1">
+                      {obj?.title}
+                    </Typography>
+                  </a>
+                  <CardContent sx={{ overflowY: "hidden" }}>
+                    <Typography
+                      paragraph
+                      color="black"
+                      className="card-content-child"
+                    >
                       <Box
                         sx={{
-                          '& > :not(style)': {
-                            display: 'flex',
-                            justifyContent: 'space-around',
-                            height: 120,
-                            width: '100%',
-                          },
+                          height: isOpen.titleText === obj?.title ? 300 : 75,
                         }}
                       >
-                        <div>
-                          <Collapse in={isOpen.titleText === obj?.title} collapsedSize={85} timeout={1} sx={{ "textAlign": "justify" }}>
-                            {obj?.content}
-                          </Collapse>
-                        </div>
+                        <Box
+                          sx={{
+                            "& > :not(style)": {
+                              display: "flex",
+                              justifyContent: "space-around",
+                              height: 120,
+                              width: "100%",
+                            },
+                          }}
+                        >
+                          <div>
+                            <Collapse
+                              in={isOpen.titleText === obj?.title}
+                              collapsedSize={85}
+                              timeout={1}
+                              sx={{ textAlign: "justify" }}
+                            >
+                              {obj?.content}
+                            </Collapse>
+                          </div>
+                        </Box>
                       </Box>
-                    </Box>
-                  </Typography>
-                </CardContent>
-                <CardActions className="card-content-footer" disableSpacing>
-                  <Button
-                    href={obj?.url}
-                    variant="contained"
-                    endIcon={<PublicIcon />}
-                    className="new-source"
-                  >
-                    <span>{obj?.source?.name ?? "News"}</span>
-                  </Button>
-                  <Button variant="contained" checked={isOpen.titleText === obj?.title} onClick={() => handleChange(obj?.title)}>{isOpen.titleText === obj?.title ? "Read less" : "Read more"}</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-          {/* {intersecting &&
+                    </Typography>
+                  </CardContent>
+                  <CardActions className="card-content-footer" disableSpacing>
+                    <Button
+                      href={obj?.url}
+                      variant="contained"
+                      endIcon={<PublicIcon />}
+                      className="new-source"
+                    >
+                      <span>{obj?.source?.name ?? "News"}</span>
+                    </Button>
+                    <Button
+                      variant="contained"
+                      checked={isOpen.titleText === obj?.title}
+                      onClick={() => handleChange(obj?.title)}
+                      ml={1}
+                    >
+                      {isOpen.titleText === obj?.title
+                        ? "Read less"
+                        : "Read more"}
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          {intersecting &&
             duplicateRemovalCatcher.map((obj) => (
-              <Grid xs="auto" key={obj._id}>
-                <Card elevation={5} className="news-card-component" sx={{ maxWidth: 500 }}>
+              <Grid key={obj._id}>
+                <Card
+                  elevation={5}
+                  className="news-card-component"
+                  sx={{ maxWidth: 500 }}
+                >
                   <a href={obj?.link}>
                     <CardMedia
                       component="img"
                       height="262px"
                       image={obj?.media ?? "/images/breaking-news.png"}
                       alt="news image"
+                      onError={checkifImg}
+                      loading="lazy"
                     />
                     <Typography component="h5" className="overlay overlay_1">
                       {obj.title}
                     </Typography>
                   </a>
-                  <CardContent>
-                    <Typography variant="subtitle1" color="black">
-                      <Box sx={{ height: isOpen.titleText === obj.title ? 300 : 75 }}>
+                  <CardContent sx={{ overflow: "hidden" }}>
+                    <Typography
+                      paragraph
+                      color="black"
+                      className="card-content-child"
+                    >
+                      <Box
+                        sx={{
+                          height: isOpen.titleText === obj.title ? 300 : 75,
+                        }}
+                      >
                         <Box
                           sx={{
-                            '& > :not(style)': {
-                              display: 'flex',
-                              justifyContent: 'space-around',
+                            "& > :not(style)": {
+                              display: "flex",
+                              justifyContent: "space-around",
                               height: 120,
-                              width: '100%',
+                              width: "100%",
                             },
                           }}
                         >
                           <div>
-                            <Collapse in={isOpen.titleText === obj.title} collapsedSize={85} timeout={1} sx={{ "textAlign": "justify" }}>
+                            <Collapse
+                              in={isOpen.titleText === obj.title}
+                              collapsedSize={85}
+                              timeout={1}
+                              sx={{ textAlign: "justify" }}
+                            >
                               {obj.summary}
                             </Collapse>
                           </div>
@@ -265,65 +347,86 @@ function SemanticDeforestation(props) {
                     >
                       <span>{obj?.authors ? obj?.authors : "News"}</span>
                     </Button>
-                    <Button variant="contained" checked={isOpen.titleText === obj.title} onClick={() => handleChange(obj.title)}>{isOpen.titleText === obj.title ? "Read less" : "Read more"}</Button>
+                    <Button
+                      variant="contained"
+                      checked={isOpen.titleText === obj.title}
+                      onClick={() => handleChange(obj.title)}
+                      ml={1}
+                    >
+                      {isOpen.titleText === obj.title
+                        ? "Read less"
+                        : "Read more"}
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>
-            ))} */}
+            ))}
         </Grid>
         <Container ref={ref} className="hide-intersecter" />
+      </Container>
+      <Container component="footer">
+        <Typography my={2} align="center">
+          News API sources:{" "}
+          <a href="https://www.newscatcherapi.com/">NewsCatcher</a> &{" "}
+          <a href="https://gnews.io/">GNews</a>
+        </Typography>
       </Container>
     </>
   );
 }
 SemanticDeforestation.propTypes = {
-  googleNewsParseJson: PropTypes.shape({
-    articleCount: PropTypes.number,
-    articles: PropTypes.arrayOf(PropTypes.shape({})),
-    timestamp: PropTypes.number,
-  }),
-  newsCatcherParseJson: PropTypes.shape({
-    articles: PropTypes.arrayOf(PropTypes.shape({})),
-  }),
+  googleNewsParseJson: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string,
+      image: PropTypes.string,
+      title: PropTypes.string,
+      content: PropTypes.string,
+      source: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+    })
+  ),
+  newsCatcherParseJson: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      link: PropTypes.string,
+      media: PropTypes.string,
+      title: PropTypes.string,
+      summary: PropTypes.string,
+      authors: PropTypes.string,
+    })
+  ),
 };
 
 SemanticDeforestation.defaultProps = {
-  googleNewsParseJson: PropTypes.shape({
-    articleCount: "",
-    articles: PropTypes.arrayOf("/images/breaking-news.png"),
-    timestamp: 0,
-  }),
-  newsCatcherParseJson: PropTypes.shape({
-    articleCount: 0,
-    articles: PropTypes.arrayOf("/images/breaking-news.png"),
-    timestamp: 0,
-  }),
+  googleNewsParseJson: [],
+  newsCatcherParseJson: [],
 };
-
 export async function getServerSideProps({ res }) {
-
   const gNewsVariable = process.env.API_KEY_GOOGLE;
-  // const newsCatcherApi = process.env.API_CATCHER_NEWS;
-  let googleNewsParseJson;
-  // let newsCatcherParseJson;
-  // var options = {
-  //   method: 'GET',
-  //   url: 'https://api.newscatcherapi.com/v2/search',
-  //   params: { q: 'deforestation', lang: 'en', sort_by: 'relevancy' },
-  //   headers: {
-  //     'x-api-key': newsCatcherApi
-  //   }
-  // };
+  const newsCatcherApi = process.env.API_CATCHER_NEWS;
+  let googleNewsParseJson = [];
+  let newsCatcherParseJson = [];
+  const options = {
+    method: "GET",
+    url: "https://api.newscatcherapi.com/v2/search",
+    params: { q: "biodiversity", lang: "en", sort_by: "relevancy" },
+    headers: {
+      "x-api-key": newsCatcherApi,
+    },
+  };
 
   try {
     const gNewsResp = await axios.get(
       `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
     );
-    // const newsCatcherResp = await axios.request(options);
-    if (gNewsResp)
-      googleNewsParseJson = JSON.parse(JSON.stringify(gNewsResp.data));
-    // if(newsCatcherResp)
-    //  newsCatcherParseJson = JSON.parse(JSON.stringify(newsCatcherResp.data.articles));
+    const newsCatcherResp = await axios.request(options);
+    if (gNewsResp) {
+      googleNewsParseJson = gNewsResp.data.articles;
+    }
+    if (newsCatcherResp) {
+      newsCatcherParseJson = newsCatcherResp.data.articles;
+    }
   } catch (error) {
     console.error(error);
   }
@@ -333,7 +436,7 @@ export async function getServerSideProps({ res }) {
   ); // Vercel Cache (Network)
   return {
     props: {
-      // newsCatcherParseJson,
+      newsCatcherParseJson,
       googleNewsParseJson,
     },
   };

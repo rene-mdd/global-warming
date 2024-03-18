@@ -1,24 +1,18 @@
-/* eslint-disable */
 import React, { useEffect, useState } from "react";
-import fetch from "unfetch";
-import Chart from "chart.js";
-// import { Container, Grid } from "semantic-ui-react";
+import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import localMethaneData from "../../public/data/csvjson-methane.json";
 import { methaneService } from "../../services/dataService";
 
-function Methane(props) {
+function Methane({ parentCallBack }) {
   const [graphError, setGraphError] = useState("");
   const url = "api/methane-api";
 
   useEffect(() => {
-    // processing of json file
-    props.parentCallBack(true);
-
+    parentCallBack(true);
     const date = [];
     const amount = [];
-
     localMethaneData.forEach((obj) => {
       date.push(obj.year.split(",").filter((x) => x)[0]);
       amount.push(
@@ -26,7 +20,6 @@ function Methane(props) {
       );
     });
     const parsedToObject = { date, amount };
-
     async function fetchData() {
       try {
         const response = await fetch(url);
@@ -34,7 +27,7 @@ function Methane(props) {
         if (data) {
           methaneService.setData(data.methane.pop());
           displayMethaneGraph(parsedToObject, data);
-          props.parentCallBack(false);
+          parentCallBack(false);
         }
       } catch (error) {
         console.error(error);
@@ -56,59 +49,53 @@ function Methane(props) {
           average.push(obj.average);
         });
         const ctx = document.getElementById("myMethChart");
-        (() =>
-          new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: methPrehistoricData.date.concat(date),
-              datasets: [
-                {
-                  label: "Methane",
-                  data: methPrehistoricData.amount.concat(average),
-                  fill: false,
-                  borderColor: "#A75E09",
-                  backgroundColor: "rgba(255, 0, 0, 0.1);",
-                  pointRadius: 0.5,
-                  pointHoverBorderWidth: 1,
-                  pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
-                  pointHoverBackgroundColor: "white",
-                  pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-                  borderWidth: 1,
-                  pointHoverRadius: 10,
-                },
-              ],
-            },
-            options: {
-              scales: {
-                bounds: "ticks",
-                ticks: {
-                  suggestedMax: 800000,
-                  suggestedMin: -800000,
-                },
-                yAxes: [
+        if (ctx) {
+          (() =>
+            new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: methPrehistoricData.date.concat(date),
+                datasets: [
                   {
-                    stacked: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Part Per billion (ppb)",
-                    },
+                    label: "Methane",
+                    data: methPrehistoricData.amount.concat(average),
+                    fill: false,
+                    borderColor: "#A75E09",
+                    backgroundColor: "rgba(255, 0, 0, 0.1);",
+                    pointRadius: 0.5,
+                    pointHoverBorderWidth: 1,
+                    pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
+                    pointHoverBackgroundColor: "white",
+                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1,
+                    pointHoverRadius: 10,
                   },
                 ],
-                xAxes: [
-                  {
+              },
+              options: {
+                scales: {
+                  y: {
                     stacked: true,
-                    scaleLabel: {
+                    title: {
                       display: true,
-                      labelString: "Year",
+                      text: "Part Per billion (ppb)",
+                    },
+                  },
+
+                  x: {
+                    stacked: true,
+                    title: {
+                      display: true,
+                      text: "Year",
                     },
                     ticks: {
                       maxRotation: 90,
                     },
                   },
-                ],
+                },
               },
-            },
-          }))();
+            }))();
+        }
       }
     } catch (error) {
       console.error(error);
@@ -124,7 +111,11 @@ function Methane(props) {
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
-          <Container component="footer" sx={{ marginTop: "-5px" }}>
+          <Container
+            component="footer"
+            className="chart-footer"
+            sx={{ marginTop: "-5px" }}
+          >
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>

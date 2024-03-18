@@ -1,17 +1,12 @@
-/* eslint-disable */
-import React, { useEffect, useState, useRef } from "react";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useEffect, useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Container, Grid, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import Co2 from "../charts/co2";
 import Co2Prehistoric from "../charts/co2Prehistoric";
 import Co2Recent from "../charts/co2Recent";
 import { AccordionCo2, AccordionShare } from "./accordion";
 import { co2Service } from "../../services/dataService";
-import {
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
-import { LoadingButton } from '@mui/lab';
 
 const theme = createTheme({
   palette: {
@@ -37,48 +32,81 @@ function ParentCo2() {
     return subscription.unsubscribe.bind(subscription);
   }, []);
 
-
   return (
     <Container component="section">
       <Container>
         <Typography component="h2" align="center" className="h2-general">
           Carbon Dioxide levels from 800,000 years ago to present
         </Typography>
-        <Grid container >
+        <Grid container mt={2}>
           {co2 ? (
             <Co2 parentCallBack={(loading) => setCo2Loading(loading)} />
           ) : null}
           {co2Prehistoric ? (
-            <Co2Prehistoric parentCallBackPrehist={(loading) => setCo2LoadingPrehistoric(loading)} />
+            <Co2Prehistoric
+              parentCallBackPrehist={(loading) =>
+                setCo2LoadingPrehistoric(loading)}
+            />
           ) : null}
           {co2recent ? (
-            <Co2Recent parentCallBackRecent={(loading) => setRecentCo2Loading(loading)} />
+            <Co2Recent
+              parentCallBackRecent={(loading) => setRecentCo2Loading(loading)}
+            />
           ) : null}
-          <Grid container justifyContent="center" sx={{ margin: "20px 0" }}>
+          <Grid container spacing={2} rowSpacing={2}>
             <ThemeProvider theme={theme}>
-              <LoadingButton
-                onClick={() => { setCo2Prehistoric((prevState) => !prevState); }}
-                loading={co2LoadingPrehistoric ? true : false}
-                variant="contained"
+              <Grid
+                xs={12}
+                sm={4}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
               >
-                {co2Prehistoric ? "Hide graph" : "-800,000 - 2009"}
-              </LoadingButton>
-              <LoadingButton
-                onClick={() => setCo2((prevState) => !prevState)}
-                loading={co2Loading ? true : false}
-                variant="contained"
-                sx={{ ml: 1 }}
+                <LoadingButton
+                  onClick={() => {
+                    setCo2Prehistoric((prevState) => !prevState);
+                  }}
+                  loading={co2LoadingPrehistoric}
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                >
+                  {co2Prehistoric ? "Hide graph" : "-800,000 - 2009"}
+                </LoadingButton>
+              </Grid>
+              <Grid
+                xs={12}
+                sm={4}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
               >
-                {co2 ? "Hide graph" : "-800,000 - present"}
-              </LoadingButton>
-              <LoadingButton
-                onClick={() => { setCo2Recent((prevState) => !prevState); }}
-                loading={co2RecentLoading ? true : false}
-                variant="contained"
-                sx={{ ml: 1 }}
+                <LoadingButton
+                  onClick={() => setCo2((prevState) => !prevState)}
+                  loading={co2Loading}
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                >
+                  {co2 ? "Hide graph" : "-800,000 - present"}
+                </LoadingButton>
+              </Grid>
+              <Grid
+                xs={12}
+                sm={4}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
               >
-                {co2recent ? "Hide graph" : "2014 - 2024"}
-              </LoadingButton>
+                <LoadingButton
+                  onClick={() => {
+                    setCo2Recent((prevState) => !prevState);
+                  }}
+                  loading={co2RecentLoading}
+                  variant="contained"
+                  sx={{ mt: 2 }}
+                >
+                  {co2recent ? "Hide graph" : "2014 - 2024"}
+                </LoadingButton>
+              </Grid>
             </ThemeProvider>
           </Grid>
         </Grid>

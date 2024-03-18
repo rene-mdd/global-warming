@@ -18,11 +18,17 @@ html * {
 }
 
 body {
-  background: linear-gradient(90deg, hsla(120, 100%, 99%, 1) 0%, hsla(0, 0%, 100%, 1)) 100% !important;
+  background: linear-gradient(
+      90deg,
+      hsla(120, 100%, 99%, 1) 0%,
+      hsla(0, 0%, 100%, 1)
+    )
+    100% !important;
 }
 
 a {
   text-decoration: none;
+  word-wrap: break-word;
 }
 
 .mini-icon {
@@ -61,10 +67,35 @@ p {
   color: white !important;
 }
 
-.h1-about {
+.h1-business {
   margin-top: 25vh !important;
   font-size: 2.5em !important;
   color: black !important;
+}
+
+.about-title {
+  margin-top: 25vh !important;
+  font-size: 2.5em !important;
+  color: black !important;
+}
+
+.git-main-wrapper {
+  background-color: #016795;
+  min-height: 100vh !important;
+  .git-title {
+    color: white;
+    font-size: 2.5em !important;
+    // margin-top: 25vh;
+  }
+  .MuiTableRow-head {
+    font-size: 15px;
+  }
+  .MuiTableCell-body {
+    font-size: 15px;
+  }
+  .commits-button {
+    border: 1px solid white;
+  }
 }
 
 .h2-general {
@@ -73,17 +104,29 @@ p {
   color: #343837 !important;
 }
 
-footer {
+.ocean-footer {
   p {
     margin: 0;
     font-size: 0.8em;
   }
 }
 
-.down-icon {
-  margin: 20px 0;
-  width: 142px;
-  height: 142px;
+.about-footer {
+  a {
+    all: unset;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.chart-footer {
+  p {
+    font-size: 14px;
+    span {
+      font-weight: bold;
+    }
+  }
 }
 
 .api-segment {
@@ -95,17 +138,13 @@ footer {
 }
 
 .landing-page-news {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/newspaper-background.jpg") !important;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("/images/newspaper-background.jpg") !important;
   background-size: cover !important;
   min-height: 100vh !important;
 
-  .arrow-icon {
-    width: 100px;
-    height: 100px;
-  }
-
   .down-icon-wrapper:hover {
-    background-color: white;
+    background-color: #34383778;
   }
 }
 
@@ -223,7 +262,7 @@ nav {
 }
 
 .hide-news-divider {
-  background-color: #3C4142;
+  background-color: #3c4142;
 }
 
 .hide-deforestation-divider {
@@ -286,10 +325,12 @@ nav {
 .menu-icon {
   cursor: pointer;
   margin-right: auto;
+  width: 50px;
 }
 
 .menu {
   font-size: 110%;
+  color: black;
 }
 
 .white-color {
@@ -413,7 +454,7 @@ nav {
 
 .news-card-component {
   position: relative !important;
-
+  overflow: hidden;
   .overlay {
     position: absolute !important;
     background: rgba(57, 57, 57, 0.5);
@@ -432,21 +473,34 @@ nav {
     font-weight: bold;
   }
 
-  .card-content-container {
+  .card-content-child {
     overflow-y: scroll;
     padding: 0 10px 0 10px;
     box-sizing: content-box;
-  }
+    max-height: 600px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    :-webkit-scrollbar {
+      display: none;
+    }
+}
 
   .card-content-footer {
     background-color: #343837;
     justify-content: space-between;
   }
 }
+@media only screen and (max-width: 700px) {
+  .card-content-footer {
+    .MuiButtonBase-root {
+      font-size: 11px !important;
+    }
+  }
+}
 
 .new-source {
   word-break: break-all !important;
-  width: 200px !important;
+  min-width: 160px !important;
 
   span {
     max-width: 145px;

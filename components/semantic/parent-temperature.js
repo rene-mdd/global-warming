@@ -6,8 +6,7 @@ import { AccordionTemp, AccordionShare } from "./accordion";
 import { Container, Grid, Typography } from "@mui/material";
 
 function ParentTemperature() {
-  const [todayValue, setTodayValue] = useState({});
-
+  const [todayValue, setTodayValue] = useState("");
   useEffect(() => {
     const subscription = temperatureService.getData().subscribe((message) => {
       if (message.value) {
@@ -23,7 +22,7 @@ function ParentTemperature() {
         <Typography component="h2" align="center" className="h2-general">
           Global temperature anomalies from year 1 to present
         </Typography>
-        <Grid container>{todayValue === {} ? null : <Temperature />}</Grid>
+        <Grid container><Temperature /></Grid>
         <Grid sx={{ marginTop: "7vh" }}>
           <Container align="center" className="today-value">
             <p>

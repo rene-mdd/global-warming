@@ -1,22 +1,20 @@
-/* eslint-disable */
 import React, { useEffect } from "react";
 import { Container, Grid } from "@mui/material";
-import fetch from "unfetch";
-import Chart from "chart.js";
-import { oceanService } from "../../services/dataService";
+import { Chart } from "chart.js/auto";
 import PropTypes from "prop-types";
+import { oceanService } from "../../services/dataService";
 
-function Ocean(props) {
+function Ocean({ parentCallBack }) {
   const url = "api/ocean-warming-api";
 
   useEffect(() => {
-    props.parentCallBack(true);
+    parentCallBack(true);
     async function fetchData() {
       try {
         const response = await fetch(url);
         const oceanWarmingData = await response.json();
         if (oceanWarmingData) {
-          props.parentCallBack(false);
+          parentCallBack(false);
           displayOceanGraph(oceanWarmingData);
         }
       } catch (error) {
@@ -39,65 +37,59 @@ function Ocean(props) {
         }
         oceanService.setData({ temperature, description });
         const ctx = document.getElementById("oceanChart");
-        (() =>
-          new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: date,
-              datasets: [
-                {
-                  label: "Ocean warming",
-                  data: temperature,
-                  fill: false,
-                  borderColor: "#1da2d8",
-                  backgroundColor: "black",
-                  pointRadius: 1,
-                  pointHoverBorderWidth: 1,
-                  pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
-                  pointHoverBackgroundColor: "white",
-                  pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-                  borderWidth: 1,
-                  pointHoverRadius: 10,
-                },
-              ],
-            },
-            options: {
-              animation: {
-                onComplete: ({ chart }) => {
-                  const completeAnimation =
-                    chart.canvas.classList.add("animation-complete");
-                  return completeAnimation;
-                },
-              },
-              scales: {
-                ticks: {
-                  suggestedMax: 800000,
-                  suggestedMin: -800000,
-                },
-                yAxes: [
+        if (ctx) {
+          (() =>
+            new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: date,
+                datasets: [
                   {
-                    stacked: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Celsius",
-                    },
+                    label: "Ocean warming",
+                    data: temperature,
+                    fill: false,
+                    borderColor: "#1da2d8",
+                    backgroundColor: "black",
+                    pointRadius: 1,
+                    pointHoverBorderWidth: 1,
+                    pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
+                    pointHoverBackgroundColor: "white",
+                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1,
+                    pointHoverRadius: 10,
                   },
                 ],
-                xAxes: [
-                  {
+              },
+              options: {
+                animation: {
+                  onComplete: ({ chart }) => {
+                    const completeAnimation =
+                      chart.canvas.classList.add("animation-complete");
+                    return completeAnimation;
+                  },
+                },
+                scales: {
+                  y: {
                     stacked: true,
-                    scaleLabel: {
+                    title: {
                       display: true,
-                      labelString: "Year",
+                      text: "Celsius",
+                    },
+                  },
+                  x: {
+                    stacked: true,
+                    title: {
+                      display: true,
+                      text: "Year",
                     },
                     ticks: {
                       maxRotation: 90,
                     },
                   },
-                ],
+                },
               },
-            },
-          }))();
+            }))();
+        }
       }
     } catch (error) {
       console.error(error);
@@ -111,16 +103,27 @@ function Ocean(props) {
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
-          <Container component="footer" sx={{ marginTop: "-5px" }}>
+          <Container
+            component="footer"
+            className="chart-footer"
+            sx={{ marginTop: "-5px" }}
+          >
             <p>
-              NOAA National Centers for Environmental information, Climate at a
-              Glance: Global Time Series, published January 2023, retrieved on
-              January 19, 2023 from &nbsp;
+              Please note, global and hemispheric anomalies are with respect to
+              the 1901-2000 average.
+            </p>
+            <p>
+              <span>Source: </span>NOAA National Centers for Environmental
+              information, Climate at a Glance: Global Time Series, published
+              January 2023, retrieved on January 19, 2023 from &nbsp;
               <a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series">
                 <em>
                   https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series
                 </em>
               </a>
+            </p>
+            <p>
+              <span>Base period: </span>1901-2000
             </p>
           </Container>
         </Grid>

@@ -1,11 +1,10 @@
-/* eslint-disable */
 import { Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { LoadingButton } from "@mui/lab";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Arctic from "../charts/arctic";
 import { AccordionArctic, AccordionShare } from "./accordion";
 import { arcticService } from "../../services/dataService";
-import { LoadingButton } from "@mui/lab";
 
 const theme = createTheme({
   palette: {
@@ -18,12 +17,12 @@ const theme = createTheme({
 function ParentArctic() {
   const [arctic, setArctic] = useState(false);
   const [arcticLoading, setArcticLoading] = useState(false);
-  const [todayValue, setTodayValue] = useState({});
+  const [todayValue, setTodayValue] = useState("");
 
   useEffect(() => {
-    const subscription = arcticService.getData().subscribe((data) => {
-      if (data) {
-        setTodayValue(data.value.pop());
+    const subscription = arcticService.getData().subscribe(({value}) => {
+      if (value) {
+        setTodayValue(value[0]);
       }
     });
     return subscription.unsubscribe.bind(subscription);
@@ -33,7 +32,7 @@ function ParentArctic() {
     <Container component="section">
       <Container>
         <Typography component="h2" align="center" className="h2-general">
-          Melted Polar Ice Caps
+          Sea ice extent
         </Typography>
         <Grid container>
           {arctic ? (
@@ -43,7 +42,7 @@ function ParentArctic() {
             <ThemeProvider theme={theme}>
               <LoadingButton
                 onClick={() => setArctic((prevState) => !prevState)}
-                loading={arcticLoading ? true : false}
+                loading={arcticLoading}
                 variant="contained"
               >
                 {arctic ? "Hide graph" : "Load graph"}
@@ -55,12 +54,7 @@ function ParentArctic() {
           <Container align="center" className="today-value">
             <p>
               Today's value:
-              <span style={{ color: "#2c82c9" }}>
-                {" "}
-                {`Extent ${todayValue.extent ? todayValue.extent : 0}, Area ${
-                  todayValue.area ? todayValue.area : 0
-                }`}
-              </span>
+              <span style={{ color: "#2c82c9" }}>{todayValue}</span>
             </p>
           </Container>
           <Container id="scrolling-container">
@@ -97,10 +91,10 @@ function ParentArctic() {
               mb={10}
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-              <AccordionArctic />
+                <AccordionArctic />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
-              <AccordionShare />
+                <AccordionShare />
               </Grid>
             </Grid>
           </Container>

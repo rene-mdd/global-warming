@@ -1,10 +1,10 @@
 /* eslint-disable */
 import {
   CardMedia,
-  Grid,
   Typography,
   Button,
 } from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import * as Scroll from "react-scroll";
 
 const LandingPage = () => (
@@ -13,12 +13,11 @@ const LandingPage = () => (
     justifyContent="center"
     direction="column"
     className="landing-background"
-    columns={12}
   >
     <Typography component="h1" align="center" className="h1-landing">
       Global Warming and Climate Change API
     </Typography>
-    <Grid align="center">
+    <Grid xs={12} align="center">
       <CardMedia
         component="img"
         image="images/icons8-stocks-64.png"
@@ -31,11 +30,11 @@ const LandingPage = () => (
         in the atmosphere.
       </Typography>
     </Grid>
-    <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
-      <Scroll.Link spy smooth duration={1000} to="jump-to-temperature" Ref="nofollow">
+    <Grid xs={12} align="center" sx={{ marginTop: "auto"}} mb={1}>
+      <Scroll.Link spy smooth duration={1000} to="jump-to-temperature">
         <Button className="icon-style">
           <CardMedia
-            image="/images/icons-double-down.png"
+            image="/images/icons-double-down-white.png"
             component="img"
             className="down-icon"
             alt="move to next section"

@@ -1,8 +1,14 @@
-import arcticData from "../../public/data/arctic-extent.json";
+import axios from "axios";
+// import arcticData from "../../public/data/arctic-extent.json";
 
 export default async function fetchArcticApi(req, res) {
   try {
+    const { data } = await axios.get(
+      "https://www.ncei.noaa.gov/access/monitoring/snow-and-ice-extent/sea-ice/G/0/data.json"
+    );
+    const arcticData = data;
     res.setHeader("Access-Control-Allow-Credentials", true);
+    res.setHeader("Content-Type", "application/json");
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET");
     res.setHeader(

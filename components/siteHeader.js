@@ -29,6 +29,6 @@ SiteHeader.propTypes = {
 SiteHeader.defaultProps = {
   title: "Global Warming API",
   description:
-    "Global warming & climate change up to date APIs, data, graphs, and news. Earth's temperature, carbon dioxide (CO2), methane, nitrous oxide, melted polar ice cap, and ocean warming.",
+    "Global warming & climate change up to date APIs, data, graphs, and news. Earth's temperature, carbon dioxide (CO2), methane, nitrous oxide, melted polar ice cap or sea ice extent, and ocean warming.",
   keyword: "Global warming, climate change, API, graphs",
 };

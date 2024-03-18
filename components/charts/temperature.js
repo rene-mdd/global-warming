@@ -1,16 +1,12 @@
-/* eslint-disable */ 
-import React, { useEffect } from "react";
-import {
-  Container,
-  Grid,
-} from "@mui/material";
-import fetch from "unfetch";
-import Chart from "chart.js";
+import React, { useEffect, useState } from "react";
+import { Container, Grid } from "@mui/material";
+import { Chart } from "chart.js/auto";
 import localTemperatureData from "../../public/data/csvjson-temperature.json";
 import { temperatureService } from "../../services/dataService";
 
 function Temperature() {
   const url = "api/temperature-api";
+  const [graphError, setGraphError] = useState("");
 
   useEffect(() => {
     const date = [];
@@ -40,6 +36,25 @@ function Temperature() {
     fetchData();
   }, []);
 
+  // Helper function to get month name from month number
+  const getMonthName = (monthNumber) => {
+    const monthMap = {
+      "04": "Jan",
+      "13": "Feb",
+      "21": "Mar",
+      "29": "Apr",
+      "38": "May",
+      "46": "Jun",
+      "54": "Jul",
+      "63": "Aug",
+      "71": "Sept",
+      "79": "Oct",
+      "88": "Nov",
+      "96": "Dec",
+    };
+    return monthMap[monthNumber] || monthNumber;
+  };
+
   const displayTempGraph = (commonEraData, temperatureLiveData) => {
     const date = [];
     const station = [];
@@ -47,35 +62,12 @@ function Temperature() {
     try {
       if (temperatureLiveData) {
         temperatureService.setData(temperatureLiveData);
-        // transform api to arrays. Using ternary experison to save space.
+        // transform api to arrays.
         temperatureLiveData.forEach((obj) => {
-          date.push(
-            obj.time.split(".")[1] === "04"
-              ? `${obj.time.slice(0, 4)} Jan`
-              : obj.time.split(".")[1] === "13"
-              ? `${obj.time.slice(0, 4)} Feb`
-              : obj.time.split(".")[1] === "21"
-              ? `${obj.time.slice(0, 4)} Mar`
-              : obj.time.split(".")[1] === "29"
-              ? `${obj.time.slice(0, 4)} Apr`
-              : obj.time.split(".")[1] === "38"
-              ? `${obj.time.slice(0, 4)} May`
-              : obj.time.split(".")[1] === "46"
-              ? `${obj.time.slice(0, 4)} Jun`
-              : obj.time.split(".")[1] === "54"
-              ? `${obj.time.slice(0, 4)} Jul`
-              : obj.time.split(".")[1] === "63"
-              ? `${obj.time.slice(0, 4)} Aug`
-              : obj.time.split(".")[1] === "71"
-              ? `${obj.time.slice(0, 4)} Sept`
-              : obj.time.split(".")[1] === "79"
-              ? `${obj.time.slice(0, 4)} Oct`
-              : obj.time.split(".")[1] === "88"
-              ? `${obj.time.slice(0, 4)} Nov`
-              : obj.time.split(".")[1] === "96"
-              ? `${obj.time.slice(0, 4)} Dec`
-              : obj.time
-          );
+          const monthNumber = obj.time.split(".")[1];
+          const monthName = getMonthName(monthNumber);
+          const formattedDate = `${obj.time.slice(0, 4)} ${monthName}`;
+          date.push(formattedDate);
           station.push(obj.station);
         });
         // chart js
@@ -103,6 +95,7 @@ function Temperature() {
               ],
             },
             options: {
+              responsive: true,
               animation: {
                 onComplete: ({ chart }) => {
                   const completeAnimation =
@@ -111,62 +104,65 @@ function Temperature() {
                 },
               },
               scales: {
-                ticks: {
-                  suggestedMax: 800000,
-                  suggestedMin: -800000,
+                y: {
+                  stacked: true,
+                  title: {
+                    display: true,
+                    text: "Celsius",
+                  },
                 },
-                yAxes: [
-                  {
-                    stacked: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Celsius",
-                    },
+                x: {
+                  stacked: true,
+                  title: {
+                    display: true,
+                    text: "Year",
                   },
-                ],
-                xAxes: [
-                  {
-                    stacked: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Year",
-                    },
-                    ticks: {
-                      maxRotation: 90,
-                    },
+                  ticks: {
+                    maxRotation: 90,
                   },
-                ],
+                },
               },
             },
           }))();
       }
     } catch (error) {
       console.error(error);
+      setGraphError(
+        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+      );
     }
   };
 
   return (
     <>
-      <Container
-        className="chart-container"
-      >
+      <Container className="chart-container">
         <canvas id="tempChart" />
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
-          <Container component="footer" sx={{ marginTop: "-5px" }}>
+          <Container
+            component="footer"
+            className="chart-footer"
+            sx={{ marginTop: "-5px" }}
+          >
             <p>
-              Source: GISTEMP Team, 2020: GISS Surface Temperature Analysis
-              (GISTEMP), version 4. NASA Goddard Institute for Space Studies.
-              Dataset accessed 20YY-MM-DD at
+              <span style={{ color: "#FD4659" }}>{graphError}</span>
+            </p>
+            <p>
+              <span>Source:</span> GISTEMP Team, 2020: GISS Surface Temperature
+              Analysis (GISTEMP), version 4. NASA Goddard Institute for Space
+              Studies. Dataset accessed 20YY-MM-DD at
               <a href="https://data.giss.nasa.gov/gistemp/">
                 <em> https://data.giss.nasa.gov/gistemp/</em>
               </a>
-              . Source data 1880 - present: Lenssen, N., G. Schmidt, J. Hansen,
-              M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019: Improvements in
-              the GISTEMP uncertainty model. J. Geophys. Res. Atmos., 124, no.
-              12, 6307-6326, doi:10.1029/2018JD029522. Source data year 1 –
-              1979: &nbsp;
+              .
+            </p>
+            <p>
+              <span>Source data 1880 - present:</span> Lenssen, N., G. Schmidt,
+              J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019:
+              Improvements in the GISTEMP uncertainty model. J. Geophys. Res.
+              Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522. Source
+              data year 1 – 1979: &nbsp;
               <a href="https://earthdata.nasa.gov/">
                 https://earthdata.nasa.gov/
               </a>

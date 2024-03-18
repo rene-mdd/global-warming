@@ -1,21 +1,14 @@
-/* eslint-disable */
 import React, { useEffect, useState } from "react";
-import fetch from "unfetch";
-import Chart from "chart.js";
-import {
-  Container,
-  Grid,
-} from "@mui/material";
+import { Chart } from "chart.js/auto";
+import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { co2Service } from "../../services/dataService";
 
-function Co2Recent(props) {
+function Co2Recent({ parentCallBackRecent }) {
   const [graphError, setGraphError] = useState("");
   const url = "api/co2-api";
-
   useEffect(() => {
-    props.parentCallBackRecent(true);
-
+    parentCallBackRecent(true);
     async function fetchData() {
       try {
         const response = await fetch(url);
@@ -23,7 +16,7 @@ function Co2Recent(props) {
         if (data) {
           displayCo2Graph(data);
           co2Service.setData(data.co2.pop());
-          props.parentCallBackRecent(false);
+          parentCallBackRecent(false);
         }
       } catch (error) {
         console.error(error);
@@ -45,59 +38,54 @@ function Co2Recent(props) {
           amount.push(obj.trend);
         });
         const ctx = document.getElementById("myRecentCo2Chart");
-        (() =>
-          new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: date,
-              datasets: [
-                {
-                  label: "Carbon Dioxide",
-                  data: amount,
-                  fill: false,
-                  borderColor: "#4984B8",
-                  backgroundColor: "black",
-                  pointRadius: false,
-                  pointHoverBorderWidth: 10,
-                  pointBackgroundColor: "rgba(255, 99, 132, 1)",
-                  pointHoverBackgroundColor: "rgba(255, 99, 132, 1)",
-                  pointHoverBorderColor: "black",
-                  borderWidth: 1,
-                  pointHoverRadius: 5,
-                },
-              ],
-            },
-            options: {
-              scales: {
-                bounds: "ticks",
-                yAxes: [
+        if (ctx) {
+          (() =>
+            new Chart(ctx, {
+              type: "line",
+              data: {
+                labels: date,
+                datasets: [
                   {
-                    stacked: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: "Part Per million (ppm)",
-                    },
-                    ticks: {
-                      min: 390,
-                      max: 440,
-                    },
+                    label: "Carbon Dioxide",
+                    data: amount,
+                    fill: false,
+                    borderColor: "#4984B8",
+                    backgroundColor: "black",
+                    pointRadius: false,
+                    pointHoverBorderWidth: 10,
+                    pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                    pointHoverBackgroundColor: "white",
+                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 0.5,
+                    pointHoverRadius: 10,
                   },
                 ],
-                xAxes: [
-                  {
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                  y: {
                     stacked: true,
-                    scaleLabel: {
+                    title: {
                       display: true,
-                      labelString: "Year",
+                      text: "Part Per million (ppm)",
+                    },
+                  },
+                  x: {
+                    stacked: true,
+                    title: {
+                      display: true,
+                      text: "Year",
                     },
                     ticks: {
                       maxRotation: 90,
                     },
                   },
-                ],
+                },
               },
-            },
-          }))();
+            }))();
+        }
       }
     } catch (error) {
       console.error(error);
@@ -114,32 +102,22 @@ function Co2Recent(props) {
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
-          <Container component="footer" sx={{ marginTop: "-5px" }}>
+          <Container
+            component="footer"
+            className="chart-footer"
+            sx={{ marginTop: "-5px" }}
+          >
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              From 10 years ago to present, the measurements of carbon dioxide concentrations are
-              done by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter
-              Tans, NOAA/GML (
+              From 10 years ago to present, the measurements of carbon dioxide
+              concentrations are done on a quasi daily basis by Mauna Loa
+              Observatory. Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
                 <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
               </a>
               )
-            </p>
-            <p>
-              Data source: 800,000 years ago to 2021
-              <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                <em>
-                  {" "}
-                  https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
-                </em>
-              </a>
-            </p>
-            <p>
-              <b>
-                From 10 years ago to present the data is measured on a quasi daily basis
-              </b>
             </p>
           </Container>
         </Grid>
