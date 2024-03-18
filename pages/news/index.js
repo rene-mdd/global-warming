@@ -149,7 +149,7 @@ function News(props) {
                       {obj?.title}
                     </Typography>
                   </a>
-                  <CardContent sx={{ overflowY: "scroll" }}>
+                  <CardContent sx={{ overflowY: "hidden" }}>
                     <Typography
                       paragraph
                       sx={{ overflowY: "scroll" }}
@@ -229,7 +229,7 @@ function News(props) {
                       {obj.title}
                     </Typography>
                   </a>
-                  <CardContent sx={{ overflowY: "scroll" }}>
+                  <CardContent sx={{ overflowY: "hidden" }}>
                     <Typography
                       paragraph
                       color="black"
