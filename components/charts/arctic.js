@@ -21,7 +21,7 @@ function Arctic({ parentCallBack }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error trying to get the graph data. Please refer to our contact form and report it. Thank you."
+          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
         );
       }
     }
