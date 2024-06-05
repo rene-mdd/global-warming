@@ -18,12 +18,9 @@ html * {
 }
 
 body {
-  background: linear-gradient(
-      90deg,
+  background: linear-gradient(90deg,
       hsla(120, 100%, 99%, 1) 0%,
-      hsla(0, 0%, 100%, 1)
-    )
-    100% !important;
+      hsla(0, 0%, 100%, 1)) 100% !important;
 }
 
 a {
@@ -82,17 +79,23 @@ p {
 .git-main-wrapper {
   background-color: #016795;
   min-height: 100vh !important;
+
   .git-title {
     color: white;
     font-size: 2.5em !important;
+    margin-top: 25vh;
+    margin-bottom: 30px;
     // margin-top: 25vh;
   }
+
   .MuiTableRow-head {
     font-size: 15px;
   }
+
   .MuiTableCell-body {
     font-size: 15px;
   }
+
   .commits-button {
     border: 1px solid white;
   }
@@ -114,6 +117,7 @@ p {
 .about-footer {
   a {
     all: unset;
+
     &:hover {
       cursor: pointer;
     }
@@ -123,6 +127,7 @@ p {
 .chart-footer {
   p {
     font-size: 14px;
+
     span {
       font-weight: bold;
     }
@@ -233,6 +238,9 @@ p {
 
   .contact-segment {
     font-size: 1.2em !important;
+    a {
+      white-space: nowrap;
+    }
   }
 }
 
@@ -445,6 +453,7 @@ nav {
 
 .news-wrapper {
   background-color: #fff !important;
+
   .hide-intersecter {
     width: 1px;
     height: 1px;
@@ -455,6 +464,7 @@ nav {
 .news-card-component {
   position: relative !important;
   overflow: hidden;
+
   .overlay {
     position: absolute !important;
     background: rgba(57, 57, 57, 0.5);
@@ -478,18 +488,22 @@ nav {
     padding: 0 10px 0 10px;
     box-sizing: content-box;
     max-height: 600px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+
+    /* Firefox */
     :-webkit-scrollbar {
       display: none;
     }
-}
+  }
 
   .card-content-footer {
     background-color: #343837;
     justify-content: space-between;
   }
 }
+
 @media only screen and (max-width: 700px) {
   .card-content-footer {
     .MuiButtonBase-root {

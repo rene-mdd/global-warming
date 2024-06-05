@@ -110,9 +110,7 @@ const Contact = () => {
               <Grid item xs={10} md={6}>
                 <Paper className="contact-info">
                   <p className="contact-segment">
-                    For questions about this
-                    project or if you want to discuss ideas related to this
-                    kind of environmental issues, please send us a <strong>message</strong>.
+                  For questions about this project or to discuss ideas related to it, please send us a message or write to us at <a href="mailto:help@global-warming.org">help@global-warming.org</a>.
                   </p>
                 </Paper>
                 <FormControl
@@ -185,14 +183,14 @@ const Contact = () => {
                   {response.type === "success"
                     ? "Your email was sent."
                     : response.type === "error"
-                    ? "Sorry there was an error"
-                    : null}
+                      ? "Sorry there was an error"
+                      : null}
                   <AlertTitle>
                     {response.type === "success"
                       ? "Thank you!"
                       : response.type === "error"
-                      ? "Try again or write to help@global-warming.org"
-                      : null}
+                        ? "Try again or write to help@global-warming.org"
+                        : null}
                   </AlertTitle>
                 </Alert>
               </Grid>

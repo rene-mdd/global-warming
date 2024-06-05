@@ -181,10 +181,14 @@ function Git() {
           xs={12}
           display="flex"
           justifyContent="center"
-          alignItems="flex-start"
+          alignItems="center"
+          flexDirection="column"
         >
-          <Typography variant="h5" color="white" borderBottom={1}>
+          <Typography variant="h5" color="white" mt={5} mb={1} borderBottom={1}>
             Database / Backend
+          </Typography>
+          <Typography paragraph color="white" >
+           TBA
           </Typography>
         </Grid>
         <Grid mt={2} xs={12}>
