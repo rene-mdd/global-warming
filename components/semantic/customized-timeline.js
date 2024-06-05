@@ -66,7 +66,7 @@ export default function CustomizedTimeline() {
             Kick off
           </Typography>
           <Typography color="white">
-            Data collection for the MVP
+            Development of web app additional features
           </Typography>
         </TimelineContent>
       </TimelineItem>
@@ -77,7 +77,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q2 2024
+          Q3 2024
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -88,15 +88,12 @@ export default function CustomizedTimeline() {
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
           <Typography variant="h6" component="span" color="white">
-            Engagement
+            Development
           </Typography>
           <Typography color="white">
-            - Start of funding campaign
+            Start of funding campaign and data collection
           </Typography>
-          <Typography color="white">
-            - Development of website additional features to save and publish the
-            data
-          </Typography>
+
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -106,7 +103,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q3 2024
+          Q4 2024
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -120,11 +117,7 @@ export default function CustomizedTimeline() {
             Expansion
           </Typography>
           <Typography color="white">
-            - Development of additional web technologies to increase traffic and
-            networking
-          </Typography>
-          <Typography color="white">
-            - Promotion of the platform through multiple media channels
+            Complete the database-API integration and assign a score to each business
           </Typography>
         </TimelineContent>
       </TimelineItem>

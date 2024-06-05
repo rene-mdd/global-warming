@@ -6,7 +6,7 @@ export default function Team() {
     badge: "GWO",
     "header-p1": "Join our organization",
     description: "We need to show the world who is destroying it",
-    "01_image": "images/rene-picture.jpeg",
+    "01_image": "images/rene-picture.jpg",
     "01_name": "René Rodríguez",
     "01_job": "Creator & Frontend Developer",
 
@@ -163,7 +163,7 @@ export default function Team() {
               </Typography>
               <Typography paragraph color="textSecondary" fontSize="1em">
                 We are currently only offering volunteer opportunities. By
-                mid-2024, we hope to begin hiring interns and full-time staff.
+                the end of 2024, we hope to begin hiring interns and full-time staff.
               </Typography>
             </Grid>
             {/* <Grid xs={12} sm={6} md={3}>

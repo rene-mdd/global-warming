@@ -95,7 +95,7 @@ function ParentOcean() {
       <Container component="ocean-footer" align="center">
         <p>
           {`Copyright ©${new Date().getFullYear()}
-              René Rodríguez. All Rights Reserved`}
+              Climate Accountability API. All Rights Reserved`}
         </p>
       </Container>
     </Container>

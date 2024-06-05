@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { Chart } from "chart.js/auto";
 import PropTypes from "prop-types";
@@ -6,6 +6,7 @@ import { oceanService } from "../../services/dataService";
 
 function Ocean({ parentCallBack }) {
   const url = "api/ocean-warming-api";
+  const [graphError, setGraphError] = useState("");
 
   useEffect(() => {
     parentCallBack(true);
@@ -92,6 +93,9 @@ function Ocean({ parentCallBack }) {
         }
       }
     } catch (error) {
+      setGraphError(
+        "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+      );
       console.error(error);
     }
   };
@@ -111,6 +115,9 @@ function Ocean({ parentCallBack }) {
             <p>
               Please note, global and hemispheric anomalies are with respect to
               the 1901-2000 average.
+            </p>
+            <p>
+              <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
               <span>Source: </span>NOAA National Centers for Environmental
