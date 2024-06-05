@@ -119,8 +119,6 @@ export default function CustomizedTimeline() {
           <Typography color="white">
             Complete the database-API integration and assign a score to each business
           </Typography>
-          <Typography color="white">
-          </Typography>
         </TimelineContent>
       </TimelineItem>
     </Timeline>

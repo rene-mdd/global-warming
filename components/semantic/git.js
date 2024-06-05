@@ -187,8 +187,8 @@ function Git() {
           <Typography variant="h5" color="white" mt={5} mb={1} borderBottom={1}>
             Database / Backend
           </Typography>
-          <Typography paragraph color="white" >
-           TBA
+          <Typography paragraph color="white">
+            TBA
           </Typography>
         </Grid>
         <Grid mt={2} xs={12}>
