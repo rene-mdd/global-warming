@@ -150,7 +150,7 @@ function Row(props) {
                         </Typography>
                       </Container>
                     </TableCell>
-                    <TableCell align="left" sx={{maxWidth: "215px"}}>
+                    <TableCell align="left" sx={{ maxWidth: "215px" }}>
                       <Container
                         disableGutters
                         component="div"
@@ -310,7 +310,9 @@ export default function BusinessStatistics({ props }) {
         </Table>
       </TableContainer>
       <Container align="center">
-        {/* <strong>TBA</strong> */}
+        <Typography paragraph fontWeight="bold" mt={3}>
+          Preliminary data
+        </Typography>
         <LoadingButton
           loading={initialLoading}
           className="loading-button"
