@@ -31,23 +31,26 @@ const theme = createTheme({
 });
 
 function Row(props) {
+  console.log(props)
   const [open, setOpen] = useState(false);
   const { included, index } = props;
   const {
     row: { attributes, relationships },
   } = props;
-  const apiHost = process.env.NEXT_PUBLIC_LOCAL_HOST;
-  const logoImgUrl = included.filter(function (o1) {
-    // return the logo with equal id
-    return relationships.logo.data?.id == o1.id;
-  });
-  const logoUrl = logoImgUrl[0]?.attributes?.uri?.url;
+  // const apiHost = process.env.NEXT_PUBLIC_LOCAL_HOST;
+  // const logoImgUrl = included.filter(function (o1) {
+  //   // return the logo with equal id
+  //   return relationships.logo.data?.id == o1.id;
+  // });
+  const logoUrl = attributes?.imgUrl;
+  // const logoUrl = "";
+  const logoImgUrl = "";
   const colorImpact =
     attributes.environmental_impact <= 5
       ? "red"
       : attributes.environmental_impact > 9
-      ? "green"
-      : "orange";
+        ? "green"
+        : "orange";
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -67,26 +70,26 @@ function Row(props) {
             scope="row"
             className="sticky-column sticky-company white-color"
           >
-            {/* {attributes?.title} */}
+            {attributes?.title}
           </TableCell>
           <TableCell align="right">
-            {/* {attributes?.disclosure_ghg_emission ?? "No data"} /{" "}
-            {attributes?.disclosure_deforestation ?? "No data"} */}
+            {attributes?.disclosure_ghg_emission ?? "No data"} /{" "}
+            {attributes?.disclosure_deforestation ?? "No data"}
           </TableCell>
           <TableCell align="right">
-            {/* {attributes?.commitment_status ?? "No data"} */}
+            {attributes?.commitment_status ?? "No data"}
           </TableCell>
           <TableCell align="right">
-            {/* {attributes?.net_emission_reduction ?? "No data"} */}
+            {attributes?.net_emission_reduction ?? "No data"}
           </TableCell>
           <TableCell align="right">
-            {/* {attributes?.climate_contribution_offset ?? "No data"} */}
+            {attributes?.climate_contribution_offset ?? "No data"}
           </TableCell>
           <TableCell align="right">
-            {/* {attributes?.deforestation ?? "No data"} */}
+            {attributes?.deforestation ?? "No data"}
           </TableCell>
           <TableCell align="right" sx={{ color: colorImpact }}>
-            {/* {attributes?.environmental_impact ?? "No data"} */}
+            {attributes?.environmental_impact ?? "No data"}
           </TableCell>
         </TableRow>
         <TableRow>
@@ -116,14 +119,14 @@ function Row(props) {
                   </TableRow>
                   <TableRow>
                     <TableCell>
-                      {/* <CardMedia
+                      <CardMedia
                         className="brands-logo"
                         component="img"
                         alt={attributes?.title}
                         src={
-                          logoUrl ? apiHost + logoUrl : "/images/no-logo.png"
+                          logoUrl ? logoUrl : "/images/no-logo.png"
                         }
-                      /> */}
+                      />
                     </TableCell>
                     <TableCell align="left" width="100%">
                       <Container
@@ -131,9 +134,9 @@ function Row(props) {
                         component="div"
                         className="text-container"
                       >
-                        {/* {ReactHtmlParser(
-                          attributes?.additional_details.processed
-                        ) ?? "No data"} */}
+                        {ReactHtmlParser(
+                          attributes?.additional_details.value
+                        ) ?? "No data"}
                       </Container>
                     </TableCell>
                     <TableCell align="left">
@@ -143,18 +146,18 @@ function Row(props) {
                         className="text-container"
                         sx={{ fontSize: 1 }}
                       >
-                        {/* {ReactHtmlParser(
-                          attributes?.products_services.processed
-                        ) ?? "No data"} */}
+                        <Typography paragraph>
+                          {attributes?.products_services}
+                        </Typography>
                       </Container>
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="left" sx={{maxWidth: "215px"}}>
                       <Container
                         disableGutters
                         component="div"
                         className="text-container"
                       >
-                        {/* {attributes?.source?.map((data, index) => {
+                        {attributes?.services.source?.map((data, index) => {
                           return (
                             <Typography
                               textAlign="left"
@@ -167,7 +170,7 @@ function Row(props) {
                               </Typography>
                             </Typography>
                           );
-                        })} */}
+                        })}
                       </Container>
                     </TableCell>
                   </TableRow>
@@ -181,9 +184,11 @@ function Row(props) {
   );
 }
 
-export default function BusinessStatistics() {
+export default function BusinessStatistics({ props }) {
+  console.log(props)
   // content api data
-  const [businessData, setBusinessData] = useState([]);
+  let businessData = [];
+  // const [businessData, setBusinessData] = useState([]);
   // media and files api data
   const [includedData, setIncludedData] = useState([]);
   // get search value
@@ -194,35 +199,38 @@ export default function BusinessStatistics() {
   const [initialLoading, setInitialLoading] = useState(false);
   // error message
   const [errorMsg, setError] = useState(false);
-  useEffect(() => {
-    // if (input.length > 0) {
-    //   setLoading(true);
-    // }
-    const delayDebounceFn = setTimeout(() => {
-      const businessApiUrl = `http://global-warming-drupal.docksal/jsonapi/business?include=logo&filter[title][operator]=CONTAINS&filter[title][value]=${input}`;
-      // let header = new Headers({
-      //   "Access-Control-Allow-Origin": "https://global-warming.org/",
-      //   Accept: "application/vnd.api+json",
-      //   "Content-Type": "application/vnd.api+json",
-      // });
-      async function fetchBusinessData() {
-        try {
-          // const response = await fetch(businessApiUrl, header);
-          // const business = await response.json();
-          // setBusinessData(() => business.data);
-          // setIncludedData(() => business.included);
-          setLoading(false);
-          // setInitialLoading(false);
-        } catch (error) {
-          setError(true);
-          console.error(error);
-        }
-      }
-      fetchBusinessData();
-    }, 500);
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [input]);
+  businessData = props;
+
+  // useEffect(() => {
+  //   // if (input.length > 0) {
+  //   //   setLoading(true);
+  //   // }
+  //   const delayDebounceFn = setTimeout(() => {
+  //     const businessApiUrl = `http://global-warming-drupal.docksal/jsonapi/business?include=logo&filter[title][operator]=CONTAINS&filter[title][value]=${input}`;
+  //     // let header = new Headers({
+  //     //   "Access-Control-Allow-Origin": "https://global-warming.org/",
+  //     //   Accept: "application/vnd.api+json",
+  //     //   "Content-Type": "application/vnd.api+json",
+  //     // });
+  //     async function fetchBusinessData() {
+  //       try {
+  //         // const response = await fetch(businessApiUrl, header);
+  //         // const business = await response.json();
+  //         // setBusinessData(() => business.data);
+  //         // setIncludedData(() => business.included);
+  //         setLoading(false);
+  //         // setInitialLoading(false);
+  //       } catch (error) {
+  //         setError(true);
+  //         console.error(error);
+  //       }
+  //     }
+  //     fetchBusinessData();
+  //   }, 500);
+
+  //   return () => clearTimeout(delayDebounceFn);
+  // }, [input]);
 
   return (
     <>
@@ -292,27 +300,27 @@ export default function BusinessStatistics() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {businessData.map((row, index) => (
+            {businessData.map(({ row }, index) => (
               <Row
                 row={row}
                 included={includedData}
                 index={index}
                 key={row.id}
               />
-            ))} */}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
       <Container align="center">
-        <strong>TBA</strong>
-      <LoadingButton
+        {/* <strong>TBA</strong> */}
+        <LoadingButton
           loading={initialLoading}
           className="loading-button"
           disabled
         />
-      {errorMsg && (
-        <Alert severity="error">There was an error trying to fetch the information. If the problem persist, please contact us.</Alert>
-      )}
+        {errorMsg && (
+          <Alert severity="error">There was an error trying to fetch the information. If the problem persist, please contact us.</Alert>
+        )}
       </Container>
     </>
   );
