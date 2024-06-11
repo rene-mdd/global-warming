@@ -31,7 +31,6 @@ const theme = createTheme({
 });
 
 function Row(props) {
-  console.log(props)
   const [open, setOpen] = useState(false);
   const { included, index } = props;
   const {
@@ -185,7 +184,6 @@ function Row(props) {
 }
 
 export default function BusinessStatistics({ props }) {
-  console.log(props)
   // content api data
   let businessData = [];
   // const [businessData, setBusinessData] = useState([]);
