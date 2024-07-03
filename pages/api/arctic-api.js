@@ -15,7 +15,9 @@ export default async function fetchArcticApi(req, res) {
       "Access-Control-Allow-Headers",
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     );
-    res.setHeader("Cache-Control", "s-maxage=43200");
+    res.setHeader('Cache-Control', 'public, max-age=43200, stale-while-revalidate=3600');
+    res.setHeader('CDN-Cache-Control', 'public, max-age=43200, stale-while-revalidate=3600');
+    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=43200, stale-while-revalidate=3600');
     res.status(200).json({ error: null, arcticData });
   } catch (error) {
     console.error(error);

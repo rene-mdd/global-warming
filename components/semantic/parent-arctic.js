@@ -54,7 +54,7 @@ function ParentArctic() {
           <Container align="center" className="today-value">
             <p>
               Today's value:
-              <span style={{ color: "#2c82c9" }}>{todayValue}</span>
+              <span style={{ color: "#2c82c9" }}> {todayValue}</span>
             </p>
           </Container>
           <Container id="scrolling-container">
