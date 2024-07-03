@@ -1,0 +1,32 @@
+[
+    {
+        "Volkswagen AG": [
+            4,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            {
+                "products": "Volkswagen Arteon 4motion, Volkswagen Atlas, Volkswagen Atlas 4motion, Volkswagen Atlas Cross Sport, Volkswagen Atlas Cross Sport 4motion, Volkswagen Beetle, Volkswagen, Beetle Convertible, Volkswagen Beetle Dune, Volkswagen Beetle Dune Convertible, Volkswagen CC, Volkswagen CC 4motion, Volkswagen e-Golf, Volkswagen Eos, Volkswagen Golf, Volkswagen Golf Alltrack, Volkswagen Golf R, Volkswagen Golf SportWagen, Volkswagen Golf SportWagen 4motion, Volkswagen GTI, Volkswagen Jetta, Volkswagen Jetta GLI, Volkswagen Jetta Hybrid, Volkswagen Passat, Volkswagen Tiguan, Volkswagen Tiguan 4motion, Volkswagen Tiguan Limited, Volkswagen Tiguan Limited 4motion, Volkswagen Touareg, Volkswagen Cabrio, Volkswagen Cabriolet, Volkswagen Corrado, Volkswagen Corrado SLC, Volkswagen Eurovan, Volkswagen Eurovan Camper, Volkswagen Fox, Volkswagen Fox GL Wagon, Volkswagen Fox Wagon, Volkswagen Golf III, Volkswagen Golf III / GTI, Volkswagen Golf/GTI, Volkswagen GTI 16v, Volkswagen GTI VR6, Volkswagen GTI/Golf GT, Volkswagen Jetta GLI 16v, Volkswagen Jetta GLI/Wolfsburg Edition, Volkswagen Jetta GLX, Volkswagen Jetta III, Volkswagen Jetta III GLX, Volkswagen Jetta SportWagen, Volkswagen Jetta Wagon, Volkswagen New Beetle, Volkswagen New Beetle Convertible, Volkswagen New Golf, Volkswagen New GTI, Volkswagen New Jetta, Volkswagen Passat 4motion, Volkswagen Passat Syncro, Volkswagen Passat Wagon, Volkswagen Passat Wagon 4motion, Volkswagen Passat Wagon Syncro, Volkswagen Phaeton, Volkswagen Quantum, Volkswagen Quantum Syncro Wagon, Volkswagen Quantum Wagon, Volkswagen R32, Volkswagen Rabbit, Volkswagen Rabbit Convertible, Volkswagen Routan, Volkswagen Routan FWD, Volkswagen Scirocco, Volkswagen Scirocco 16v, Volkswagen Touareg Hybrid, Volkswagen Vanagon 2WD, Volkswagen Vanagon Syncro 4WD, Volkswagen Vanagon/Camper 2WD",
+                "notes": "They offer one cabon neutral vehicle model, the ID.3.<br> They co-builded Tramm-Göthen solar plant.",
+                "sources": "https://www.volkswagenag.com/en/news/2021/04/way-to-zero--volkswagen-presents-roadmap-for-climate-neutral-mob.html, https://www.power-technology.com/projects/tramm-gothen-solar-park-mecklenburg-western-pomerania-germany/",
+                "score": 4
+            }
+        ],
+        "JBS": [
+            3,
+            3,
+            1,
+            -1,
+            0,
+            -1,
+            {
+                "products": "McDonald's, Burger King, Subway, Outback, KFC, Pizza Hut, Wendy's, Swift , Aspen Ridge , Pilgrim's , Great Southern , Primo , Moy Park , 1855 , 5 Star Beef , 5 Star Beef Reserve , Aberdeen Black , Acres Organic Grassfed Beef , Adaptable Meals , Alamesa , Albert van Zoonen , AMH , Aussie Beef , Beef City Black , Beef City Platinum , Beehive , Blue Ribbon Angus Beef , Blue Ribbon Beef , Byron Bay Berkshire Pork , Canadian Diamond Beef , Canadian Diamond Black Angus , Cedar River Farms , Certified Angus Beef , Chef's Exclusive , Clear River Farms , Clear River Farms Premium Beef , Country Pride , County Post , Creative Food Solutions , DAK , Dalehead Foods , Danepak , Danola , Del Día , Elite Prime , Four Star Beef , Four Star Natural Beef , Friboi , Geo. Adams , Gold Kist , Gold'n Plump , Good Nature Pork , Gourmet Burger , Grainge , Grass Run Farms , Great Southern Pinnacle , Hans , Hereford , Hereford Boss , Huon Aquaculture , Imperial American Wagyu Beef , Just Bare , King Island Beef , Kitchen Range , La Herencia , Little Italy , Little Joe Beef , Mountain Creek Farms , Moy Park Beef Orleans , Moy Park Foodservice , Moyer , Moyer Angus Beef , Northern Gold , Northern Meat Shoppe , O'Kane , Oak Crown , OZO , Pierce Chicken , Pilgrim’s Mexico , Plumrose , Pure Prime , Queenslander , Red Gum Creek , Red Gum Creek Lamb , Right to Roam , Rivalea , Riverina Australian Black Angus , Royal , Savora Sous Vide , Savoro , Seven Point Pork , Shiro Kin Wagyu , Showcase Premium Ground Beef , Showcase Premium USA Beef , Showcase Premium USA Beef Natural , Spring Creek , Spring Crossing , Swift Australia , Swift Black Angus , Tajima Wagyu , Tatiara , Tender Valley , The Bachelor , The Green Butcher , The Honest Butcher , Think Pure Natural , Think Pure Organic , Thousand Guineas , Three Islands , To-Ricos , Tulip , W. Black , Weddel , Wicked Pig , Yardstick , Zap!.",
+                "notes": "This corporation is a good example of greenwashing. They have dozens of promises and projects related to environmental conservation and offsetting, but none of them are up and running. On the contrary, their emissions, and deforestation have been growing every year. <br>Between 2016 and 2021 JBS increased their GHG emission by 51%. <br> JBS have rampant deforestation in their supply chain as we can see in Trase platform, but forest500 gives them a 42% overall deforestation score. This ranking might be too lenient on the corporation. We need to investigate more about forest500 ranking methodology and their information sources. <br>Committed to net-zero emissions by 2040 (dubious).",
+                "sources": "https://jbsfoodsgroup.com/our-brands, https://jbs.com.br/wp-content/uploads/2019/11/JBS_RAS2017_book_EN.pdf, https://forest500.org/forest-500-data, https://fundojbsamazonia.org/en/projects/supported-projects/#prettyPhoto, https://trase.finance/entities/36d340a7-c657-3eb8-8f6d-1cc3c596be08, https://www.iatp.org/media-brief-jbs-increases-emissions-51-percent#:~:text=The%20company%2C%20which%20is%20the,IATP)'s%20latest%20calculations.",
+                "score": 5
+            }
+        ]
+    }
+]

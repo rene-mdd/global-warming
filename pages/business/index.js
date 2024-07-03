@@ -7,7 +7,7 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import BusinessStatistics from "../../components/semantic/business-statistics";
-
+import business from "../../public/data/dummy";
 function Business() {
   // not ready
   const aboutTitle = "Business environmental impact";
@@ -50,7 +50,7 @@ function Business() {
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>
             <Grid item xs={12} md={12} lg={8} mb={6}>
-            <BusinessStatistics />
+            <BusinessStatistics props={business} />
             </Grid>
         </Grid>
       </Grid>
