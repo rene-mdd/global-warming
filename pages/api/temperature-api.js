@@ -33,8 +33,10 @@ export default async (req, res) => {
     res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=43200, stale-while-revalidate=3600');
     res.setHeader('CDN-Cache-Control', 'public, max-age=3600, s-maxage=43200, stale-while-revalidate=3600');
     res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=3600. s-maxage=43200, stale-while-revalidate=3600');
+    console.log(data)
     res.status(200).json({ error: null, result });
   } catch (error) {
+    console.error(error)
     res.status(500).send({ result: null, error });
   }
 };
