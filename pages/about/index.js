@@ -8,6 +8,20 @@ import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import Git from "../../components/semantic/git";
 
 function About() {
+
+  async function getdata(req, res) {
+    try {
+    const data = await fetch(
+      "https://data.giss.nasa.gov/gistemp/graphs_v4/graph_data/Monthly_Mean_Global_Surface_Temperature/graph.txt"
+    );
+    console.log(data)
+    const response = data.json();
+    console.log(response)
+  }
+  catch(error) {
+    console.log(error)
+  }
+  } getdata()
   const aboutTitle = "Climate Accountability API - About Us";
   const aboutMetaDescription =
     "Our mission is to provide the public with information related to every organization carbon footprint";
