@@ -30,13 +30,12 @@ export default async (req, res) => {
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     );
     // caching the response for 12 hours day (just max one slow request per day)
-    res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=43200, stale-while-revalidate=3600');
-    res.setHeader('CDN-Cache-Control', 'public, max-age=3600, s-maxage=43200, stale-while-revalidate=3600');
-    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=3600. s-maxage=43200, stale-while-revalidate=3600');
-    console.log(data)
+    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=0. s-maxage=43200, stale-while-revalidate=3600');
+    res.setHeader('CDN-Cache-Control', 'public, max-age=0, s-maxage=43200, stale-while-revalidate=3600');
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=43200, stale-while-revalidate=3600');
     res.status(200).json({ error: null, result });
+    
   } catch (error) {
-    console.error(error)
     res.status(500).send({ result: null, error });
   }
 };
