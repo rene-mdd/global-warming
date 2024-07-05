@@ -18,8 +18,8 @@ export default async (req, res) => {
   );
 
   if (error) {
-    res.statusCode = 500;
     res.setHeader("Content-Type", "text/plain");
+    res.status(500).send({ result: "Data currently unavailable. Try again later. If the problem persists, please inform us at help@global-warming.org", error });
     res.end("Internal Server Error");
     return;
   }
@@ -65,9 +65,10 @@ export default async (req, res) => {
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     );
     res.statusCode = 200;
-    res.setHeader('Cache-Control', 'public, max-age=43200, stale-while-revalidate=3600');
-    res.setHeader('CDN-Cache-Control', 'public, max-age=43200, stale-while-revalidate=3600');
-    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=43200, stale-while-revalidate=3600');
+    // caching the response for 12 hours a day 
+    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=0. s-maxage=43200, stale-while-revalidate=3600');
+    res.setHeader('CDN-Cache-Control', 'public, max-age=0, s-maxage=43200, stale-while-revalidate=3600');
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=43200, stale-while-revalidate=3600');
     res.json({ methane: methaneData });
   }
 };

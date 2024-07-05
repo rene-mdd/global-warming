@@ -17,7 +17,7 @@ const theme = createTheme({
 function ParentArctic() {
   const [arctic, setArctic] = useState(false);
   const [arcticLoading, setArcticLoading] = useState(false);
-  const [todayValue, setTodayValue] = useState("");
+  const [todayValue, setTodayValue] = useState("0");
 
   useEffect(() => {
     const subscription = arcticService.getData().subscribe(({value}) => {
