@@ -6,8 +6,9 @@ export default async (req, res) => {
     );
     // const lines = data.split("\n");
     const response = await data.json();
+    console.log(response)
     // const responseToJson = response.json();
-    const stringifyOceanObj = JSON.stringify(response);
+    const stringifyOceanObj = JSON.stringify(response.data);
     const parseToObject = JSON.parse(stringifyOceanObj);
 
     // cors config
