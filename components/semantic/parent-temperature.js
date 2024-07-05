@@ -27,7 +27,7 @@ function ParentTemperature() {
           <Container align="center" className="today-value">
             <p>
               Today's value:
-              <span> {todayValue.station}</span>
+              <span> {todayValue?.station ? todayValue?.station : `Data currently unavailable. Try again later. If the problem persists, please inform us at help@global-warming.org`}</span>
             </p>
           </Container>
           <Container>

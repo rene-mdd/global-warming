@@ -8,6 +8,7 @@ import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import Git from "../../components/semantic/git";
 
 function About() {
+
   const aboutTitle = "Climate Accountability API - About Us";
   const aboutMetaDescription =
     "Our mission is to provide the public with information related to every organization carbon footprint";

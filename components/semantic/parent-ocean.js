@@ -16,7 +16,7 @@ const theme = createTheme({
 });
 
 function ParentOcean() {
-  const [todayValue, setTodayValue] = useState("");
+  const [todayValue, setTodayValue] = useState("0");
   const [description, setDescription] = useState({});
   const [oceanLoading, setOceanLoading] = useState(false);
   const [ocean, setOcean] = useState(false);
@@ -83,7 +83,7 @@ function ParentOcean() {
               justifyContent="space-around"
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionOcean props={description.title} />
+                <AccordionOcean props={description?.title ? description?.title : `Global Ocean February - January Average Temperature Anomalies`} />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />
