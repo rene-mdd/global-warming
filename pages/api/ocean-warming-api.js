@@ -27,7 +27,6 @@ export default async (req, res) => {
       .status(200)
       .json({ error: null, result: parseToObject, description: data.description });
   } catch (error) {
-    res.status(500).send({ result: "Data currently unavailable. Try again later. If the problem persists, please inform us at help@global-warming.org", data, error });
-    res.setEr
+    res.status(500).send({ result: "Data currently unavailable. Try again later. If the problem persists, please inform us at help@global-warming.org", error });
   }
 };
