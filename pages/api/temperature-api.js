@@ -1,4 +1,3 @@
-import axios from "axios";
 
 const line2Array = (line) => line.split(" ").filter((ele) => ele);
 
