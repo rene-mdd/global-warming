@@ -1,4 +1,3 @@
-import axios from "axios";
 
 const line2Array = (line) => line.split(" ").filter((ele) => ele);
 
@@ -7,9 +6,13 @@ const convertToObject = (valueArray2d) =>
 
 export default async (req, res) => {
   try {
-    const { data } = await axios.get(
-      "https://data.giss.nasa.gov/gistemp/graphs_v4/graph_data/Monthly_Mean_Global_Surface_Temperature/graph.txt"
-    );
+    const response = await fetch(
+      "https://data.giss.nasa.gov/gistemp/graphs_v4/graph_data/Monthly_Mean_Global_Surface_Temperature/graph.txt", {
+        headers: {
+          'Accept': "text/plain",
+        }
+      });
+      const data = await response.text();
 
     const lines = data.split("\n");
     // in the _ vars we store the dashed lines
@@ -30,9 +33,9 @@ export default async (req, res) => {
       "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
     );
     // caching the response for 12 hours day (just max one slow request per day)
-    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=0. s-maxage=43200, stale-while-revalidate=3600');
-    res.setHeader('CDN-Cache-Control', 'public, max-age=0, s-maxage=43200, stale-while-revalidate=3600');
-    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=43200, stale-while-revalidate=3600');
+    res.setHeader('Vercel-CDN-Cache-Control', 'public, max-age=3600. s-maxage=43200, stale-while-revalidate=3600');
+    res.setHeader('CDN-Cache-Control', 'public, max-age=3600, s-maxage=43200, stale-while-revalidate=3600');
+    res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=43200, stale-while-revalidate=3600');
     res.status(200).json({ error: null, result });
     
   } catch (error) {
