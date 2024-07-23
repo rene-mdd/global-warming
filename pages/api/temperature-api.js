@@ -10,10 +10,10 @@ export default async (req, res) => {
       "https://data.giss.nasa.gov/gistemp/graphs_v4/graph_data/Monthly_Mean_Global_Surface_Temperature/graph.txt", {
         headers: {
           'Accept': "text/plain",
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
         }
       });
       const data = await response.text();
-
     const lines = data.split("\n");
     // in the _ vars we store the dashed lines
     // eslint-disable-next-line no-unused-vars
@@ -40,5 +40,6 @@ export default async (req, res) => {
     
   } catch (error) {
     res.status(500).send({ result: "Data currently unavailable. Try again later. If the problem persists, please inform us at help@global-warming.org", error });
+    console.error(error);
   }
 };
