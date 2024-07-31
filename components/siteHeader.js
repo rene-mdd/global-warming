@@ -1,5 +1,6 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
+// import { metadata } from "../pages/about";
 
 export default function SiteHeader({ title, description, keyword }) {
   return (
@@ -7,7 +8,7 @@ export default function SiteHeader({ title, description, keyword }) {
       <Head>
         <title>{title}</title>
         <meta property="og:url" content="https://global-warming.org/" />
-        <meta property="og:title" content="Global Warming Data and API" />
+        <meta property="og:title" content={description} />
         <meta property="og:image" content="images/logo-planet-image.png" />
         <meta property="og:image:width" content="75" />
         <meta property="og:image:height" content="75" />

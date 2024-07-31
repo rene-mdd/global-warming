@@ -51,7 +51,7 @@ function About() {
             alt="planet dying logo"
           />
           <Typography
-            component="h2"
+            component="h1"
             className="h2-landing-about"
             align="center"
             gutterBottom

@@ -60,7 +60,7 @@ function SemanticDeforestation(props) {
         (t) => t.description === thing.description || t.title === thing.title
       )
   );
-  const deforestationTitle = "Global deforestation news and map.";
+  const deforestationTitle = "Deforestation news";
   const deforestationMetaDescription =
     "Live news about worldwide deforestation and map builder to check on global forest loss.";
   const deforestationKeywords =
