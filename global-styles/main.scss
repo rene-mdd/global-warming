@@ -74,6 +74,24 @@ p {
   margin-top: 25vh !important;
   font-size: 2.5em !important;
   color: black !important;
+
+  p {
+    font-weight: bold;
+  }
+}
+
+.imprint {
+  p {
+    font-weight: bold;
+  }
+}
+
+.second-imprint {
+  h3 {
+    font-size: 1.3em !important;
+    color: black !important;
+    font-weight: bold;
+  }
 }
 
 .git-main-wrapper {
@@ -107,14 +125,49 @@ p {
   color: #343837 !important;
 }
 
-.ocean-footer {
+.footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+
   p {
     margin: 0;
-    font-size: 0.8em;
+    font-size: 0.9em;
+    font-weight: 500;
+  }
+
+  .imprint {
+    color: #069AF3;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 
 .about-footer {
+  background-color: #016795;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+
+  p {
+    margin: 0;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: white;
+  }
+
+  .imprint {
+    cursor: pointer;
+  }
+}
+
+.github-source {
+  p {
+    font-size: 1.2em;
+  }
+
   a {
     all: unset;
 
@@ -238,6 +291,7 @@ p {
 
   .contact-segment {
     font-size: 1.2em !important;
+
     a {
       white-space: nowrap;
     }

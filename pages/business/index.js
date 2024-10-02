@@ -1,6 +1,7 @@
 /* eslint-disable */
 import {
   CardMedia,
+  Divider,
   Grid,
   Typography,
 } from "@mui/material";
@@ -8,6 +9,7 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import BusinessStatistics from "../../components/semantic/business-statistics";
 import business from "../../public/data/dummy";
+import Footer from "../../components/semantic/footer";
 function Business() {
   // not ready
   const aboutTitle = "Business environmental impact";
@@ -29,7 +31,7 @@ function Business() {
         direction="column"
         className="landing-page-about"
       >
-        <Typography paragraph align="center" className="h1-business">
+        <Typography component="p" align="center" className="h1-business">
           Business Data
         </Typography>
         <Grid align="center">
@@ -54,6 +56,7 @@ function Business() {
             </Grid>
         </Grid>
       </Grid>
+      <Footer props="footer" />
       </>
   );
 }

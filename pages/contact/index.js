@@ -15,7 +15,9 @@ import {
   Alert,
   AlertTitle,
   FormLabel,
+  Divider,
 } from "@mui/material";
+import Footer from "../../components/semantic/footer";
 
 const Contact = () => {
   const [contact, setContact] = useState({
@@ -198,6 +200,7 @@ const Contact = () => {
           </Grid>
         </Grid>
       </Container>
+      <Footer props="footer" />
     </>
   );
 };

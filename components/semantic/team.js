@@ -44,19 +44,19 @@ export default function Team() {
         <Box pt={8} pb={12} textAlign="center">
           <Box mb={9}>
             <Container maxWidth="sm">
-              {/* <Typography variant="overline" color="textSecondary" paragraph>
+              {/* <Typography variant="overline" color="textSecondary" component="p">
                 {content.badge}
               </Typography> */}
               <Typography
                 variant="h3"
-                paragraph
+                component="p"
                 color="primary"
                 fontSize="1.5em"
                 gutterBottom
               >
                 {content["header-p1"]}
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" paragraph>
+              <Typography variant="subtitle1" color="textSecondary" component="p">
                 {content.description}
               </Typography>
             </Container>
@@ -149,7 +149,7 @@ export default function Team() {
               </Typography>
             </Grid>
             <Grid xs={12}>
-              <Typography paragraph mt={10} fontSize="1.2em">
+              <Typography component="p" mt={10} fontSize="1.2em">
                 If you want to be part of the organization write us at
                 <Typography
                   color="primary"
@@ -161,7 +161,7 @@ export default function Team() {
                   &nbsp;help@global-warming.org
                 </Typography>
               </Typography>
-              <Typography paragraph color="textSecondary" fontSize="1em">
+              <Typography component="p" color="textSecondary" fontSize="1em">
                 We are currently only offering volunteer opportunities. By
                 the end of 2024, we hope to begin hiring interns and full-time staff.
               </Typography>

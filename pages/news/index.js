@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
+import Footer from "../../components/semantic/footer";
 
 function News(props) {
   const [isOpen, setToggle] = useState("");
@@ -151,7 +152,7 @@ function News(props) {
                   </a>
                   <CardContent sx={{ overflowY: "hidden" }}>
                     <Typography
-                      paragraph
+                      component="p"
                       color="black"
                       className="card-content-child"
                     >
@@ -230,7 +231,7 @@ function News(props) {
                   </a>
                   <CardContent sx={{ overflowY: "hidden" }}>
                     <Typography
-                      paragraph
+                      component="p"
                       color="black"
                       className="card-content-child"
                     >
@@ -289,13 +290,14 @@ function News(props) {
         </Grid>
         <Container ref={ref} className="hide-intersecter" />
       </Container>
-      <Container component="footer">
+      <Container>
         <Typography my={2} align="center">
           News API sources:{" "}
           <a href="https://www.newscatcherapi.com/">NewsCatcher</a> &{" "}
           <a href="https://gnews.io/">GNews</a>
         </Typography>
       </Container>
+      <Footer props="footer" />
     </>
   );
 }

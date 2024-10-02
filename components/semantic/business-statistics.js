@@ -145,7 +145,7 @@ function Row(props) {
                         className="text-container"
                         sx={{ fontSize: 1 }}
                       >
-                        <Typography paragraph>
+                        <Typography component="p">
                           {attributes?.products_services}
                         </Typography>
                       </Container>
@@ -164,7 +164,7 @@ function Row(props) {
                               href={data?.uri}
                               key={data.title + " " + index}
                             >
-                              <Typography paragraph>
+                              <Typography component="p">
                                 {data?.title ?? "No data"}
                               </Typography>
                             </Typography>
@@ -310,7 +310,7 @@ export default function BusinessStatistics({ props }) {
         </Table>
       </TableContainer>
       <Container align="center">
-        <Typography paragraph fontWeight="bold" mt={3}>
+        <Typography component="p" fontWeight="bold" mt={3}>
           Preliminary data
         </Typography>
         <LoadingButton

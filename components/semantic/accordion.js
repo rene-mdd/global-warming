@@ -154,7 +154,7 @@ const AccordionTemp = () => (
       >
         Global Monthly Mean Surface Temperature Change
       </Typography>
-      <Typography paragraph sx={{ fontSize: "18px", color: "#276f86" }}>
+      <Typography component="p" sx={{ fontSize: "18px", color: "#276f86" }}>
         This API provides on a monthly basis, the global mean surface
         temperature anomaly from 1880.04 to the present (in celsius). Fetch this
         endpoint
@@ -182,7 +182,7 @@ const AccordionCo2 = () => (
       >
         Daily global seasonal cycle and trend value
       </Typography>
-      <Typography paragraph sx={{ fontSize: "18px" }}>
+      <Typography component="p" sx={{ fontSize: "18px" }}>
         This API provides on a quasi-daily basis, the amount of carbon dioxide
         (CO2) in the atmosphere from 10 years go to the present. It is expressed
         as a mole fraction in dry air, parts per million (ppm). Fetch this
@@ -211,7 +211,7 @@ const AccordionMethane = () => (
       >
         Globally averaged, monthly mean atmospheric methane abundance determined from marine surface sites
       </Typography>
-      <Typography paragraph sx={{ fontSize: "18px" }}>
+      <Typography component="p" sx={{ fontSize: "18px" }}>
         This API provides on a monthly basis, the amount of methane in the
         atmosphere from 1983 to the present. Expressed as a mole fraction in dry
         air, parts per billion (ppb). Fetch this endpoint
@@ -239,7 +239,7 @@ const AccordionNitrous = () => (
       >
         Globally-averaged, monthly mean atmospheric nitrous oxide abundance determined from marine surface sites
       </Typography>
-      <Typography paragraph sx={{ fontSize: "18px" }}>
+      <Typography component="p" sx={{ fontSize: "18px" }}>
         This API provides on a monthly basis, the amount of nitrous oxide in the
         atmosphere from 2001 to the present. Expressed as a mole fraction in dry
         air, parts per billion (ppb). Fetch this endpoint
@@ -267,7 +267,7 @@ const AccordionArctic = () => (
       >
         Sea ice extent
       </Typography>
-      <Typography paragraph sx={{ fontSize: "18px" }}>
+      <Typography component="p" sx={{ fontSize: "18px" }}>
         Sea ice extent from 1979–2024 for the Globe, on a monthly basis, Northern Hemisphere, and
         Southern Hemisphere. Fetch this endpoint
         <b> https://global-warming.org/api/arctic-api </b>
@@ -294,7 +294,7 @@ const AccordionOcean = (props) => (
       >
         {props.props}
       </Typography>
-      <Typography paragraph sx={{ fontSize: "18px" }}>
+      <Typography component="p" sx={{ fontSize: "18px" }}>
         The Extended Reconstructed Sea Surface Temperature (ERSST) dataset is a
         global monthly analysis of SST data derived from the International
         Comprehensive Ocean–Atmosphere Dataset (
