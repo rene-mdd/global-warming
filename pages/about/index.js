@@ -1,5 +1,6 @@
 import * as Scroll from "react-scroll";
 import { CardMedia, Typography, Button, Divider } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
@@ -7,7 +8,6 @@ import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import Git from "../../components/semantic/git";
 import Footer from "../../components/semantic/footer";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
@@ -113,7 +113,7 @@ function About() {
         </Grid>
       </Grid>
       <ThemeProvider theme={theme}>
-      <Footer props="about-footer" />
+        <Footer props="about-footer" />
       </ThemeProvider>
     </>
   );

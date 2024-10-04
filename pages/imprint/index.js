@@ -1,10 +1,9 @@
-import * as Scroll from "react-scroll";
-import { Divider, Link, Typography } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
+import { Container } from "@mui/system";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
-import { Container } from "@mui/system";
 
 function Imprint() {
 
@@ -81,16 +80,16 @@ function Imprint() {
               <Typography component="span">We are willing to participate in dispute resolution procedures before the following consumer arbitration board:</Typography>
             </Typography>
             <Typography component="p">
-              <Typography component="span">Universalschlichtungsstelle des Bundes am Zentrum für Schlichtung e.V. Straßburger Straße 8
-                77694 Kehl, Germany
-                <Link href="https://www.universalschlichtungsstelle.de/"> (www.universalschlichtungsstelle.de)</Link></Typography>
+              Universalschlichtungsstelle des Bundes am Zentrum für Schlichtung e.V. Straßburger Straße 8
+              77694 Kehl, Germany
+              <Link href="https://www.universalschlichtungsstelle.de/"> (www.universalschlichtungsstelle.de)</Link>
             </Typography>
             <Typography component="h3" mt={4} mb={4}>
               EU-Streitschlichtung
             </Typography>
             <Typography component="p" mb={5}>
-              <Typography component="span">In the event of a dispute, consumers have the option to use the European Online Dispute Resolution (ODR) platform. You can access the platform at the following link:
-                <Link href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.chooseLanguage"> (EU Online Dispute Resolution Platform)</Link></Typography>
+              In the event of a dispute, consumers have the option to use the European Online Dispute Resolution (ODR) platform. You can access the platform at the following link:
+              <Link href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.chooseLanguage"> (EU Online Dispute Resolution Platform)</Link>
             </Typography>
           </Container>
         </Container>
