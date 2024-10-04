@@ -1,5 +1,5 @@
 /* eslint-disable */
-import Script from "next/script";
+// import Script from "next/script";
 import {
   Container,
   Typography,
@@ -21,20 +21,6 @@ export default function Footer({ props }) {
         <Container align="center">
           <Typography component="p" className="imprint"><Link color="primary" href="/imprint">Imprint</Link></Typography>
         </Container>
-        <Script
-          defer
-          src="https://www.googletagmanager.com/gtag/js?id=[Tracking ID]"
-        ></Script>
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `
-                      window.dataLayer = window.dataLayer || [];
-                      function gtag(){dataLayer.push(arguments);}
-                      gtag('js', new Date());
-                      gtag('config', 'UA-174660681-1');
-                  `,
-          }}
-        ></Script>
       </Container>
     </>
   );

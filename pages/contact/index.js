@@ -1,7 +1,5 @@
 /* eslint-disable */
 import { useState } from "react";
-import StickyMenu from "../../components/semantic/menu";
-import SiteHeader from "../../components/siteHeader";
 import {
   Container,
   CardMedia,
@@ -15,8 +13,9 @@ import {
   Alert,
   AlertTitle,
   FormLabel,
-  Divider,
 } from "@mui/material";
+import StickyMenu from "../../components/semantic/menu";
+import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 
 const Contact = () => {
@@ -112,7 +111,7 @@ const Contact = () => {
               <Grid item xs={10} md={6}>
                 <Paper className="contact-info">
                   <p className="contact-segment">
-                  For questions about this project or to discuss ideas related to it, please send us a message or write to us at <a href="mailto:help@global-warming.org">help@global-warming.org</a>.
+                    For questions about this project or to discuss ideas related to it, please send us a message or write to us at <a href="mailto:help@global-warming.org">help@global-warming.org</a>.
                   </p>
                 </Paper>
                 <FormControl
