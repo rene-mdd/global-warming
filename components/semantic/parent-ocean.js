@@ -92,12 +92,6 @@ function ParentOcean() {
           </Container>
         </Grid>
       </Container>
-      <Container component="ocean-footer" align="center">
-        <p>
-          {`Copyright ©${new Date().getFullYear()}
-              Climate Accountability API. All Rights Reserved`}
-        </p>
-      </Container>
     </Container>
   );
 }

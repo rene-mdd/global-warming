@@ -1,10 +1,26 @@
 /* eslint-disable */
 import Script from "next/script";
+import {
+  Container,
+  Typography,
+  Link,
+  Divider
+} from "@mui/material";
 
-export default function Footer() {
+export default function Footer({ props }) {
   return (
     <>
-      <footer>
+      <Divider />
+      <Container maxWidth="false" component="footer" className={props}>
+        <Container align="center">
+          <Typography component="p">
+            {`Copyright ©${new Date().getFullYear()}
+              Climate Accountability API. All Rights Reserved`}
+          </Typography>
+        </Container>
+        <Container align="center">
+          <Typography component="p" className="imprint"><Link color="primary" href="/imprint">Imprint</Link></Typography>
+        </Container>
         <Script
           defer
           src="https://www.googletagmanager.com/gtag/js?id=[Tracking ID]"
@@ -19,7 +35,7 @@ export default function Footer() {
                   `,
           }}
         ></Script>
-      </footer>
+      </Container>
     </>
   );
 }

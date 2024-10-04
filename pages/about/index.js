@@ -1,14 +1,26 @@
 import * as Scroll from "react-scroll";
 import { CardMedia, Typography, Button, Divider } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import Git from "../../components/semantic/git";
+import Footer from "../../components/semantic/footer";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+    },
+    pepe: {
+      main: "#343837",
+    },
+  },
+});
 
 function About() {
-
   const aboutTitle = "Climate Accountability API - About Us";
   const aboutMetaDescription =
     "Our mission is to provide the public with information related to every organization carbon footprint";
@@ -28,7 +40,7 @@ function About() {
         justifyContent="center"
         className="landing-page-about"
       >
-        <Typography paragraph align="center" className="about-title ">
+        <Typography component="p" align="center" className="about-title ">
           About Us
         </Typography>
         <Grid align="center">
@@ -100,6 +112,9 @@ function About() {
           <Git />
         </Grid>
       </Grid>
+      <ThemeProvider theme={theme}>
+        <Footer props="about-footer" />
+      </ThemeProvider>
     </>
   );
 }

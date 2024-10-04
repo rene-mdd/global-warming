@@ -187,13 +187,13 @@ function Git() {
           <Typography variant="h5" color="white" mt={5} mb={1} borderBottom={1}>
             Database / Backend
           </Typography>
-          <Typography paragraph color="white">
+          <Typography component="p" color="white">
             TBA
           </Typography>
         </Grid>
         <Grid mt={2} xs={12}>
-          <Container component="footer" align="center" className="about-footer">
-            <Typography paragraph color="white">
+          <Container component="footer" align="center" className="github-source">
+            <Typography component="p" color="white">
               Source:{" "}
               <a href="https://github.com/rene-mdd/global-warming">
                 https://github.com/rene-mdd/global-warming
