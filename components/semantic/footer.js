@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable react/prop-types */
 import Script from "next/script";
 import {
   Container,
@@ -21,20 +21,23 @@ export default function Footer({ props }) {
         <Container align="center">
           <Typography component="p" className="imprint"><Link color="primary" href="/imprint">Imprint</Link></Typography>
         </Container>
-        <Script
-          defer
-          src="https://www.googletagmanager.com/gtag/js?id=[Tracking ID]"
-        ></Script>
-        <Script
+        <script
+          async
+          type="text/plain"
+          className="cmplazyload"
+          data-cmp-vendor="s26"
+          data-cmp-src="https://www.googletagmanager.com/gtag/js?id=G-SQLY9RLSQH"
+        />
+        <script
           dangerouslySetInnerHTML={{
             __html: `
-                      window.dataLayer = window.dataLayer || [];
-                      function gtag(){dataLayer.push(arguments);}
-                      gtag('js', new Date());
-                      gtag('config', 'UA-174660681-1');
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SQLY9RLSQH');
                   `,
           }}
-        ></Script>
+        />
       </Container>
     </>
   );

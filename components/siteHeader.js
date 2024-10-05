@@ -6,7 +6,6 @@ export default function SiteHeader({ title, description, keyword }) {
     <>
       <Head>
         <title>{title}</title>
-        <script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/js/semiautomatic.min.js" data-cmp-cdid="83e6be9c61a9a" data-cmp-host="c.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="0" />
         <meta property="og:url" content="https://global-warming.org/" />
         <meta property="og:title" content="Global Warming Data and API" />
         <meta property="og:image" content="images/logo-planet-image.png" />
