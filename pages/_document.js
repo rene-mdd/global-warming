@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
@@ -11,6 +12,23 @@ export default function Document() {
         data-cmp-host="c.delivery.consentmanager.net"
         data-cmp-cdn="cdn.consentmanager.net"
         data-cmp-codesrc="0"
+      />
+      <script
+        async
+        type="text/plain"
+        class="cmplazyload"
+        data-cmp-vendor="s26"
+        data-cmp-src="https://www.googletagmanager.com/gtag/js?id=G-SQLY9RLSQH"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-SQLY9RLSQH');
+                  `,
+        }}
       />
       <Head>
         <link rel="shortcut icon" type="image/gif" href="favicon/favicon.ico" />
