@@ -80,6 +80,31 @@ p {
   }
 }
 
+.menu-center-group {
+  position: relative;
+  left: 75px;
+
+  @media only screen and (max-width: 930px) {
+    left: 0;
+  }
+}
+
+.donate-contact-group {
+  .donate-btn {
+    color: #10a674;
+    margin-top: 5px;
+    font-size: small;
+    border: 1px solid #10a674;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 1px;
+  }
+}
+
+.donation-counter-wrapper {
+  padding-bottom: 20px;
+}
+
 .imprint {
   p {
     font-weight: bold;
@@ -91,12 +116,14 @@ p {
     font-weight: bold;
     font-size: 2em;
   }
+
   h3 {
     font-weight: bold;
     font-weight: 1.5em;
     margin-bottom: 10px;
     margin-top: 20px;
   }
+
   h4 {
     font-weight: bold;
     margin-top: 20px;
@@ -156,7 +183,7 @@ p {
   }
 
   .imprint {
-    color: #069AF3;
+    color: #069af3;
     text-decoration: underline;
     cursor: pointer;
   }

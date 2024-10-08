@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from "react";
 // import { Container, Image, Menu } from "semantic-ui-react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -18,6 +17,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#ffffff",
+      secondary: "#47C072"
     },
   },
 });
@@ -75,49 +75,40 @@ export default class StickySideBar extends Component {
             <Box>
               <AppBar position="fixed" color="primary">
                 <Toolbar sx={{ justifyContent: "space-between" }}>
-                  <Link href="/">
-                    <Avatar
-                      sx={{ width: "50px" }}
-                      src="images/logo-planet-image.png"
-                      className="menu-icon"
-                    />
-                  </Link>
-                  <ButtonGroup variant="text" size="large">
+                  <ButtonGroup>
                     <Link href="/">
-                      <Button className="menu">
-                        Home
-                      </Button>
-                    </Link>
-                    <Link href="/about">
-                      <Button className="menu">
-                        About
-                      </Button>
-                    </Link>
-                    <Link href="/business">
-                      <Button className="menu">
-                        Business
-                      </Button>
-                    </Link>
-                    <Link href="/news">
-                      <Button className="menu">
-                        News
-                      </Button>
-                    </Link>
-                    <Link href="/deforestation">
-                      <Button className="menu">
-                        Deforestation
-                      </Button>
+                      <Avatar
+                        sx={{ width: "50px" }}
+                        src="images/logo-planet-image.png"
+                        className="menu-icon"
+                      />
                     </Link>
                   </ButtonGroup>
-                  <Link href="/contact">
-                    <Button
-                    
-                      className="menu"
-                      sx={{ marginLeft: "auto" }}
-                    >
-                      Contact
-                    </Button>
-                  </Link>
+                  <ButtonGroup variant="text" size="large" className="menu-center-group">
+                    <Link href="/">
+                      <Button className="menu">Home</Button>
+                    </Link>
+                    <Link href="/about">
+                      <Button className="menu">About</Button>
+                    </Link>
+                    <Link href="/business">
+                      <Button className="menu">Business</Button>
+                    </Link>
+                    <Link href="/news">
+                      <Button className="menu">News</Button>
+                    </Link>
+                    <Link href="/deforestation">
+                      <Button className="menu">Deforestation</Button>
+                    </Link>
+                  </ButtonGroup>
+                  <ButtonGroup className="donate-contact-group">
+                    <Link href="/donate">
+                      <Button className="menu donate-btn">Donate</Button>
+                    </Link>
+                    <Link href="/contact">
+                      <Button className="menu">Contact</Button>
+                    </Link>
+                  </ButtonGroup>
                 </Toolbar>
               </AppBar>
             </Box>

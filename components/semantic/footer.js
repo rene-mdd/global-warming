@@ -1,19 +1,18 @@
-/* eslint-disable */
 // import Script from "next/script";
-import {
-  Container,
-  Typography,
-  Link,
-  Divider
-} from "@mui/material";
+import { Container, Typography, Link, Divider } from "@mui/material";
+import PropTypes from "prop-types";
 
-export default function Footer({ props }) {
+export default function Footer({ classNameProp }) {
   return (
     <>
       <Divider />
-      <Container maxWidth="false" component="footer" className={props}>
+      <Container maxWidth="false" component="footer" className={classNameProp}>
         <Container align="center">
-          <Typography component="p" className="imprint"><Link color="primary" href="/imprint">Imprint</Link></Typography>
+          <Typography component="p" className="imprint">
+            <Link color="primary" href="/imprint">
+              Imprint
+            </Link>
+          </Typography>
         </Container>
         <Container align="center">
           <Typography component="p">
@@ -22,9 +21,21 @@ export default function Footer({ props }) {
           </Typography>
         </Container>
         <Container align="center">
-          <Typography component="p" className="imprint"><Link color="primary" href="/privacy-policy">Privacy Policy</Link></Typography>
+          <Typography component="p" className="imprint">
+            <Link color="primary" href="/privacy-policy">
+              Privacy Policy
+            </Link>
+          </Typography>
         </Container>
       </Container>
     </>
   );
 }
+
+Footer.propTypes = {
+  classNameProp: PropTypes.string,
+};
+
+Footer.defaultProps = {
+  classNameProp: "footer",
+};

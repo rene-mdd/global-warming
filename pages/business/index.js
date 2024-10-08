@@ -1,15 +1,10 @@
-/* eslint-disable */
-import {
-  CardMedia,
-  Divider,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { CardMedia, Grid, Typography } from "@mui/material";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import BusinessStatistics from "../../components/semantic/business-statistics";
 import business from "../../public/data/dummy";
 import Footer from "../../components/semantic/footer";
+
 function Business() {
   // not ready
   const aboutTitle = "Business environmental impact";
@@ -26,11 +21,7 @@ function Business() {
         keywords={aboutKeywords}
       />
       <StickyMenu />
-      <Grid
-        container
-        direction="column"
-        className="landing-page-about"
-      >
+      <Grid container direction="column" className="landing-page-about">
         <Typography component="p" align="center" className="h1-business">
           Business Data
         </Typography>
@@ -47,17 +38,18 @@ function Business() {
             align="center"
             gutterBottom
           >
-           Search for the environmental impact your brands have on the environment
+            Search for the environmental impact your brands have on the
+            environment
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>
-            <Grid item xs={12} md={12} lg={8} mb={6}>
+          <Grid item xs={12} md={12} lg={8} mb={6}>
             <BusinessStatistics props={business} />
-            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-      <Footer props="footer" />
-      </>
+      <Footer classNameProp="footer" />
+    </>
   );
 }
 
