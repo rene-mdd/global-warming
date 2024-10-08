@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-indent */
 import { Link, Typography } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Container } from "@mui/system";
@@ -152,7 +151,6 @@ function privacyPolicy() {
             more information about how they handle your data.
           </Typography>
           <Typography component="h4">Data processing</Typography>
-
           <Typography component="p">
             We have concluded a data processing agreement (DPA) for the use of
             the above-mentioned service. This is a contract mandated by data
@@ -927,7 +925,7 @@ function privacyPolicy() {
           </Typography>
         </Container>
       </Grid>
-      <Footer props="footer" />
+      <Footer classNameProp="footer" />
     </>
   );
 }

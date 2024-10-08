@@ -56,8 +56,8 @@ function About() {
             align="center"
             gutterBottom
           >
-            At <strong>Climate Accountability API</strong>, We are building the most comprehensive platform for
-            worldwide business environmental impact data.
+            At <strong>Climate Accountability API</strong>, We are building the
+            most comprehensive platform for business environmental impact data.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center">
@@ -113,7 +113,7 @@ function About() {
         </Grid>
       </Grid>
       <ThemeProvider theme={theme}>
-        <Footer props="about-footer" />
+        <Footer classNameProp="about-footer" />
       </ThemeProvider>
     </>
   );

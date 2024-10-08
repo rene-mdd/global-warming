@@ -372,7 +372,7 @@ function SemanticDeforestation(props) {
           <a href="https://gnews.io/">GNews</a>
         </Typography>
       </Container>
-      <Footer props="footer" />
+      <Footer classNameProp="footer" />
     </>
   );
 }

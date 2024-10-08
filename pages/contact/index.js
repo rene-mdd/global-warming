@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-nested-ternary */
 import { useState } from "react";
 import {
   Container,
@@ -87,15 +87,16 @@ const Contact = () => {
       <StickyMenu />
       <Container>
         <Grid columns={{ lg: 12 }} xl="auto">
-          <Typography align="center" variant="h1" component="h2" className="contact-title">
+          <Typography
+            align="center"
+            variant="h1"
+            component="h2"
+            className="contact-title"
+          >
             Contact
           </Typography>
           <Grid>
-            <Grid
-              justifyContent="center"
-              container
-              fullWidth
-            >
+            <Grid justifyContent="center" container fullWidth>
               <Grid item xs={12} sm={10} md={6}>
                 <CardMedia
                   src="images/contact-image.png"
@@ -111,7 +112,12 @@ const Contact = () => {
               <Grid item xs={10} md={6}>
                 <Paper className="contact-info">
                   <p className="contact-segment">
-                    For questions about this project or to discuss ideas related to it, please send us a message or write to us at <a href="mailto:help@global-warming.org">help@global-warming.org</a>.
+                    For questions about this project or to discuss ideas related
+                    to it, please send us a message or write to us at{" "}
+                    <a href="mailto:help@global-warming.org">
+                      help@global-warming.org
+                    </a>
+                    .
                   </p>
                 </Paper>
                 <FormControl
@@ -177,21 +183,18 @@ const Contact = () => {
                     Submit
                   </Button>
                 </FormControl>
-                <Alert
-                  hidden={response.type === ""}
-                  severity={response.type}
-                >
+                <Alert hidden={response.type === ""} severity={response.type}>
                   {response.type === "success"
                     ? "Your email was sent."
                     : response.type === "error"
-                      ? "Sorry there was an error"
-                      : null}
+                    ? "Sorry there was an error"
+                    : null}
                   <AlertTitle>
                     {response.type === "success"
                       ? "Thank you!"
                       : response.type === "error"
-                        ? "Try again or write to help@global-warming.org"
-                        : null}
+                      ? "Try again or write to help@global-warming.org"
+                      : null}
                   </AlertTitle>
                 </Alert>
               </Grid>
@@ -199,7 +202,7 @@ const Contact = () => {
           </Grid>
         </Grid>
       </Container>
-      <Footer props="footer" />
+      <Footer classNameProp="footer" />
     </>
   );
 };
