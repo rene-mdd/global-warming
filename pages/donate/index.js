@@ -42,14 +42,14 @@ function Donate() {
           Donate
         </Typography>
         <TwingleEmbed />
-        <Container align="center" className="donation-counter-wrapper">
+        {/* <Container align="center" className="donation-counter-wrapper">
           <iframe
             height="100"
             width="300"
             src="https://donationstatus.twingle.de/donation-status/kK8RRspW1cOFus%252F9KetzHg%253D%253D"
             title="Climate Accountability API donation counter"
           />
-        </Container>
+        </Container> */}
         <Container align="center">
           <Typography component="p" maxWidth={600}>
             We are a non-profit because we believe that data about the
