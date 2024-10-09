@@ -18,9 +18,12 @@ html * {
 }
 
 body {
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+      90deg,
       hsla(120, 100%, 99%, 1) 0%,
-      hsla(0, 0%, 100%, 1)) 100% !important;
+      hsla(0, 0%, 100%, 1)
+    )
+    100% !important;
 }
 
 a {
@@ -83,9 +86,16 @@ p {
 .menu-center-group {
   position: relative;
   left: 75px;
-
   @media only screen and (max-width: 930px) {
     left: 0;
+  }
+}
+
+.menu-mobile-group {
+  .mobile-donate-btn {
+    a {
+      color: #10a674;
+    }
   }
 }
 

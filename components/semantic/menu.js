@@ -49,7 +49,7 @@ export default class StickySideBar extends Component {
     return (
       <>
         {mediaQuery ? (
-          <BurgerMenu>
+          <BurgerMenu className="menu-mobile-group">
             <Container id="home" className="menu-item">
               <Link href="/">Home</Link>
             </Container>
@@ -64,6 +64,9 @@ export default class StickySideBar extends Component {
             </Container>
             <Container id="deforestation" className="menu-item">
               <Link href="/deforestation">Deforestation</Link>
+            </Container>
+            <Container id="donate" className="menu-item mobile-donate-btn">
+              <Link href="/donate">Donate</Link>
             </Container>
             <Container id="contact" className="menu-item">
               <Link href="/contact">Contact</Link>
