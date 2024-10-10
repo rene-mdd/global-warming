@@ -529,6 +529,17 @@ function privacyPolicy() {
             Which cookies and services are used on this website can be found in
             this privacy policy.
           </Typography>
+          <Typography component="h3">GLS Bank</Typography>{" "}
+          <Typography component="p">
+            We use the GLS Bank donation tool embedded via an iframe on our
+            website. GLS Bank may use third-party services such as Twigle to
+            process data for donation purposes. For more details, please refer
+            to GLS Bank’s privacy policy:{" "}
+            <Link href="https://zukunftsstiftung-entwicklung.de/datenschutz/">
+              https://zukunftsstiftung-entwicklung.de/datenschutz/
+            </Link>
+            .
+          </Typography>
           <Typography component="h3">Consent with ConsentManager</Typography>{" "}
           <Typography component="p">
             Our website uses the ConsentManager consent technology to obtain
