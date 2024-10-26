@@ -114,8 +114,8 @@ const Contact = () => {
                   <p className="contact-segment">
                     For questions about this project or to discuss ideas related
                     to it, please send us a message or write to us at{" "}
-                    <a href="mailto:help@global-warming.org">
-                      help@global-warming.org
+                    <a href="mailto:info@global-warming.org">
+                      info@global-warming.org
                     </a>
                     .
                   </p>
