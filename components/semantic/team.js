@@ -158,7 +158,7 @@ export default function Team() {
                   href="mailto: help@global-warming.org"
                   target="_blank"
                 >
-                  &nbsp;help@global-warming.org
+                  &nbsp;info@global-warming.org
                 </Typography>
               </Typography>
               <Typography component="p" color="textSecondary" fontSize="1em">
