@@ -21,12 +21,15 @@ function Imprint() {
     "Imprint: Climate Accountability API gUG. Berlin, Germany.";
   const imprintKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
+    const websiteUrl = "https://global-warming.org/imprint";
+
   return (
     <>
       <SiteHeader
         description={imprintMetaDescription}
         title={imprintTitle}
         keywords={imprintKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Grid container>
@@ -80,13 +83,13 @@ function Imprint() {
                 Amtsgericht Charlottenburg
               </Typography>
             </Typography>
-            <Typography component="p">
+            {/* <Typography component="p">
               VAT ID:{" "}
               <Typography component="span">
                 Sales tax identification number according to Sect. 27 a of the
                 Sales Tax Law: pending
               </Typography>
-            </Typography>
+            </Typography> */}
             <Typography component="p" mb={5}>
               Represented by:{" "}
               <Typography component="span">René Rodríguez</Typography>

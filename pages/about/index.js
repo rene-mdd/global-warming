@@ -22,6 +22,7 @@ const theme = createTheme({
 
 function About() {
   const aboutTitle = "Climate Accountability API - About Us";
+  const websiteUrl = "https://global-warming.org/about";
   const aboutMetaDescription =
     "Our mission is to provide the public with information related to every organization carbon footprint";
   const aboutKeywords =
@@ -32,6 +33,7 @@ function About() {
         description={aboutMetaDescription}
         title={aboutTitle}
         keywords={aboutKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Grid
@@ -51,7 +53,7 @@ function About() {
             alt="planet dying logo"
           />
           <Typography
-            component="h2"
+            component="h1"
             className="h2-landing-about"
             align="center"
             gutterBottom

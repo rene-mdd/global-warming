@@ -75,14 +75,17 @@ const Contact = () => {
   const contactMetaDescription =
     "For suggestions about this global warming project, or if you want to discuss ideas related to this kind of environmental issues, use this contact section.";
   const contactMetaTitle =
-    "Global warming contact for sharing ideas and solutions.";
-  const contactKeywords = "Global warming, climate change, contact";
+    "Climate Accountability contact";
+  const contactKeywords = "Global warming, climate change, Climate Accountability, contact";
+  const websiteUrl = "https://global-warming.org/contact";
+
   return (
     <>
       <SiteHeader
         description={contactMetaDescription}
         title={contactMetaTitle}
         keywords={contactKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Container>

@@ -14,6 +14,7 @@ import ParentOcean from "../components/semantic/parent-ocean";
 
 function Home() {
   const homeTitle = "Global Warming API";
+  const websiteUrl = "https://global-warming.org";
   const homeMetaDescription =
     "Global warming & climate change up to date APIs, data, graphs, and news. Earth's temperature, carbon dioxide (CO2), methane, nitrous oxide, and melted polar ice cap.";
   const homeKeywords = "Global warming, climate change, API, graphs";
@@ -23,6 +24,7 @@ function Home() {
         description={homeMetaDescription}
         title={homeTitle}
         keywords={homeKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <SideMenu />
