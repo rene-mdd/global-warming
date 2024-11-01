@@ -83,13 +83,13 @@ function Imprint() {
                 Amtsgericht Charlottenburg
               </Typography>
             </Typography>
-            <Typography component="p">
+            {/* <Typography component="p">
               VAT ID:{" "}
               <Typography component="span">
                 Sales tax identification number according to Sect. 27 a of the
                 Sales Tax Law: pending
               </Typography>
-            </Typography>
+            </Typography> */}
             <Typography component="p" mb={5}>
               Represented by:{" "}
               <Typography component="span">René Rodríguez</Typography>
