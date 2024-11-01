@@ -21,12 +21,15 @@ function Imprint() {
     "Imprint: Climate Accountability API gUG. Berlin, Germany.";
   const imprintKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
+    const websiteUrl = "https://global-warming.org/imprint";
+
   return (
     <>
       <SiteHeader
         description={imprintMetaDescription}
         title={imprintTitle}
         keywords={imprintKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Grid container>

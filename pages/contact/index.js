@@ -77,12 +77,15 @@ const Contact = () => {
   const contactMetaTitle =
     "Climate Accountability contact";
   const contactKeywords = "Global warming, climate change, Climate Accountability, contact";
+  const websiteUrl = "https://global-warming.org/contact";
+
   return (
     <>
       <SiteHeader
         description={contactMetaDescription}
         title={contactMetaTitle}
         keywords={contactKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Container>

@@ -65,6 +65,7 @@ function SemanticDeforestation(props) {
     "Live news about worldwide deforestation and map builder to check on global forest loss.";
   const deforestationKeywords =
     "Deforestation, global warming, climate change, environment";
+    const websiteUrl = "https://global-warming.org/deforestation";
 
   return (
     <>
@@ -72,6 +73,7 @@ function SemanticDeforestation(props) {
         description={deforestationMetaDescription}
         title={deforestationTitle}
         keywords={deforestationKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Grid container className="landing-page-deforestation">

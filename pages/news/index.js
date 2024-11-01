@@ -67,12 +67,15 @@ function News(props) {
     "Live worldwide news about global warming and climate change.";
   const newsKeywords =
     "Global warming, climate change, news, environment, green house gases";
+    const websiteUrl = "https://global-warming.org/news";
+
   return (
     <>
       <SiteHeader
         description={newsMetaDescription}
         title={newsMetaTitle}
         keywords={newsKeywords}
+        websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Grid container className="landing-page-news">

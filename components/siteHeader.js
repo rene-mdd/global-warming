@@ -2,16 +2,16 @@ import Head from "next/head";
 import PropTypes from "prop-types";
 // import { metadata } from "../pages/about";
 
-export default function SiteHeader({ title, description, keyword }) {
+export default function SiteHeader({ title, description, keyword, websiteUrl }) {
   return (
     <>
       <Head>
         <title>{title}</title>
-        <meta property="og:url" content="https://global-warming.org/" />
-        <meta property="og:title" content={description} />
-        <meta property="og:image" content="images/logo-planet-image.png" />
-        <meta property="og:image:width" content="75" />
-        <meta property="og:image:height" content="75" />
+        <meta property="og:url" content={websiteUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:image" content="/images/logo-planet-image.png" />
+        <meta property="og:image:width" content="150" />
+        <meta property="og:image:height" content="150" />
         <meta property="og:image:type" content="image/png" />
         <meta name="description" content={description} />
         <meta name="keywords" content={keyword} />
