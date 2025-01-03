@@ -192,8 +192,8 @@ function Git() {
           </Typography>
         </Grid>
         <Grid mt={2} xs={12}>
-          <Container component="footer" align="center" className="github-source">
-            <Typography component="p" color="white">
+          <Container component="footer" className="github-source">
+            <Typography component="p" align="center" color="white">
               Source:{" "}
               <a href="https://github.com/rene-mdd/global-warming">
                 https://github.com/rene-mdd/global-warming
