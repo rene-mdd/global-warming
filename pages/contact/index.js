@@ -75,7 +75,7 @@ const Contact = () => {
   const contactMetaDescription =
     "For suggestions about this global warming project, or if you want to discuss ideas related to this kind of environmental issues, use this contact section.";
   const contactMetaTitle =
-    "Climate Accountability contact";
+    "Climate Accountability API contact";
   const contactKeywords = "Global warming, climate change, Climate Accountability, contact";
   const websiteUrl = "https://global-warming.org/contact";
 
