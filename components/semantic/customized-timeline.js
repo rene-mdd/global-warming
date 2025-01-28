@@ -24,7 +24,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q4 2023
+          2023
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -41,7 +41,7 @@ export default function CustomizedTimeline() {
             Legal
           </Typography>
           <Typography color="white">
-            Registration and paperwork of the nonprofit
+            Registration and paperwork of the nonprofit.
           </Typography>
         </TimelineContent>
       </TimelineItem>
@@ -52,7 +52,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q1 2024
+          2024
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -66,7 +66,7 @@ export default function CustomizedTimeline() {
             Kick off
           </Typography>
           <Typography color="white">
-            Development of web app additional features
+            Development of web app additional features.
           </Typography>
         </TimelineContent>
       </TimelineItem>
@@ -77,7 +77,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q3 2024
+          2025
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -91,9 +91,8 @@ export default function CustomizedTimeline() {
             Development
           </Typography>
           <Typography color="white">
-            Start of funding campaign and data collection
+            Start of fundraising campaign. Development of prototype.
           </Typography>
-
         </TimelineContent>
       </TimelineItem>
       <TimelineItem>
@@ -103,7 +102,7 @@ export default function CustomizedTimeline() {
           color="white"
           className="timeline-q"
         >
-          Q4 2024
+          2026
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
@@ -117,7 +116,7 @@ export default function CustomizedTimeline() {
             Expansion
           </Typography>
           <Typography color="white">
-            Complete the database-API integration and assign a score to each business
+            Launch of the fully-fledged platform to a global audience.
           </Typography>
         </TimelineContent>
       </TimelineItem>
