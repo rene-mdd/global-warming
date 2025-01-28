@@ -65,7 +65,7 @@ function SemanticDeforestation(props) {
     "Live news about worldwide deforestation and map builder to check on global forest loss.";
   const deforestationKeywords =
     "Deforestation, global warming, climate change, environment";
-    const websiteUrl = "https://global-warming.org/deforestation";
+  const websiteUrl = "https://global-warming.org/deforestation";
 
   return (
     <>
