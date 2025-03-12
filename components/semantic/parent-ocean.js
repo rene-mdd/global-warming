@@ -24,8 +24,7 @@ function ParentOcean() {
   useEffect(() => {
     const subscription = oceanService.getData().subscribe((message) => {
       if (message.value) {
-        console.log(message)
-        setTodayValue(message.value.temperature[message.value.temperature.length - 1].anomaly);
+        setTodayValue(message.value.temperature[message.value.temperature.length - 1]);
         setDescription(message.value.description);
       }
     });
@@ -58,7 +57,7 @@ function ParentOcean() {
           <Container align="center" className="today-value">
             <p>
               Today's value:
-              <span> {todayValue.anomaly + " °C"}</span>
+              <span> {todayValue ? todayValue : 0 + " °C"}</span>
             </p>
           </Container>
           <Container>
