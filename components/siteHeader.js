@@ -7,6 +7,7 @@ export default function SiteHeader({ title, description, keyword, websiteUrl }) 
     <>
       <Head>
         <title>{title}</title>
+        <link rel="canonical" href={websiteUrl} />
         <meta property="og:url" content={websiteUrl} />
         <meta property="og:title" content={title} />
         <meta property="og:image" content="/images/logo-planet-image.png" />

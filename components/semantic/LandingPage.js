@@ -26,7 +26,7 @@ const LandingPage = () => (
       />
       <Typography align="center" className="h2-landing" maxWidth="80%">
         This page delivers up to date APIs, graph, and information about the
-        earth&quot;s current temperature and the concentration of greenhouse gases (GHG)
+        earth's current temperature and the concentration of greenhouse gases (GHG)
         in the atmosphere.
       </Typography>
     </Grid>

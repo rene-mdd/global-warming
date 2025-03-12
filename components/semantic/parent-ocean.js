@@ -58,7 +58,7 @@ function ParentOcean() {
           <Container align="center" className="today-value">
             <p>
               Today's value:
-              <span> {todayValue + " °C"}</span>
+              <span> {todayValue.anomaly + " °C"}</span>
             </p>
           </Container>
           <Container>

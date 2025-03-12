@@ -21,7 +21,7 @@ function Imprint() {
     "Imprint: Climate Accountability API gUG. Berlin, Germany.";
   const imprintKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
-    const websiteUrl = "https://global-warming.org/imprint";
+  const websiteUrl = "https://global-warming.org/imprint";
 
   return (
     <>
@@ -83,13 +83,13 @@ function Imprint() {
                 Amtsgericht Charlottenburg
               </Typography>
             </Typography>
-            {/* <Typography component="p">
+            <Typography component="p">
               VAT ID:{" "}
               <Typography component="span">
                 Sales tax identification number according to Sect. 27 a of the
-                Sales Tax Law: pending
+                Sales Tax Law: DE450553116
               </Typography>
-            </Typography> */}
+            </Typography>
             <Typography component="p" mb={5}>
               Represented by:{" "}
               <Typography component="span">René Rodríguez</Typography>
@@ -122,7 +122,7 @@ function Imprint() {
               <Link href="https://ec.europa.eu/consumers/odr/">
                 {" "}
                 (https://ec.europa.eu/consumers/odr/)
-              </Link>
+              </Link>{" "}
               Our e-mail address can be found above in the site notice.
             </Typography>
             <Typography component="h3" mt={4} mb={2}>
