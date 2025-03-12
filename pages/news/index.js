@@ -45,7 +45,6 @@ function News(props) {
   };
 
   const { newsCatcherParseJson, googleNewsParseJson } = props;
-
   const duplicateRemovalCatcher = newsCatcherParseJson.filter(
     (thing, index, self) =>
       index ===
@@ -67,7 +66,7 @@ function News(props) {
     "Live worldwide news about global warming and climate change.";
   const newsKeywords =
     "Global warming, climate change, news, environment, green house gases";
-    const websiteUrl = "https://global-warming.org/news";
+  const websiteUrl = "https://global-warming.org/news";
 
   return (
     <>
@@ -296,8 +295,10 @@ function News(props) {
       <Container>
         <Typography my={2} align="center">
           News API sources:{" "}
-          <a href="https://www.newscatcherapi.com/">NewsCatcher</a> &{" "}
-          <a href="https://gnews.io/">GNews</a>
+          <a href="https://www.newscatcherapi.com/?utm_source=free-user&utm_medium=referral&utm_campaign=global-warming">
+            NewsCatcher
+          </a>{" "}
+          & <a href="https://gnews.io/">GNews</a>
         </Typography>
       </Container>
       <Footer classNameProp="footer" />
@@ -356,7 +357,8 @@ export async function getServerSideProps({ res }) {
       newsCatcherParseJson = newsCatcherResp.data.articles;
     }
   } catch (error) {
-    console.error(error);
+    console.log("hello")
+    console.log(error);
   }
   res.setHeader(
     "Cache-Control",
