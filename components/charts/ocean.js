@@ -34,7 +34,7 @@ function Ocean({ parentCallBack }) {
       if (result) {
         for (const [key, value] of Object.entries(result)) {
           date.push(key);
-          temperature.push(value);
+          temperature.push(value.anomaly);
         }
         oceanService.setData({ temperature, description });
         const ctx = document.getElementById("oceanChart");
