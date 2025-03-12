@@ -65,7 +65,7 @@ function SemanticDeforestation(props) {
     "Live news about worldwide deforestation and map builder to check on global forest loss.";
   const deforestationKeywords =
     "Deforestation, global warming, climate change, environment";
-    const websiteUrl = "https://global-warming.org/deforestation";
+  const websiteUrl = "https://global-warming.org/deforestation";
 
   return (
     <>
@@ -370,8 +370,10 @@ function SemanticDeforestation(props) {
       <Container>
         <Typography my={2} align="center">
           News API sources:{" "}
-          <a href="https://www.newscatcherapi.com/">NewsCatcher</a> &{" "}
-          <a href="https://gnews.io/">GNews</a>
+          <a href="https://www.newscatcherapi.com/?utm_source=free-user&utm_medium=referral&utm_campaign=global-warming">
+            NewsCatcher
+          </a>{" "}
+          & <a href="https://gnews.io/">GNews</a>
         </Typography>
       </Container>
       <Footer classNameProp="footer" />

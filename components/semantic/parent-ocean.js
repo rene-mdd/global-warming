@@ -24,7 +24,8 @@ function ParentOcean() {
   useEffect(() => {
     const subscription = oceanService.getData().subscribe((message) => {
       if (message.value) {
-        setTodayValue(message.value.temperature[message.value.temperature.length - 1]);
+        console.log(message)
+        setTodayValue(message.value.temperature[message.value.temperature.length - 1].anomaly);
         setDescription(message.value.description);
       }
     });
