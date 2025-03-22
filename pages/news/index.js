@@ -49,7 +49,7 @@ function News(props) {
     (thing, index, self) =>
       index ===
       self.findIndex(
-        (t) => t.summary === thing.summary || t.title === thing.title
+        (t) => t.description === thing.description || t.title === thing.title
       )
   );
 
@@ -212,7 +212,7 @@ function News(props) {
             ))}
           {intersecting &&
             duplicateRemovalCatcher.map((obj) => (
-              <Grid key={obj._id}>
+              <Grid key={obj.id}>
                 <Card
                   elevation={5}
                   className="news-card-component"
@@ -259,7 +259,7 @@ function News(props) {
                               timeout={1}
                               sx={{ textAlign: "justify" }}
                             >
-                              {obj.summary}
+                              {obj.description}
                             </Collapse>
                           </div>
                         </Box>
@@ -268,12 +268,12 @@ function News(props) {
                   </CardContent>
                   <CardActions className="card-content-footer" disableSpacing>
                     <Button
-                      href={obj.url}
+                      href={obj.link}
                       variant="contained"
                       endIcon={<PublicIcon />}
                       className="new-source"
                     >
-                      <span>{obj?.authors ? obj?.authors : "News"}</span>
+                      <span>{obj?.author ? obj?.author : "News"}</span>
                     </Button>
                     <Button
                       variant="contained"
@@ -339,17 +339,23 @@ export async function getServerSideProps({ res }) {
   let newsCatcherParseJson = [];
   const options = {
     method: "GET",
-    url: "https://api.newscatcherapi.com/v2/search",
-    params: { q: "climate change", lang: "en", sort_by: "relevancy" },
+    params: {
+      q: "climate change",
+      lang: "en",
+      sort_by: "relevancy",
+    },
     headers: {
-      "x-api-key": newsCatcherApi,
+      "x-api-token": newsCatcherApi,
     },
   };
   try {
     const gNewsResp = await axios.get(
       `https://gnews.io/api/v4/search?q=%22global%20warming%22&lang=en&image=required&token=${gNewsVariable}`
     );
-    const newsCatcherResp = await axios.request(options);
+    const newsCatcherResp = await axios.request(
+      "https://v3-api.newscatcherapi.com/api/search",
+      options
+    );
     if (gNewsResp) {
       googleNewsParseJson = gNewsResp.data.articles;
     }

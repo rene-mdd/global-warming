@@ -49,7 +49,7 @@ function SemanticDeforestation(props) {
     (thing, index, self) =>
       index ===
       self.findIndex(
-        (t) => t.summary === thing.summary || t.title === thing.title
+        (t) => t.description === thing.description || t.title === thing.title
       )
   );
 
@@ -287,7 +287,7 @@ function SemanticDeforestation(props) {
             ))}
           {intersecting &&
             duplicateRemovalCatcher.map((obj) => (
-              <Grid key={obj._id}>
+              <Grid key={obj?.id}>
                 <Card
                   elevation={5}
                   className="news-card-component"
@@ -303,7 +303,7 @@ function SemanticDeforestation(props) {
                       loading="lazy"
                     />
                     <Typography component="h5" className="overlay overlay_1">
-                      {obj.title}
+                      {obj?.title}
                     </Typography>
                   </a>
                   <CardContent sx={{ overflow: "hidden" }}>
@@ -314,7 +314,7 @@ function SemanticDeforestation(props) {
                     >
                       <Box
                         sx={{
-                          height: isOpen.titleText === obj.title ? 300 : 75,
+                          height: isOpen.titleText === obj?.title ? 300 : 75,
                         }}
                       >
                         <Box
@@ -329,12 +329,12 @@ function SemanticDeforestation(props) {
                         >
                           <div>
                             <Collapse
-                              in={isOpen.titleText === obj.title}
+                              in={isOpen.titleText === obj?.title}
                               collapsedSize={85}
                               timeout={1}
                               sx={{ textAlign: "justify" }}
                             >
-                              {obj.summary}
+                              {obj?.description}
                             </Collapse>
                           </div>
                         </Box>
@@ -343,20 +343,20 @@ function SemanticDeforestation(props) {
                   </CardContent>
                   <CardActions className="card-content-footer" disableSpacing>
                     <Button
-                      href={obj.url}
+                      href={obj?.link}
                       variant="contained"
                       endIcon={<PublicIcon />}
                       className="new-source"
                     >
-                      <span>{obj?.authors ? obj?.authors : "News"}</span>
+                      <span>{obj?.author ? obj?.author : "News"}</span>
                     </Button>
                     <Button
                       variant="contained"
-                      checked={isOpen.titleText === obj.title}
-                      onClick={() => handleChange(obj.title)}
+                      checked={isOpen.titleText === obj?.title}
+                      onClick={() => handleChange(obj?.title)}
                       ml={1}
                     >
-                      {isOpen.titleText === obj.title
+                      {isOpen.titleText === obj?.title
                         ? "Read less"
                         : "Read more"}
                     </Button>
@@ -415,8 +415,7 @@ export async function getServerSideProps({ res }) {
   let newsCatcherParseJson = [];
   const options = {
     method: "GET",
-    url: "https://api.newscatcherapi.com/v2/search",
-    params: { q: "biodiversity", lang: "en", sort_by: "relevancy" },
+    params: { q: "deforestation", lang: "en", sort_by: "relevancy" },
     headers: {
       "x-api-key": newsCatcherApi,
     },
@@ -426,7 +425,7 @@ export async function getServerSideProps({ res }) {
     const gNewsResp = await axios.get(
       `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
     );
-    const newsCatcherResp = await axios.request(options);
+    const newsCatcherResp = await axios.request("https://v3-api.newscatcherapi.com/api/search", options);
     if (gNewsResp) {
       googleNewsParseJson = gNewsResp.data.articles;
     }
