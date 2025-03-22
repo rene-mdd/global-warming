@@ -417,7 +417,7 @@ export async function getServerSideProps({ res }) {
     method: "GET",
     params: { q: "deforestation", lang: "en", sort_by: "relevancy" },
     headers: {
-      "x-api-key": newsCatcherApi,
+      "x-api-token": newsCatcherApi,
     },
   };
 
@@ -425,7 +425,10 @@ export async function getServerSideProps({ res }) {
     const gNewsResp = await axios.get(
       `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
     );
-    const newsCatcherResp = await axios.request("https://v3-api.newscatcherapi.com/api/search", options);
+    const newsCatcherResp = await axios.request(
+      "https://v3-api.newscatcherapi.com/api/search",
+      options
+    );
     if (gNewsResp) {
       googleNewsParseJson = gNewsResp.data.articles;
     }
