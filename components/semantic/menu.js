@@ -17,7 +17,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#ffffff",
-      secondary: "#47C072"
+      secondary: "#47C072",
     },
   },
 });
@@ -87,7 +87,11 @@ export default class StickySideBar extends Component {
                       />
                     </Link>
                   </ButtonGroup>
-                  <ButtonGroup variant="text" size="large" className="menu-center-group">
+                  <ButtonGroup
+                    variant="text"
+                    size="large"
+                    className="menu-center-group"
+                  >
                     <Link href="/">
                       <Button className="menu">Home</Button>
                     </Link>

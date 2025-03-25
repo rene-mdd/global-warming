@@ -171,6 +171,9 @@ p {
 
   .commits-button {
     border: 1px solid white;
+    &:hover {
+      opacity: 0.1 !important;
+    }
   }
 }
 
@@ -224,8 +227,8 @@ p {
   }
 
   a {
-    all: unset;
-
+    text-decoration: none;
+    color: white;
     &:hover {
       cursor: pointer;
     }
@@ -448,6 +451,10 @@ nav {
 .menu {
   font-size: 110%;
   color: black;
+  &:hover {
+    background-color: #6db629;
+    color: white;
+  }
 }
 
 .white-color {

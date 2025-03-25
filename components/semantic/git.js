@@ -169,7 +169,6 @@ function Git() {
               size="large"
               color="primary"
               variant="outlined"
-              sx={{ color: "white" }}
               onClick={() => setCommit(commitsPages - 1)}
               loading={loadingCommits}
             >
