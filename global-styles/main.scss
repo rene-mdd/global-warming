@@ -486,16 +486,82 @@ nav {
   min-height: 100vh;
 
   .timeline-title {
-    margin-top: 25vh;
+    margin-top: 15vh;
     color: white;
     font-size: 3em !important;
     margin-bottom: 30px;
   }
 }
 
+
+
+.vision-mission-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  .vision {
+    color: white;
+    flex-basis: 33%;
+    min-width: 300px;
+    margin: 35px 0;
+
+    h2 {
+      font-weight: bold;
+      font-size: x-large;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+  .mission {
+    color: white;
+    flex-basis: 33%;
+    font-size: large;
+    min-width: 300px;
+    margin: 35px 0;
+    h2 {
+      font-weight: bold;
+      font-size: x-large
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+}
+
+.transparency-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  .transparency-title {
+    margin-top: 15vh;
+    margin-bottom: 10vh;
+  }
+}
+
+.transparency-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h3 {
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 50px;
+  }
+  a {
+    color: #1976d2;
+    font-size: large;
+  }
+}
+
 .timeline-q {
   font-size: 22px;
   margin: auto 0;
+}
+
+.link-to-contact {
+  margin: 0px 0 40px 0;
+  font-size: large;
 }
 
 @media only screen and (max-width: 700px) {

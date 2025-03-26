@@ -58,7 +58,7 @@ function Git() {
             }
           );
           if (response) {
-            setGitResp(() => [...response]);
+            setGitResp(() => [...response].reverse());
             setloadingCommits(false);
           }
         }
