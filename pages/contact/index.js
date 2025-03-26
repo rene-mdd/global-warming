@@ -32,6 +32,7 @@ const Contact = () => {
     type: "",
     message: "",
   });
+  const recaptchaApiKey = process.env.RECAPTCHA_API_KEY;
 
   const handleChange = (e) =>
     setContact({ ...contact, [e.target.name]: e.target.value });
@@ -128,11 +129,7 @@ const Contact = () => {
                   onSubmit={handleSubmit}
                   className="contact-form-wrapper"
                 >
-                  <Input
-                    type="hidden"
-                    name="apiKey"
-                    value="sf_mkjj658f8757mb3c2h466290"
-                  />
+                  <Input type="hidden" name="apiKey" value={recaptchaApiKey} />
                   <FormLabel htmlFor="name" required>
                     Name
                   </FormLabel>
