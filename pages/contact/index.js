@@ -128,7 +128,11 @@ const Contact = () => {
                   onSubmit={handleSubmit}
                   className="contact-form-wrapper"
                 >
-                  <Input type="hidden" name="apiKey" value="your-api-key" />
+                  <Input
+                    type="hidden"
+                    name="apiKey"
+                    value="sf_mkjj658f8757mb3c2h466290"
+                  />
                   <FormLabel htmlFor="name" required>
                     Name
                   </FormLabel>
@@ -180,7 +184,7 @@ const Contact = () => {
                   {/* reCAPTCHA widge */}
                   <div
                     className="g-recaptcha"
-                    data-sitekey="sf_mkjj658f8757mb3c2h466290"
+                    data-sitekey="6LeKBwErAAAAAPtC6R-erUdWb0txmzRgOn9OV0Jl"
                   />
                   <Button
                     className="submit-button"
