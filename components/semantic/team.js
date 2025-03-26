@@ -8,7 +8,7 @@ export default function Team() {
     description: "We must disclose the environmental impact of every business.",
     "01_image": "images/rene-picture.jpg",
     "01_name": "René Rodríguez",
-    "01_job": "Creator & Frontend Developer",
+    "01_job": "Founder & Full-Stack Developer",
 
     "02_image": "images/karoline-picture.png",
     "02_name": "Karoline R. Rivera",
@@ -21,13 +21,13 @@ export default function Team() {
     "04_name": "Team Member",
     "04_job": "Join us",
 
-    "05_image": "images/miguel-prestol.jpeg",
-    "05_name": "Miguel Prestol",
-    "05_job": "Cyber Security ",
+    "05_image": "images/julia-picture.jpeg",
+    "05_name": "Julia Snajdr",
+    "05_job": "Fundraiser",
 
-    "06_image": "images/empty-profile.jpeg",
-    "06_name": "Team Member",
-    "06_job": "Join us",
+    "06_image": "images/yana-picture.jpeg",
+    "06_name": "Yana chistovskaya",
+    "06_job": "Fundraiser - Marketing",
 
     "07_image": "images/empty-profile.jpeg",
     "07_name": "Team Member",
@@ -56,7 +56,11 @@ export default function Team() {
               >
                 {content["header-p1"]}
               </Typography>
-              <Typography variant="subtitle1" color="textSecondary" component="p">
+              <Typography
+                variant="subtitle1"
+                color="textSecondary"
+                component="p"
+              >
                 {content.description}
               </Typography>
             </Container>
@@ -114,23 +118,40 @@ export default function Team() {
               </Typography>
             </Grid>
 
-            {/* <Grid xs={12} sm={6} md={3}>
-                <Avatar
-                  alt="teammate picture"
-                  src={content["05_image"]}
-                  className="team-picture"
-                />
-                <Typography variant="h6" component="h6" gutterBottom>
-                  {content["05_name"]}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  component="span"
-                >
-                  {content["05_job"]}
-                </Typography>
-              </Grid> */}
+            <Grid xs={12} sm={6} md={3}>
+              <Avatar
+                alt="teammate picture"
+                src={content["05_image"]}
+                className="team-picture"
+              />
+              <Typography variant="h6" component="h6" gutterBottom>
+                {content["05_name"]}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="span"
+              >
+                {content["05_job"]}
+              </Typography>
+            </Grid>
+            <Grid xs={12} sm={6} md={3}>
+              <Avatar
+                alt="teammate picture"
+                src={content["06_image"]}
+                className="team-picture"
+              />
+              <Typography variant="h6" component="h6" gutterBottom>
+                {content["06_name"]}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="span"
+              >
+                {content["06_job"]}
+              </Typography>
+            </Grid>
             <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
@@ -167,22 +188,22 @@ export default function Team() {
               </Typography> */}
             </Grid>
             {/* <Grid xs={12} sm={6} md={3}>
-                <Avatar
-                  alt="teammate picture"
-                  src={content["06_image"]}
-                  className="team-picture"
-                />
-                <Typography variant="h6" component="h6" gutterBottom>
-                  {content["06_name"]}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  component="span"
-                >
-                  {content["06_job"]}
-                </Typography>
-              </Grid> */}
+              <Avatar
+                alt="teammate picture"
+                src={content["06_image"]}
+                className="team-picture"
+              />
+              <Typography variant="h6" component="h6" gutterBottom>
+                {content["06_name"]}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="span"
+              >
+                {content["06_job"]}
+              </Typography>
+            </Grid> */}
             {/* <Grid xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"

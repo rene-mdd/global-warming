@@ -1,11 +1,10 @@
 // import Script from "next/script";
-import { Container, Typography, Link, Divider } from "@mui/material";
+import { Container, Typography, Link } from "@mui/material";
 import PropTypes from "prop-types";
 
 export default function Footer({ classNameProp }) {
   return (
     <>
-      <Divider />
       <Container maxWidth="false" component="footer" className={classNameProp}>
         <Container align="center">
           <Typography component="p" className="imprint">

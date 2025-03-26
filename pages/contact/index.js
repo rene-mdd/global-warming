@@ -6,7 +6,6 @@ import {
   Grid,
   Typography,
   Paper,
-  FormControl,
   Input,
   TextField,
   Button,
@@ -53,7 +52,7 @@ const Contact = () => {
       });
 
       const json = await res.json();
-      if (json.success) {
+      if (json.message) {
         setResponse({
           type: "success",
           message: "Thank you for reaching out.",
@@ -74,9 +73,9 @@ const Contact = () => {
   };
   const contactMetaDescription =
     "For suggestions about this global warming project, or if you want to discuss ideas related to this kind of environmental issues, use this contact section.";
-  const contactMetaTitle =
-    "Climate Accountability API contact";
-  const contactKeywords = "Global warming, climate change, Climate Accountability, contact";
+  const contactMetaTitle = "Climate Accountability API contact";
+  const contactKeywords =
+    "Global warming, climate change, Climate Accountability, contact";
   const websiteUrl = "https://global-warming.org/contact";
 
   return (
@@ -99,7 +98,7 @@ const Contact = () => {
             Contact
           </Typography>
           <Grid>
-            <Grid justifyContent="center" container fullWidth>
+            <Grid justifyContent="center" container>
               <Grid item xs={12} sm={10} md={6}>
                 <CardMedia
                   src="images/contact-image.png"
@@ -123,13 +122,13 @@ const Contact = () => {
                     .
                   </p>
                 </Paper>
-                <FormControl
+                <form
                   action="https://api.staticforms.xyz/submit"
                   method="post"
                   onSubmit={handleSubmit}
-                  component="form"
-                  fullWidth
+                  className="contact-form-wrapper"
                 >
+                  <Input type="hidden" name="apiKey" value="your-api-key" />
                   <FormLabel htmlFor="name" required>
                     Name
                   </FormLabel>
@@ -138,6 +137,7 @@ const Contact = () => {
                     name="name"
                     value={contact.name}
                     onChange={handleChange}
+                    required
                     autoFocus
                   />
                   <FormLabel htmlFor="email" required>
@@ -147,6 +147,7 @@ const Contact = () => {
                     id="email"
                     name="email"
                     value={contact.email}
+                    required
                     onChange={handleChange}
                   />
                   <FormLabel htmlFor="subject" className="hide-element">
@@ -176,6 +177,11 @@ const Contact = () => {
                     required
                     multiline
                   />
+                  {/* reCAPTCHA widge */}
+                  <div
+                    className="g-recaptcha"
+                    data-sitekey="sf_mkjj658f8757mb3c2h466290"
+                  />
                   <Button
                     className="submit-button"
                     type="submit"
@@ -185,7 +191,13 @@ const Contact = () => {
                   >
                     Submit
                   </Button>
-                </FormControl>
+                  {/* Include reCAPTCHA JavaScript */}
+                  <script
+                    src="https://www.google.com/recaptcha/api.js"
+                    async
+                    defer
+                  />
+                </form>
                 <Alert hidden={response.type === ""} severity={response.type}>
                   {response.type === "success"
                     ? "Your email was sent."

@@ -171,6 +171,9 @@ p {
 
   .commits-button {
     border: 1px solid white;
+    &:hover {
+      opacity: 0.1 !important;
+    }
   }
 }
 
@@ -185,6 +188,7 @@ p {
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
+  border-top: 1px solid #adadad;
 
   p {
     margin: 0;
@@ -205,6 +209,7 @@ p {
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
+  border-top: 1px solid white;
 
   p {
     margin: 0;
@@ -224,8 +229,8 @@ p {
   }
 
   a {
-    all: unset;
-
+    text-decoration: none;
+    color: white;
     &:hover {
       cursor: pointer;
     }
@@ -353,6 +358,12 @@ p {
   }
 }
 
+.contact-form-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .header {
   p {
     font-size: 1.3em !important;
@@ -448,6 +459,10 @@ nav {
 .menu {
   font-size: 110%;
   color: black;
+  &:hover {
+    background-color: #6db629;
+    color: white;
+  }
 }
 
 .white-color {
@@ -479,16 +494,81 @@ nav {
   min-height: 100vh;
 
   .timeline-title {
-    margin-top: 25vh;
+    margin-top: 15vh;
     color: white;
-    font-size: 3em !important;
+    font-size: 2.5em !important;
     margin-bottom: 30px;
+  }
+}
+
+.vision-mission-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  .vision {
+    color: white;
+    flex-basis: 33%;
+    min-width: 300px;
+    margin: 35px 0;
+
+    h2 {
+      font-weight: bold;
+      font-size: x-large;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+  .mission {
+    color: white;
+    flex-basis: 33%;
+    font-size: large;
+    min-width: 300px;
+    margin: 35px 0;
+    h2 {
+      font-weight: bold;
+      font-size: x-large;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+}
+
+.transparency-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  .transparency-title {
+    margin-top: 15vh;
+    margin-bottom: 10vh;
+    font-size: 2.5em;
+  }
+}
+
+.transparency-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h3 {
+    font-size: large;
+    font-weight: bold;
+  }
+  a {
+    color: #1976d2;
+    font-size: large;
+    margin-bottom: 50px;
   }
 }
 
 .timeline-q {
   font-size: 22px;
   margin: auto 0;
+}
+
+.link-to-contact {
+  margin: 0px 0 40px 0;
+  font-size: large;
 }
 
 @media only screen and (max-width: 700px) {
@@ -526,6 +606,14 @@ nav {
 
   .h2-landing-about {
     font-size: 1.2em !important;
+  }
+  .transparency-text-wrapper {
+    h3 {
+      font-size: 16px;
+    }
+    a {
+      font-size: 16px;
+    }
   }
 }
 

@@ -8,6 +8,7 @@ import Team from "../../components/semantic/team";
 import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import Git from "../../components/semantic/git";
 import Footer from "../../components/semantic/footer";
+import Transparency from "../../components/semantic/transparency";
 
 const theme = createTheme({
   palette: {
@@ -97,6 +98,7 @@ function About() {
           </Scroll.Link>
         </Grid>
       </Grid>
+      <Divider className="hide-divider" />
       <Divider name="jump-news" className="hide-divider" />
       <Grid container className="timeline">
         <Typography variant="h2" className="timeline-title">
@@ -104,6 +106,13 @@ function About() {
         </Typography>
         <CustomizedTimeline />
       </Grid>
+      <Grid container className="transparency-wrapper">
+        <Typography variant="h2" className="transparency-title" align="center">
+          Transparency
+        </Typography>
+        <Transparency />
+      </Grid>
+      <Divider sx={{ borderColor: "#adadad" }} />
       <Grid container className="team-wrapper">
         <Grid xs={12}>
           <Team />

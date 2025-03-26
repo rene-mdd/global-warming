@@ -133,7 +133,11 @@ function News(props) {
         <Grid container spacing={2} justifyContent="center">
           {duplicateRemovalGNews &&
             duplicateRemovalGNews.map((obj) => (
-              <Grid key={obj?.title}>
+              <Grid
+                key={obj?.title}
+                size={{ xs: 12, md: 6 }}
+                sx={{ maxWidth: 500, width: "100%" }}
+              >
                 <Card
                   elevation={5}
                   className="news-card-component"
@@ -212,7 +216,11 @@ function News(props) {
             ))}
           {intersecting &&
             duplicateRemovalCatcher.map((obj) => (
-              <Grid key={obj.id}>
+              <Grid
+                key={obj?.id}
+                size={{ xs: 12, md: 6 }}
+                sx={{ maxWidth: 500, width: "100%" }}
+              >
                 <Card
                   elevation={5}
                   className="news-card-component"
@@ -228,7 +236,7 @@ function News(props) {
                       loading="lazy"
                     />
                     <Typography component="h5" className="overlay overlay_1">
-                      {obj.title}
+                      {obj?.title}
                     </Typography>
                   </a>
                   <CardContent sx={{ overflowY: "hidden" }}>
@@ -239,7 +247,7 @@ function News(props) {
                     >
                       <Box
                         sx={{
-                          height: isOpen.titleText === obj.title ? 300 : 75,
+                          height: isOpen.titleText === obj?.title ? 300 : 75,
                         }}
                       >
                         <Box
@@ -254,12 +262,14 @@ function News(props) {
                         >
                           <div>
                             <Collapse
-                              in={isOpen.titleText === obj.title}
+                              in={isOpen.titleText === obj?.title}
                               collapsedSize={85}
                               timeout={1}
                               sx={{ textAlign: "justify" }}
                             >
-                              {obj.description}
+                              {obj?.description?.length < 14
+                                ? obj?.content
+                                : obj?.description}
                             </Collapse>
                           </div>
                         </Box>
@@ -268,7 +278,7 @@ function News(props) {
                   </CardContent>
                   <CardActions className="card-content-footer" disableSpacing>
                     <Button
-                      href={obj.link}
+                      href={obj?.link}
                       variant="contained"
                       endIcon={<PublicIcon />}
                       className="new-source"
@@ -277,11 +287,11 @@ function News(props) {
                     </Button>
                     <Button
                       variant="contained"
-                      checked={isOpen.titleText === obj.title}
-                      onClick={() => handleChange(obj.title)}
+                      checked={isOpen.titleText === obj?.title}
+                      onClick={() => handleChange(obj?.title)}
                       ml={1}
                     >
-                      {isOpen.titleText === obj.title
+                      {isOpen.titleText === obj?.title
                         ? "Read less"
                         : "Read more"}
                     </Button>
@@ -363,8 +373,7 @@ export async function getServerSideProps({ res }) {
       newsCatcherParseJson = newsCatcherResp.data.articles;
     }
   } catch (error) {
-    console.log("hello")
-    console.log(error);
+    console.error(error);
   }
   res.setHeader(
     "Cache-Control",

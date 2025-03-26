@@ -208,7 +208,11 @@ function SemanticDeforestation(props) {
         >
           {duplicateRemovalGNews &&
             duplicateRemovalGNews.map((obj) => (
-              <Grid key={obj?.title}>
+              <Grid
+                key={obj?.title}
+                size={{ xs: 12, md: 6 }}
+                sx={{ maxWidth: 500, width: "100%" }}
+              >
                 <Card
                   elevation={5}
                   className="news-card-component"
@@ -287,7 +291,11 @@ function SemanticDeforestation(props) {
             ))}
           {intersecting &&
             duplicateRemovalCatcher.map((obj) => (
-              <Grid key={obj?.id}>
+              <Grid
+                key={obj?.id}
+                size={{ xs: 12, md: 6 }}
+                sx={{ maxWidth: 500, width: "100%" }}
+              >
                 <Card
                   elevation={5}
                   className="news-card-component"
@@ -334,7 +342,9 @@ function SemanticDeforestation(props) {
                               timeout={1}
                               sx={{ textAlign: "justify" }}
                             >
-                              {obj?.description}
+                              {obj?.description?.length < 14
+                                ? obj?.content
+                                : obj?.description}
                             </Collapse>
                           </div>
                         </Box>
