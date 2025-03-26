@@ -112,7 +112,7 @@ function About() {
         </Typography>
         <Transparency />
       </Grid>
-      <Divider />
+      <Divider sx={{ borderColor: "#adadad" }} />
       <Grid container className="team-wrapper">
         <Grid xs={12}>
           <Team />

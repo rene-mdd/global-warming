@@ -9,7 +9,6 @@ export default async (req, res) => {
     // const responseToJson = response.json();
     const stringifyOceanObj = JSON.stringify(response.data);
     const parseToObject = JSON.parse(stringifyOceanObj);
-    console.log(parseToObject)
 
     // cors config
     res.setHeader("Access-Control-Allow-Credentials", true);

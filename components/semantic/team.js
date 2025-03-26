@@ -138,23 +138,6 @@ export default function Team() {
             <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
-                src={content["04_image"]}
-                className="team-picture"
-              />
-              <Typography variant="h6" component="h6" gutterBottom>
-                {content["04_name"]}
-              </Typography>
-              <Typography
-                variant="body1"
-                color="textSecondary"
-                component="span"
-              >
-                {content["04_job"]}
-              </Typography>
-            </Grid>
-            <Grid xs={12} sm={6} md={3}>
-              <Avatar
-                alt="teammate picture"
                 src={content["06_image"]}
                 className="team-picture"
               />
@@ -167,6 +150,23 @@ export default function Team() {
                 component="span"
               >
                 {content["06_job"]}
+              </Typography>
+            </Grid>
+            <Grid xs={12} sm={6} md={3}>
+              <Avatar
+                alt="teammate picture"
+                src={content["04_image"]}
+                className="team-picture"
+              />
+              <Typography variant="h6" component="h6" gutterBottom>
+                {content["04_name"]}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="span"
+              >
+                {content["04_job"]}
               </Typography>
             </Grid>
             <Grid xs={12}>

@@ -373,8 +373,7 @@ export async function getServerSideProps({ res }) {
       newsCatcherParseJson = newsCatcherResp.data.articles;
     }
   } catch (error) {
-    console.log("hello");
-    console.log(error);
+    console.error(error);
   }
   res.setHeader(
     "Cache-Control",
