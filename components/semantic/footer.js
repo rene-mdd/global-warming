@@ -15,7 +15,7 @@ export default function Footer({ classNameProp }) {
         </Container>
         <Container align="center">
           <Typography component="p">
-            {`Copyright ©${new Date().getFullYear()}
+            {`Copyright © 2020 - ${new Date().getFullYear()}
               Climate Accountability API. All Rights Reserved`}
           </Typography>
         </Container>
