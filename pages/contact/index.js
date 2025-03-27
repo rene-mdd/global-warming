@@ -18,6 +18,7 @@ import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 
 const Contact = () => {
+
   const [contact, setContact] = useState({
     name: "",
     email: "",
@@ -129,7 +130,7 @@ const Contact = () => {
                   onSubmit={handleSubmit}
                   className="contact-form-wrapper"
                 >
-                  <Input type="hidden" name="apiKey" value={recaptchaApiKey} />
+                  <input type="hidden" name="apiKey" value={recaptchaApiKey} />
                   <FormLabel htmlFor="name" required>
                     Name
                   </FormLabel>
@@ -181,7 +182,7 @@ const Contact = () => {
                   {/* reCAPTCHA widge */}
                   <div
                     className="g-recaptcha"
-                    data-sitekey="6LeKBwErAAAAAPtC6R-erUdWb0txmzRgOn9OV0Jl"
+                    data-sitekey="6Ld7WAErAAAAAIZ_XI9p5rTEVObKDwu1vrFat2vD"
                   />
                   <Button
                     className="submit-button"
@@ -193,11 +194,6 @@ const Contact = () => {
                     Submit
                   </Button>
                   {/* Include reCAPTCHA JavaScript */}
-                  <script
-                    src="https://www.google.com/recaptcha/api.js"
-                    async
-                    defer
-                  />
                 </form>
                 <Alert hidden={response.type === ""} severity={response.type}>
                   {response.type === "success"
