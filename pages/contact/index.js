@@ -33,6 +33,7 @@ const Contact = () => {
     message: "",
   });
   const recaptchaApiKey = process.env.RECAPTCHA_API_KEY;
+  const recaptchaDataKey = process.env.RECAPTCHA_DATA_KEY;
 
   const handleChange = (e) =>
     setContact({ ...contact, [e.target.name]: e.target.value });
@@ -129,7 +130,11 @@ const Contact = () => {
                   onSubmit={handleSubmit}
                   className="contact-form-wrapper"
                 >
-                  <Input type="hidden" name="apiKey" value={recaptchaApiKey} />
+                  <Input
+                    type="hidden"
+                    name={recaptchaApiKey}
+                    value={recaptchaApiKey}
+                  />
                   <FormLabel htmlFor="name" required>
                     Name
                   </FormLabel>
@@ -179,15 +184,16 @@ const Contact = () => {
                     multiline
                   />
                   {/* reCAPTCHA widge */}
-                  <div
+                  {/* <div
                     className="g-recaptcha"
                     data-sitekey="6LeKBwErAAAAAPtC6R-erUdWb0txmzRgOn9OV0Jl"
-                  />
+                  /> */}
                   <Button
-                    className="submit-button"
+                    className="submit-button g-recaptcha"
                     type="submit"
                     value="Submit"
                     onChange={handleChange}
+                    data-sitekey={recaptchaDataKey}
                     required
                   >
                     Submit
