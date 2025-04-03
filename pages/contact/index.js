@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-nested-ternary */
 import { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import {
   Container,
   CardMedia,
@@ -13,12 +15,13 @@ import {
   AlertTitle,
   FormLabel,
 } from "@mui/material";
+import PropTypes from "prop-types";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 
-const Contact = () => {
-
+const Contact = (props) => {
+  const { siteKey, secretKey } = props;
   const [contact, setContact] = useState({
     name: "",
     email: "",
@@ -27,25 +30,39 @@ const Contact = () => {
     message: "",
     replyTo: "help@global-warming",
     accessKey: "4b81c8f7-3ee9-4f84-9e25-d45657620223",
+    "g-recaptcha-response": "",
   });
 
   const [response, setResponse] = useState({
     type: "",
     message: "",
   });
-  const recaptchaApiKey = process.env.RECAPTCHA_API_KEY;
 
-  const handleChange = (e) =>
+  function onChange(value) {
+    // token value
+    if (value) {
+      setContact({
+        ...contact,
+        "g-recaptcha-response": value,
+        secret: secretKey,
+      });
+    }
+  }
+
+  const handleChange = (e) => {
     setContact({ ...contact, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setContact({
-      ...contact,
-      name: "",
-      email: "",
-      message: "",
-    });
+    if (!contact["g-recaptcha-response"]) {
+      setResponse({
+        type: "error",
+        message: "Please complete the reCAPTCHA challenge.",
+      });
+      return;
+    }
+
     try {
       const res = await fetch("https://api.staticforms.xyz/submit", {
         method: "POST",
@@ -69,7 +86,7 @@ const Contact = () => {
       setResponse({
         type: "error",
         message:
-          "An error occurred while submitting the form. please write a direct email to rene.r@live.com",
+          "An error occurred while submitting the form. please write a direct email to help@global-warming.org",
       });
     }
   };
@@ -124,13 +141,7 @@ const Contact = () => {
                     .
                   </p>
                 </Paper>
-                <form
-                  action="https://api.staticforms.xyz/submit"
-                  method="post"
-                  onSubmit={handleSubmit}
-                  className="contact-form-wrapper"
-                >
-                  <input type="hidden" name="apiKey" value={recaptchaApiKey} />
+                <form onSubmit={handleSubmit} className="contact-form-wrapper">
                   <FormLabel htmlFor="name" required>
                     Name
                   </FormLabel>
@@ -179,21 +190,16 @@ const Contact = () => {
                     required
                     multiline
                   />
-                  {/* reCAPTCHA widge */}
-                  <div
-                    className="g-recaptcha"
-                    data-sitekey="6Ld7WAErAAAAAIZ_XI9p5rTEVObKDwu1vrFat2vD"
-                  />
+                  <ReCAPTCHA sitekey={siteKey} onChange={onChange} />
                   <Button
                     className="submit-button"
                     type="submit"
                     value="Submit"
-                    onChange={handleChange}
+                    onSubmit={handleSubmit}
                     required
                   >
                     Submit
                   </Button>
-                  {/* Include reCAPTCHA JavaScript */}
                 </form>
                 <Alert hidden={response.type === ""} severity={response.type}>
                   {response.type === "success"
@@ -205,7 +211,7 @@ const Contact = () => {
                     {response.type === "success"
                       ? "Thank you!"
                       : response.type === "error"
-                      ? "Try again or write to help@global-warming.org"
+                      ? response.message
                       : null}
                   </AlertTitle>
                 </Alert>
@@ -218,5 +224,30 @@ const Contact = () => {
     </>
   );
 };
+
+Contact.propTypes = {
+  siteKey: PropTypes.string,
+  secretKey: PropTypes.string,
+};
+
+Contact.defaultProps = {
+  siteKey: "",
+  secretKey: "",
+};
+
+export async function getServerSideProps({ res }) {
+  const siteKey = process.env.RECAPTCHA_API_KEY || "";
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+  res.setHeader(
+    "Cache-Control",
+    "maxage=43200, s-maxage=43200, stale-while-revalidate"
+  ); // Vercel Cache (Network)
+  return {
+    props: {
+      siteKey,
+      secretKey,
+    },
+  };
+}
 
 export default Contact;

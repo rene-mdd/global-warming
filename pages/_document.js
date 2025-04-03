@@ -32,7 +32,6 @@ export default function Document() {
       />
       <Head>
         <link rel="shortcut icon" type="image/gif" href="favicon/favicon.ico" />
-        <script src="https://www.google.com/recaptcha/api.js" async defer />
       </Head>
       <body>
         <Main />
