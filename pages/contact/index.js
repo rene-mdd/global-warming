@@ -3,7 +3,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-// import ReCAPTCHA from "react-google-recaptcha";
 import {
   Container,
   CardMedia,
@@ -22,11 +21,9 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 
-function Contact(props) {
-  const { siteKey, secretKey } = props;
+function Contact({ siteKey = "", secretKey = "" }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,8 +53,6 @@ function Contact(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-console.log(window.grecaptcha)
-console.log(window.grecaptcha.getResponse())
     // Get reCAPTCHA response
     if (!window.grecaptcha) {
       setStatus("error");
@@ -85,20 +80,18 @@ console.log(window.grecaptcha.getResponse())
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          apiKey: siteKey || "",
+          apiKey: secretKey,
           name,
           email,
-          subject,
+          subject: "StaticForms - Contact Form",
           message,
-          recaptchaToken: recaptchaResponse,
+          "g-recaptcha-response": recaptchaResponse,
           // Set replyTo directly to the email address
-          replyTo: email,
+          replyTo: "help@global-warming.org",
         }),
       });
 
       const data = await response.json();
-      console.log(data)
-      console.log(response)
       if (response.ok) {
         setStatus("success");
         setStatusMessage(
@@ -107,7 +100,6 @@ console.log(window.grecaptcha.getResponse())
         // Reset form fields
         setName("");
         setEmail("");
-        setSubject("");
         setMessage("");
         // Reset reCAPTCHA
         window.grecaptcha.reset();
@@ -225,7 +217,11 @@ console.log(window.grecaptcha.getResponse())
                     required
                     multiline
                   />
-                  <div className="g-recaptcha" data-sitekey={secretKey} />{" "}
+                  <div
+                    className="g-recaptcha"
+                    id="recaptcha-container"
+                    data-sitekey={siteKey}
+                  />{" "}
                   <Button
                     className="submit-button"
                     type="submit"
@@ -262,18 +258,13 @@ console.log(window.grecaptcha.getResponse())
 }
 
 Contact.propTypes = {
-  siteKey: PropTypes.string,
-  secretKey: PropTypes.string,
-};
-
-Contact.defaultProps = {
-  siteKey: "",
-  secretKey: "",
+  siteKey: PropTypes.string.isRequired,
+  secretKey: PropTypes.string.isRequired,
 };
 
 export async function getServerSideProps({ res }) {
-  const siteKey = process.env.RECAPTCHA_API_KEY || "";
-  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
+  const secretKey = process.env.RECAPTCHA_API_KEY || "";
   res.setHeader(
     "Cache-Control",
     "maxage=43200, s-maxage=43200, stale-while-revalidate"
