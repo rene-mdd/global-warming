@@ -11,7 +11,7 @@ function privacyPolicy() {
     "Privacy policy: Climate Accountability API gUG. Berlin, Germany.";
   const privacyKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
-    const websiteUrl = "https://global-warming.org/privacy-policy";
+  const websiteUrl = "https://global-warming.org/privacy-policy";
 
   return (
     <>
@@ -152,14 +152,6 @@ function privacyPolicy() {
             You can review Vercel’s privacy policy{" "}
             <Link href="https://vercel.com/legal/privacy-policy">here</Link> for
             more information about how they handle your data.
-          </Typography>
-          <Typography component="h4">Data processing</Typography>
-          <Typography component="p">
-            We have concluded a data processing agreement (DPA) for the use of
-            the above-mentioned service. This is a contract mandated by data
-            privacy laws that guarantees that they process personal data of our
-            website visitors only based on our instructions and in compliance
-            with the GDPR.
           </Typography>
           <Typography component="h3">Amazon CloudFront CDN</Typography>{" "}
           <Typography component="p">
@@ -578,6 +570,68 @@ function privacyPolicy() {
             ConsentManager uses cookies to obtain the declarations of consent
             mandated by law. The legal basis for the use of such cookies is Art.
             6(1)(c) GDPR.
+          </Typography>
+          <Typography component="h4">Google reCAPTCHA</Typography>
+          <Typography component="p">
+            To protect our website from spam and abuse, we use Google reCAPTCHA,
+            a service provided by Google Ireland Limited (Gordon House, Barrow
+            Street, Dublin 4, Ireland). reCAPTCHA helps us determine whether
+            data entered on our website (e.g., in a contact form) is submitted
+            by a human or an automated program.
+          </Typography>{" "}
+          <Typography component="h4"> Data Collection & Processing</Typography>
+          <Typography mb={2} component="p">
+            reCAPTCHA analyzes website visitors based on various criteria, such
+            as:
+          </Typography>{" "}
+          <Typography component="ul">
+            {" "}
+            <Typography component="li">IP address</Typography>{" "}
+            <Typography component="li">
+              Mouse movements and interactions
+            </Typography>
+            <Typography component="li"> Time spent on the page</Typography>
+            <Typography component="li">
+              {" "}
+              Browser & device information
+            </Typography>
+            <Typography component="li"> Cookies set by Google</Typography>
+            <Typography component="li">
+              Previous interactions with Google services
+            </Typography>{" "}
+          </Typography>{" "}
+          <Typography component="p">
+            This data is transmitted to Google servers and may be stored in the
+            USA.
+          </Typography>{" "}
+          <Typography component="p">
+            For more information on how Google processes personal data, please
+            review Google's privacy policy:{" "}
+            <a href="https://policies.google.com/privacy">
+              https://policies.google.com/privacy
+            </a>
+          </Typography>{" "}
+          <Typography component="h4">Legal Basis</Typography>{" "}
+          <Typography mb={2} component="p">
+            The use of reCAPTCHA is based on Art. 6(1)(f) GDPR (legitimate
+            interest). We have a legitimate interest in protecting our website
+            from spam, bots, and fraudulent activities. Objection & Opt-Out
+            Users who do not wish to be analyzed by reCAPTCHA can:
+          </Typography>{" "}
+          <Typography component="ul">
+            {" "}
+            <Typography component="li">
+              <strong>Disable JavaScript</strong> in their browser (note: this
+              may affect website functionality).
+            </Typography>{" "}
+            <Typography component="li">
+              <strong>Use browser extensions</strong> that block Google
+              services.
+            </Typography>{" "}
+            <Typography component="li">
+              <strong>Exercise their rights under GDPR</strong>, such as
+              requesting access to, correction of, or deletion of their data.
+            </Typography>
           </Typography>
           <Typography component="h4">Data processing</Typography>{" "}
           <Typography component="p">
