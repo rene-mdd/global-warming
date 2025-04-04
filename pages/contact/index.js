@@ -1,7 +1,9 @@
-/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-nested-ternary */
-import { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+
+"use client";
+
+import { useState, useEffect } from "react";
+// import ReCAPTCHA from "react-google-recaptcha";
 import {
   Container,
   CardMedia,
@@ -20,74 +22,107 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 
-const Contact = (props) => {
+function Contact(props) {
   const { siteKey, secretKey } = props;
-  const [contact, setContact] = useState({
-    name: "",
-    email: "",
-    subject: "StaticForms - Contact Form",
-    honeypot: "",
-    message: "",
-    replyTo: "help@global-warming",
-    accessKey: "4b81c8f7-3ee9-4f84-9e25-d45657620223",
-    "g-recaptcha-response": "",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("idle");
+  const [statusMessage, setStatusMessage] = useState("");
 
-  const [response, setResponse] = useState({
-    type: "",
-    message: "",
-  });
-
-  function onChange(value) {
-    // token value
-    if (value) {
-      setContact({
-        ...contact,
-        "g-recaptcha-response": value,
-        secret: secretKey,
-      });
+  // Load reCAPTCHA script
+  useEffect(() => {
+    // Avoid duplicate loading
+    if (
+      typeof window !== "undefined" &&
+      !window.grecaptcha &&
+      !document.querySelector('script[src*="recaptcha/api.js"]')
+    ) {
+      const script = document.createElement("script");
+      script.src = `https://www.google.com/recaptcha/api.js`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        setRecaptchaLoaded(true);
+      };
+      document.head.appendChild(script);
+    } else if (typeof window !== "undefined" && window.grecaptcha) {
+      setRecaptchaLoaded(true);
     }
-  }
-
-  const handleChange = (e) => {
-    setContact({ ...contact, [e.target.name]: e.target.value });
-  };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!contact["g-recaptcha-response"]) {
-      setResponse({
-        type: "error",
-        message: "Please complete the reCAPTCHA challenge.",
-      });
+console.log(window.grecaptcha)
+console.log(window.grecaptcha.getResponse())
+    // Get reCAPTCHA response
+    if (!window.grecaptcha) {
+      setStatus("error");
+      setStatusMessage(
+        "reCAPTCHA not loaded. Please refresh the page and try again."
+      );
       return;
     }
 
+    const recaptchaResponse = window.grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      setStatus("error");
+      setStatusMessage("Please complete the reCAPTCHA verification.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus("idle");
+
     try {
-      const res = await fetch("https://api.staticforms.xyz/submit", {
+      // This is the URL of our own Static Forms API endpoint
+      const response = await fetch("https://api.staticforms.xyz/submit", {
         method: "POST",
-        body: JSON.stringify(contact),
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          apiKey: secretKey || "",
+          name,
+          email,
+          subject,
+          message,
+          recaptchaToken: recaptchaResponse,
+          // Set replyTo directly to the email address
+          replyTo: email,
+        }),
       });
 
-      const json = await res.json();
-      if (json.message) {
-        setResponse({
-          type: "success",
-          message: "Thank you for reaching out.",
-        });
+      const data = await response.json();
+      console.log(data)
+      console.log(response)
+      if (response.ok) {
+        setStatus("success");
+        setStatusMessage(
+          "Thank you for your message! We will get back to you soon."
+        );
+        // Reset form fields
+        setName("");
+        setEmail("");
+        setSubject("");
+        setMessage("");
+        // Reset reCAPTCHA
+        window.grecaptcha.reset();
       } else {
-        setResponse({
-          type: "error",
-          message: json.message,
-        });
+        setStatus("error");
+        setStatusMessage(
+          data.error || "Failed to send your message. Please try again later."
+        );
       }
-    } catch (event) {
-      setResponse({
-        type: "error",
-        message:
-          "An error occurred while submitting the form. please write a direct email to help@global-warming.org",
-      });
+    } catch (error) {
+      setStatus("error");
+      setStatusMessage("An unexpected error occurred. Please try again later.");
+      console.error("Form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
   const contactMetaDescription =
@@ -148,8 +183,8 @@ const Contact = (props) => {
                   <Input
                     id="name"
                     name="name"
-                    value={contact.name}
-                    onChange={handleChange}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     required
                     autoFocus
                   />
@@ -159,9 +194,9 @@ const Contact = (props) => {
                   <Input
                     id="email"
                     name="email"
-                    value={contact.email}
+                    value={email}
                     required
-                    onChange={handleChange}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <FormLabel htmlFor="subject" className="hide-element">
                     Subject
@@ -171,47 +206,48 @@ const Contact = (props) => {
                     id="subject"
                     type="hidden"
                     name="subject"
-                    onChange={handleChange}
+                    onChange={(e) => setName(e.target.value)}
                   />
                   <Input
                     id="honeypot"
                     name="honeypot"
                     className="hide-element"
-                    onChange={handleChange}
+                    onChange={(e) => setName(e.target.value)}
                   />
                   <FormLabel htmlFor="message">Your message</FormLabel>
                   <TextField
                     id="message"
                     name="message"
                     variant="standard"
-                    value={contact.message}
-                    onChange={handleChange}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     margin="normal"
                     required
                     multiline
                   />
-                  <ReCAPTCHA sitekey={siteKey} onChange={onChange} />
+                  <div className="g-recaptcha" data-sitekey={siteKey} />{" "}
                   <Button
                     className="submit-button"
                     type="submit"
                     value="Submit"
                     onSubmit={handleSubmit}
+                    disabled={isSubmitting || !recaptchaLoaded}
                     required
                   >
                     Submit
                   </Button>
                 </form>
-                <Alert hidden={response.type === ""} severity={response.type}>
-                  {response.type === "success"
+                <Alert hidden={status === "idle"} severity={status}>
+                  {status === "success"
                     ? "Your email was sent."
-                    : response.type === "error"
+                    : status === "error"
                     ? "Sorry there was an error"
                     : null}
                   <AlertTitle>
-                    {response.type === "success"
+                    {status === "success"
                       ? "Thank you!"
-                      : response.type === "error"
-                      ? response.message
+                      : status === "error"
+                      ? statusMessage
                       : null}
                   </AlertTitle>
                 </Alert>
@@ -223,7 +259,7 @@ const Contact = (props) => {
       <Footer classNameProp="footer" />
     </>
   );
-};
+}
 
 Contact.propTypes = {
   siteKey: PropTypes.string,
