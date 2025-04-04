@@ -85,7 +85,7 @@ console.log(window.grecaptcha.getResponse())
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          apiKey: secretKey || "",
+          apiKey: siteKey || "",
           name,
           email,
           subject,
@@ -225,7 +225,7 @@ console.log(window.grecaptcha.getResponse())
                     required
                     multiline
                   />
-                  <div className="g-recaptcha" data-sitekey={siteKey} />{" "}
+                  <div className="g-recaptcha" data-sitekey={secretKey} />{" "}
                   <Button
                     className="submit-button"
                     type="submit"
