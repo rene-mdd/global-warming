@@ -117,7 +117,7 @@ export default function Team() {
                 {content["03_job"]}
               </Typography>
             </Grid>
-
+            {/* 
             <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
@@ -134,7 +134,7 @@ export default function Team() {
               >
                 {content["05_job"]}
               </Typography>
-            </Grid>
+            </Grid> */}
             <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
