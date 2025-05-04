@@ -41,10 +41,7 @@ export default function CustomizedTimeline() {
           </Typography>
         </Grid>
       </Grid>
-      <Timeline
-        position="alternate"
-        sx={{ marginBottom: "0px", width: "100%", padding: "0" }}
-      >
+      <Timeline position="alternate" sx={{ width: "100%", padding: "0" }}>
         <TimelineItem className="timeline-item">
           <TimelineOppositeContent
             align="right"

@@ -22,8 +22,6 @@ export default function Transparency() {
         <Link href="/contact" className="link-to-contact">
           Contact
         </Link>
-      </Grid>
-      <Grid size={{ xs: 12, md: 6 }} className="transparency-text-wrapper">
         <Typography component="h3">Anual financial statements:</Typography>
         <Typography
           component="a"
