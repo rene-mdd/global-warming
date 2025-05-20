@@ -16,15 +16,6 @@ export default function CustomizedTimeline() {
   return (
     <>
       <Grid className="vision-mission-wrapper">
-        <Grid className="vision" size={{ xs: 12, md: 6 }}>
-          <Typography mb={5} component="h2" align="center">
-            Vision
-          </Typography>
-          <Typography component="p" align="center">
-            A world where environmental accountability is the norm, not the
-            exception. With transparency at the heart of everything we do.
-          </Typography>
-        </Grid>
         <Grid className="mission">
           <Typography
             mb={5}
@@ -35,9 +26,18 @@ export default function CustomizedTimeline() {
             Mission
           </Typography>
           <Typography component="p" align="center">
-            To make ESG data about every organized entity free, open,
-            transparent, and practical for everyday decision-making. Fostering a
-            global shift toward sustainability.
+            To make companies ESG data free, open, and practical for everyday
+            use, empowering people everywhere to make informed, sustainable
+            decisions—accelerating the transition to a greener future.
+          </Typography>
+        </Grid>
+        <Grid className="vision" size={{ xs: 12, md: 6 }}>
+          <Typography mb={5} component="h2" align="center">
+            Vision
+          </Typography>
+          <Typography component="p" align="center">
+            A world where environmental accountability is the norm, not the
+            exception. With transparency at the heart of everything we do.
           </Typography>
         </Grid>
       </Grid>
