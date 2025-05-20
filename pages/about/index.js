@@ -100,7 +100,7 @@ function About() {
       </Grid>
       <Divider className="hide-divider" />
       <Divider name="jump-news" className="hide-divider" />
-      <Grid container className="timeline">
+      <Grid container className="timeline" id="project-timeline">
         <Typography variant="h2" className="timeline-title">
           Project Timeline
         </Typography>
