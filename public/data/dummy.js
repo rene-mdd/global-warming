@@ -297,7 +297,7 @@ businessData = [{
             additional_details: {
                 format: "text/plain",
                 processed: "2024-06-11T00:00:00Z",
-                value: `Adidas has committed to achieving climate neutrality (GHG - greenhouse gases) across its own operations by 2025, reducing absolute GHG emissions across its entire value chain by 30% by 2030, measured against a baseline of 2017. But there is not still an official commitment for net-zero emissions.<br><br>Adidas claims a "cumulative" reduction of combined net emissions by 55%. But there is not a third-party source to confirm this.<br><br>Adidas claims a "cumulative" reduction of combined net emissions by 55%. But there is not a third-party source to confirm this.<br><br>They offer a low carbon running shoes called futurecraft.<br><br>They also have shoes made from recycled, salvaged marine waste, called Parley shoes.<br><br>The futurecraft loop is made from 100 per cent recyclable TPU.`,
+                value: `Adidas has committed to achieving climate neutrality (GHG - greenhouse gases) across its own operations by 2025, reducing absolute GHG emissions across its entire value chain by 30% by 2030, measured against a baseline of 2017. But there is not still an official commitment for net-zero emissions.<br><br>Adidas claims a "cumulative" reduction of combined net emissions by 55%. But there is not a third-party source to confirm this.<br><br>They offer a low carbon running shoes called futurecraft.<br><br>They also have shoes made from recycled, salvaged marine waste, called Parley shoes.<br><br>The futurecraft loop is made from 100 per cent recyclable TPU.`,
             },
             imgUrl: "images/adidas_logo.png",
             disclosure_ghg_emission: 3,

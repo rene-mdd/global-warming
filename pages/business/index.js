@@ -40,8 +40,7 @@ function Business() {
             align="center"
             gutterBottom
           >
-            Search for the environmental impact your brands have on the
-            environment
+            Find information on companies' social and environmental impact.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>
