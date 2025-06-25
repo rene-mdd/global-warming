@@ -8,7 +8,7 @@ export default function Team() {
     description: "We must disclose the environmental impact of every business.",
     "01_image": "images/rene-picture.jpg",
     "01_name": "René Rodríguez",
-    "01_job": "Founder & Full-Stack Developer",
+    "01_job": "Founder & Software Developer",
 
     "02_image": "images/karoline-picture.png",
     "02_name": "Karoline R. Rivera",
