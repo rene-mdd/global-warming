@@ -104,7 +104,7 @@ function ParentCo2() {
                   variant="contained"
                   sx={{ mt: 2 }}
                 >
-                  {co2recent ? "Hide graph" : "2014 - 2024"}
+                  {co2recent ? "Hide graph" : `${new Date().getFullYear() - 10} - ${new Date().getFullYear()}`}
                 </LoadingButton>
               </Grid>
             </ThemeProvider>
