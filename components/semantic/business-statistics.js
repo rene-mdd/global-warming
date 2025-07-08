@@ -67,27 +67,27 @@ function Row(props) {
           <TableCell
             component="th"
             scope="row"
-            className="sticky-column sticky-company white-color"
+            className="sticky-column sticky-company white-color tablecell-styles"
           >
             {attributes?.title}
           </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" className="tablecell-styles">
             {attributes?.disclosure_ghg_emission ?? "No data"} /{" "}
             {attributes?.disclosure_deforestation ?? "No data"}
           </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" className="tablecell-styles">
             {attributes?.commitment_status ?? "No data"}
           </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" className="tablecell-styles">
             {attributes?.net_emission_reduction ?? "No data"}
           </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" className="tablecell-styles">
             {attributes?.climate_contribution_offset ?? "No data"}
           </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" className="tablecell-styles">
             {attributes?.deforestation ?? "No data"}
           </TableCell>
-          <TableCell align="right" sx={{ color: colorImpact }}>
+          <TableCell align="right" sx={{ color: colorImpact }} className="tablecell-styles bold-class ">
             {attributes?.environmental_impact ?? "No data"}
           </TableCell>
         </TableRow>
@@ -143,7 +143,6 @@ function Row(props) {
                         disableGutters
                         component="div"
                         className="text-container"
-                        sx={{ fontSize: 1 }}
                       >
                         <Typography component="p">
                           {attributes?.products_services}
@@ -261,37 +260,38 @@ export default function BusinessStatistics({ props }) {
                   variant="span"
                   fontWeight="bold"
                   className="white-color"
+                  fontSize="large"
                 >
                   Company
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography variant="span" fontWeight="bold">
+                <Typography variant="span" fontWeight="bold" fontSize="large">
                   Disclosure: GHG Emission / Deforestation
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography variant="span" fontWeight="bold">
+                <Typography variant="span" fontWeight="bold" fontSize="large">
                   Commitment status
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography variant="span" fontWeight="bold">
+                <Typography variant="span" fontWeight="bold" fontSize="large">
                   Net emission reduction
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography variant="span" fontWeight="bold">
+                <Typography variant="span" fontWeight="bold" fontSize="large">
                   Climate contribution / Offsetting
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography variant="span" fontWeight="bold">
+                <Typography variant="span" fontWeight="bold" fontSize="large">
                   Deforestation
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <Typography variant="span" fontWeight="bold">
+                <Typography variant="span" fontWeight="bold" fontSize="large">
                   Environmental impact
                 </Typography>
               </TableCell>
@@ -310,7 +310,7 @@ export default function BusinessStatistics({ props }) {
         </Table>
       </TableContainer>
       <Container align="center">
-        <Typography component="p" fontWeight="bold" mt={3}>
+        <Typography component="p" fontWeight="bold" mt={3} fontSize="large">
           Preliminary data
         </Typography>
         <LoadingButton

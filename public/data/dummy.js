@@ -6,7 +6,7 @@ businessData = [{
             additional_details: {
                 format: "text/plain",
                 processed: "2024-06-11T00:00:00Z",
-                value: "They offer one cabon neutral vehicle model, the ID.3.<br><br> They co-builded Tramm-Göthen solar plant.<br><br> Europe carmakers like VW, BMW, Daimler, PSA and Renault have been linked to Amazon rainforest deforestation. ",
+                value: "They offer one cabon neutral vehicle model, the ID.3.<br><br> They co-builded Tramm-Göthen solar plant.<br><br> Europe carmakers like VW, BMW, Daimler, PSA and Renault have been linked to Amazon rainforest deforestation. <br><br><br>Positive Actions: <br><br>'Way to Zero' strategy for climate-neutral business by 2050<br><br>Europe-leading EV transition & battery investments<br><br>Renewable energy projects & carbon-neutral factories<br><br>Battery recycling & circular economy pilots	<br><br>Responsible sourcing initiatives<br><br><br>Negative actions:<br><br>Dieselgate scandal & ongoing reputational damage<br><br>Continued sales of combustion engine cars globally<br><br>Heavy reliance on carbon offsets in some cases<br><br>High supply chain emissions & slow global decarbonization<br>Human rights concerns in mineral supply chains<br><br>",
             },
             imgUrl: "images/volkswagen_logo_2019.png",
             disclosure_ghg_emission: 4,
@@ -135,7 +135,7 @@ businessData = [{
             additional_details: {
                 format: "text/plain",
                 processed: "2024-06-11T00:00:00Z",
-                value: "Apple Inc. together with Conservation International created a $200 million fund for timber producing managed forest. This kind of projects suck carbon from the atmosphere. That’s why we scored this as partial, in the climate contribution field.",
+                value: "Apple Inc. together with Conservation International created a $200 million fund for timber producing managed forest. This kind of projects suck carbon from the atmosphere. That’s why we scored this as partial, in the climate contribution field.<br><br>Since 2018, Apple powers all its global corporate facilities, including offices, stores, and data centers, with 100% renewable energy.<br><br>Apple has been carbon-neutral across its own corporate operations (Scope 1 & 2) since 2020.<br><br>Over 99% of Apple’s total emissions come from Scope 3 (mostly from supply chain & product use).<br><br>Reports of labor abuses, poor working conditions, and human rights concerns at supplier factories (e.g., Foxconn, Pegatron).<br><br><br>Positive Actions: <br><br>100% renewable energy for operations since 2018<br><br>Carbon-neutral corporate operations since 2020<br><br>Full carbon-neutrality target by 2030<br><br>Industry-leading recycling robots & materials use<br><br>Major supplier decarbonization programs<br><br><br>Negative actions:<br><br>Scope 3 emissions remain high (supply chain + product use)<br><br>Criticism of planned obsolescence and fast product cycles<br><br>Some reliance on forestry-based offsets (Restore Fund)<br><br>Supplier labor & environmental violations reported<br><br>Raw material sourcing linked to human rights & eco risks<br><br>",
             },
             imgUrl: "images/apple_logo_black.png",
             disclosure_ghg_emission: 4,
@@ -189,7 +189,7 @@ businessData = [{
             additional_details: {
                 format: "text/plain",
                 processed: "2024-06-11T00:00:00Z",
-                value: "Amazon is another example of greenwashing. The only climate contribution Amazon have promised to do is a $10 million donation for the conservation of forests in different US regions. This amount seems ridiculously small for a company of this size.<br><br>They also launched the Agroforestry and Restoration Accelerator in partnership with The Nature Conservancy. But this project have not begun and it will be a long time until we can measure its true impact.<br><br>Amazon emission have been increasing  by around 15% each year.",
+                value: "Amazon have promised to do is a $10 million donation for the conservation of forests in different US regions. This amount seems ridiculously small for a company of this size.<br><br>They also launched the Agroforestry and Restoration Accelerator in partnership with The Nature Conservancy. But this project have not begun and it will be a long time until we can measure its true impact.<br><br>Amazon emission have been increasing  by around 15% each year. <br><br><br>Positive Actions: <br><br>The Climate Pledge & renewable energy leadership<br><br>Largest corporate renewable energy buyer<br><br>$2B Climate Pledge Fund for green startups<br><br>Electric delivery vehicles (Rivian)<br><br>Reforestation & packaging reduction<br><br><br>Negative actions:<br><br>Rising absolute emissions (despite green energy)<br><br>Weak Scope 3 transparency<br><br>Expanding air freight & fast shipping emissions<br><br>Greenwashing concerns in marketing<br><br>Overconsumption model & labor issues<br>",
             },
             imgUrl: "images/amazon-logo.png",
             disclosure_ghg_emission: -1,
