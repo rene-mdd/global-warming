@@ -199,35 +199,37 @@ export default function BusinessStatistics({ props }) {
 
   businessData = props;
 
-  // useEffect(() => {
-  //   // if (input.length > 0) {
-  //   //   setLoading(true);
-  //   // }
-  //   const delayDebounceFn = setTimeout(() => {
-  //     const businessApiUrl = `http://global-warming-drupal.docksal/jsonapi/business?include=logo&filter[title][operator]=CONTAINS&filter[title][value]=${input}`;
-  //     // let header = new Headers({
-  //     //   "Access-Control-Allow-Origin": "https://global-warming.org/",
-  //     //   Accept: "application/vnd.api+json",
-  //     //   "Content-Type": "application/vnd.api+json",
-  //     // });
-  //     async function fetchBusinessData() {
-  //       try {
-  //         // const response = await fetch(businessApiUrl, header);
-  //         // const business = await response.json();
-  //         // setBusinessData(() => business.data);
-  //         // setIncludedData(() => business.included);
-  //         setLoading(false);
-  //         // setInitialLoading(false);
-  //       } catch (error) {
-  //         setError(true);
-  //         console.error(error);
-  //       }
-  //     }
-  //     fetchBusinessData();
-  //   }, 500);
+  useEffect(() => {
+    // if (input.length > 0) {
+    //   setLoading(true);
+    // }
+    const delayDebounceFn = setTimeout(() => {
+      const businessApiUrl = `https://gist.githubusercontent.com/ddelange/22e12073e88ed8d1e75e2e0f26754d7f/raw/477e6518e34e2cf005717b29003730f54601cdf7/data_wikirate_companies_subset_wikipedia_with_metrics.json`;
+      let header = new Headers({
+        "Access-Control-Allow-Origin": "*",
+        Accept: "application/vnd.api+json",
+        "Content-Type": "application/vnd.api+json",
+      });
+      console.log(businessApiUrl)
+      async function fetchBusinessData() {
+        try {
+          const response = await fetch(businessApiUrl, header);
+          const business = await response.json();
+          console.log(response)
+          // setBusinessData(() => business.data);
+          // setIncludedData(() => business.included);
+          setLoading(false);
+          // setInitialLoading(false);
+        } catch (error) {
+          setError(true);
+          console.error(error);
+        }
+      }
+      fetchBusinessData();
+    }, 500);
 
-  //   return () => clearTimeout(delayDebounceFn);
-  // }, [input]);
+    return () => clearTimeout(delayDebounceFn);
+  }, [input]);
 
   return (
     <>
