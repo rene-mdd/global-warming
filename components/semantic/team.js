@@ -17,9 +17,10 @@ export default function Team() {
     "03_image": "images/keitel-picture.jpeg",
     "03_name": "Keitel Ortega",
     "03_job": "Senior Software Developer",
-    "04_image": "images/empty-profile.jpeg",
-    "04_name": "Team Member",
-    "04_job": "Join us",
+
+    "04_image": "images/serwatka.jpg",
+    "04_name": "Andżelika Serwatka",
+    "04_job": "Fundraiser",
 
     "05_image": "images/angie.jpg",
     "05_name": "Angie Visatri",
