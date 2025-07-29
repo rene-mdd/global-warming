@@ -21,17 +21,19 @@ export default function Partners() {
       >
         Partners & Acknowledgements
       </Typography>
-      <Card sx={{ maxWidth: 566 }}>
+      <Card sx={{ maxWidth: 566, paddingLeft: 1, paddingRight: 1 }}>
         <CardMedia
           image="/images/eon-stiftung-logo.jpg"
           className="eon-image"
-          title="green iguana"
+          title="eon winners"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             Award
           </Typography>
-          <Typography variant="body2">European Climate Fund Winners</Typography>
+          <Typography variant="p" size="large">
+            European Climate Fund Winners
+          </Typography>
         </CardContent>
         <CardActions>
           <Button
