@@ -26,9 +26,9 @@ export default function CustomizedTimeline() {
             Mission
           </Typography>
           <Typography component="p" align="center">
-            To make companies ESG data free, open, and practical for everyday
-            use, empowering people everywhere to make informed, sustainable
-            decisions—accelerating the transition to a greener future.
+            To make companies' ESG data free, open, and practical for everyday
+            use. Empowering people everywhere to make informed, sustainable
+            decisions. Accelerating the transition to a greener future.
           </Typography>
         </Grid>
         <Grid className="vision" size={{ xs: 12, md: 6 }}>
