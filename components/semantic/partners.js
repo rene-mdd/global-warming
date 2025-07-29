@@ -21,13 +21,13 @@ export default function Partners() {
       >
         Partners & Acknowledgements
       </Typography>
-      <Card sx={{ maxWidth: 566, paddingLeft: 1, paddingRight: 1 }}>
+      <Card sx={{ paddingLeft: 1, paddingRight: 1 }}>
         <CardMedia
           image="/images/eon-stiftung-logo.jpg"
           className="eon-image"
           title="eon winners"
         />
-        <CardContent>
+        <CardContent sx={{ padding: "13px" }}>
           <Typography gutterBottom variant="h5" component="div">
             Award
           </Typography>
