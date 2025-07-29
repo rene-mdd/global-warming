@@ -9,6 +9,7 @@ import CustomizedTimeline from "../../components/semantic/customized-timeline";
 import Git from "../../components/semantic/git";
 import Footer from "../../components/semantic/footer";
 import Transparency from "../../components/semantic/transparency";
+import Partners from "../../components/semantic/partners";
 
 const theme = createTheme({
   palette: {
@@ -112,13 +113,23 @@ function About() {
         </Typography>
         <Transparency />
       </Grid>
-      <Divider sx={{ borderColor: "#adadad" }} />
-      <Grid container className="team-wrapper">
+      <Grid container className="partners-wrapper">
+        <Grid
+          xs={12}
+          display="flex"
+          justifyContent="center"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Partners />
+        </Grid>
+      </Grid>
+      <Grid container className="about-wrapper">
         <Grid xs={12}>
           <Team />
         </Grid>
       </Grid>
-      <Grid container className="team-wrapper">
+      <Grid container className="about-wrapper">
         <Grid xs={12}>
           <Git />
         </Grid>

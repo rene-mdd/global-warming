@@ -18,9 +18,12 @@ html * {
 }
 
 body {
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+      90deg,
       hsla(120, 100%, 99%, 1) 0%,
-      hsla(0, 0%, 100%, 1)) 100% !important;
+      hsla(0, 0%, 100%, 1)
+    )
+    100% !important;
 }
 
 a {
@@ -471,7 +474,7 @@ nav {
 }
 
 .tablecell-styles {
-  font-size: large
+  font-size: large;
 }
 
 .side-menu-icon {
@@ -659,8 +662,27 @@ nav {
   margin: auto;
 }
 
-.team-wrapper {
+.about-wrapper {
   min-height: 100vh;
+}
+
+.partners-wrapper {
+  min-height: 25vh;
+  background-color: #016795;
+  padding-bottom: 96px;
+}
+
+.partners-title {
+  color: white;
+  font-size: 2.5em;
+  margin-top: 15vh;
+  margin-bottom: 10vh;
+}
+
+.eon-image {
+  background-size: 100%;
+  width: 370px;
+  height: 190px;
 }
 
 .news-wrapper {
