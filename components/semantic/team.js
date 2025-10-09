@@ -1,4 +1,4 @@
-import { Container, Box, Typography, Avatar } from "@mui/material";
+import { Container, Box, Typography, Avatar, Link } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 
 export default function Team() {
@@ -18,13 +18,13 @@ export default function Team() {
     "03_name": "Keitel Ortega",
     "03_job": "Senior Software Developer",
 
-    "04_image": "images/serwatka.jpg",
-    "04_name": "Andżelika Serwatka",
-    "04_job": "Fundraiser",
+    "04_image": "images/darshan.jpeg",
+    "04_name": "Darshan Parashuramappa",
+    "04_job": "Data Analyst",
 
-    "05_image": "images/angie.jpg",
-    "05_name": "Angie Visatri",
-    "05_job": "Exec. Assistant / Fundraiser",
+    "05_image": "images/emma.jpeg",
+    "05_name": "Emma Finnamore",
+    "05_job": "Fundraiser",
 
     "06_image": "images/yana-picture.jpeg",
     "06_name": "Yana chistovskaya",
@@ -34,13 +34,21 @@ export default function Team() {
     "07_name": "Farah Fauth P.",
     "07_job": "ESG Data Analyst and Researcher",
 
-    "08_image": "images/veronica.jpeg",
-    "08_name": "Veronica Marotta",
-    "08_job": "Fundraiser / Grant writer",
+    "08_image": "images/nina.png",
+    "08_name": "Nina Nowak",
+    "08_job": "Data Scientist",
 
-    "09_image": "images/empty-profile.jpeg",
-    "09_name": "Team Member",
-    "09_job": "Join us",
+    "09_image": "images/hailey.jpeg",
+    "09_name": "Hailey Foster",
+    "09_job": "Fundraiser / Grant writer",
+
+    "10_image": "images/veronica.jpeg",
+    "10_name": "Veronica Marotta",
+    "10_job": "Fundraiser",
+
+    "11_image": "images/empty-profile.jpeg",
+    "11_name": "Team Member",
+    "11_job": "Join us",
   };
 
   return (
@@ -223,6 +231,40 @@ export default function Team() {
                 component="span"
               >
                 {content["09_job"]}
+              </Typography>
+            </Grid>
+            <Grid xs={12} sm={6} md={3}>
+              <Avatar
+                alt="teammate picture"
+                src={content["10_image"]}
+                className="team-picture"
+              />
+              <Typography variant="h6" component="h6" gutterBottom>
+                {content["10_name"]}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="span"
+              >
+                {content["10_job"]}
+              </Typography>
+            </Grid>
+            <Grid xs={12} sm={6} md={3}>
+              <Avatar
+                alt="teammate picture"
+                src={content["11_image"]}
+                className="team-picture"
+              />
+              <Typography variant="h6" component="h6" gutterBottom>
+                {content["11_name"]}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="span"
+              >
+                <Link underline="none" href="/contact">{content["11_job"]}</Link>
               </Typography>
             </Grid>
           </Grid>

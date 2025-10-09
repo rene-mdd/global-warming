@@ -27,7 +27,7 @@ export default function CustomizedTimeline() {
           </Typography>
           <Typography component="p" align="center">
             To make companies' ESG data free, open, and practical for everyday
-            use. Empowering people everywhere to make informed, sustainable
+            use. Empowering people everywhere to make informed and sustainable
             decisions. Accelerating the transition to a greener future.
           </Typography>
         </Grid>
