@@ -38,7 +38,7 @@ export default function Partners() {
         <CardActions>
           <Button
             size="small"
-            href="https://www.eon-stiftung.com/de/handeln/european-climate-fund/ecf-projects-2024.html"
+            href="https://www.eon-foundation.com/en/solutions/European-climate-fund_eng-2025/european-climate-fund-2025/ecf-projects-2024.html"
           >
             Learn More
           </Button>
