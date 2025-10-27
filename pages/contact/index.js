@@ -221,6 +221,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
                     className="g-recaptcha"
                     id="recaptcha-container"
                     data-sitekey={siteKey}
+                    data-action="LOGIN"
                   />{" "}
                   <Button
                     className="submit-button"
