@@ -8,7 +8,7 @@
           "value": "data.global-warming.org"
         }
       ],
-      "destination": "https://production-nov3e.ondigitalocean.app/:1",
+      "destination": "https://production-nov3e.ondigitalocean.app/",
       "permanent": true
     }
   ]
