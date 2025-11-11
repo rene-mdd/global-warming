@@ -26,7 +26,7 @@ function About() {
   const aboutTitle = "Climate Accountability API - About Us";
   const websiteUrl = "https://global-warming.org/about";
   const aboutMetaDescription =
-    "Our mission is to provide the public with information related to every organization carbon footprint";
+    "Our mission is to provide the public with information related to the environmental and social impact of every organization";
   const aboutKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
   return (

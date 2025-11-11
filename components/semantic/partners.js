@@ -21,7 +21,7 @@ export default function Partners() {
       >
         Partners & Acknowledgements
       </Typography>
-      <Card sx={{ paddingLeft: 1, paddingRight: 1 }}>
+      <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
         <CardMedia
           image="/images/eon-stiftung-logo.jpg"
           className="eon-image"
@@ -32,13 +32,13 @@ export default function Partners() {
             Award
           </Typography>
           <Typography variant="p" size="large">
-            European Climate Fund Winners
+            Winners of E.ON European Climate Fund Competition
           </Typography>
         </CardContent>
         <CardActions>
           <Button
             size="small"
-            href="https://www.eon-foundation.com/en/solutions/European-climate-fund_eng-2025/european-climate-fund-2025/ecf-projects-2024.html"
+            href="https://www.eon-foundation.com/en/solutions/european-climate-fund-2025/ecf-projects-2024.html"
           >
             Learn More
           </Button>
