@@ -8,7 +8,7 @@ import Footer from "../../components/semantic/footer";
 function Business() {
   // not ready
   const aboutTitle = "Business environmental impact";
-  const websiteUrl = "https://global-warming.org/business";
+  const websiteUrl = "https://www.global-warming.org/business";
   const aboutMetaDescription =
     "List of business and organization by their environmental impact";
   const aboutKeywords =

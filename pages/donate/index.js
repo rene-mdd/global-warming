@@ -24,7 +24,7 @@ function Donate() {
     "Our mission is to provide the public with information related to every organization carbon footprint";
   const donateKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
-  const websiteUrl = "https://global-warming.org/donate";
+  const websiteUrl = "https://www.global-warming.org/donate";
 
   return (
     <>

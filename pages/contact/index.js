@@ -122,7 +122,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
   const contactMetaTitle = "Climate Accountability API contact";
   const contactKeywords =
     "Global warming, climate change, Climate Accountability, contact";
-  const websiteUrl = "https://global-warming.org/contact";
+  const websiteUrl = "https://www.global-warming.org/contact";
 
   return (
     <>
