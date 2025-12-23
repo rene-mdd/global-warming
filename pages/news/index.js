@@ -66,7 +66,7 @@ function News(props) {
     "Live worldwide news about global warming and climate change.";
   const newsKeywords =
     "Global warming, climate change, news, environment, green house gases";
-  const websiteUrl = "https://global-warming.org/news";
+  const websiteUrl = "https://www.global-warming.org/news";
 
   return (
     <>

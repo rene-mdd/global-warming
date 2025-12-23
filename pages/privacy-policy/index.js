@@ -11,7 +11,7 @@ function privacyPolicy() {
     "Privacy policy: Climate Accountability API gUG. Berlin, Germany.";
   const privacyKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
-  const websiteUrl = "https://global-warming.org/privacy-policy";
+  const websiteUrl = "https://www.global-warming.org/privacy-policy";
 
   return (
     <>

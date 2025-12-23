@@ -2,7 +2,12 @@ import Head from "next/head";
 import PropTypes from "prop-types";
 // import { metadata } from "../pages/about";
 
-export default function SiteHeader({ title, description, keyword, websiteUrl }) {
+export default function SiteHeader({
+  title,
+  description,
+  keyword,
+  websiteUrl,
+}) {
   return (
     <>
       <Head>
@@ -26,7 +31,7 @@ SiteHeader.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   keyword: PropTypes.string,
-  websiteUrl: PropTypes.string
+  websiteUrl: PropTypes.string,
 };
 
 SiteHeader.defaultProps = {
@@ -34,5 +39,5 @@ SiteHeader.defaultProps = {
   description:
     "Global warming & climate change up to date APIs, data, graphs, and news. Earth's temperature, carbon dioxide (CO2), methane, nitrous oxide, melted polar ice cap or sea ice extent, and ocean warming.",
   keyword: "Global warming, climate change, API, graphs",
-  websiteUrl: "https://global-warming.org/"
+  websiteUrl: "https://www.global-warming.org/",
 };

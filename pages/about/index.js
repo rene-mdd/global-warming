@@ -24,7 +24,7 @@ const theme = createTheme({
 
 function About() {
   const aboutTitle = "Climate Accountability API - About Us";
-  const websiteUrl = "https://global-warming.org/about";
+  const websiteUrl = "https://www.global-warming.org/about";
   const aboutMetaDescription =
     "Our mission is to provide the public with information related to the environmental and social impact of every organization";
   const aboutKeywords =

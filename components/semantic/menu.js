@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 // import { Container, Image, Menu } from "semantic-ui-react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import {
   Container,
   Box,
@@ -71,6 +72,12 @@ export default class StickySideBar extends Component {
             <Container id="contact" className="menu-item">
               <Link href="/contact">Contact</Link>
             </Container>
+            <Container id="social-media-container" className="menu-item">
+              <Link href="https://www.linkedin.com/company/climate-accountability-api/">
+                {" "}
+                <LinkedInIcon fontSize="large" sx={{ margin: "9px 25px 0 0", color: "white" }} />
+              </Link>
+            </Container>
           </BurgerMenu>
         ) : (
           // desktop menu
@@ -109,6 +116,11 @@ export default class StickySideBar extends Component {
                     </Link>
                   </ButtonGroup>
                   <ButtonGroup className="donate-contact-group">
+                    <Link href="https://www.linkedin.com/company/climate-accountability-api/">
+                      <LinkedInIcon
+                        sx={{ margin: "9px 25px 0 0", color: "#0A66C2" }}
+                      />
+                    </Link>
                     <Link href="/donate">
                       <Button className="menu donate-btn">Donate</Button>
                     </Link>
