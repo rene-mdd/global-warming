@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { CardMedia, Container, TextField, Alert } from "@mui/material";
+import { CardMedia, Container, TextField, Alert, Link } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -234,7 +234,7 @@ export default function BusinessStatistics({ props }) {
   return (
     <>
       <Container maxWidth={false} align="center" sx={{ marginBottom: 1 }}>
-        <TextField
+        {/* <TextField
           label="Search"
           size="medium"
           autoComplete="off"
@@ -250,7 +250,7 @@ export default function BusinessStatistics({ props }) {
               ></LoadingButton>
             ),
           }}
-        ></TextField>
+        ></TextField> */}
       </Container>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table" className="position-relative">
@@ -312,8 +312,8 @@ export default function BusinessStatistics({ props }) {
         </Table>
       </TableContainer>
       <Container align="center">
-        <Typography component="p" fontWeight="bold" mt={3} fontSize="large">
-          Preliminary data
+        <Typography component="p" mt={3} fontSize="large">
+          Access data: <Link href="https://data.global-warming.org/">Login / Register</Link>
         </Typography>
         <LoadingButton
           loading={initialLoading}

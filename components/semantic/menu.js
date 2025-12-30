@@ -50,6 +50,7 @@ export default class StickySideBar extends Component {
     return (
       <>
         {mediaQuery ? (
+          // mobile menu
           <BurgerMenu className="menu-mobile-group">
             <Container id="home" className="menu-item">
               <Link href="/">Home</Link>
@@ -75,7 +76,10 @@ export default class StickySideBar extends Component {
             <Container id="social-media-container" className="menu-item">
               <Link href="https://www.linkedin.com/company/climate-accountability-api/">
                 {" "}
-                <LinkedInIcon fontSize="large" sx={{ margin: "9px 25px 0 0", color: "white" }} />
+                <LinkedInIcon
+                  fontSize="large"
+                  sx={{ margin: "9px 25px 0 0", color: "white" }}
+                />
               </Link>
             </Container>
           </BurgerMenu>
