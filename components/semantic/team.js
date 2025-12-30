@@ -32,7 +32,7 @@ export default function Team() {
 
     "07_image": "images/farah.jpeg",
     "07_name": "Farah Fauth P.",
-    "07_job": "ESG Data Analyst and Researcher",
+    "07_job": "Lead ESG Researcher",
 
     "08_image": "images/nina.png",
     "08_name": "Nina Nowak",
