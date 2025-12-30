@@ -7,25 +7,25 @@ import Footer from "../../components/semantic/footer";
 
 function Business() {
   // not ready
-  const aboutTitle = "Business environmental impact";
+  const businessTitle = "Free ESG Data";
   const websiteUrl = "https://www.global-warming.org/business";
-  const aboutMetaDescription =
-    "List of business and organization by their environmental impact";
-  const aboutKeywords =
-    "Global warming, environment, impact, pollution, climate change, business";
+  const businessMetaDescription =
+    "Track Nestlé, JBS, Apple ESG impact: GHG emissions, deforestation, climate commitments. Open data API.";
+  const businessKeywords =
+    "ESG data, company emissions, GHG Scope 1 2 3, corporate climate impact, deforestation tracker, business sustainability, API";
 
   return (
     <>
       <SiteHeader
-        description={aboutMetaDescription}
-        title={aboutTitle}
-        keywords={aboutKeywords}
+        description={businessMetaDescription}
+        title={businessTitle}
+        keywords={businessKeywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Grid container direction="column" className="landing-page-about">
-        <Typography component="p" align="center" className="h1-business">
-          Business Data
+        <Typography component="h1" align="center" className="h1-business">
+          Open & Free Company ESG Data
         </Typography>
         <Grid align="center">
           <CardMedia
@@ -40,7 +40,8 @@ function Business() {
             align="center"
             gutterBottom
           >
-            Find information on companies' social and environmental impact.
+            Discover companies' environmental, social, and governance (ESG)
+            impact data.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>
