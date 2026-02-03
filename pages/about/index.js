@@ -60,8 +60,9 @@ function About() {
             align="center"
             gutterBottom
           >
-            At <strong>Climate Accountability API</strong>, We are building the
-            most comprehensive platform for business environmental impact data.
+            At <strong>Climate Accountability API</strong>, we are building the
+            most comprehensive platform for business ESG impact and climate
+            related data.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center">
