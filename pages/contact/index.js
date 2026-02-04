@@ -160,10 +160,9 @@ function Contact({ siteKey = "", secretKey = "" }) {
               <Grid item xs={10} md={6}>
                 <Paper className="contact-info">
                   <p className="contact-segment">
-                    For questions about this project or to discuss ideas related
-                    to it, please send us a message or write to us at{" "}
+                    For inquiries, contact us at{" "}
                     <a href="mailto:info@global-warming.org">
-                      info@global-warming.org
+                      help@global-warming.org
                     </a>
                     .
                   </p>
