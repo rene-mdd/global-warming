@@ -22,9 +22,9 @@ export default function Team() {
     "04_name": "Darshan Parashuramappa",
     "04_job": "Data Analyst",
 
-    "05_image": "images/emma.jpeg",
-    "05_name": "Emma Finnamore",
-    "05_job": "Fundraiser",
+    "05_image": "images/annalisa.jpg",
+    "05_name": "Annalisa Ricchiuti",
+    "05_job": "Legal Advisor",
 
     "06_image": "images/yana-picture.jpeg",
     "06_name": "Yana chistovskaya",
@@ -148,7 +148,7 @@ export default function Team() {
                 {content["04_job"]}
               </Typography>
             </Grid>
-            {/* <Grid xs={12} sm={6} md={3}>
+            <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["05_image"]}
@@ -164,7 +164,7 @@ export default function Team() {
               >
                 {content["05_job"]}
               </Typography>
-            </Grid> */}
+            </Grid>
             <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
