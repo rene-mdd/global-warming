@@ -28,7 +28,7 @@ function Temperature() {
         displayTempGraph(parsedToObject, data.result);
       } catch (error) {
         console.error(error);
-          setGraphError(
+        setGraphError(
           "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
         );
       }
@@ -67,22 +67,22 @@ function Temperature() {
 
     try {
       if (!temperatureLiveData || !canvasRef.current) return;
-        temperatureService.setData(temperatureLiveData);
-        // transform api to arrays.
-        temperatureLiveData.forEach((obj) => {
-          const monthNumber = obj.time.split(".")[1];
-          const monthName = getMonthName(monthNumber);
-          const formattedDate = `${obj.time.slice(0, 4)} ${monthName}`;
-          date.push(formattedDate);
-          const value = Number(obj.station);
-          station.push(Number.isFinite(value) ? value : null);
-        });
-             if (chartRef.current) {
+      temperatureService.setData(temperatureLiveData);
+      // transform api to arrays.
+      temperatureLiveData.forEach((obj) => {
+        const monthNumber = obj.time.split(".")[1];
+        const monthName = getMonthName(monthNumber);
+        const formattedDate = `${obj.time.slice(0, 4)} ${monthName}`;
+        date.push(formattedDate);
+        const value = Number(obj.station);
+        station.push(Number.isFinite(value) ? value : null);
+      });
+      if (chartRef.current) {
         chartRef.current.destroy();
         chartRef.current = null;
       }
-        // chart js
-        chartRef.current = new Chart(canvasRef.current, {
+      // chart js
+      chartRef.current = new Chart(canvasRef.current, {
         type: "line",
         data: {
           labels: commonEraData.date.concat(date),
@@ -131,7 +131,7 @@ function Temperature() {
           },
         },
       });
-      
+
     } catch (error) {
       console.error(error);
       setGraphError(
@@ -143,7 +143,7 @@ function Temperature() {
   return (
     <>
       <Container className="chart-container">
-         <canvas ref={canvasRef} id="tempChart" />
+        <canvas ref={canvasRef} id="tempChart" />
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>

@@ -173,7 +173,7 @@ Nitrous.propTypes = {
 };
 
 Nitrous.defaultProps = {
-  parentCallBack: () => {},
+  parentCallBack: () => { },
 };
 
 export default Nitrous;

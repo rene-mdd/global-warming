@@ -152,7 +152,7 @@ Ocean.propTypes = {
 };
 
 Ocean.defaultProps = {
-  parentCallBack: () => {},
+  parentCallBack: () => { },
 };
 
 export default Ocean;

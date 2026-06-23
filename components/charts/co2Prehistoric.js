@@ -135,7 +135,7 @@ Co2Prehistoric.propTypes = {
 };
 
 Co2Prehistoric.defaultProps = {
-  parentCallBackPrehist: () => {},
+  parentCallBackPrehist: () => { },
 };
 
 export default Co2Prehistoric;

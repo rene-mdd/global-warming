@@ -170,7 +170,7 @@ Co2.propTypes = {
 };
 
 Co2.defaultProps = {
-  parentCallBack: () => {},
+  parentCallBack: () => { },
 };
 
 export default Co2;

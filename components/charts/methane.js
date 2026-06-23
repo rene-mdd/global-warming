@@ -115,7 +115,7 @@ function Methane({ parentCallBack }) {
   return (
     <>
       <Container className="chart-container">
-          <canvas ref={canvasRef} id="myMethChart" />
+        <canvas ref={canvasRef} id="myMethChart" />
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
@@ -160,7 +160,7 @@ Methane.propTypes = {
 };
 
 Methane.defaultProps = {
-  parentCallBack: () => {},
+  parentCallBack: () => { },
 };
 
 export default Methane;

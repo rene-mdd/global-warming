@@ -155,7 +155,7 @@ Arctic.propTypes = {
 };
 
 Arctic.defaultProps = {
-  parentCallBack: () => {},
+  parentCallBack: () => { },
 };
 
 export default Arctic;

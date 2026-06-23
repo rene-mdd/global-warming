@@ -150,7 +150,7 @@ Co2Recent.propTypes = {
 };
 
 Co2Recent.defaultProps = {
-  parentCallBackRecent: () => {},
+  parentCallBackRecent: () => { },
 };
 
 export default Co2Recent;
