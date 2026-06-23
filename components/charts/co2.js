@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
@@ -8,25 +8,33 @@ import { co2Service } from "../../services/dataService";
 function Co2({ parentCallBack }) {
   const [graphError, setGraphError] = useState("");
   const url = "api/co2-api";
+  const canvasRef = useRef(null);
+  const chartRef = useRef(null);
 
   useEffect(() => {
     parentCallBack(true);
+
     const date = [];
     const amount = [];
+
     localCo2Data.forEach((obj) => {
-      date.push(obj.year.split(",").filter((x) => x)[0]);
-      amount.push(
-        Number(parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1))
-      );
+      const parts = obj.year.split(",").filter((x) => x);
+      date.push(parts[0]);
+
+      const localValue = Number(parseFloat(parts[1]).toFixed(1));
+      amount.push(Number.isFinite(localValue) ? localValue : null);
     });
+
     const parsedToObject = { date, amount };
+
     async function fetchData() {
       try {
         const response = await fetch(url);
         const data = await response.json();
+
         if (data) {
           displayCo2Graph(parsedToObject, data);
-          co2Service.setData(data.co2.pop());
+          co2Service.setData(data.co2?.[data.co2.length - 1] ?? null);
           parentCallBack(false);
         }
       } catch (error) {
@@ -36,65 +44,78 @@ function Co2({ parentCallBack }) {
         );
       }
     }
+
     fetchData();
+
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
   }, []);
 
   const displayCo2Graph = (prehistoricData, latestCo2Data) => {
     const date = [];
     const amount = [];
+
     try {
-      if (latestCo2Data) {
-        latestCo2Data.co2.forEach((obj) => {
-          date.push(`${obj.year}.${obj.month}.${obj.day}`);
-          amount.push(obj.trend);
-        });
-        const ctx = document.getElementById("myCo2Chart");
-        if (ctx) {
-          (() =>
-            new Chart(ctx, {
-              type: "line",
-              data: {
-                labels: prehistoricData.date.concat(date),
-                datasets: [
-                  {
-                    label: "Carbon Dioxide",
-                    data: prehistoricData.amount.concat(amount),
-                    fill: false,
-                    borderColor: "#4984B8",
-                    backgroundColor: "black",
-                    pointRadius: 0.5,
-                    pointHoverBorderWidth: 10,
-                    pointBackgroundColor: "rgba(255, 99, 132, 1)",
-                    pointHoverBackgroundColor: "white",
-                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-                    borderWidth: 0.5,
-                    pointHoverRadius: 10,
-                  },
-                ],
-              },
-              options: {
-                scales: {
-                  y: {
-                    title: {
-                      display: true,
-                      text: "Part Per million (ppm)",
-                    },
-                  },
-                  x: {
-                    stacked: true,
-                    title: {
-                      display: true,
-                      text: "Year",
-                    },
-                    ticks: {
-                      maxRotation: 90,
-                    },
-                  },
-                },
-              },
-            }))();
-        }
+      if (!latestCo2Data?.co2 || !canvasRef.current) return;
+
+      latestCo2Data.co2.forEach((obj) => {
+        date.push(`${obj.year}.${obj.month}.${obj.day}`);
+
+        const value = Number(obj.trend);
+        amount.push(Number.isFinite(value) ? value : null);
+      });
+
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
       }
+
+      chartRef.current = new Chart(canvasRef.current, {
+        type: "line",
+        data: {
+          labels: prehistoricData.date.concat(date),
+          datasets: [
+            {
+              label: "Carbon Dioxide",
+              data: prehistoricData.amount.concat(amount),
+              fill: false,
+              borderColor: "#4984B8",
+              backgroundColor: "black",
+              pointRadius: 0.5,
+              pointHoverBorderWidth: 10,
+              pointBackgroundColor: "rgba(255, 99, 132, 1)",
+              pointHoverBackgroundColor: "white",
+              pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 0.5,
+              pointHoverRadius: 10,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: "Part Per million (ppm)",
+              },
+            },
+            x: {
+              stacked: false,
+              title: {
+                display: true,
+                text: "Year",
+              },
+              ticks: {
+                maxRotation: 90,
+              },
+            },
+          },
+        },
+      });
     } catch (error) {
       console.error(error);
       setGraphError(
@@ -106,8 +127,9 @@ function Co2({ parentCallBack }) {
   return (
     <>
       <Container className="chart-container">
-        <canvas id="myCo2Chart" />
+        <canvas ref={canvasRef} id="myCo2Chart" />
       </Container>
+
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
           <Container
@@ -132,7 +154,7 @@ function Co2({ parentCallBack }) {
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 <em>
                   {" "}
-                  https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                  [https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases](https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases)
                 </em>
               </a>
             </p>
@@ -148,7 +170,7 @@ Co2.propTypes = {
 };
 
 Co2.defaultProps = {
-  parentCallBack: true,
+  parentCallBack: () => {},
 };
 
 export default Co2;

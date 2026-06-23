@@ -210,12 +210,10 @@ export default function BusinessStatistics({ props }) {
   //       Accept: "application/vnd.api+json",
   //       "Content-Type": "application/vnd.api+json",
   //     });
-  //     console.log(businessApiUrl)
   //     async function fetchBusinessData() {
   //       try {
   //         const response = await fetch(businessApiUrl, header);
   //         const business = await response.json();
-  //         console.log(response)
   //         // setBusinessData(() => business.data);
   //         // setIncludedData(() => business.included);
   //         setLoading(false);

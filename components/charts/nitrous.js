@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
@@ -8,15 +8,21 @@ import { nitrousService } from "../../services/dataService";
 function Nitrous({ parentCallBack }) {
   const [graphError, setGraphError] = useState("");
   const url = "api/nitrous-oxide-api";
+  const canvasRef = useRef(null);
+  const chartRef = useRef(null);
+
   useEffect(() => {
     parentCallBack(true);
+
     const date = [];
     const amount = [];
+
     nitrousLocalData.forEach((obj) => {
-      date.push(obj.year.split(",").filter((x) => x)[0]);
-      amount.push(
-        parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1)
-      );
+      const parts = obj.year.split(",").filter((x) => x);
+      date.push(parts[0]);
+
+      const localValue = Number(parseFloat(parts[1]).toFixed(1));
+      amount.push(Number.isFinite(localValue) ? localValue : null);
     });
 
     const parsedToObject = { date, amount };
@@ -25,10 +31,11 @@ function Nitrous({ parentCallBack }) {
       try {
         const response = await fetch(url);
         const data = await response.json();
+
         if (data) {
           displayNitrousGraph(parsedToObject, data);
           parentCallBack(false);
-          nitrousService.setData(data.nitrous.pop());
+          nitrousService.setData(data.nitrous?.[data.nitrous.length - 1] ?? null);
         }
       } catch (error) {
         console.error(error);
@@ -37,7 +44,15 @@ function Nitrous({ parentCallBack }) {
         );
       }
     }
+
     fetchData();
+
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
   }, []);
 
   const displayNitrousGraph = (
@@ -46,60 +61,64 @@ function Nitrous({ parentCallBack }) {
   ) => {
     const date = [];
     const average = [];
-    try {
-      if (latestNitrousData.nitrous) {
-        latestNitrousData.nitrous.forEach((obj) => {
-          date.push(obj.date);
-          average.push(obj.average);
-        });
-        const ctx = document.getElementById("myNitrousChart");
-        if (ctx) {
-          (() =>
-            new Chart(ctx, {
-              type: "line",
-              data: {
-                labels: cleanNitrousPrehistoricData.date.concat(date),
-                datasets: [
-                  {
-                    label: "Nitrous Oxide",
-                    data: cleanNitrousPrehistoricData.amount.concat(average),
-                    fill: false,
-                    borderColor: "#FDB147",
-                    backgroundColor: "rgba(255, 0, 0, 0.1);",
-                    pointRadius: 1.5,
-                    pointHoverBorderWidth: 1,
-                    pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
-                    pointHoverBackgroundColor: "white",
-                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-                    borderWidth: 1,
-                    pointHoverRadius: 10,
-                  },
-                ],
-              },
-              options: {
-                scales: {
-                  y: {
-                    stacked: false,
-                    title: {
-                      display: true,
-                      text: "Nitrous Oxide mole fraction (ppb)",
-                    },
-                  },
 
-                  x: {
-                    title: {
-                      display: true,
-                      text: "Year",
-                    },
-                    ticks: {
-                      maxRotation: 90,
-                    },
-                  },
-                },
-              },
-            }))();
-        }
+    try {
+      if (!latestNitrousData?.nitrous || !canvasRef.current) return;
+
+      latestNitrousData.nitrous.forEach((obj) => {
+        date.push(obj.date);
+
+        const liveValue = Number(obj.average);
+        average.push(Number.isFinite(liveValue) ? liveValue : null);
+      });
+
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
       }
+
+      chartRef.current = new Chart(canvasRef.current, {
+        type: "line",
+        data: {
+          labels: cleanNitrousPrehistoricData.date.concat(date),
+          datasets: [
+            {
+              label: "Nitrous Oxide",
+              data: cleanNitrousPrehistoricData.amount.concat(average),
+              fill: false,
+              borderColor: "#FDB147",
+              backgroundColor: "rgba(255, 0, 0, 0.1)",
+              pointRadius: 1.5,
+              pointHoverBorderWidth: 1,
+              pointBackgroundColor: "rgba(255, 0, 0, 0.1)",
+              pointHoverBackgroundColor: "white",
+              pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 1,
+              pointHoverRadius: 10,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              stacked: false,
+              title: {
+                display: true,
+                text: "Nitrous Oxide mole fraction (ppb)",
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: "Year",
+              },
+              ticks: {
+                maxRotation: 90,
+              },
+            },
+          },
+        },
+      });
     } catch (error) {
       console.error(error);
       setGraphError(
@@ -111,8 +130,9 @@ function Nitrous({ parentCallBack }) {
   return (
     <>
       <Container className="chart-container">
-        <canvas id="myNitrousChart" />
+        <canvas ref={canvasRef} id="myNitrousChart" />
       </Container>
+
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
           <Container
@@ -127,14 +147,14 @@ function Nitrous({ parentCallBack }) {
               Data 800,000 ago to 2001 source: United States, Environmental
               Protection Agency (EPA), (
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
-                https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
+                [https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases](https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases)
               </a>
               )
             </p>
             <p>
               <span>2001 - present: </span>Ed Dlugokencky, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
-                https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/
+                [https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/](https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/)
               </a>
               )
             </p>
@@ -153,7 +173,7 @@ Nitrous.propTypes = {
 };
 
 Nitrous.defaultProps = {
-  parentCallBack: true,
+  parentCallBack: () => {},
 };
 
 export default Nitrous;
