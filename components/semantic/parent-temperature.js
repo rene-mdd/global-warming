@@ -9,9 +9,10 @@ function ParentTemperature() {
   const [todayValue, setTodayValue] = useState("");
   useEffect(() => {
     const subscription = temperatureService.getData().subscribe((message) => {
-      if (message.value) {
-        setTodayValue(message.value.pop());
-      }
+      const values = message?.value;
+      if (!Array.isArray(values) || values.length === 0) return;
+      setTodayValue(values[values.length - 1]);
+
     });
     return subscription.unsubscribe.bind(subscription);
   }, []);

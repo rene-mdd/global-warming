@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { Chart } from "chart.js/auto";
 import PropTypes from "prop-types";
@@ -7,6 +7,8 @@ import { oceanService } from "../../services/dataService";
 function Ocean({ parentCallBack }) {
   const url = "api/ocean-warming-api";
   const [graphError, setGraphError] = useState("");
+  const canvasRef = useRef(null);
+  const chartRef = useRef(null);
 
   useEffect(() => {
     parentCallBack(true);
@@ -23,6 +25,12 @@ function Ocean({ parentCallBack }) {
       }
     }
     fetchData();
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
   }, []);
 
   const displayOceanGraph = (oceanWarmingData) => {
@@ -34,63 +42,63 @@ function Ocean({ parentCallBack }) {
       if (result) {
         for (const [key, value] of Object.entries(result)) {
           date.push(key);
-          temperature.push(value.anomaly);
+          const temp = Number(value?.departure);
+          temperature.push(Number.isFinite(temp) ? temp : null);
         }
         oceanService.setData({ temperature, description });
-        const ctx = document.getElementById("oceanChart");
-        if (ctx) {
-          (() =>
-            new Chart(ctx, {
-              type: "line",
-              data: {
-                labels: date,
-                datasets: [
-                  {
-                    label: "Ocean warming",
-                    data: temperature,
-                    fill: false,
-                    borderColor: "#1da2d8",
-                    backgroundColor: "black",
-                    pointRadius: 1,
-                    pointHoverBorderWidth: 1,
-                    pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
-                    pointHoverBackgroundColor: "white",
-                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-                    borderWidth: 1,
-                    pointHoverRadius: 10,
-                  },
-                ],
+        if (!canvasRef.current) return;
+        if (chartRef.current) {
+          chartRef.current.destroy();
+          chartRef.current = null;
+        };
+        chartRef.current = new Chart(canvasRef.current, {
+          type: "line",
+          data: {
+            labels: date,
+            datasets: [
+              {
+                label: "Ocean warming",
+                data: temperature,
+                fill: false,
+                borderColor: "#1da2d8",
+                backgroundColor: "black",
+                pointRadius: 1,
+                pointHoverBorderWidth: 1,
+                pointBackgroundColor: "rgba(255, 0, 0, 0.1)",
+                pointHoverBackgroundColor: "white",
+                pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 1,
+                pointHoverRadius: 10,
               },
-              options: {
-                animation: {
-                  onComplete: ({ chart }) => {
-                    const completeAnimation =
-                      chart.canvas.classList.add("animation-complete");
-                    return completeAnimation;
-                  },
-                },
-                scales: {
-                  y: {
-                    stacked: true,
-                    title: {
-                      display: true,
-                      text: "Celsius",
-                    },
-                  },
-                  x: {
-                    stacked: true,
-                    title: {
-                      display: true,
-                      text: "Year",
-                    },
-                    ticks: {
-                      maxRotation: 90,
-                    },
-                  },
+            ],
+          },
+          options: {
+            animation: {
+              onComplete: ({ chart }) => {
+                chart.canvas.classList.add("animation-complete");
+              },
+            },
+            scales: {
+              y: {
+                stacked: true,
+                title: {
+                  display: true,
+                  text: "Celsius",
                 },
               },
-            }))();
-        }
+              x: {
+                stacked: true,
+                title: {
+                  display: true,
+                  text: "Year",
+                },
+                ticks: {
+                  maxRotation: 90,
+                },
+              },
+            },
+          },
+        });
       }
     } catch (error) {
       setGraphError(
@@ -103,7 +111,7 @@ function Ocean({ parentCallBack }) {
   return (
     <>
       <Container className="chart-container">
-        <canvas id="oceanChart" />
+        <canvas ref={canvasRef} id="oceanChart" />
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
@@ -144,7 +152,7 @@ Ocean.propTypes = {
 };
 
 Ocean.defaultProps = {
-  parentCallBack: true,
+  parentCallBack: () => { },
 };
 
 export default Ocean;

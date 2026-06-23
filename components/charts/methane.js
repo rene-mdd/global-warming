@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
@@ -8,16 +8,19 @@ import { methaneService } from "../../services/dataService";
 function Methane({ parentCallBack }) {
   const [graphError, setGraphError] = useState("");
   const url = "api/methane-api";
+  const canvasRef = useRef(null);
+  const chartRef = useRef(null);
 
   useEffect(() => {
     parentCallBack(true);
     const date = [];
     const amount = [];
     localMethaneData.forEach((obj) => {
-      date.push(obj.year.split(",").filter((x) => x)[0]);
-      amount.push(
-        Number(parseFloat(obj.year.split(",").filter((x) => x)[1]).toFixed(1))
-      );
+      const parts = obj.year.split(",").filter((x) => x);
+      date.push(parts[0]);
+
+      const localValue = Number(parseFloat(parts[1]).toFixed(1));
+      amount.push(Number.isFinite(localValue) ? localValue : null);
     });
     const parsedToObject = { date, amount };
     async function fetchData() {
@@ -25,7 +28,7 @@ function Methane({ parentCallBack }) {
         const response = await fetch(url);
         const data = await response.json();
         if (data) {
-          methaneService.setData(data.methane.pop());
+          methaneService.setData(data.methane?.[data.methane.length - 1] ?? null);
           displayMethaneGraph(parsedToObject, data);
           parentCallBack(false);
         }
@@ -37,66 +40,71 @@ function Methane({ parentCallBack }) {
       }
     }
     fetchData();
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
   }, []);
 
   const displayMethaneGraph = (methPrehistoricData, latestMethaneData) => {
     const date = [];
     const average = [];
     try {
-      if (latestMethaneData.methane) {
-        latestMethaneData.methane.forEach((obj) => {
-          date.push(obj.date);
-          average.push(obj.average);
-        });
-        const ctx = document.getElementById("myMethChart");
-        if (ctx) {
-          (() =>
-            new Chart(ctx, {
-              type: "line",
-              data: {
-                labels: methPrehistoricData.date.concat(date),
-                datasets: [
-                  {
-                    label: "Methane",
-                    data: methPrehistoricData.amount.concat(average),
-                    fill: false,
-                    borderColor: "#A75E09",
-                    backgroundColor: "rgba(255, 0, 0, 0.1);",
-                    pointRadius: 0.5,
-                    pointHoverBorderWidth: 1,
-                    pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
-                    pointHoverBackgroundColor: "white",
-                    pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-                    borderWidth: 1,
-                    pointHoverRadius: 10,
-                  },
-                ],
-              },
-              options: {
-                scales: {
-                  y: {
-                    stacked: true,
-                    title: {
-                      display: true,
-                      text: "Part Per billion (ppb)",
-                    },
-                  },
-
-                  x: {
-                    stacked: true,
-                    title: {
-                      display: true,
-                      text: "Year",
-                    },
-                    ticks: {
-                      maxRotation: 90,
-                    },
-                  },
-                },
-              },
-            }))();
-        }
+      if (!latestMethaneData?.methane || !canvasRef.current) return;
+      latestMethaneData.methane.forEach((obj) => {
+        date.push(obj.date);
+        const liveValue = Number(obj.average);
+        average.push(Number.isFinite(liveValue) ? liveValue : null);
+      });
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
       }
+      chartRef.current = new Chart(canvasRef.current, {
+        type: "line",
+        data: {
+          labels: methPrehistoricData.date.concat(date),
+          datasets: [
+            {
+              label: "Methane",
+              data: methPrehistoricData.amount.concat(average),
+              fill: false,
+              borderColor: "#A75E09",
+              backgroundColor: "rgba(255, 0, 0, 0.1)",
+              pointRadius: 0.5,
+              pointHoverBorderWidth: 1,
+              pointBackgroundColor: "rgba(255, 0, 0, 0.1)",
+              pointHoverBackgroundColor: "white",
+              pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 1,
+              pointHoverRadius: 10,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              stacked: false,
+              title: {
+                display: true,
+                text: "Part Per billion (ppb)",
+              },
+            },
+            x: {
+              stacked: false,
+              title: {
+                display: true,
+                text: "Year",
+              },
+              ticks: {
+                maxRotation: 90,
+              },
+            },
+          },
+        },
+      });
     } catch (error) {
       console.error(error);
       setGraphError(
@@ -107,7 +115,7 @@ function Methane({ parentCallBack }) {
   return (
     <>
       <Container className="chart-container">
-        <canvas id="myMethChart" />
+        <canvas ref={canvasRef} id="myMethChart" />
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
@@ -152,7 +160,7 @@ Methane.propTypes = {
 };
 
 Methane.defaultProps = {
-  parentCallBack: true,
+  parentCallBack: () => { },
 };
 
 export default Methane;

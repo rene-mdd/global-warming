@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { Chart } from "chart.js/auto";
 import localTemperatureData from "../../public/data/csvjson-temperature.json";
@@ -7,20 +7,17 @@ import { temperatureService } from "../../services/dataService";
 function Temperature() {
   const url = "api/temperature-api";
   const [graphError, setGraphError] = useState("");
+  const canvasRef = useRef(null);
+  const chartRef = useRef(null);
 
   useEffect(() => {
     const date = [];
     const amount = [];
     localTemperatureData.forEach((obj) => {
-      date.push(obj.year.split(" ").filter((x) => x)[0]);
-      amount.push(
-        parseFloat(
-          obj.year
-            .split(" ")
-            .filter((x) => x)[1]
-            .slice(0, 5)
-        )
-      );
+      const parts = obj.year.split(" ").filter((x) => x);
+      date.push(parts[0]);
+      const localValue = Number(parseFloat(parts[1].slice(0, 5)));
+      amount.push(Number.isFinite(localValue) ? localValue : null);
     });
 
     const parsedToObject = { date, amount };
@@ -31,9 +28,18 @@ function Temperature() {
         displayTempGraph(parsedToObject, data.result);
       } catch (error) {
         console.error(error);
+        setGraphError(
+          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+        );
       }
     }
     fetchData();
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
   }, []);
 
   // Helper function to get month name from month number
@@ -60,71 +66,72 @@ function Temperature() {
     const station = [];
 
     try {
-      if (temperatureLiveData) {
-        temperatureService.setData(temperatureLiveData);
-        // transform api to arrays.
-        temperatureLiveData.forEach((obj) => {
-          const monthNumber = obj.time.split(".")[1];
-          const monthName = getMonthName(monthNumber);
-          const formattedDate = `${obj.time.slice(0, 4)} ${monthName}`;
-          date.push(formattedDate);
-          station.push(obj.station);
-        });
-        // chart js
-        const ctx = document.getElementById("tempChart");
-        (() =>
-          new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: commonEraData.date.concat(date),
-              datasets: [
-                {
-                  label: "Temperature",
-                  data: commonEraData.amount.concat(station),
-                  fill: false,
-                  borderColor: "#FF073A",
-                  backgroundColor: "black",
-                  pointRadius: 1,
-                  pointHoverBorderWidth: 1,
-                  pointBackgroundColor: "rgba(255, 0, 0, 0.1);",
-                  pointHoverBackgroundColor: "white",
-                  pointHoverBorderColor: "rgba(255, 99, 132, 1)",
-                  borderWidth: 0.5,
-                  pointHoverRadius: 10,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              animation: {
-                onComplete: ({ chart }) => {
-                  const completeAnimation =
-                    chart.canvas.classList.add("animation-complete");
-                  return completeAnimation;
-                },
-              },
-              scales: {
-                y: {
-                  stacked: true,
-                  title: {
-                    display: true,
-                    text: "Celsius",
-                  },
-                },
-                x: {
-                  stacked: true,
-                  title: {
-                    display: true,
-                    text: "Year",
-                  },
-                  ticks: {
-                    maxRotation: 90,
-                  },
-                },
-              },
-            },
-          }))();
+      if (!temperatureLiveData || !canvasRef.current) return;
+      temperatureService.setData(temperatureLiveData);
+      // transform api to arrays.
+      temperatureLiveData.forEach((obj) => {
+        const monthNumber = obj.time.split(".")[1];
+        const monthName = getMonthName(monthNumber);
+        const formattedDate = `${obj.time.slice(0, 4)} ${monthName}`;
+        date.push(formattedDate);
+        const value = Number(obj.station);
+        station.push(Number.isFinite(value) ? value : null);
+      });
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
       }
+      // chart js
+      chartRef.current = new Chart(canvasRef.current, {
+        type: "line",
+        data: {
+          labels: commonEraData.date.concat(date),
+          datasets: [
+            {
+              label: "Temperature",
+              data: commonEraData.amount.concat(station),
+              fill: false,
+              borderColor: "#FF073A",
+              backgroundColor: "black",
+              pointRadius: 1,
+              pointHoverBorderWidth: 1,
+              pointBackgroundColor: "rgba(255, 0, 0, 0.1)",
+              pointHoverBackgroundColor: "white",
+              pointHoverBorderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 0.5,
+              pointHoverRadius: 10,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          animation: {
+            onComplete: ({ chart }) => {
+              chart.canvas.classList.add("animation-complete");
+            },
+          },
+          scales: {
+            y: {
+              stacked: false,
+              title: {
+                display: true,
+                text: "Celsius",
+              },
+            },
+            x: {
+              stacked: false,
+              title: {
+                display: true,
+                text: "Year",
+              },
+              ticks: {
+                maxRotation: 90,
+              },
+            },
+          },
+        },
+      });
+
     } catch (error) {
       console.error(error);
       setGraphError(
@@ -136,7 +143,7 @@ function Temperature() {
   return (
     <>
       <Container className="chart-container">
-        <canvas id="tempChart" />
+        <canvas ref={canvasRef} id="tempChart" />
       </Container>
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
