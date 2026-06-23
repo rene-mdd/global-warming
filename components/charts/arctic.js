@@ -47,12 +47,13 @@ function Arctic({ parentCallBack }) {
     try {
       if (!arcticData || !canvasRef.current) return;
 
-      const filterArcticData = Object.keys(arcticData)
+      const filterArcticData = {};
+
+      Object.keys(arcticData)
         .filter((objKey) => objKey !== "198712" && objKey !== "198801")
-        .reduce((newObj, key) => {
-          newObj[key] = arcticData[key];
-          return newObj;
-        }, {});
+        .forEach((key) => {
+          filterArcticData[key] = arcticData[key];
+        });
 
       for (const [key, squareKm] of Object.entries(filterArcticData)) {
         amount.push(squareKm.value);
@@ -74,6 +75,7 @@ function Arctic({ parentCallBack }) {
               borderColor: "rgba(44, 130, 201, 1)",
               data: amount,
               borderWidth: 1,
+              fill: false,
             },
           ],
         },
@@ -118,6 +120,7 @@ function Arctic({ parentCallBack }) {
       <Container className="chart-container">
         <canvas ref={canvasRef} id="arcticChart" />
       </Container>
+
       <Grid container columns={10} justifyContent="center">
         <Grid item xs={9}>
           <Container
@@ -155,7 +158,7 @@ Arctic.propTypes = {
 };
 
 Arctic.defaultProps = {
-  parentCallBack: () => { },
+  parentCallBack: () => {},
 };
 
 export default Arctic;
