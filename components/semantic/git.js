@@ -183,12 +183,12 @@ function Git() {
           alignItems="center"
           flexDirection="column"
         >
-          <Typography variant="h5" color="white" mt={5} mb={1} borderBottom={1}>
+          {/* <Typography variant="h5" color="white" mt={5} mb={1} borderBottom={1}>
             Database / Backend
           </Typography>
           <Typography component="p" color="white">
             TBA
-          </Typography>
+          </Typography> */}
         </Grid>
         <Grid mt={2} xs={12}>
           <Container component="footer" className="github-source">
