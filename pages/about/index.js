@@ -120,7 +120,7 @@ function About() {
         </Grid>
       </Grid>
       <Grid container sx={{ width: "100%" }} className="partners-wrapper">
-        <Grid sx={{ width: "100%" }} >
+        <Grid sx={{ width: "100%" }}>
           <Partners />
         </Grid>
       </Grid>

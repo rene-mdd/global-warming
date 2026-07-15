@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -11,7 +12,7 @@ function CountUp({ end, duration = 1200, showPlus = false, isVisible }) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        if (!isVisible) return;
+        if (!isVisible) return undefined;
 
         let start = 0;
         const increment = end / (duration / 16);
@@ -36,6 +37,13 @@ function CountUp({ end, duration = 1200, showPlus = false, isVisible }) {
         </Typography>
     );
 }
+
+CountUp.propTypes = {
+    end: PropTypes.number.isRequired,
+    duration: PropTypes.number,
+    showPlus: PropTypes.bool,
+    isVisible: PropTypes.bool.isRequired,
+};
 
 function FactCard({ value, label, showPlus }) {
     const ref = useRef(null);
@@ -71,6 +79,12 @@ function FactCard({ value, label, showPlus }) {
         </Paper>
     );
 }
+
+FactCard.propTypes = {
+    value: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    showPlus: PropTypes.bool,
+};
 
 export default function FactsSection() {
     const facts = [
