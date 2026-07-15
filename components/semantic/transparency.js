@@ -38,14 +38,6 @@ export default function Transparency() {
         >
           Download
         </Typography>
-        <Typography component="h3">Transparency register:</Typography>
-        <Typography
-          component="a"
-          href="/documents/transparency-register.pdf"
-          download
-        >
-          Download
-        </Typography>
       </Grid>
     </>
   );

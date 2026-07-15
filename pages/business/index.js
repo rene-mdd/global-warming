@@ -25,7 +25,7 @@ function Business() {
       <StickyMenu />
       <Grid container direction="column" className="landing-page-about">
         <Typography component="p" align="center" className="h1-business">
-          Business Data
+          Companies ESG data
         </Typography>
         <Grid align="center">
           <CardMedia
@@ -40,7 +40,7 @@ function Business() {
             align="center"
             gutterBottom
           >
-            Find information on companies' social and environmental impact.
+            Find information on companies' environmental, social and governance (ESG) impact.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>

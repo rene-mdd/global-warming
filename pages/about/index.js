@@ -10,6 +10,7 @@ import Git from "../../components/semantic/git";
 import Footer from "../../components/semantic/footer";
 import Transparency from "../../components/semantic/transparency";
 import Partners from "../../components/semantic/partners";
+import Achievements from "../../components/semantic/achievements";
 
 const theme = createTheme({
   palette: {
@@ -108,27 +109,26 @@ function About() {
         </Typography>
         <CustomizedTimeline />
       </Grid>
-      <Grid container className="transparency-wrapper" id="transparency">
-        <Typography variant="h2" className="transparency-title" align="center">
-          Transparency
-        </Typography>
-        <Transparency />
-      </Grid>
-      <Grid container className="partners-wrapper">
-        <Grid
-          xs={12}
-          display="flex"
-          justifyContent="center"
-          flexDirection="column"
-          alignItems="center"
-        >
-          <Partners />
+      <Grid container>
+        <Grid xs={12}>
+          <Achievements />
         </Grid>
       </Grid>
       <Grid container className="about-wrapper">
         <Grid xs={12}>
           <Team />
         </Grid>
+      </Grid>
+      <Grid container sx={{ width: "100%" }} className="partners-wrapper">
+        <Grid sx={{ width: "100%" }}>
+          <Partners />
+        </Grid>
+      </Grid>
+      <Grid container className="transparency-wrapper" id="transparency">
+        <Typography variant="h2" className="transparency-title" align="center">
+          Transparency
+        </Typography>
+        <Transparency />
       </Grid>
       <Grid container className="about-wrapper">
         <Grid xs={12}>
