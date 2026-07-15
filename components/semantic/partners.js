@@ -58,10 +58,10 @@ export default function Partners() {
             />
             <CardContent sx={{ padding: "13px" }}>
               <Typography gutterBottom variant="h5" component="div">
-                 Partner
+                Partner
               </Typography>
               <Typography variant="p" size="large">
-                Joined as a consortium member of CLIMACT 
+                Joined as a consortium member of CLIMACT
               </Typography>
             </CardContent>
             <CardActions>
@@ -80,7 +80,7 @@ export default function Partners() {
               image="/images/ontec-energy.png"
               className="eon-image"
               title="Ontec Energy"
-              sx={{ width: "150px", margin: "auto"}}
+              sx={{ width: "150px", margin: "auto" }}
             />
             <CardContent sx={{ padding: "13px" }}>
               <Typography gutterBottom variant="h5" component="div">
@@ -106,7 +106,7 @@ export default function Partners() {
               image="/images/roi-logo.png"
               className="eon-image"
               title="Roots of Impact"
-              sx={{ width: "150px", margin: "auto"}}
+              sx={{ width: "150px", margin: "auto" }}
             />
             <CardContent sx={{ padding: "13px" }}>
               <Typography gutterBottom variant="h5" component="div">

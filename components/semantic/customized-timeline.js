@@ -44,7 +44,7 @@ export default function CustomizedTimeline() {
         </Grid>
       </Grid>
       <Timeline position="alternate" sx={{ width: "100%", padding: "0" }}>
-         <TimelineItem>
+        <TimelineItem>
           <TimelineOppositeContent
             sx={{ m: "auto 0" }}
             variant="body2"
@@ -172,7 +172,7 @@ export default function CustomizedTimeline() {
             </Typography>
           </TimelineContent>
         </TimelineItem>
-                <TimelineItem>
+        <TimelineItem>
           <TimelineOppositeContent
             align="right"
             variant="body2"

@@ -124,7 +124,7 @@ function About() {
           <Partners />
         </Grid>
       </Grid>
-            <Grid container className="transparency-wrapper" id="transparency">
+      <Grid container className="transparency-wrapper" id="transparency">
         <Typography variant="h2" className="transparency-title" align="center">
           Transparency
         </Typography>
