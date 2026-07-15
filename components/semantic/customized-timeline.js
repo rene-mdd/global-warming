@@ -11,6 +11,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import GroupsIcon from "@mui/icons-material/Groups";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import CodeIcon from '@mui/icons-material/Code';
 
 export default function CustomizedTimeline() {
   return (
@@ -26,7 +28,7 @@ export default function CustomizedTimeline() {
             Mission
           </Typography>
           <Typography component="p" align="center">
-            To make companies' ESG data free, open, and practical for everyday
+            To make climate and companies' ESG data free, open, and practical for everyday
             use. Empowering people everywhere to make informed and sustainable
             decisions. Accelerating the transition to a greener future.
           </Typography>
@@ -42,6 +44,31 @@ export default function CustomizedTimeline() {
         </Grid>
       </Grid>
       <Timeline position="alternate" sx={{ width: "100%", padding: "0" }}>
+         <TimelineItem>
+          <TimelineOppositeContent
+            sx={{ m: "auto 0" }}
+            variant="body2"
+            color="white"
+            className="timeline-q"
+          >
+            2020
+          </TimelineOppositeContent>
+          <TimelineSeparator>
+            <TimelineConnector />
+            <TimelineDot sx={{ backgroundColor: "#C83CB9" }}>
+              <PlayArrowIcon sx={{ color: "white" }} />
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent sx={{ py: "12px", px: 2 }}>
+            <Typography variant="h6" component="span" color="white">
+              Start
+            </Typography>
+            <Typography color="white">
+              Development of the first public API exposing atmospheric greenhouse gas concentration.
+            </Typography>
+          </TimelineContent>
+        </TimelineItem>
         <TimelineItem className="timeline-item">
           <TimelineOppositeContent
             align="right"
@@ -113,10 +140,10 @@ export default function CustomizedTimeline() {
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
             <Typography variant="h6" component="span" color="white">
-              Development
+              Fundraising
             </Typography>
             <Typography color="white">
-              Start of fundraising campaign. Development of prototype.
+              Start of fundraising campaign.
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -131,14 +158,39 @@ export default function CustomizedTimeline() {
           </TimelineOppositeContent>
           <TimelineSeparator>
             <TimelineConnector />
-            <TimelineDot sx={{ backgroundColor: "#1fa774" }}>
-              <RocketLaunchIcon />
+            <TimelineDot sx={{ backgroundColor: "#D5174E" }}>
+              <CodeIcon />
             </TimelineDot>
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
             <Typography variant="h6" component="span" color="white">
-              Expansion
+              Development
+            </Typography>
+            <Typography color="white">
+              Development of prototype.
+            </Typography>
+          </TimelineContent>
+        </TimelineItem>
+                <TimelineItem>
+          <TimelineOppositeContent
+            align="right"
+            variant="body2"
+            color="white"
+            className="timeline-q"
+          >
+            2027
+          </TimelineOppositeContent>
+          <TimelineSeparator>
+            <TimelineConnector />
+            <TimelineDot sx={{ backgroundColor: "#1fa774" }}>
+              <RocketLaunchIcon color="white" />
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent sx={{ py: "12px", px: 2 }}>
+            <Typography variant="h6" component="span" color="white">
+              Launch
             </Typography>
             <Typography color="white">
               Launch of the fully-fledged platform to a global audience.
