@@ -114,21 +114,15 @@ function About() {
         </Typography>
         <Transparency />
       </Grid>
-      <Grid container className="partners-wrapper">
-        <Grid
-          xs={12}
-          display="flex"
-          justifyContent="center"
-          flexDirection="column"
-          alignItems="center"
-        >
+      <Grid container sx={{ width: "100%" }}  className="partners-wrapper">
+        <Grid sx={{ width: "100%" }} >
           <Partners />
         </Grid>
       </Grid>
       <Grid container className="about-wrapper">
         <Grid xs={12}>
           <Team />
-        </Grid>
+          </Grid>
       </Grid>
       <Grid container className="about-wrapper">
         <Grid xs={12}>
