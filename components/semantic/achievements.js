@@ -8,7 +8,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
-function CountUp({ end, duration = 1200, showPlus = false, isVisible }) {
+function CountUp({ end, duration, showPlus, isVisible }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -49,17 +49,19 @@ CountUp.propTypes = {
   isVisible: PropTypes.bool.isRequired,
 };
 
+CountUp.defaultProps = {
+  duration: 1200,
+  showPlus: false,
+};
+
 function FactCard({ value, label, showPlus }) {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.5 },
-    );
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setIsVisible(true);
+    }, { threshold: 0.5 });
 
     const el = ref.current;
     if (el) observer.observe(el);
@@ -90,6 +92,10 @@ FactCard.propTypes = {
   showPlus: PropTypes.bool,
 };
 
+FactCard.defaultProps = {
+  showPlus: false,
+};
+
 export default function FactsSection() {
   const facts = [
     { value: 80000, label: "Connected Devices", showPlus: true },
@@ -117,11 +123,34 @@ export default function FactsSection() {
 
       <Container sx={{ position: "relative", zIndex: 1 }}>
         <Grid container spacing={4} justifyContent="center" textAlign="center">
-          {facts.map((fact) => (
-            <Grid key={fact.label} size={{ xs: 12, sm: 6, md: 3 }}>
-              <FactCard {...fact} />
-            </Grid>
-          ))}
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <FactCard
+              value={facts[0].value}
+              label={facts[0].label}
+              showPlus={facts[0].showPlus}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <FactCard
+              value={facts[1].value}
+              label={facts[1].label}
+              showPlus={facts[1].showPlus}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <FactCard
+              value={facts[2].value}
+              label={facts[2].label}
+              showPlus={facts[2].showPlus}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+            <FactCard
+              value={facts[3].value}
+              label={facts[3].label}
+              showPlus={facts[3].showPlus}
+            />
+          </Grid>
         </Grid>
       </Container>
     </Box>
