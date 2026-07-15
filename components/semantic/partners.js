@@ -12,15 +12,32 @@ import Typography from "@mui/material/Typography";
 export default function Partners() {
   return (
     <>
-      <Typography
-        gutterBottom
-        className="partners-title"
-        variant="h2"
-        component="div"
-        align="center"
-      >
-        Partners & Acknowledgements
-      </Typography>
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid size={12}>
+          <Item>
+            {" "}
+            <Typography
+              gutterBottom
+              className="partners-title"
+              variant="h2"
+              component="div"
+              align="center"
+            >
+              Partners & Acknowledgements
+            </Typography>
+          </Item>
+        </Grid>
+        <Grid size={6}>
+          <Item>2</Item>
+        </Grid>
+        <Grid size={6}>
+          <Item>3</Item>
+        </Grid>
+        <Grid size={6}>
+          <Item>4</Item>
+        </Grid>
+      </Grid>
+
       <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
         <CardMedia
           image="/images/eon-stiftung-logo.jpg"
