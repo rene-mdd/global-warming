@@ -11,7 +11,7 @@ export default function Team() {
     "01_job": "Founder & Software Developer",
 
     "02_image": "images/venkat.jpg",
-    "02_name": "Data Engineer & LLMs Developer",
+    "02_name": "Data & LLMs Engineer",
     "02_job": "Strategy & Impact Measurement",
 
     "03_image": "images/keitel-picture.jpeg",
