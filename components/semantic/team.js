@@ -10,8 +10,8 @@ export default function Team() {
     "01_name": "René Rodríguez",
     "01_job": "Founder & Software Developer",
 
-    "02_image": "images/karoline-picture.png",
-    "02_name": "Karoline R. Rivera",
+    "02_image": "images/venkat.jpg",
+    "02_name": "Data & LLMs Engineer",
     "02_job": "Strategy & Impact Measurement",
 
     "03_image": "images/keitel-picture.jpeg",
@@ -96,7 +96,7 @@ export default function Team() {
                 {content["01_job"]}
               </Typography>
             </Grid>
-            {/* <Grid xs={12} sm={6} md={3}>
+            <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["02_image"]}
@@ -112,7 +112,7 @@ export default function Team() {
               >
                 {content["02_job"]}
               </Typography>
-            </Grid> */}
+            </Grid>
             <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"

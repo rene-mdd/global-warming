@@ -61,9 +61,13 @@ function About() {
             align="center"
             gutterBottom
           >
-            At <strong>Climate Accountability API</strong>, we are building the
-            most comprehensive platform for business ESG impact and climate
-            related data.
+            At <strong>Climate Accountability API</strong>, we develop open
+            digital infrastructure for trustworthy sustainability and
+            environmental data, with expertise in APIs, interoperability, data
+            governance, metadata, FAIR data principles, and digital platforms.
+            Our mission is to build the world's most comprehensive, transparent,
+            and accessible platform for ESG and climate-related
+            data.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center">
