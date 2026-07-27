@@ -32,7 +32,7 @@ export default function Partners() {
             />
             <CardContent sx={{ padding: "13px" }}>
               <Typography gutterBottom variant="h5" component="div">
-                Award - Supporter
+                E.ON
               </Typography>
               <Typography variant="p" size="large">
                 Winners of E.ON European Climate Fund Competition
@@ -57,7 +57,7 @@ export default function Partners() {
             />
             <CardContent sx={{ padding: "13px" }}>
               <Typography gutterBottom variant="h5" component="div">
-                Partner
+                BCI
               </Typography>
               <Typography variant="p" size="large">
                 Joined as a consortium member of CLIMACT
@@ -83,7 +83,7 @@ export default function Partners() {
             />
             <CardContent sx={{ padding: "13px" }}>
               <Typography gutterBottom variant="h5" component="div">
-                Partner
+                Ontec Energy
               </Typography>
               <Typography variant="p" size="large">
                 Supporting Climate Accountability API work
@@ -109,10 +109,10 @@ export default function Partners() {
             />
             <CardContent sx={{ padding: "13px" }}>
               <Typography gutterBottom variant="h5" component="div">
-                Partner
+                Roots of Impact
               </Typography>
               <Typography variant="p" size="large">
-                Supporting Climate Accountability API work
+                Advisors and supporters Climate Accountability API
               </Typography>
             </CardContent>
             <CardActions>
