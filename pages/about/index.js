@@ -66,7 +66,7 @@ function About() {
             environmental data, with expertise in APIs, interoperability, data
             governance, metadata, FAIR data principles, and digital platforms.
             Our mission is to build the world's most comprehensive, transparent,
-            and accessible platform for ESG, sustainability, and climate-related
+            and accessible platform for ESG and climate-related
             data.
           </Typography>
         </Grid>
