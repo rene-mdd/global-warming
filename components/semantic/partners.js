@@ -112,7 +112,7 @@ export default function Partners() {
                 Roots of Impact
               </Typography>
               <Typography variant="p" size="large">
-                Advisors and supporters Climate Accountability API
+                Advisors and supporters of Climate Accountability API
               </Typography>
             </CardContent>
             <CardActions>
