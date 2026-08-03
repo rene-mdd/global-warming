@@ -3,16 +3,16 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 export default function Team() {
   const content = {
-    badge: "GWO",
+    "badge": "GWO",
     "header-p1": "Join our organization",
-    description: "We must disclose the environmental impact of every business.",
+    "description": "We must disclose the environmental impact of every business.",
     "01_image": "images/rene-picture.jpg",
     "01_name": "René Rodríguez",
     "01_job": "Founder & Software Developer",
 
     "02_image": "images/venkat.jpg",
-    "02_name": "Data & LLMs Engineer",
-    "02_job": "Strategy & Impact Measurement",
+    "02_name": "Venkat Harshith",
+    "02_job": "Data & LLMs Engineer",
 
     "03_image": "images/keitel-picture.jpeg",
     "03_name": "Keitel Ortega",
@@ -216,7 +216,7 @@ export default function Team() {
                 {content["08_job"]}
               </Typography>
             </Grid>
-            <Grid xs={12} sm={6} md={3}>
+            {/* <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"
                 src={content["09_image"]}
@@ -232,7 +232,7 @@ export default function Team() {
               >
                 {content["09_job"]}
               </Typography>
-            </Grid>
+            </Grid> */}
             {/* <Grid xs={12} sm={6} md={3}>
               <Avatar
                 alt="teammate picture"

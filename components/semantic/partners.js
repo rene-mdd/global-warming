@@ -60,7 +60,7 @@ export default function Partners() {
                 BCI
               </Typography>
               <Typography variant="p" size="large">
-                Joined as a consortium member of CLIMACT
+                Consortium Partners for Horizon Europe Project
               </Typography>
             </CardContent>
             <CardActions>
