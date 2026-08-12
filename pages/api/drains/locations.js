@@ -1,18 +1,19 @@
-// pages/api/drains/locations.js   — Pages Router version
+// pages/api/drains/locations.js
 //
-// Country -> city -> IP tree for the "IPs by location" panel.
+// "Which IPs are coming from where" — a country -> city -> IP tree.
 //   GET /api/drains/locations?hours=24&countries=15&ips=25
 //
-// Separate from /stats because the payload is much larger and the dashboard
-// only asks for it when the panel is on screen.
+// Separate from /stats because the payload is much larger and the dashboard only
+// asks for it when the panel is on screen.
 
-import { readRecords } from "@/lib/drain-store";
-import { aggregateLocations } from "@/lib/aggregate";
-import { checkApiAuth } from "@/lib/api-auth";
-import { privacyInfo } from "@/lib/privacy";
+import { readRecords } from "../../../lib/drain-store";
+import { aggregateLocations } from "../../../lib/aggregate";
+import checkApiAuth from "../../../lib/api-auth";
+import { privacyInfo } from "../../../lib/privacy";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
+    res.setHeader("Allow", "GET");
     return res.status(405).json({ error: "method not allowed" });
   }
 
@@ -20,8 +21,14 @@ export default async function handler(req, res) {
   if (refusal) return res.status(refusal.status).json(refusal.body);
 
   const hours = Math.min(24 * 90, Math.max(1, Number(req.query.hours) || 24));
-  const limitCountries = Math.min(60, Math.max(1, Number(req.query.countries) || 15));
-  const limitIpsPerCountry = Math.min(200, Math.max(1, Number(req.query.ips) || 25));
+  const limitCountries = Math.min(
+    60,
+    Math.max(1, Number(req.query.countries) || 15),
+  );
+  const limitIpsPerCountry = Math.min(
+    200,
+    Math.max(1, Number(req.query.ips) || 25),
+  );
 
   const endTime = Date.now();
   const startTime = endTime - hours * 60 * 60 * 1000;

@@ -17,6 +17,7 @@
 //    "roughly this part of the world" rather than a fact.
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import PropTypes from "prop-types";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -36,8 +37,42 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import styles from "./locationsPanel.module.scss";
-import { MAGNITUDE_HUE, formatFullTimestamp, formatNumber, formatPercent } from "@/lib/chart-theme";
-import { countryFlag, countryName } from "@/lib/vercel-regions";
+import {
+  MAGNITUDE_HUE,
+  formatFullTimestamp,
+  formatNumber,
+  formatPercent,
+} from "../../../lib/chart-theme";
+import { countryFlag, countryName } from "../../../lib/vercel-regions";
+
+/** Verb describing what the stored IP value actually is, for the subtitle. */
+function ipModeWord(mode) {
+  if (mode === "hash") return "hashed";
+  if (mode === "truncate") return "truncated to /24";
+  return "not stored";
+}
+
+/** Column heading for the address column, matching the anonymisation mode. */
+function addressHeading(mode) {
+  if (mode === "hash") return "Visitor (hashed)";
+  if (mode === "truncate") return "Subnet";
+  return "IP address";
+}
+
+/** Unit label for the per-country count, matching what it really counts. */
+function countUnit(mode) {
+  if (mode === "truncate") return "subnets";
+  if (mode === "hash") return "visitors";
+  return "IPs";
+}
+
+/** Explains how a country's location was derived. */
+function geoQualityTitle(quality) {
+  if (quality === "approximate") {
+    return "Inferred from the Vercel edge region, not the visitor's IP — treat as approximate";
+  }
+  return "Some of these requests had true geolocation, some were inferred from the edge region";
+}
 
 function relativeTime(ms) {
   const delta = Date.now() - Number(ms);
@@ -57,7 +92,8 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
   const [expanded, setExpanded] = useState(() => new Set());
   const [filter, setFilter] = useState("");
 
-  const magnitudeHue = hue ?? (isDark ? MAGNITUDE_HUE.dark : MAGNITUDE_HUE.light);
+  const magnitudeHue =
+    hue ?? (isDark ? MAGNITUDE_HUE.dark : MAGNITUDE_HUE.light);
 
   useEffect(() => {
     let cancelled = false;
@@ -65,7 +101,8 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     fetch(`/api/drains/locations?hours=${hours}`, { cache: "no-store" })
       .then(async (res) => {
         const json = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
+        if (!res.ok)
+          throw new Error(json?.error || `Request failed (${res.status})`);
         return json;
       })
       .then((json) => {
@@ -100,17 +137,22 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     return all.filter((c) => {
       if (countryName(c.country).toLowerCase().includes(q)) return true;
       if (c.country.toLowerCase().includes(q)) return true;
-      if (c.cities.some((city) => city.city?.toLowerCase().includes(q))) return true;
+      if (c.cities.some((city) => city.city?.toLowerCase().includes(q)))
+        return true;
       return c.ips.some((ip) => ip.ip.toLowerCase().includes(q));
     });
   }, [data, filter]);
 
   const maxRequests = useMemo(
     () => Math.max(1, ...(data?.countries ?? []).map((c) => c.requests)),
-    [data]
+    [data],
   );
 
   const ipsHidden = data?.privacy?.mode === "drop";
+  // Separate flags rather than a chained ternary in JSX (no-nested-ternary).
+  const isLoading = loading && !data;
+  const isEmpty = !isLoading && countries.length === 0;
+  const showList = !isLoading && countries.length > 0;
 
   return (
     <div className={styles.panel}>
@@ -120,7 +162,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
           <p className={styles.sub}>
             Click a country to see the individual addresses
             {data?.privacy?.mode && data.privacy.mode !== "off"
-              ? ` · IPs are ${data.privacy.mode === "hash" ? "hashed" : data.privacy.mode === "truncate" ? "truncated to /24" : "not stored"}`
+              ? ` · IPs are ${ipModeWord(data.privacy.mode)}`
               : ""}
           </p>
         </div>
@@ -146,19 +188,25 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
         </Alert>
       )}
 
-      {loading && !data ? (
+      {isLoading && (
         <Stack alignItems="center" sx={{ py: 4 }}>
           <CircularProgress size={24} />
         </Stack>
-      ) : countries.length === 0 ? (
+      )}
+      {isEmpty && (
         <Typography variant="body2" color="text.secondary" sx={{ py: 3 }}>
-          {filter ? "Nothing matches that filter." : "No location data in this window yet."}
+          {filter
+            ? "Nothing matches that filter."
+            : "No location data in this window yet."}
         </Typography>
-      ) : (
+      )}
+      {showList && (
         <ul className={styles.countryList}>
           {countries.map((country) => {
             const isOpen = expanded.has(country.country);
-            const errorRate = country.requests ? country.errors / country.requests : 0;
+            const errorRate = country.requests
+              ? country.errors / country.requests
+              : 0;
 
             return (
               <li key={country.country} className={styles.country}>
@@ -168,7 +216,12 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                   onClick={() => toggle(country.country)}
                   aria-expanded={isOpen}
                 >
-                  <IconButton size="small" component="span" tabIndex={-1} sx={{ p: 0.25 }}>
+                  <IconButton
+                    size="small"
+                    component="span"
+                    tabIndex={-1}
+                    sx={{ p: 0.25 }}
+                  >
                     {isOpen ? (
                       <ExpandMoreIcon fontSize="small" />
                     ) : (
@@ -176,42 +229,42 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                     )}
                   </IconButton>
 
-                  <span className={styles.flag}>{countryFlag(country.country)}</span>
+                  <span className={styles.flag}>
+                    {countryFlag(country.country)}
+                  </span>
 
                   <span className={styles.countryName}>
                     {countryName(country.country)}
                     {country.geoQuality !== "accurate" && (
-                      <Tooltip
-                        title={
-                          country.geoQuality === "approximate"
-                            ? "Inferred from the Vercel edge region, not the visitor's IP — treat as approximate"
-                            : "Some of these requests had true geolocation, some were inferred from the edge region"
-                        }
-                      >
+                      <Tooltip title={geoQualityTitle(country.geoQuality)}>
                         <span className={styles.approx}>~</span>
                       </Tooltip>
                     )}
                   </span>
 
                   <span className={styles.countryStats}>
-                    <span className={styles.statNum}>{formatNumber(country.requests)}</span>
+                    <span className={styles.statNum}>
+                      {formatNumber(country.requests)}
+                    </span>
                     <span className={styles.statLabel}>req</span>
                     {!ipsHidden && (
                       <>
-                        <span className={styles.statNum}>{formatNumber(country.uniqueIps)}</span>
+                        <span className={styles.statNum}>
+                          {formatNumber(country.uniqueIps)}
+                        </span>
                         {/* Match the label to what the number actually counts. */}
                         <span className={styles.statLabel}>
-                          {data?.privacy?.mode === "truncate"
-                            ? "subnets"
-                            : data?.privacy?.mode === "hash"
-                            ? "visitors"
-                            : "IPs"}
+                          {countUnit(data?.privacy?.mode)}
                         </span>
                       </>
                     )}
                     {country.errors > 0 && (
-                      <Tooltip title={`${formatNumber(country.errors)} responses were 4xx or 5xx`}>
-                        <span className={styles.errBadge}>{formatPercent(errorRate, 0)} err</span>
+                      <Tooltip
+                        title={`${formatNumber(country.errors)} responses were 4xx or 5xx`}
+                      >
+                        <span className={styles.errBadge}>
+                          {formatPercent(errorRate, 0)} err
+                        </span>
                       </Tooltip>
                     )}
                   </span>
@@ -245,7 +298,9 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
 
                     {ipsHidden || country.ips.length === 0 ? (
                       <Typography variant="caption" color="text.secondary">
-                        {ipsHidden ? "IP storage is disabled." : "No addresses recorded."}
+                        {ipsHidden
+                          ? "IP storage is disabled."
+                          : "No addresses recorded."}
                       </Typography>
                     ) : (
                       <Box className={styles.tableWrap}>
@@ -253,11 +308,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                           <TableHead>
                             <TableRow>
                               <TableCell>
-                                {data?.privacy?.mode === "hash"
-                                  ? "Visitor (hashed)"
-                                  : data?.privacy?.mode === "truncate"
-                                  ? "Subnet"
-                                  : "IP address"}
+                                {addressHeading(data?.privacy?.mode)}
                               </TableCell>
                               <TableCell>City</TableCell>
                               <TableCell align="right">Requests</TableCell>
@@ -278,29 +329,43 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                                       size="small"
                                       label="bot"
                                       variant="outlined"
-                                      sx={{ ml: 0.75, height: 18, fontSize: 10 }}
+                                      sx={{
+                                        ml: 0.75,
+                                        height: 18,
+                                        fontSize: 10,
+                                      }}
                                     />
                                   )}
                                 </TableCell>
                                 <TableCell>{ip.city ?? "—"}</TableCell>
-                                <TableCell align="right">{formatNumber(ip.requests)}</TableCell>
+                                <TableCell align="right">
+                                  {formatNumber(ip.requests)}
+                                </TableCell>
                                 <TableCell align="right">
                                   {ip.errors ? formatNumber(ip.errors) : "—"}
                                 </TableCell>
                                 <TableCell className={styles.mono}>
-                                  <span className={styles.truncate}>{ip.topRoute ?? "—"}</span>
+                                  <span className={styles.truncate}>
+                                    {ip.topRoute ?? "—"}
+                                  </span>
                                 </TableCell>
                                 <TableCell>
                                   {ip.browser ?? "—"}
-                                  {ip.os && ip.os !== "Unknown" ? ` / ${ip.os}` : ""}
+                                  {ip.os && ip.os !== "Unknown"
+                                    ? ` / ${ip.os}`
+                                    : ""}
                                 </TableCell>
                                 <TableCell>
-                                  <Tooltip title={formatFullTimestamp(ip.firstSeen)}>
+                                  <Tooltip
+                                    title={formatFullTimestamp(ip.firstSeen)}
+                                  >
                                     <span>{relativeTime(ip.firstSeen)}</span>
                                   </Tooltip>
                                 </TableCell>
                                 <TableCell>
-                                  <Tooltip title={formatFullTimestamp(ip.lastSeen)}>
+                                  <Tooltip
+                                    title={formatFullTimestamp(ip.lastSeen)}
+                                  >
                                     <span>{relativeTime(ip.lastSeen)}</span>
                                   </Tooltip>
                                 </TableCell>
@@ -316,8 +381,9 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                             color="text.secondary"
                             sx={{ display: "block", p: 1 }}
                           >
-                            + {formatNumber(country.ipsTruncated)} more addresses not shown (raise
-                            with <code>?ips=</code> on /api/drains/locations)
+                            + {formatNumber(country.ipsTruncated)} more
+                            addresses not shown (raise with <code>?ips=</code>{" "}
+                            on /api/drains/locations)
                           </Typography>
                         )}
                       </Box>
@@ -331,7 +397,11 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
       )}
 
       {(data?.countriesTruncated > 0 || data?.unknown?.requests > 0) && (
-        <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1.5 }}>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: "block", mt: 1.5 }}
+        >
           {data.countriesTruncated > 0 &&
             `+${data.countriesTruncated} more countries not shown. `}
           {data.unknown?.requests > 0 &&
@@ -341,3 +411,13 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     </div>
   );
 }
+
+LocationsPanel.propTypes = {
+  hours: PropTypes.number.isRequired,
+  // Bumped by the parent to force a refetch.
+  nonce: PropTypes.number.isRequired,
+  isDark: PropTypes.bool,
+  hue: PropTypes.string,
+};
+
+LocationsPanel.defaultProps = { isDark: false, hue: null };

@@ -24,6 +24,7 @@
 //   - There is a single y-axis. Never add a second scale to these charts.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Box from "@mui/material/Box";
@@ -60,7 +61,7 @@ import {
 } from "recharts";
 
 import styles from "./trafficDashboard.module.scss";
-import LocationsPanel from "./locationsPanel";
+import LocationsPanel from "../locationsPanel/locationsPanel";
 import {
   MAGNITUDE_HUE,
   STATUS_SERIES,
@@ -71,13 +72,42 @@ import {
   formatFullTimestamp,
   formatNumber,
   formatPercent,
-} from "@/lib/chart-theme";
-import { countryFlag, countryName, regionLabel } from "@/lib/vercel-regions";
+} from "../../../lib/chart-theme";
+import {
+  countryFlag,
+  countryName,
+  regionLabel,
+} from "../../../lib/vercel-regions";
 
 const SURFACE = { light: "#fcfcfb", dark: "#1a1a19" };
 const GRIDLINE = { light: "#e1e0d9", dark: "#2c2c2a" };
 const BASELINE = { light: "#c3c2b7", dark: "#383835" };
 const MUTED = "#898781";
+
+/**
+ * Status class for an HTTP code. Written as early returns rather than a chained
+ * ternary so it stays readable (and satisfies no-nested-ternary).
+ */
+function statusClassFor(code) {
+  if (!Number.isFinite(code)) return null;
+  if (code >= 500) return "s5xx";
+  if (code >= 400) return "s4xx";
+  if (code >= 300) return "s3xx";
+  return "s2xx";
+}
+
+/** Human label for the chart's time-bucket width. */
+function bucketLabelFor(bucketMs) {
+  if (bucketMs >= 86400000) return "1 day";
+  if (bucketMs >= 3600000) return "1 hour";
+  return `${bucketMs / 60000} min`;
+}
+
+/** Tooltip text explaining how a record's geolocation was derived. */
+function geoSourceTitle(geoSource) {
+  if (geoSource === "headers") return "From x-vercel-ip-* headers (accurate)";
+  return "Approximated from the edge region";
+}
 
 async function getJSON(url) {
   const res = await fetch(url, { cache: "no-store" });
@@ -98,16 +128,24 @@ function StatTile({ label, value, hint }) {
   );
 }
 
+StatTile.propTypes = {
+  label: PropTypes.node.isRequired,
+  value: PropTypes.node.isRequired,
+  hint: PropTypes.node,
+};
+
+StatTile.defaultProps = { hint: null };
+
 /* ------------------------------------------------------- magnitude bars */
 
 function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
   const max = useMemo(
     () => Math.max(1, ...rows.map((r) => Number(r.count) || 0)),
-    [rows]
+    [rows],
   );
   const total = useMemo(
     () => rows.reduce((sum, r) => sum + (Number(r.count) || 0), 0),
-    [rows]
+    [rows],
   );
 
   if (!rows.length) return <div className={styles.emptyBars}>{emptyText}</div>;
@@ -120,7 +158,11 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
         const share = total ? count / total : 0;
         return (
           <li key={row.key} className={styles.barRow}>
-            <Tooltip title={String(label)} placement="top-start" enterDelay={600}>
+            <Tooltip
+              title={String(label)}
+              placement="top-start"
+              enterDelay={600}
+            >
               <span className={styles.barLabel}>{label}</span>
             </Tooltip>
             <span className={styles.barValue}>
@@ -143,6 +185,21 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
   );
 }
 
+MagnitudeBars.propTypes = {
+  rows: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      count: PropTypes.number,
+      isOther: PropTypes.bool,
+    }),
+  ).isRequired,
+  hue: PropTypes.string.isRequired,
+  formatLabel: PropTypes.func,
+  emptyText: PropTypes.string,
+};
+
+MagnitudeBars.defaultProps = { formatLabel: null, emptyText: "No data yet" };
+
 function BreakdownPanel({ title, subtitle, rows, hue, formatLabel }) {
   return (
     <div className={styles.panel}>
@@ -157,9 +214,19 @@ function BreakdownPanel({ title, subtitle, rows, hue, formatLabel }) {
   );
 }
 
+BreakdownPanel.propTypes = {
+  title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  rows: PropTypes.arrayOf(PropTypes.shape({})),
+  hue: PropTypes.string.isRequired,
+  formatLabel: PropTypes.func,
+};
+
+BreakdownPanel.defaultProps = { subtitle: null, rows: [], formatLabel: null };
+
 /* ------------------------------------------------------------- tooltip */
 
-function StatusTooltip({ active, payload, label, bucketMs, colors }) {
+function StatusTooltip({ active, payload, label, colors }) {
   if (!active || !payload?.length) return null;
   const total = payload.reduce((sum, p) => sum + (Number(p.value) || 0), 0);
 
@@ -191,6 +258,16 @@ function StatusTooltip({ active, payload, label, bucketMs, colors }) {
   );
 }
 
+StatusTooltip.propTypes = {
+  // Recharts injects these; none are guaranteed on first render.
+  active: PropTypes.bool,
+  payload: PropTypes.arrayOf(PropTypes.shape({})),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  colors: PropTypes.objectOf(PropTypes.string).isRequired,
+};
+
+StatusTooltip.defaultProps = { active: false, payload: [], label: null };
+
 /* ============================================================ dashboard */
 
 export default function TrafficDashboard() {
@@ -207,7 +284,7 @@ export default function TrafficDashboard() {
         acc[s.key] = isDark ? s.dark : s.light;
         return acc;
       }, {}),
-    [isDark]
+    [isDark],
   );
 
   const [rangeKey, setRangeKey] = useState("24h");
@@ -229,7 +306,7 @@ export default function TrafficDashboard() {
 
   const hours = useMemo(
     () => TIME_RANGES.find((r) => r.key === rangeKey)?.hours ?? 24,
-    [rangeKey]
+    [rangeKey],
   );
 
   // Debounce the search box so typing doesn't hammer the endpoint.
@@ -272,7 +349,16 @@ export default function TrafficDashboard() {
     getJSON(`/api/drains/events?${params.toString()}`)
       .then((json) => {
         if (cancelled) return;
-        setEvents(Array.isArray(json.events) ? json.events : []);
+        // Attach a stable key here rather than using the array index in JSX:
+        // ids can repeat across a redelivery, so the composite keeps React's
+        // reconciliation correct without an index-based key.
+        const list = Array.isArray(json.events) ? json.events : [];
+        setEvents(
+          list.map((event, index) => ({
+            ...event,
+            rowKey: `${event.id ?? "event"}-${event.timestamp ?? 0}-${index}`,
+          })),
+        );
         setEventsError(null);
       })
       .catch((err) => {
@@ -298,6 +384,9 @@ export default function TrafficDashboard() {
   const bucketMs = stats?.window?.bucketMs ?? 3600000;
   const breakdowns = stats?.breakdowns ?? {};
   const hasData = (totals?.requests ?? 0) > 0;
+  // Separate flags rather than a chained ternary in JSX (no-nested-ternary).
+  const isLoading = loading && !stats;
+  const showEmptyState = !isLoading && !hasData;
 
   const statusClassTotals = stats?.statusClasses ?? [];
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
@@ -361,11 +450,12 @@ export default function TrafficDashboard() {
       )}
 
       {/* -------------------------------------------------- empty state */}
-      {loading && !stats ? (
+      {isLoading && (
         <Stack alignItems="center" sx={{ py: 8 }}>
           <CircularProgress />
         </Stack>
-      ) : !hasData ? (
+      )}
+      {showEmptyState && (
         <Alert severity="info" sx={{ mb: 3 }}>
           <AlertTitle>No events yet</AlertTitle>
           Nothing has arrived at <code>/api/drains/ingest</code> in this window.
@@ -373,22 +463,45 @@ export default function TrafficDashboard() {
           <Box component="ul" sx={{ pl: 3, my: 1 }}>
             <li>
               <strong>See it working right now</strong> — run{" "}
-              <code>npm run seed</code> in another terminal to generate realistic
-              sample traffic, then hit Refresh.
+              <code>npm run seed</code> in another terminal to generate
+              realistic sample traffic, then hit Refresh.
             </li>
             <li>
               <strong>Wire up the real drain</strong> — deploy this app, then in
-              Vercel go to <em>Team Settings → Drains → Add Drain → Logs →
-              Custom Endpoint</em> and point it at{" "}
-              <code>https://your-app/api/drains/ingest</code>. See the README for
-              the full walkthrough.
+              Vercel go to{" "}
+              <em>
+                Team Settings → Drains → Add Drain → Logs → Custom Endpoint
+              </em>{" "}
+              and point it at <code>https://your-app/api/drains/ingest</code>.
+              See the README for the full walkthrough.
             </li>
           </Box>
         </Alert>
-      ) : null}
+      )}
 
       {hasData && (
         <>
+          {/* --------------------------------- stale raw-IP notice ------
+              Anonymisation runs at ingest, so switching it on does NOT rewrite
+              what's already stored. Without this warning the tile would read
+              "Unique visitors" over a store that is still partly raw. */}
+          {stats?.privacy?.mode &&
+            stats.privacy.mode !== "off" &&
+            totals.unanonymisedRecords > 0 && (
+              <Alert severity="warning" sx={{ mb: 3 }}>
+                <AlertTitle>
+                  {formatNumber(totals.unanonymisedRecords)} stored record
+                  {totals.unanonymisedRecords === 1 ? "" : "s"} still contain
+                  raw IP addresses
+                </AlertTitle>
+                Anonymisation (<code>{stats.privacy.mode}</code>) is applied
+                when events arrive, so turning it on does not rewrite data that
+                was already stored. These records predate the setting. Clear the
+                store (<code>npm run clear</code>) and let it refill, or accept
+                that this window mixes raw and anonymised addresses.
+              </Alert>
+            )}
+
           {/* ------------------------------------------------ geo notice */}
           {totals.geoHeaderCoverage < 0.5 && (
             <Alert severity="warning" className={styles.geoHint}>
@@ -397,8 +510,8 @@ export default function TrafficDashboard() {
               this window carry true visitor geolocation. Log Drains don&apos;t
               include the visitor&apos;s country — the drain schema only exposes
               the Vercel <em>edge region</em> that served the request (e.g.{" "}
-              <code>fra1</code>), which this dashboard falls back to. To get real
-              country/city, call <code>logRequest(request)</code> from{" "}
+              <code>fra1</code>), which this dashboard falls back to. To get
+              real country/city, call <code>logRequest(request)</code> from{" "}
               <code>lib/log-request.js</code> in your API routes; it reads the{" "}
               <code>x-vercel-ip-country</code> headers and logs them so they
               arrive through the drain.
@@ -413,7 +526,9 @@ export default function TrafficDashboard() {
               // Requests != log entries: several entries can share a requestId.
               // Showing both makes the difference (and the billing basis) plain.
               hint={`from ${formatNumber(totals.logEvents)} log entries${
-                totals.buildLogs ? ` · ${formatNumber(totals.buildLogs)} build` : ""
+                totals.buildLogs
+                  ? ` · ${formatNumber(totals.buildLogs)} build`
+                  : ""
               }`}
             />
             {/* Label follows the active anonymisation mode — with truncated IPs
@@ -422,13 +537,15 @@ export default function TrafficDashboard() {
             <StatTile
               label={stats?.privacy?.uniqueLabel ?? "Unique IPs"}
               value={formatCompact(totals.uniqueIps)}
-              hint={stats?.privacy?.uniqueHint ?? "Distinct client IP addresses"}
+              hint={
+                stats?.privacy?.uniqueHint ?? "Distinct client IP addresses"
+              }
             />
             <StatTile
               label="Error rate"
               value={formatPercent(totals.errorRate)}
               hint={`${formatNumber(totals.errors)} 4xx+ · ${formatNumber(
-                totals.serverErrors
+                totals.serverErrors,
               )} 5xx`}
             />
             <StatTile
@@ -440,7 +557,7 @@ export default function TrafficDashboard() {
               label="Bot traffic"
               value={formatPercent(
                 totals.requests ? totals.botRequests / totals.requests : 0,
-                0
+                0,
               )}
               hint={`${formatNumber(totals.botRequests)} requests`}
             />
@@ -457,16 +574,13 @@ export default function TrafficDashboard() {
               <div>
                 <h3 className={styles.panelTitle}>Requests over time</h3>
                 <p className={styles.panelSub}>
-                  Stacked by status class ·{" "}
-                  {bucketMs >= 86400000
-                    ? "1 day"
-                    : bucketMs >= 3600000
-                    ? "1 hour"
-                    : `${bucketMs / 60000} min`}{" "}
-                  buckets
+                  Stacked by status class · {bucketLabelFor(bucketMs)} buckets
                 </p>
               </div>
-              <Button size="small" onClick={() => setShowSeriesTable((v) => !v)}>
+              <Button
+                size="small"
+                onClick={() => setShowSeriesTable((v) => !v)}
+              >
                 {showSeriesTable ? "Hide table" : "Show table"}
               </Button>
             </div>
@@ -490,9 +604,7 @@ export default function TrafficDashboard() {
                   />
                   <RechartsTooltip
                     cursor={{ fill: gridline, opacity: 0.4 }}
-                    content={
-                      <StatusTooltip bucketMs={bucketMs} colors={statusColor} />
-                    }
+                    content={<StatusTooltip colors={statusColor} />}
                   />
                   {/* Stack order is semantic: success at the base, errors on
                       top, so an error spike is visible against the axis top.
@@ -585,8 +697,13 @@ export default function TrafficDashboard() {
             </div>
             <ul className={styles.barList}>
               {statusClassTotals.map((row) => {
-                const max = Math.max(1, ...statusClassTotals.map((c) => c.count));
-                const share = statusGrandTotal ? row.count / statusGrandTotal : 0;
+                const max = Math.max(
+                  1,
+                  ...statusClassTotals.map((c) => c.count),
+                );
+                const share = statusGrandTotal
+                  ? row.count / statusGrandTotal
+                  : 0;
                 return (
                   <li key={row.key} className={styles.barRow}>
                     <span className={styles.barLabel}>{row.label}</span>
@@ -647,7 +764,9 @@ export default function TrafficDashboard() {
               subtitle="Vercel datacenter that served the request"
               rows={breakdowns.edgeRegion}
               hue={magnitudeHue}
-              formatLabel={(code) => (code === "Other" ? "Other" : regionLabel(code))}
+              formatLabel={(code) =>
+                code === "Other" ? "Other" : regionLabel(code)
+              }
             />
             <BreakdownPanel
               title="Browsers"
@@ -747,7 +866,11 @@ export default function TrafficDashboard() {
 
         {/* minWidth forces horizontal scrolling rather than squeezing the last
             columns into an unreadable sliver. */}
-        <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 520 }}>
+        <TableContainer
+          component={Paper}
+          variant="outlined"
+          sx={{ maxHeight: 520 }}
+        >
           <Table
             size="small"
             stickyHeader
@@ -774,26 +897,22 @@ export default function TrafficDashboard() {
               {events.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={12}>
-                    <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ py: 2 }}
+                    >
                       No events match. Try widening the time range or clearing
                       the search.
                     </Typography>
                   </TableCell>
                 </TableRow>
               ) : (
-                events.map((event, idx) => {
+                events.map((event) => {
                   const code = Number(event.statusCode);
-                  const cls = !Number.isFinite(code)
-                    ? null
-                    : code >= 500
-                    ? "s5xx"
-                    : code >= 400
-                    ? "s4xx"
-                    : code >= 300
-                    ? "s3xx"
-                    : "s2xx";
+                  const cls = statusClassFor(code);
                   return (
-                    <TableRow key={`${event.id}-${idx}`} hover>
+                    <TableRow key={event.rowKey} hover>
                       <TableCell className={styles.mono}>
                         {formatFullTimestamp(event.timestamp)}
                       </TableCell>
@@ -826,13 +945,7 @@ export default function TrafficDashboard() {
                       </TableCell>
                       <TableCell>
                         {event.country ? (
-                          <Tooltip
-                            title={
-                              event.geoSource === "headers"
-                                ? "From x-vercel-ip-* headers (accurate)"
-                                : "Approximated from the edge region"
-                            }
-                          >
+                          <Tooltip title={geoSourceTitle(event.geoSource)}>
                             <span>
                               {countryFlag(event.country)}{" "}
                               {event.city ? `${event.city}, ` : ""}
@@ -848,12 +961,17 @@ export default function TrafficDashboard() {
                         <Tooltip title={event.userAgent ?? ""} enterDelay={500}>
                           <span>
                             {event.browser ?? "—"}
-                            {event.os && event.os !== "Unknown" ? ` / ${event.os}` : ""}
+                            {event.os && event.os !== "Unknown"
+                              ? ` / ${event.os}`
+                              : ""}
                           </span>
                         </Tooltip>
                       </TableCell>
                       <TableCell className={styles.mono}>
-                        <span className={styles.truncate} style={{ maxWidth: 160 }}>
+                        <span
+                          className={styles.truncate}
+                          style={{ maxWidth: 160 }}
+                        >
                           {event.host ?? "—"}
                         </span>
                       </TableCell>
@@ -868,7 +986,10 @@ export default function TrafficDashboard() {
                         />
                       </TableCell>
                       <TableCell className={styles.mono}>
-                        <span className={styles.truncate} style={{ maxWidth: 120 }}>
+                        <span
+                          className={styles.truncate}
+                          style={{ maxWidth: 120 }}
+                        >
                           {event.deploymentId ?? "—"}
                         </span>
                       </TableCell>
@@ -878,10 +999,24 @@ export default function TrafficDashboard() {
                           // Fields already shown in their own columns would just
                           // be noise here, so only YOUR extra fields are listed.
                           const shownElsewhere = new Set([
-                            "country", "city", "clientIp", "userAgent", "path",
-                            "method", "host", "latitude", "longitude", "loggedAt",
-                            "referer", "vercelId", "deploymentUrl", "continent",
-                            "countryRegion", "postalCode", "timezone", "statusCode",
+                            "country",
+                            "city",
+                            "clientIp",
+                            "userAgent",
+                            "path",
+                            "method",
+                            "host",
+                            "latitude",
+                            "longitude",
+                            "loggedAt",
+                            "referer",
+                            "vercelId",
+                            "deploymentUrl",
+                            "continent",
+                            "countryRegion",
+                            "postalCode",
+                            "timezone",
+                            "statusCode",
                           ]);
                           const text = Object.entries(event.custom)
                             .filter(([k]) => !shownElsewhere.has(k))
@@ -904,7 +1039,11 @@ export default function TrafficDashboard() {
         </TableContainer>
       </div>
 
-      <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 2 }}>
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{ display: "block", mt: 2 }}
+      >
         Drain endpoint: <code>/api/drains/ingest</code> · Configure in Vercel
         under{" "}
         <Link
