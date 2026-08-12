@@ -35,6 +35,7 @@
     "react-hooks/exhaustive-deps": "off",
     "no-underscore-dangle": "off",
     "prefer-arrow-callback": "warn",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "react/jsx-wrap-multilines": "off"
   }
 }
