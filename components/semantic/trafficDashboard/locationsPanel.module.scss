@@ -1,0 +1,195 @@
+// components/LocationsPanel.module.scss
+//
+// Styling for the country -> IP tree. Inherits the --dash-* custom properties
+// emitted by TrafficDashboard.module.scss's .root, so light/dark follows the
+// dashboard without redeclaring the palette.
+
+$gap-xs: 4px;
+$gap-sm: 8px;
+$gap-md: 16px;
+$radius: 10px;
+$bar-radius: 4px;
+
+.panel {
+  background: var(--dash-surface, #fcfcfb);
+  border: 1px solid var(--dash-border, rgba(11, 11, 11, 0.1));
+  border-radius: $radius;
+  padding: $gap-md;
+  margin-bottom: 24px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $gap-sm;
+  margin-bottom: $gap-md;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dash-text-primary, #0b0b0b);
+  margin: 0;
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--dash-text-muted, #898781);
+  margin: 2px 0 0;
+}
+
+.countryList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.country {
+  border-bottom: 1px solid var(--dash-gridline, #e1e0d9);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// The whole row is the toggle, so it's a button — but it has to look like a row.
+.countryRow {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: $gap-sm;
+  width: 100%;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: color-mix(in srgb, var(--dash-magnitude, #2a78d6) 6%, transparent);
+  }
+
+  // Keyboard focus must stay obvious since this is the primary control here.
+  &:focus-visible {
+    outline: 2px solid var(--dash-magnitude, #2a78d6);
+    outline-offset: -2px;
+  }
+}
+
+.flag {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.countryName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--dash-text-primary, #0b0b0b);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Marks a country whose location came from the edge region rather than the
+// visitor's IP. Not decorative — it's a precision caveat.
+.approx {
+  color: var(--dash-text-muted, #898781);
+  margin-left: 5px;
+  font-weight: 400;
+  cursor: help;
+}
+
+.countryStats {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.statNum {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--dash-text-primary, #0b0b0b);
+}
+
+.statLabel {
+  font-size: 11px;
+  color: var(--dash-text-muted, #898781);
+  margin-right: 6px;
+}
+
+.errBadge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #fff;
+  // Status-critical step; paired with the "err" text so colour isn't the only cue.
+  background: #d03b3b;
+  cursor: help;
+}
+
+.track {
+  grid-column: 1 / -1;
+  display: block;
+  height: 5px;
+  background: var(--dash-track, #ece9e1);
+  border-radius: $bar-radius;
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: 0 $bar-radius $bar-radius 0;
+  transition: width 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+}
+
+.detail {
+  padding: 0 0 $gap-md 30px;
+}
+
+.cityRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: $gap-sm;
+}
+
+.tableWrap {
+  border: 1px solid var(--dash-border, rgba(11, 11, 11, 0.1));
+  border-radius: 8px;
+  overflow: auto;
+  max-height: 340px;
+
+  td,
+  th {
+    white-space: nowrap;
+  }
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.truncate {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}

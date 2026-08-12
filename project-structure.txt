@@ -1,0 +1,193 @@
+Project File Structure (excluding node_modules)
+
+.eslintrc
+.gitignore
+README.md
+index-en.html
+next.config.js
+package-lock.json
+package.json
+components/
+  charts/
+    arctic.js
+    co2.js
+    co2Prehistoric.js
+    co2Recent.js
+    methane.js
+    nitrous.js
+    ocean.js
+    temperature.js
+  semantic/
+    accordion.js
+    achievements.js
+    business-statistics.js
+    customized-timeline.js
+    footer.js
+    git.js
+    LandingPage.js
+    locationsPanel.js
+    menu.js
+    parent-arctic.js
+    parent-co2.js
+    parent-methane.js
+    parent-nitrous.js
+    parent-ocean.js
+    parent-temperature.js
+    partners.js
+    sideMenu.js
+    team.js
+    trafficDashboard.js
+    transparency.js
+    twigleEmbed.js
+  siteHeader.js
+fonts/
+  Play/
+    OFL.txt
+    Play-Bold.ttf
+    Play-Regular.ttf
+global-styles/
+  burger-menu.scss
+  main.scss
+lib/
+  aggregate.js
+  api-auth.js
+  chart-theme.js
+  drain-parse.js
+  drain-signature.js
+  drain-store.js
+  log-request.js
+  privacy.js
+  store-file.js
+  store-redis.js
+  ua-parse.js
+  vercel-regions.js
+.next/
+  build-manifest.json
+  package.json
+  react-loadable-manifest.json
+  server/
+    middleware-build-manifest.js
+    middleware-manifest.json
+    middleware-react-loadable-manifest.js
+    next-font-manifest.js
+    next-font-manifest.json
+    pages-manifest.json
+  static/
+    chunks/
+      polyfills.js
+    development/
+      _buildManifest.js
+      _ssgManifest.js
+  trace/
+  cache/
+    swc/
+      plugins/
+        v7_linux_x86_64_0.102.1/
+    webpack/
+      client-development/
+        (compiled .pack.gz files)
+      server-development/
+        (compiled .pack.gz files)
+pages/
+  about/
+    index.js
+  api/
+    arctic-api.js
+    chart-img/
+      [elementID].js
+    co2-api.js
+    drains/
+      events.js
+      ingest.js
+      locations.js
+      stats.js
+    methane-api.js
+    nitrous-oxide-api.js
+    ocean-warming-api.js
+    temperature-api.js
+  business/
+    index.js
+  contact/
+    index.js
+  deforestation/
+    index.js
+  donate/
+    index.js
+  imprint/
+    index.js
+  news/
+    index.js
+  privacy-policy/
+    index.js
+  _app.js
+  _document.js
+  index.js
+public/
+  data/
+    arctic-extent.json
+    business.json
+    co2.csv
+    csvjson-co2-prehistoric.json
+    csvjson-methane.json
+    csvjson-nitrous.json
+    csvjson-temperature.json
+    dummy.js
+    nitrous.csv
+    temperature-1979.json
+  documents/
+    articles-of-association.pdf
+    climate-accountability-api-jahresabschluss.pdf
+    transparency-register.pdf
+  favicon/
+    favicon.ico
+  fonts/
+    Play-Bold.ttf
+    Play-Regular.ttf
+  images/
+    adidas_logo.png
+    amazon-logo.png
+    annalisa.jpg
+    apple_logo_black.png
+    background-global-warming.webp
+    binda-consulting-logo.png
+    breaking-news.png
+    breaking-news.webp
+    circle-right.png
+    contact-image.png
+    darshan.jpeg
+    emma.jpeg
+    empty-profile.jpeg
+    eon-stiftung-logo.jpg
+    farah.jpeg
+    favicon.png
+    forest.png
+    hailey.jpeg
+    icons8-forest-64.png
+    icons8-less-than-60.png
+    icons8-location-96.png
+    icons8-more-than-60.png
+    icons8-news-256.png
+    icons8-stocks-64.png
+    icons-double-down.png
+    icons-double-down-white.png
+    jbs.png
+    keitel-picture.jpeg
+    logo-planet-image.png
+    newspaper-background.jpg
+    nina.png
+    no-logo.png
+    ontec-energy.png
+    rene-picture.jpg
+    roi-logo.png
+    siemens-logo.png
+    statistic-icon.png
+    venkat.jpg
+    veronica.jpeg
+    volkswagen_logo_2019.png
+    yana-picture.jpeg
+  sitemap.xml
+  SSG/
+    about.json
+  vercel.svg
+services/
+  dataService.js

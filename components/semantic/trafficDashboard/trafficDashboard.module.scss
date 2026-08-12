@@ -1,0 +1,424 @@
+// components/TrafficDashboard.module.scss
+//
+// SCSS module for the traffic dashboard. MUI handles the components (cards,
+// tables, chips); this file handles the chart chrome, the custom magnitude
+// bars, and layout details that are fiddly to express as `sx` props.
+//
+// Light/dark values come from a single set of maps below, emitted as CSS custom
+// properties so the dark variant is a real chosen palette rather than an
+// automatic inversion.
+
+// ---------------------------------------------------------------------------
+// Tokens
+// ---------------------------------------------------------------------------
+$light: (
+  surface: #fcfcfb,
+  plane: #f9f9f7,
+  text-primary: #0b0b0b,
+  text-secondary: #52514e,
+  text-muted: #898781,
+  gridline: #e1e0d9,
+  baseline: #c3c2b7,
+  border: rgba(11, 11, 11, 0.1),
+  track: #ece9e1,
+  magnitude: #2a78d6,
+);
+
+$dark: (
+  surface: #1a1a19,
+  plane: #0d0d0d,
+  text-primary: #ffffff,
+  text-secondary: #c3c2b7,
+  text-muted: #898781,
+  gridline: #2c2c2a,
+  baseline: #383835,
+  border: rgba(255, 255, 255, 0.1),
+  track: #2c2c2a,
+  magnitude: #3987e5,
+);
+
+@mixin emit-tokens($map) {
+  @each $name, $value in $map {
+    --dash-#{$name}: #{$value};
+  }
+}
+
+// Spacing scale, kept small on purpose.
+$gap-xs: 4px;
+$gap-sm: 8px;
+$gap-md: 16px;
+$gap-lg: 24px;
+$radius: 10px;
+$bar-radius: 4px; // rounded data-end on magnitude bars
+
+// ---------------------------------------------------------------------------
+// Root
+// ---------------------------------------------------------------------------
+.root {
+  @include emit-tokens($light);
+  color-scheme: light;
+  font-variant-numeric: tabular-nums;
+}
+
+.root.dark {
+  @include emit-tokens($dark);
+  color-scheme: dark;
+}
+
+// ---------------------------------------------------------------------------
+// Header
+// ---------------------------------------------------------------------------
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $gap-md;
+  margin-bottom: $gap-lg;
+}
+
+.headerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $gap-sm;
+  margin-top: $gap-xs;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $gap-sm;
+}
+
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0ca30c;
+  display: inline-block;
+  margin-right: 6px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+// Respect users who don't want motion.
+@media (prefers-reduced-motion: reduce) {
+  .liveDot {
+    animation: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Stat tiles — the hero numbers
+// ---------------------------------------------------------------------------
+.tileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: $gap-md;
+  margin-bottom: $gap-lg;
+}
+
+.tile {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: $radius;
+  padding: $gap-md;
+}
+
+.tileLabel {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--dash-text-muted);
+  margin: 0 0 6px;
+}
+
+.tileValue {
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: var(--dash-text-primary);
+  // Proportional figures read better for a standalone hero number.
+  font-variant-numeric: proportional-nums;
+}
+
+.tileHint {
+  font-size: 12px;
+  color: var(--dash-text-muted);
+  margin-top: 6px;
+}
+
+// ---------------------------------------------------------------------------
+// Panels
+// ---------------------------------------------------------------------------
+.panel {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: $radius;
+  padding: $gap-md $gap-md $gap-sm;
+  margin-bottom: $gap-lg;
+  // Recharts' ResponsiveContainer can't shrink inside a grid track without this.
+  min-width: 0;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $gap-sm;
+  margin-bottom: $gap-sm;
+}
+
+.panelTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dash-text-primary);
+  margin: 0;
+}
+
+.panelSub {
+  font-size: 12px;
+  color: var(--dash-text-muted);
+  margin: 2px 0 0;
+}
+
+.chartWrap {
+  width: 100%;
+  // Keeps the axis labels from clipping at narrow widths.
+  overflow: visible;
+}
+
+// ---------------------------------------------------------------------------
+// Legend — always present for the stacked chart, with values, because the
+// light-mode 4xx yellow sits under 3:1 against the surface.
+// ---------------------------------------------------------------------------
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap-md;
+  padding: $gap-sm 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--dash-text-secondary);
+}
+
+.legendSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex: none;
+  // 2px surface ring so touching swatches stay separable.
+  box-shadow: 0 0 0 1px var(--dash-surface);
+}
+
+.legendValue {
+  color: var(--dash-text-primary);
+  font-weight: 600;
+}
+
+// ---------------------------------------------------------------------------
+// Breakdown grid + magnitude bars
+// ---------------------------------------------------------------------------
+.breakdownGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $gap-md;
+  margin-bottom: $gap-lg;
+}
+
+.barList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: $gap-sm;
+}
+
+.barLabel {
+  font-size: 13px;
+  color: var(--dash-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dash-text-primary);
+}
+
+.barShare {
+  font-size: 11px;
+  color: var(--dash-text-muted);
+  margin-left: 6px;
+  font-weight: 400;
+}
+
+.barTrack {
+  grid-column: 1 / -1;
+  height: 6px;
+  margin-top: 4px;
+  background: var(--dash-track);
+  border-radius: $bar-radius;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  // 4px rounded data-end, square where it meets the baseline.
+  border-radius: 0 $bar-radius $bar-radius 0;
+  background: var(--dash-magnitude);
+  transition: width 0.3s ease;
+
+  &.isOther {
+    // "Other" is an aggregate, not an entity — deliberately recessive.
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barFill {
+    transition: none;
+  }
+}
+
+.emptyBars {
+  font-size: 13px;
+  color: var(--dash-text-muted);
+  padding: $gap-md 0;
+}
+
+// ---------------------------------------------------------------------------
+// Tooltip (Recharts custom content)
+// ---------------------------------------------------------------------------
+.tooltip {
+  background: var(--dash-surface);
+  border: 1px solid var(--dash-border);
+  border-radius: 8px;
+  padding: $gap-sm 10px;
+  font-size: 12px;
+  color: var(--dash-text-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.tooltipTitle {
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.tooltipRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $gap-md;
+
+  & + & {
+    margin-top: 3px;
+  }
+}
+
+.tooltipLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--dash-text-secondary);
+}
+
+.tooltipTotal {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--dash-gridline);
+  font-weight: 600;
+}
+
+// ---------------------------------------------------------------------------
+// Events table
+// ---------------------------------------------------------------------------
+.tableToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $gap-sm;
+  margin-bottom: $gap-sm;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.truncate {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.statusPill {
+  display: inline-block;
+  min-width: 34px;
+  text-align: center;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  // Colour is set inline from the validated series palette; the number itself
+  // is always visible so the pill never relies on colour alone.
+  color: #fff;
+}
+
+.customCell {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  color: var(--dash-text-secondary);
+  // Single line + ellipsis: wrapping JSON here made every table row ~90px tall.
+  // The full value is available via the cell's tooltip.
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+// Keep every body cell on one line so row height stays uniform and the table
+// scrolls horizontally instead of growing vertically.
+.eventsTable {
+  td,
+  th {
+    white-space: nowrap;
+  }
+}
+
+.geoHint {
+  margin-bottom: $gap-lg;
+}
