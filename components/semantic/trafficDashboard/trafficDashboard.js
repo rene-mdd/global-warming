@@ -171,7 +171,9 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
             </span>
             <div className={styles.barTrack}>
               <div
-                className={`${styles.barFill} ${row.isOther ? styles.isOther : ""}`}
+                className={`${styles.barFill} ${
+                  row.isOther ? styles.isOther : ""
+                }`}
                 style={{
                   width: `${Math.max(2, (count / max) * 100)}%`,
                   background: hue,
@@ -750,8 +752,7 @@ export default function TrafficDashboard() {
               formatLabel={(code) =>
                 code === "Other"
                   ? "Other"
-                  : `${countryFlag(code)} ${countryName(code)}`.trim()
-              }
+                  : `${countryFlag(code)} ${countryName(code)}`.trim()}
             />
             <BreakdownPanel
               title="Top routes"
@@ -765,8 +766,7 @@ export default function TrafficDashboard() {
               rows={breakdowns.edgeRegion}
               hue={magnitudeHue}
               formatLabel={(code) =>
-                code === "Other" ? "Other" : regionLabel(code)
-              }
+                code === "Other" ? "Other" : regionLabel(code)}
             />
             <BreakdownPanel
               title="Browsers"

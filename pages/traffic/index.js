@@ -39,7 +39,7 @@ function Traffic() {
         justifyContent="center"
         className="landing-page-about"
       >
-    <TrafficDashboard />
+        <TrafficDashboard />
       </Grid>
       <ThemeProvider theme={theme}>
         <Footer classNameProp="about-footer" />
