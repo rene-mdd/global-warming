@@ -7,6 +7,7 @@ import { readRecords, storeInfo } from "../../../lib/drain-store";
 import { aggregate } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
 import { privacyInfo } from "../../../lib/privacy";
+import { isPublicMode, publicStats } from "../../../lib/public-mode";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -23,7 +24,9 @@ export default async function handler(req, res) {
 
   try {
     const records = await readRecords({ since: startTime });
-    const stats = aggregate(records, { startTime, endTime });
+    const raw = aggregate(records, { startTime, endTime });
+    // Strip the per-visitor breakdowns before they leave the server.
+    const stats = isPublicMode() ? publicStats(raw) : raw;
     // `privacy` tells the UI how to label the unique-visitor tile honestly
     // (raw IPs vs /24 subnets vs hashes).
     return res.status(200).json({

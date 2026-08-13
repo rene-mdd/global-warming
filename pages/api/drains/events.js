@@ -6,6 +6,7 @@
 import { readRecords } from "../../../lib/drain-store";
 import { statusClass } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
+import { isPublicMode, publicEvent } from "../../../lib/public-mode";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -55,9 +56,14 @@ export default async function handler(req, res) {
     // Newest first, capped.
     const page = records.slice(-limit).reverse();
 
+    // In public mode each row loses its linkage key, so rows can't be grouped
+    // back into one person's session.
+    const publicMode = isPublicMode();
+    const events = publicMode ? page.map(publicEvent) : page;
+
     return res
       .status(200)
-      .json({ events: page, total: records.length, limit, hours });
+      .json({ events, total: records.length, limit, hours, publicMode });
   } catch (err) {
     console.error("[drains/events]", err);
     return res.status(500).json({ error: err.message ?? "read failed" });

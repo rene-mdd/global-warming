@@ -77,6 +77,12 @@ $bar-radius: 4px; // rounded data-end on magnitude bars
   margin-bottom: $gap-lg;
 }
 
+.mainTrafficWrapper {
+  padding: $gap-lg;
+  background: var(--dash-plane);
+  border-radius: $radius;
+}
+
 .headerMeta {
   display: flex;
   flex-wrap: wrap;

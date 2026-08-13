@@ -83,32 +83,11 @@ p {
   }
 }
 
-.menu-center-group {
-  position: relative;
-  left: 75px;
-
-  @media only screen and (max-width: 930px) {
-    left: 0;
-  }
-}
-
 .menu-mobile-group {
   .mobile-donate-btn {
     a {
       color: #10a674;
     }
-  }
-}
-
-.donate-contact-group {
-  .donate-btn {
-    color: #10a674;
-    margin-top: 5px;
-    font-size: small;
-    border: 1px solid #10a674;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-right: 1px;
   }
 }
 
@@ -459,10 +438,49 @@ nav {
   width: 50px;
 }
 
-.menu-center-group, .donate-contact-group {
+.menu-center-group {
+  position: relative;
+  left: 75px;
+
+  @media only screen and (max-width: 930px) {
+    left: 0;
+  }
   .menu {
     font-size: 110%;
     color: black;
+      @media only screen and (max-width: 930px) {
+    font-size: 100%;
+  }
+    &:hover {
+      background-color: #6db629;
+      color: white;
+    }
+  }
+}
+
+.donate-contact-group {
+  align-items: center;
+  .donate-btn {
+    color: #10a674;
+    border: 1px solid #10a674;
+    border-radius: 5px;
+    margin-right: 1px;
+    font-size: small;
+    padding: 5px 15px;
+    margin-top: 1px;
+    font-weight: bold;
+    &:hover {
+      background-color: #6db629;
+      color: white;
+    }
+  }
+  .menu {
+    font-size: 110%;
+    color: black;
+    padding: 5px 15px;
+          @media only screen and (max-width: 930px) {
+    font-size: 100%;
+  }
     &:hover {
       background-color: #6db629;
       color: white;

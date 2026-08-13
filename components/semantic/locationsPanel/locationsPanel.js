@@ -148,7 +148,9 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     [data],
   );
 
-  const ipsHidden = data?.privacy?.mode === "drop";
+  // Either IP storage is off entirely, or we're in public mode and the server
+  // withheld the address lists.
+  const ipsHidden = data?.privacy?.mode === "drop" || Boolean(data?.publicMode);
   // Separate flags rather than a chained ternary in JSX (no-nested-ternary).
   const isLoading = loading && !data;
   const isEmpty = !isLoading && countries.length === 0;
@@ -298,9 +300,9 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
 
                     {ipsHidden || country.ips.length === 0 ? (
                       <Typography variant="caption" color="text.secondary">
-                        {ipsHidden
-                          ? "IP storage is disabled."
-                          : "No addresses recorded."}
+                        {data?.publicMode
+                          ? "Individual addresses are withheld in the public view."
+                          : "IP storage is disabled."}
                       </Typography>
                     ) : (
                       <Box className={styles.tableWrap}>

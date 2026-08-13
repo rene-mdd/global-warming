@@ -171,9 +171,7 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
             </span>
             <div className={styles.barTrack}>
               <div
-                className={`${styles.barFill} ${
-                  row.isOther ? styles.isOther : ""
-                }`}
+                className={`${styles.barFill} ${row.isOther ? styles.isOther : ""}`}
                 style={{
                   width: `${Math.max(2, (count / max) * 100)}%`,
                   background: hue,
@@ -388,13 +386,16 @@ export default function TrafficDashboard() {
   const hasData = (totals?.requests ?? 0) > 0;
   // Separate flags rather than a chained ternary in JSX (no-nested-ternary).
   const isLoading = loading && !stats;
+  // Server-enforced: the API strips per-visitor data in public mode. This flag
+  // only stops us rendering panels that would arrive empty.
+  const publicMode = Boolean(stats?.publicMode);
   const showEmptyState = !isLoading && !hasData;
 
   const statusClassTotals = stats?.statusClasses ?? [];
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
 
   return (
-    <div className={`${styles.root} ${isDark ? styles.dark : ""}`}>
+    <div className={`${styles.mainTrafficWrapper} ${styles.root} ${isDark ? styles.dark : ""}`}>
       {/* ------------------------------------------------------- header */}
       <div className={styles.header}>
         <div>
@@ -521,6 +522,16 @@ export default function TrafficDashboard() {
           )}
 
           {/* ---------------------------------------------------- tiles */}
+          {publicMode && (
+            <Alert severity="info" sx={{ mb: 3 }}>
+              <AlertTitle>Public view</AlertTitle>
+              This dashboard is published openly, so per-visitor detail is
+              withheld: individual addresses, user agents, referrers and
+              application fields are removed server-side. Aggregate figures —
+              including the unique-visitor count — are shown in full.
+            </Alert>
+          )}
+
           <div className={styles.tileGrid}>
             <StatTile
               label="Requests"
@@ -797,12 +808,14 @@ export default function TrafficDashboard() {
               rows={breakdowns.statusCode}
               hue={magnitudeHue}
             />
-            <BreakdownPanel
-              title="Top client IPs"
-              subtitle="Most active callers"
-              rows={breakdowns.clientIp}
-              hue={magnitudeHue}
-            />
+            {!publicMode && (
+              <BreakdownPanel
+                title="Top client IPs"
+                subtitle="Most active callers"
+                rows={breakdowns.clientIp}
+                hue={magnitudeHue}
+              />
+            )}
             <BreakdownPanel
               title="Hostnames"
               rows={breakdowns.host}
@@ -814,11 +827,13 @@ export default function TrafficDashboard() {
               rows={breakdowns.source}
               hue={magnitudeHue}
             />
-            <BreakdownPanel
-              title="Referrers"
-              rows={breakdowns.referer}
-              hue={magnitudeHue}
-            />
+            {!publicMode && (
+              <BreakdownPanel
+                title="Referrers"
+                rows={breakdowns.referer}
+                hue={magnitudeHue}
+              />
+            )}
           </div>
         </>
       )}
@@ -885,20 +900,20 @@ export default function TrafficDashboard() {
                 <TableCell>Status</TableCell>
                 <TableCell>Method</TableCell>
                 <TableCell>Path</TableCell>
-                <TableCell>Client IP</TableCell>
+                {!publicMode && <TableCell>Client IP</TableCell>}
                 <TableCell>Location</TableCell>
                 <TableCell>Browser / OS</TableCell>
                 <TableCell>Host</TableCell>
                 <TableCell>Region</TableCell>
                 <TableCell>Source</TableCell>
                 <TableCell>Deployment</TableCell>
-                <TableCell>Your fields</TableCell>
+                {!publicMode && <TableCell>Your fields</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
               {events.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={12}>
+                  <TableCell colSpan={publicMode ? 10 : 12}>
                     <Typography
                       variant="body2"
                       color="text.secondary"
@@ -942,9 +957,11 @@ export default function TrafficDashboard() {
                           </span>
                         </Tooltip>
                       </TableCell>
-                      <TableCell className={styles.mono}>
-                        {event.clientIp ?? "—"}
-                      </TableCell>
+                      {!publicMode && (
+                        <TableCell className={styles.mono}>
+                          {event.clientIp ?? "—"}
+                        </TableCell>
+                      )}
                       <TableCell>
                         {event.country ? (
                           <Tooltip title={geoSourceTitle(event.geoSource)}>
@@ -995,43 +1012,47 @@ export default function TrafficDashboard() {
                           {event.deploymentId ?? "—"}
                         </span>
                       </TableCell>
-                      <TableCell>
-                        {(() => {
-                          if (!event.custom) return "—";
-                          // Fields already shown in their own columns would just
-                          // be noise here, so only YOUR extra fields are listed.
-                          const shownElsewhere = new Set([
-                            "country",
-                            "city",
-                            "clientIp",
-                            "userAgent",
-                            "path",
-                            "method",
-                            "host",
-                            "latitude",
-                            "longitude",
-                            "loggedAt",
-                            "referer",
-                            "vercelId",
-                            "deploymentUrl",
-                            "continent",
-                            "countryRegion",
-                            "postalCode",
-                            "timezone",
-                            "statusCode",
-                          ]);
-                          const text = Object.entries(event.custom)
-                            .filter(([k]) => !shownElsewhere.has(k))
-                            .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
-                            .join("  ");
-                          if (!text) return "—";
-                          return (
-                            <Tooltip title={text} enterDelay={400}>
-                              <span className={styles.customCell}>{text}</span>
-                            </Tooltip>
-                          );
-                        })()}
-                      </TableCell>
+                      {!publicMode && (
+                        <TableCell>
+                          {(() => {
+                            if (!event.custom) return "—";
+                            // Fields already shown in their own columns would just
+                            // be noise here, so only YOUR extra fields are listed.
+                            const shownElsewhere = new Set([
+                              "country",
+                              "city",
+                              "clientIp",
+                              "userAgent",
+                              "path",
+                              "method",
+                              "host",
+                              "latitude",
+                              "longitude",
+                              "loggedAt",
+                              "referer",
+                              "vercelId",
+                              "deploymentUrl",
+                              "continent",
+                              "countryRegion",
+                              "postalCode",
+                              "timezone",
+                              "statusCode",
+                            ]);
+                            const text = Object.entries(event.custom)
+                              .filter(([k]) => !shownElsewhere.has(k))
+                              .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
+                              .join("  ");
+                            if (!text) return "—";
+                            return (
+                              <Tooltip title={text} enterDelay={400}>
+                                <span className={styles.customCell}>
+                                  {text}
+                                </span>
+                              </Tooltip>
+                            );
+                          })()}
+                        </TableCell>
+                      )}
                     </TableRow>
                   );
                 })

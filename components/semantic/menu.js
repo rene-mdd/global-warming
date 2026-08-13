@@ -119,19 +119,21 @@ export default class StickySideBar extends Component {
                       <Button className="menu">Deforestation</Button>
                     </Link>
                   </ButtonGroup>
-                  <ButtonGroup className="donate-contact-group">
+                  <Box className="donate-contact-group">
+                    <Button>
                     <Link href="https://www.linkedin.com/company/climate-accountability-api/">
                       <LinkedInIcon
-                        sx={{ margin: "9px 25px 0 0", color: "#0A66C2" }}
+                        sx={{ paddingTop: "6px", color: "#0A66C2" }}
                       />
                     </Link>
+                    </Button>
                     <Link href="/donate">
-                      <Button className="menu donate-btn">Donate</Button>
+                      <Button className="donate-btn">Donate</Button>
                     </Link>
                     <Link href="/contact">
                       <Button className="menu">Contact</Button>
                     </Link>
-                  </ButtonGroup>
+                  </Box>
                 </Toolbar>
               </AppBar>
             </Box>

@@ -10,6 +10,7 @@ import { readRecords } from "../../../lib/drain-store";
 import { aggregateLocations } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
 import { privacyInfo } from "../../../lib/privacy";
+import { isPublicMode, publicLocations } from "../../../lib/public-mode";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -35,12 +36,14 @@ export default async function handler(req, res) {
 
   try {
     const records = await readRecords({ since: startTime });
-    const data = aggregateLocations(records, {
+    const raw = aggregateLocations(records, {
       startTime,
       endTime,
       limitCountries,
       limitIpsPerCountry,
     });
+    // Withhold the per-IP arrays; keep the country/city counts.
+    const data = isPublicMode() ? publicLocations(raw) : raw;
     return res.status(200).json({ ...data, privacy: privacyInfo(), hours });
   } catch (err) {
     console.error("[drains/locations]", err);
