@@ -7,8 +7,7 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:jsx-a11y/recommended",
-    // "plugin:react-hooks/recommended",
-    // always put prettier at last
+    "prettier/react",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -17,10 +16,10 @@
     "prettier",
     "react"
   ],
-    "env": {
-        "browser": true,
-        "node": true
-    },
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "rules": {
     "semi": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -34,8 +33,10 @@
     "react/no-unescaped-entities": "off",
     "react-hooks/exhaustive-deps": "off",
     "no-underscore-dangle": "off",
-    "prefer-arrow-callback": "warn",
+    "prefer-arrow-callback": "off",
+    "arrow-body-style": "off",
     "no-restricted-syntax": "off",
-    "react/jsx-wrap-multilines": "off"
+    "react/jsx-wrap-multilines": "off",
+    "react/jsx-curly-newline": "off"
   }
 }
