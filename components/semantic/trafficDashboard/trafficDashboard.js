@@ -109,6 +109,32 @@ function geoSourceTitle(geoSource) {
   return "Approximated from the edge region";
 }
 
+/**
+ * Subtitle for the events table.
+ *
+ * In public mode the rows have been altered on the way out — fields removed,
+ * timestamps floored, city names gated. Saying so is not just courtesy: a table
+ * captioned "every field the drain delivered" while quietly serving reduced rows
+ * would misrepresent both the data and the privacy posture.
+ */
+function eventsSubtitle(publicMode, meta) {
+  if (!publicMode) return "Newest first · every field the drain delivered";
+
+  const grain = meta?.timeGranularity ?? "minute";
+  const minVisitors = meta?.cityGate?.minVisitors;
+
+  return [
+    "Newest first",
+    "public view: no addresses or user agents",
+    `times rounded down to the ${grain}`,
+    minVisitors
+      ? `city shown only where ${minVisitors}+ visitors share it`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+}
+
 async function getJSON(url) {
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json().catch(() => ({}));
@@ -299,6 +325,10 @@ export default function TrafficDashboard() {
 
   const [events, setEvents] = useState([]);
   const [eventsError, setEventsError] = useState(null);
+  // What the server did to the rows on the way out (timestamp granularity, city
+  // threshold). Surfaced in the subtitle so the table doesn't quietly imply it
+  // is showing raw data.
+  const [eventsMeta, setEventsMeta] = useState(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const searchTimer = useRef(null);
@@ -359,6 +389,10 @@ export default function TrafficDashboard() {
             rowKey: `${event.id ?? "event"}-${event.timestamp ?? 0}-${index}`,
           })),
         );
+        setEventsMeta({
+          timeGranularity: json.timeGranularity,
+          cityGate: json.cityGate,
+        });
         setEventsError(null);
       })
       .catch((err) => {
@@ -844,7 +878,7 @@ export default function TrafficDashboard() {
           <div>
             <h3 className={styles.panelTitle}>Live events</h3>
             <p className={styles.panelSub}>
-              Newest first · every field the drain delivered
+              {eventsSubtitle(publicMode, eventsMeta)}
             </p>
           </div>
         </div>

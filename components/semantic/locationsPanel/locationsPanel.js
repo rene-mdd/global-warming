@@ -74,6 +74,23 @@ function geoQualityTitle(quality) {
   return "Some of these requests had true geolocation, some were inferred from the edge region";
 }
 
+/**
+ * Why some city names are missing from the public view.
+ *
+ * Worth spelling out on screen: a shorter city list looks like missing data, and
+ * the honest reading is the opposite — the requests are counted, only the label
+ * is withheld.
+ */
+function cityGateReason(gate) {
+  if (!gate?.minVisitors) {
+    return "city names are not published in this view.";
+  }
+  if (!gate.measurable) {
+    return "visitor addresses aren't stored, so there's no way to tell whether a city has enough visitors to name safely.";
+  }
+  return `fewer than ${gate.minVisitors} distinct visitors came from each, so naming the city could point at one person. Their requests are still counted in the country totals.`;
+}
+
 function relativeTime(ms) {
   const delta = Date.now() - Number(ms);
   if (!Number.isFinite(delta)) return "—";
@@ -396,6 +413,18 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
             );
           })}
         </ul>
+      )}
+
+      {data?.publicMode && data?.cityGate?.withheld > 0 && (
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: "block", mt: 1.5 }}
+        >
+          {formatNumber(data.cityGate.withheld)}{" "}
+          {data.cityGate.withheld === 1 ? "city name is" : "city names are"}{" "}
+          withheld: {cityGateReason(data.cityGate)}
+        </Typography>
       )}
 
       {(data?.countriesTruncated > 0 || data?.unknown?.requests > 0) && (
