@@ -6,7 +6,12 @@
 import { readRecords } from "../../../lib/drain-store";
 import { statusClass } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
-import { isPublicMode, publicEvent } from "../../../lib/public-mode";
+import {
+  isPublicMode,
+  publicEvents,
+  cityMinVisitors,
+  publicTimeGranularity,
+} from "../../../lib/public-mode";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -58,12 +63,30 @@ export default async function handler(req, res) {
 
     // In public mode each row loses its linkage key, so rows can't be grouped
     // back into one person's session.
+    //
+    // City names are the exception: they survive only where enough distinct
+    // visitors share the city to hide the individual. The crowd is counted over
+    // `records` — the full post-filter set — not over `page`, because `records`
+    // is what a caller can page through, and the anonymity set is whatever is
+    // actually reachable. Passing the pre-filter store here would be wrong: it
+    // would let a city cleared by a busy day leak through a narrow ?q= that
+    // matches one person.
     const publicMode = isPublicMode();
-    const events = publicMode ? page.map(publicEvent) : page;
+    const events = publicMode ? publicEvents(page, records) : page;
 
-    return res
-      .status(200)
-      .json({ events, total: records.length, limit, hours, publicMode });
+    return res.status(200).json({
+      events,
+      total: records.length,
+      limit,
+      hours,
+      publicMode,
+      ...(publicMode
+        ? {
+            cityGate: { minVisitors: cityMinVisitors() },
+            timeGranularity: publicTimeGranularity(),
+          }
+        : undefined),
+    });
   } catch (err) {
     console.error("[drains/events]", err);
     return res.status(500).json({ error: err.message ?? "read failed" });

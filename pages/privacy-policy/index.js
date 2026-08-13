@@ -1,4 +1,4 @@
-import { Link, Typography } from "@mui/material";
+import { Link, Typography, List, ListItem, ListItemText, Divider, Box, Stack } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Container } from "@mui/system";
 import StickyMenu from "../../components/semantic/menu";
@@ -524,6 +524,230 @@ function privacyPolicy() {
             Which cookies and services are used on this website can be found in
             this privacy policy.
           </Typography>
+          <Typography
+            variant="h5"
+            component="h2"
+            gutterBottom
+            fontWeight="bold"
+            mt={4}
+          >
+            Server log files, API access logs and public traffic statistics
+          </Typography>
+          <Typography variant="body1" paragraph>
+            When you access this website or call one of our freely available
+            climate data APIs (for example <code>/api/temperature-api</code>),
+            our systems automatically record information that your browser or
+            API client transmits with the request. This information comprises:
+          </Typography>
+          <List dense>
+            {[
+              "the abbreviated or pseudonymised IP address of the requesting device",
+              "the country and, where available, the city that our hosting provider derives from that IP address",
+              "the date and time of the request",
+              "the requested path and the HTTP method",
+              "the HTTP status code returned",
+              "the referrer URL, where transmitted",
+              "browser type and version and operating system, as reported in the user agent",
+              "the requested host name, the deployment identifier and the technical region of the server that processed the request",
+            ].map((item, index) => (
+              <ListItem key={index} sx={{ py: 0.5 }}>
+                <ListItemText primary={item} />
+              </ListItem>
+            ))}
+          </List>
+          <Typography variant="body1" paragraph sx={{ mt: 2 }}>
+            These data are not merged with other data sources, and they are not
+            used to create user profiles or to recognise you across sessions.
+          </Typography>
+          <Divider sx={{ my: 3 }} />
+          <Box mb={3}>
+            <Typography
+              variant="h6"
+              component="h3"
+              gutterBottom
+              fontWeight="bold"
+            >
+              Purposes
+            </Typography>
+            <Typography variant="body1" paragraph>
+              We process these data in order to (i) operate, secure and
+              troubleshoot this website and our APIs, (ii) detect and defend
+              against abuse, automated scraping and denial-of-service attempts,
+              (iii) measure load and plan capacity for APIs we provide free of
+              charge, and (iv) publish statistics on the use of those APIs, as
+              described under "Public traffic statistics" below.
+            </Typography>
+          </Box>
+          <Box mb={3}>
+            <Typography
+              variant="h6"
+              component="h3"
+              gutterBottom
+              fontWeight="bold"
+            >
+              Legal basis
+            </Typography>
+            <Typography variant="body1" paragraph>
+              The legal basis is Art. 6(1)(f) GDPR. We have a legitimate
+              interest in the technically error-free provision, the security and
+              the optimisation of this website and its APIs. As a project whose
+              purpose is public accountability in relation to climate data, we
+              also have a legitimate interest in documenting transparently how
+              our openly accessible APIs are used. This recording does not
+              involve storing information on, or gaining access to information
+              already stored in, your terminal equipment; § 25 (1) TDDDG
+              therefore does not apply and your consent is not required. This
+              processing is separate from the consent-based web analysis
+              described in section 5 of this policy. You may object to it at any
+              time pursuant to Art. 21(1) GDPR — see "Right to object to the
+              collection of data in special cases" above.
+            </Typography>
+          </Box>
+          <Box mb={3}>
+            <Typography
+              variant="h6"
+              component="h3"
+              gutterBottom
+              fontWeight="bold"
+            >
+              Data minimisation
+            </Typography>
+            <Typography variant="body1" paragraph>
+              IP addresses are not stored in readable form. Before an entry is
+              written to our log store, the IP address is [truncated to its
+              first three octets / replaced by a salted, non-reversible hash],
+              so that a stored entry can no longer be resolved back to a
+              specific address. We deliberately do not record precise location
+              data: although our hosting provider also makes latitude,
+              longitude, postal code and time zone available, we do not collect
+              them. Only country and city are recorded.
+            </Typography>
+          </Box>
+          <Box mb={3}>
+            <Typography
+              variant="h6"
+              component="h3"
+              gutterBottom
+              fontWeight="bold"
+            >
+              Storage duration
+            </Typography>
+            <Typography variant="body1" paragraph>
+              Log entries are deleted automatically [30] days after they are
+              recorded, and in any event once our log store exceeds [20,000]
+              entries, whichever occurs first. Deletion is permanent; entries
+              are not archived elsewhere.
+            </Typography>
+          </Box>
+          <Box mb={3}>
+            <Typography
+              variant="h6"
+              component="h3"
+              gutterBottom
+              fontWeight="bold"
+            >
+              Recipients
+            </Typography>
+            <Typography variant="body1" paragraph>
+              The following processors are involved in this processing on our
+              behalf:
+            </Typography>
+
+            <Stack spacing={2} ml={2}>
+              <Box>
+                <Typography variant="body1" fontWeight="medium">
+                  Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  provision of the website and transmission of the log entries
+                  to our log store (see "External Hosting" in section 2). Vercel
+                  Inc. is certified under the EU-US Data Privacy Framework
+                  (DPF); the transfer of data to the United States is based on
+                  that certification. Further information:{" "}
+                  <Link
+                    href="https://www.dataprivacyframework.gov/list"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    https://www.dataprivacyframework.gov/list
+                  </Link>
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography variant="body1" fontWeight="medium">
+                  Upstash, Inc., Delaware, USA
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  operation of the [region: e.g. eu-central-1, Frankfurt]
+                  database in which the log entries are stored. Upstash relies
+                  on the EU-US Data Privacy Framework and, in the alternative,
+                  on the Standard Contractual Clauses of the European
+                  Commission. Further information:{" "}
+                  <Link
+                    href="https://upstash.com/trust/dpa.pdf"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    https://upstash.com/trust/dpa.pdf
+                  </Link>
+                </Typography>
+              </Box>
+            </Stack>
+
+            <Typography variant="body1" paragraph sx={{ mt: 2 }}>
+              We have concluded a data processing agreement pursuant to Art. 28
+              GDPR with each of these providers.
+            </Typography>
+          </Box>
+          <Box mb={3}>
+            <Typography
+              variant="h6"
+              component="h3"
+              gutterBottom
+              fontWeight="bold"
+            >
+              Public traffic statistics
+            </Typography>
+            <Typography variant="body1" paragraph>
+              We publish aggregated statistics on the use of our APIs at{" "}
+              <Link
+                href="https://www.global-warming.org/logs"
+                target="_blank"
+                rel="noopener"
+              >
+                https://www.global-warming.org/logs
+              </Link>
+              . This page is accessible without a login. The published view is
+              produced on our servers and deliberately does not contain IP
+              addresses — neither in readable nor in pseudonymised form — nor
+              user agents, referrer URLs, request identifiers or any list of
+              individual addresses per country. What is published is: the number
+              of requests over time, the requested paths, status codes, browser
+              and operating system families, the country a request came from,
+              and the number of distinct visitors per country as a figure. City
+              names are published only where at least five distinct visitors
+              from the same city appear in the same period; below that threshold
+              the city name is withheld and only the country is shown.
+            </Typography>
+          </Box>
+          <Box>
+            <Typography
+              variant="h6"
+              component="h3"
+              gutterBottom
+              fontWeight="bold"
+            >
+              Public source code
+            </Typography>
+            <Typography variant="body1" paragraph>
+              The source code of this website, including the logging function
+              described above, is published in a public repository at
+              [repository URL]. That repository contains program code and
+              configuration only. It contains no log entries, no access data and
+              no personal data relating to our visitors.
+            </Typography>
+          </Box>
           <Typography component="h3">GLS Bank</Typography>{" "}
           <Typography component="p">
             We use the GLS Bank donation tool embedded via an iframe on our

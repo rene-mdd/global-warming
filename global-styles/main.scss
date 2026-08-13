@@ -186,7 +186,7 @@ p {
 
 .about-footer {
   background-color: #016795;
-  display: flex;
+  display: flex !important;
   justify-content: space-around;
   align-items: center;
   padding: 10px 0;
