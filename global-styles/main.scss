@@ -459,13 +459,14 @@ nav {
   width: 50px;
 }
 
-.menu {
-  font-size: 110%;
-  color: black;
-
-  &:hover {
-    background-color: #6db629;
-    color: white;
+.menu-center-group, .donate-contact-group {
+  .menu {
+    font-size: 110%;
+    color: black;
+    &:hover {
+      background-color: #6db629;
+      color: white;
+    }
   }
 }
 
