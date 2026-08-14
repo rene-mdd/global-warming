@@ -2,19 +2,6 @@
 
 // components/LocationsPanel.jsx
 //
-// "IPs by location" — expandable country rows revealing the individual IPs seen
-// from each place, with request counts, error counts, first/last seen, top
-// route and browser.
-//
-// Two deliberate choices:
-//
-//  - Not a world map. Under any anonymisation mode precise lat/long is dropped
-//    (street-level coordinates identify a household; the city name doesn't), so
-//    a map would be plotting city centroids and implying accuracy that isn't
-//    there. A grouped list is honest and needs no map dependency.
-//  - Each country is marked with how its geo was derived. `~` means it was
-//    inferred from the Vercel edge region, not the visitor's IP, so treat it as
-//    "roughly this part of the world" rather than a fact.
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
@@ -168,7 +155,6 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
   // Either IP storage is off entirely, or we're in public mode and the server
   // withheld the address lists.
   const ipsHidden = data?.privacy?.mode === "drop" || Boolean(data?.publicMode);
-  // Separate flags rather than a chained ternary in JSX (no-nested-ternary).
   const isLoading = loading && !data;
   const isEmpty = !isLoading && countries.length === 0;
   const showList = !isLoading && countries.length > 0;

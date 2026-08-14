@@ -14,7 +14,7 @@
 //   - a live table with every field the drain provides, plus your own
 //     console.log() fields
 //
-// Charting notes:
+// Charting notes (worth keeping if you edit this):
 //   - The status-class colours are a validated set; the legend always shows
 //     numeric values and a table view is one click away, because the light-mode
 //     4xx yellow sits under 3:1 contrast against the surface. Colour never
@@ -539,9 +539,6 @@ export default function TrafficDashboard() {
               </Alert>
             )}
 
-          {/* ------------------------------------------------ geo notice */}
-
-          {/* ---------------------------------------------------- tiles */}
           {publicMode && (
             <Alert severity="info" sx={{ mb: 3 }}>
               <AlertTitle>Public view</AlertTitle>
@@ -872,7 +869,13 @@ export default function TrafficDashboard() {
         <div className={styles.tableToolbar}>
           <TextField
             size="small"
-            placeholder="Search path, IP, country, UA…"
+            placeholder={
+              // The server narrows the searchable fields in public mode, so the
+              // placeholder must not advertise a search it will refuse to run.
+              publicMode
+                ? "Search path, country, host…"
+                : "Search path, IP, country, UA…"
+            }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             sx={{ minWidth: 240 }}

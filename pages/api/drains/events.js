@@ -11,7 +11,9 @@ import {
   publicEvents,
   cityMinVisitors,
   publicTimeGranularity,
+  searchableFields,
 } from "../../../lib/public-mode";
+import { clampHours, setReadCacheHeaders } from "../../../lib/api-read";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -19,11 +21,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "method not allowed" });
   }
 
-  const refusal = checkApiAuth(req);
+  const { refusal, elevated } = checkApiAuth(req);
   if (refusal) return res.status(refusal.status).json(refusal.body);
 
+  // An operator token turns public mode off for this request only.
+  const publicMode = isPublicMode() && !elevated;
+  setReadCacheHeaders(res, { publicMode });
+
   const limit = Math.min(500, Math.max(1, Number(req.query.limit) || 100));
-  const hours = Math.min(24 * 90, Math.max(1, Number(req.query.hours) || 24));
+  const hours = clampHours(req.query.hours);
   const query = String(req.query.q || "")
     .trim()
     .toLowerCase();
@@ -41,18 +47,15 @@ export default async function handler(req, res) {
       records = records.filter((r) => statusClass(r.statusCode) === wanted);
     }
 
+    // Which fields ?q= may match is a privacy control in public mode, not a
+    // convenience list — see the reasoning in lib/public-mode.js, which owns
+    // both this list and the list of fields stripped from responses. 
+    const fields = searchableFields(publicMode);
+
     if (query) {
       records = records.filter((r) =>
-        [
-          r.path,
-          r.clientIp,
-          r.country,
-          r.city,
-          r.host,
-          r.userAgent,
-          r.method,
-          r.message,
-        ]
+        fields
+          .map((field) => r[field])
           .filter(Boolean)
           .some((value) => String(value).toLowerCase().includes(query)),
       );
@@ -68,10 +71,7 @@ export default async function handler(req, res) {
     // visitors share the city to hide the individual. The crowd is counted over
     // `records` — the full post-filter set — not over `page`, because `records`
     // is what a caller can page through, and the anonymity set is whatever is
-    // actually reachable. Passing the pre-filter store here would be wrong: it
-    // would let a city cleared by a busy day leak through a narrow ?q= that
-    // matches one person.
-    const publicMode = isPublicMode();
+    // actually reachable. 
     const events = publicMode ? publicEvents(page, records) : page;
 
     return res.status(200).json({

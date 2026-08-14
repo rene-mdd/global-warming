@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node --experimental-default-type=module --import ./tests/loader.mjs --test ./tests/privacy-invariants.test.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

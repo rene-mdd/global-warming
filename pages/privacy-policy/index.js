@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Link,
   Typography,
@@ -14,9 +15,8 @@ import { Container } from "@mui/system";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
-import { useState } from "react";
 
-function privacyPolicy() {
+function PrivacyPolicy() {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -1247,4 +1247,4 @@ function privacyPolicy() {
   );
 }
 
-export default privacyPolicy;
+export default PrivacyPolicy;

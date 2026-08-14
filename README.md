@@ -13,6 +13,10 @@ Don't forget to install the node modules: npm install
 
 To run it on node js: npm run dev
 
+To test traffic page: npm run build + npm test
+
+Pages components tests: npx eslint lib 
+
 News API: Gnews - NewsCatcher
 
 Site: www.global-warming.org
