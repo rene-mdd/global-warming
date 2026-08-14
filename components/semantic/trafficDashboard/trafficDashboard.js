@@ -14,7 +14,7 @@
 //   - a live table with every field the drain provides, plus your own
 //     console.log() fields
 //
-// Charting notes (worth keeping if you edit this):
+// Charting notes:
 //   - The status-class colours are a validated set; the legend always shows
 //     numeric values and a table view is one click away, because the light-mode
 //     4xx yellow sits under 3:1 contrast against the surface. Colour never
@@ -540,20 +540,6 @@ export default function TrafficDashboard() {
             )}
 
           {/* ------------------------------------------------ geo notice */}
-          {totals.geoHeaderCoverage < 0.5 && (
-            <Alert severity="warning" className={styles.geoHint}>
-              <AlertTitle>Country data is approximate right now</AlertTitle>
-              Only {formatPercent(totals.geoHeaderCoverage, 0)} of requests in
-              this window carry true visitor geolocation. Log Drains don&apos;t
-              include the visitor&apos;s country — the drain schema only exposes
-              the Vercel <em>edge region</em> that served the request (e.g.{" "}
-              <code>fra1</code>), which this dashboard falls back to. To get
-              real country/city, call <code>logRequest(request)</code> from{" "}
-              <code>lib/log-request.js</code> in your API routes; it reads the{" "}
-              <code>x-vercel-ip-country</code> headers and logs them so they
-              arrive through the drain.
-            </Alert>
-          )}
 
           {/* ---------------------------------------------------- tiles */}
           {publicMode && (

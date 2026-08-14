@@ -78,7 +78,9 @@ $bar-radius: 4px; // rounded data-end on magnitude bars
 }
 
 .mainTrafficWrapper {
-  padding: 100px 24px;
+  padding: 76px 0px;
+  width: 98%;
+  margin: 0 auto;
   background: var(--dash-plane);
   border-radius: $radius;
 }
