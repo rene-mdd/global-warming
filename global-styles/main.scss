@@ -132,7 +132,7 @@ p {
 .git-main-wrapper {
   background-color: #016795;
   min-height: 100vh !important;
-
+  width: 100%;;
   .git-title {
     color: white;
     font-size: 2.5em !important;
@@ -518,9 +518,9 @@ nav {
   align-items: center;
   flex-direction: column;
   background-color: #016795;
-  min-height: 100vh;
 
   .timeline-title {
+    text-align: center;
     margin-top: 15vh;
     color: white;
     font-size: 2.5em !important;
@@ -568,10 +568,7 @@ nav {
 }
 
 .transparency-wrapper {
-  // display: flex;
-  // flex-direction: column;
-  min-height: 100vh;
-
+  padding-bottom: 15vh;
   .transparency-title {
     margin-top: 15vh;
     margin-bottom: 10vh;
@@ -634,6 +631,7 @@ nav {
   .timeline {
     .timeline-title {
       font-size: 2.2em !important;
+      text-align: center !important;
     }
   }
 
@@ -677,10 +675,6 @@ nav {
   width: 307px;
   height: 204px;
   margin: auto;
-}
-
-.about-wrapper {
-  min-height: 100vh;
 }
 
 .partners-wrapper {

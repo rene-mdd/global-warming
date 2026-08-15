@@ -73,7 +73,6 @@ function Git() {
     <>
       <Grid
         container
-        display="flex"
         justifyContent="center"
         alignItems="center"
         className="git-main-wrapper"
