@@ -1,11 +1,28 @@
-import { Link, Typography, List, ListItem, ListItemText, Divider, Box, Stack } from "@mui/material";
+import { useState } from "react";
+import {
+  Link,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Box,
+  Stack,
+  Popper,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Container } from "@mui/system";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 
-function privacyPolicy() {
+function PrivacyPolicy() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
   const privacyTitle = "Climate Accountability API - Privacy Policy";
   const privacyMetaDescription =
     "Privacy policy: Climate Accountability API gUG. Berlin, Germany.";
@@ -258,10 +275,18 @@ function privacyPolicy() {
             Ren&eacute; Rodr&iacute;guez / Climate Accountability API.
             <br /> Seestra&szlig;e 107. 13353, Berlin, Germany.
           </Typography>
-          <Typography component="p">
-            Phone: &#91;Telefonnummer der verantwortlichen Stelle&#93;
-            <br /> E-mail: help@global-warming.org
+          <Typography component="div">
+            Phone:{" "}
+            <button aria-describedby={id} type="button" onClick={handleClick}>
+              Show number
+            </button>
+            <Popper id={id} open={open} anchorEl={anchorEl}>
+              <Box sx={{ border: 1, p: 1, bgcolor: "white" }}>
+                0 &#49;&#53;&#50;&#48; &#50;&#52;&#49;&#56;&#51;&#48;&#49;
+              </Box>
+            </Popper>
           </Typography>
+          <br /> E-mail: help@global-warming.org
           <Typography component="p">
             The controller is the natural person or legal entity that
             single-handedly or jointly with others makes decisions as to the
@@ -1222,4 +1247,4 @@ function privacyPolicy() {
   );
 }
 
-export default privacyPolicy;
+export default PrivacyPolicy;

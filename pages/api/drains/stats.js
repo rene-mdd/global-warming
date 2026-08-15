@@ -8,6 +8,7 @@ import { aggregate } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
 import { privacyInfo } from "../../../lib/privacy";
 import { isPublicMode, publicStats } from "../../../lib/public-mode";
+import { clampHours, setReadCacheHeaders } from "../../../lib/api-read";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -15,10 +16,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "method not allowed" });
   }
 
-  const refusal = checkApiAuth(req);
+  const { refusal, elevated } = checkApiAuth(req);
   if (refusal) return res.status(refusal.status).json(refusal.body);
 
-  const hours = Math.min(24 * 90, Math.max(1, Number(req.query.hours) || 24));
+  // An operator token turns public mode off for this request only.
+  const publicMode = isPublicMode() && !elevated;
+  setReadCacheHeaders(res, { publicMode });
+
+  const hours = clampHours(req.query.hours);
   const endTime = Date.now();
   const startTime = endTime - hours * 60 * 60 * 1000;
 
@@ -26,7 +31,7 @@ export default async function handler(req, res) {
     const records = await readRecords({ since: startTime });
     const raw = aggregate(records, { startTime, endTime });
     // Strip the per-visitor breakdowns before they leave the server.
-    const stats = isPublicMode() ? publicStats(raw) : raw;
+    const stats = publicMode ? publicStats(raw) : raw;
     // `privacy` tells the UI how to label the unique-visitor tile honestly
     // (raw IPs vs /24 subnets vs hashes).
     return res.status(200).json({

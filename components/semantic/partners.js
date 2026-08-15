@@ -7,27 +7,30 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import { Container } from "@mui/system";
 
 // import Grid from "@mui/material/Unstable_Grid2";
 
 export default function Partners() {
   return (
     <>
+    <Container>
       <Typography
         gutterBottom
         className="partners-title"
         variant="h2"
-        component="div"
+        component="h2"
         align="center"
       >
         Partners & Supporters
       </Typography>
-      <Grid container spacing={6} justifyContent="center">
+      </Container>
+      <Grid container spacing={6} justifyContent="center" className="partners-cards-wrapper">
         <Grid size={3}>
           <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
             <CardMedia
               image="/images/eon-stiftung-logo.jpg"
-              className="eon-image"
+              className="supporters-image"
               title="eon winners"
             />
             <CardContent sx={{ padding: "13px" }}>
@@ -52,7 +55,7 @@ export default function Partners() {
           <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
             <CardMedia
               image="/images/binda-consulting-logo.png"
-              className="eon-image"
+              className="supporters-image"
               title="binda consulting"
             />
             <CardContent sx={{ padding: "13px" }}>
@@ -77,7 +80,7 @@ export default function Partners() {
           <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
             <CardMedia
               image="/images/ontec-energy.png"
-              className="eon-image"
+              className="supporters-image"
               title="Ontec Energy"
               sx={{ width: "150px", margin: "auto" }}
             />
@@ -103,7 +106,7 @@ export default function Partners() {
           <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
             <CardMedia
               image="/images/roi-logo.png"
-              className="eon-image"
+              className="supporters-image"
               title="Roots of Impact"
               sx={{ width: "150px", margin: "auto" }}
             />

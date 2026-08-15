@@ -11,12 +11,15 @@ import Grid from "@mui/material/Unstable_Grid2";
 import GroupsIcon from "@mui/icons-material/Groups";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import CodeIcon from '@mui/icons-material/Code';
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import CodeIcon from "@mui/icons-material/Code";
 
 export default function CustomizedTimeline() {
   return (
     <>
+      <Typography variant="h2" className="timeline-title">
+        Project Timeline
+      </Typography>
       <Grid className="vision-mission-wrapper">
         <Grid className="mission">
           <Typography
@@ -28,9 +31,10 @@ export default function CustomizedTimeline() {
             Mission
           </Typography>
           <Typography component="p" align="center">
-            To make climate and companies' ESG data free, open, and practical for everyday
-            use. Empowering people everywhere to make informed and sustainable
-            decisions. Accelerating the transition to a greener future.
+            To make climate and companies' ESG data free, open, and practical
+            for everyday use. Empowering people everywhere to make informed and
+            sustainable decisions. Accelerating the transition to a greener
+            future.
           </Typography>
         </Grid>
         <Grid className="vision" size={{ xs: 12, md: 6 }}>
@@ -46,7 +50,7 @@ export default function CustomizedTimeline() {
       <Timeline position="alternate" sx={{ width: "100%", padding: "0" }}>
         <TimelineItem>
           <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
+            sx={{ m: "auto 0", fontSize: "20px" }}
             variant="body2"
             color="white"
             className="timeline-q"
@@ -65,12 +69,14 @@ export default function CustomizedTimeline() {
               Start
             </Typography>
             <Typography color="white">
-              Development of the first public API exposing atmospheric greenhouse gas concentration.
+              Development of the first public API exposing atmospheric
+              greenhouse gas concentration.
             </Typography>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem className="timeline-item">
           <TimelineOppositeContent
+            sx={{ m: "auto 0", fontSize: "20px" }}
             align="right"
             variant="body2"
             color="white"
@@ -99,7 +105,7 @@ export default function CustomizedTimeline() {
         </TimelineItem>
         <TimelineItem>
           <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
+            sx={{ m: "auto 0", fontSize: "20px" }}
             variant="body2"
             color="white"
             className="timeline-q"
@@ -124,6 +130,7 @@ export default function CustomizedTimeline() {
         </TimelineItem>
         <TimelineItem>
           <TimelineOppositeContent
+            sx={{ m: "auto 0", fontSize: "20px" }}
             align="right"
             variant="body2"
             color="white"
@@ -149,7 +156,7 @@ export default function CustomizedTimeline() {
         </TimelineItem>
         <TimelineItem>
           <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
+            sx={{ m: "auto 0", fontSize: "20px" }}
             variant="body2"
             color="white"
             className="timeline-q"
@@ -167,13 +174,12 @@ export default function CustomizedTimeline() {
             <Typography variant="h6" component="span" color="white">
               Development
             </Typography>
-            <Typography color="white">
-              Development of prototype.
-            </Typography>
+            <Typography color="white">Development of prototype.</Typography>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
           <TimelineOppositeContent
+            sx={{ m: "auto 0", fontSize: "20px" }}
             align="right"
             variant="body2"
             color="white"

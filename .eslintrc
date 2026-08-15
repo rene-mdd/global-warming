@@ -11,11 +11,7 @@
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "jsx-a11y",
-    "prettier",
-    "react"
-  ],
+  "plugins": ["jsx-a11y", "prettier", "react"],
   "env": {
     "browser": true,
     "node": true
@@ -24,7 +20,15 @@
     "semi": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/no-cycle": ["error", { "maxDepth": "∞" }],
-    "prettier/prettier": ["warn", {"usePrettierrc": false, "endOfLine":"auto", "singleQuote": false, "parser": "flow"}],
+    "prettier/prettier": [
+      "warn",
+      {
+        "usePrettierrc": false,
+        "endOfLine": "auto",
+        "singleQuote": false,
+        "parser": "flow"
+      }
+    ],
     "no-use-before-define": "off",
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/label-has-for": 0,
@@ -38,6 +42,7 @@
     "no-restricted-syntax": "off",
     "react/jsx-wrap-multilines": "off",
     "react/jsx-curly-newline": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "prefer-const": "off"
   }
 }

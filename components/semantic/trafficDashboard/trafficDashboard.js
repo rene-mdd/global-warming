@@ -197,7 +197,9 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
             </span>
             <div className={styles.barTrack}>
               <div
-                className={`${styles.barFill} ${row.isOther ? styles.isOther : ""}`}
+                className={`${styles.barFill} ${
+                  row.isOther ? styles.isOther : ""
+                }`}
                 style={{
                   width: `${Math.max(2, (count / max) * 100)}%`,
                   background: hue,
@@ -313,7 +315,7 @@ export default function TrafficDashboard() {
     [isDark],
   );
 
-  const [rangeKey, setRangeKey] = useState("24h");
+  const [rangeKey, setRangeKey] = useState("7d");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [nonce, setNonce] = useState(0);
 
@@ -429,7 +431,11 @@ export default function TrafficDashboard() {
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
 
   return (
-    <div className={`${styles.mainTrafficWrapper} ${styles.root} ${isDark ? styles.dark : ""}`}>
+    <div
+      className={`${styles.mainTrafficWrapper} ${styles.root} ${
+        isDark ? styles.dark : ""
+      }`}
+    >
       {/* ------------------------------------------------------- header */}
       <div className={styles.header}>
         <div>
@@ -539,23 +545,6 @@ export default function TrafficDashboard() {
               </Alert>
             )}
 
-          {/* ------------------------------------------------ geo notice */}
-          {totals.geoHeaderCoverage < 0.5 && (
-            <Alert severity="warning" className={styles.geoHint}>
-              <AlertTitle>Country data is approximate right now</AlertTitle>
-              Only {formatPercent(totals.geoHeaderCoverage, 0)} of requests in
-              this window carry true visitor geolocation. Log Drains don&apos;t
-              include the visitor&apos;s country — the drain schema only exposes
-              the Vercel <em>edge region</em> that served the request (e.g.{" "}
-              <code>fra1</code>), which this dashboard falls back to. To get
-              real country/city, call <code>logRequest(request)</code> from{" "}
-              <code>lib/log-request.js</code> in your API routes; it reads the{" "}
-              <code>x-vercel-ip-country</code> headers and logs them so they
-              arrive through the drain.
-            </Alert>
-          )}
-
-          {/* ---------------------------------------------------- tiles */}
           {publicMode && (
             <Alert severity="info" sx={{ mb: 3 }}>
               <AlertTitle>Public view</AlertTitle>
@@ -886,7 +875,13 @@ export default function TrafficDashboard() {
         <div className={styles.tableToolbar}>
           <TextField
             size="small"
-            placeholder="Search path, IP, country, UA…"
+            placeholder={
+              // The server narrows the searchable fields in public mode, so the
+              // placeholder must not advertise a search it will refuse to run.
+              publicMode
+                ? "Search path, country, host…"
+                : "Search path, IP, country, UA…"
+            }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             sx={{ minWidth: 240 }}
@@ -1110,6 +1105,13 @@ export default function TrafficDashboard() {
         >
           Team Settings → Drains
         </Link>
+      </Typography>
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{ display: "block", mt: 2 }}
+      >
+        For companies ESG data visit: <Link href="/esg">ESG</Link>
       </Typography>
     </div>
   );

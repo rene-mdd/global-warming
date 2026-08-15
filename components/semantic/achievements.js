@@ -7,6 +7,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import Link from "@mui/material/Link";
 
 function CountUp({ end, duration, showPlus, isVisible }) {
   const [count, setCount] = useState(0);
@@ -101,27 +102,27 @@ export default function FactsSection() {
     { value: 80000, label: "Connected Devices", showPlus: true },
     { value: 350000, label: "Monthly API requests", showPlus: true },
     { value: 150000, label: "Companies", showPlus: true },
-    { value: 15, label: "Countries", showPlus: true },
   ];
 
   return (
     <Box
       component="section"
-      sx={{
-        position: "relative",
-        py: 10,
-        color: "white",
-        backgroundImage: "url('/images/your-background.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      className="achievements-section"
     >
       <Box
         sx={{ position: "absolute", inset: 0, bgcolor: "rgba(0, 0, 0, 0.69)" }}
       />
 
       <Container sx={{ position: "relative", zIndex: 1 }}>
+        <Typography
+          gutterBottom
+          variant="h2"
+          component="h2"
+          align="center"
+          className="achievements-title"
+        >
+          Global Usage
+        </Typography>
         <Grid container spacing={4} justifyContent="center" textAlign="center">
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
             <FactCard
@@ -144,14 +145,12 @@ export default function FactsSection() {
               showPlus={facts[2].showPlus}
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-            <FactCard
-              value={facts[3].value}
-              label={facts[3].label}
-              showPlus={facts[3].showPlus}
-            />
-          </Grid>
         </Grid>
+      </Container>
+      <Container align="center" sx={{ position: "relative", zIndex: 1, marginTop: "40px", marginBottom: "64px" }}>
+        <Link  underline="hover" href="/traffic" className="link-to-traffic">
+          Learn More
+        </Link>
       </Container>
     </Box>
   );

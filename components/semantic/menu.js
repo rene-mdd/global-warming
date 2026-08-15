@@ -59,13 +59,16 @@ export default class StickySideBar extends Component {
               <Link href="/about">About</Link>
             </Container>
             <Container id="business" className="menu-item">
-              <Link href="/business">ESG</Link>
+              <Link href="/esg">ESG</Link>
             </Container>
             <Container id="news" className="menu-item">
               <Link href="/news">News</Link>
             </Container>
             <Container id="deforestation" className="menu-item">
               <Link href="/deforestation">Deforestation</Link>
+            </Container>
+            <Container id="traffic" className="menu-item">
+              <Link href="/traffic">Traffic</Link>
             </Container>
             <Container id="donate" className="menu-item mobile-donate-btn">
               <Link href="/donate">Donate</Link>
@@ -109,7 +112,7 @@ export default class StickySideBar extends Component {
                     <Link href="/about">
                       <Button className="menu">About</Button>
                     </Link>
-                    <Link href="/business">
+                    <Link href="/esg">
                       <Button className="menu">ESG</Button>
                     </Link>
                     <Link href="/news">
@@ -117,6 +120,9 @@ export default class StickySideBar extends Component {
                     </Link>
                     <Link href="/deforestation">
                       <Button className="menu">Deforestation</Button>
+                    </Link>
+                     <Link href="/traffic">
+                      <Button className="menu">Traffic</Button>
                     </Link>
                   </ButtonGroup>
                   <Box className="donate-contact-group">

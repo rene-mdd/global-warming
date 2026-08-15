@@ -11,6 +11,7 @@ import { aggregateLocations } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
 import { privacyInfo } from "../../../lib/privacy";
 import { isPublicMode, publicLocations } from "../../../lib/public-mode";
+import { clampHours, setReadCacheHeaders } from "../../../lib/api-read";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -18,10 +19,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "method not allowed" });
   }
 
-  const refusal = checkApiAuth(req);
+  const { refusal, elevated } = checkApiAuth(req);
   if (refusal) return res.status(refusal.status).json(refusal.body);
 
-  const hours = Math.min(24 * 90, Math.max(1, Number(req.query.hours) || 24));
+  // An operator token turns public mode off for this request only.
+  const publicMode = isPublicMode() && !elevated;
+  setReadCacheHeaders(res, { publicMode });
+
+  const hours = clampHours(req.query.hours);
   const limitCountries = Math.min(
     60,
     Math.max(1, Number(req.query.countries) || 15),
@@ -43,7 +48,7 @@ export default async function handler(req, res) {
       limitIpsPerCountry,
     });
     // Withhold the per-IP arrays; keep the country/city counts.
-    const data = isPublicMode() ? publicLocations(raw) : raw;
+    const data = publicMode ? publicLocations(raw) : raw;
     return res.status(200).json({ ...data, privacy: privacyInfo(), hours });
   } catch (err) {
     console.error("[drains/locations]", err);
