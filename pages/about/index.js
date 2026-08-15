@@ -1,5 +1,5 @@
 import * as Scroll from "react-scroll";
-import { CardMedia, Typography, Button, Divider } from "@mui/material";
+import { CardMedia, Typography, Button, Divider, Box } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import StickyMenu from "../../components/semantic/menu";
@@ -27,7 +27,7 @@ function About() {
   const aboutTitle = "Climate Accountability API - About Us";
   const websiteUrl = "https://www.global-warming.org/about";
   const aboutMetaDescription =
-    "Our mission is to provide the public with information related to the environmental and social impact of every organization";
+    "Our mission is to provide the public with open information on climate data and companies’ social and environmental impacts (ESG)";
   const aboutKeywords =
     "Global warming, about, carbon footprint, climate change, environment";
   return (
@@ -48,7 +48,7 @@ function About() {
         <Typography component="p" align="center" className="about-title ">
           About Us
         </Typography>
-        <Grid align="center">
+        <Grid size="grow" align="center">
           <CardMedia
             component="img"
             image="images/logo-planet-image.png"
@@ -66,30 +66,51 @@ function About() {
             environmental data, with expertise in APIs, interoperability, data
             governance, metadata, FAIR data principles, and digital platforms.
             Our mission is to build the world's most comprehensive, transparent,
-            and accessible platform for ESG and climate-related
-            data.
+            and accessible platform for ESG and climate-related data.
           </Typography>
         </Grid>
-        <Grid component="div" container justifyContent="center">
-          <Grid>
-            <iframe
-              title="Tons of CO2 emitted into the atmosphere"
-              src="https://www.theworldcounts.com/embed/challenges/23?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
-              style={{ border: "none", width: "100%" }}
-              height="125"
-              width="300"
-              loading="lazy"
-            />
+        <Grid
+          component="div"
+          container
+          sx={{
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Grid size="grow">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <iframe
+                title="Tons of CO2 emitted into the atmosphere"
+                src="https://www.theworldcounts.com/embed/challenges/23?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+                style={{ border: "none", width: "100%" }}
+                height="125"
+                width="300"
+                loading="lazy"
+              />
+            </Box>
           </Grid>
-          <Grid>
-            <iframe
-              title="World average temperature (°C)"
-              src="https://www.theworldcounts.com/embed/challenges/21?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
-              style={{ border: "none", width: "100%" }}
-              height="125"
-              width="300"
-              loading="lazy"
-            />
+          <Grid size="grow">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <iframe
+                title="World average temperature (°C)"
+                src="https://www.theworldcounts.com/embed/challenges/21?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
+                style={{ border: "none", width: "100%" }}
+                height="125"
+                width="300"
+                loading="lazy"
+              />
+            </Box>
           </Grid>
         </Grid>
         <Grid align="center" sx={{ marginTop: "auto", marginBottom: "10px" }}>
@@ -108,36 +129,32 @@ function About() {
       <Divider className="hide-divider" />
       <Divider name="jump-news" className="hide-divider" />
       <Grid container className="timeline" id="project-timeline">
-        <Typography variant="h2" className="timeline-title">
-          Project Timeline
-        </Typography>
         <CustomizedTimeline />
       </Grid>
       <Grid container>
-        <Grid xs={12}>
-          <Achievements />
-        </Grid>
+        <Achievements />
       </Grid>
       <Grid container className="about-wrapper">
-        <Grid xs={12}>
-          <Team />
-        </Grid>
+        <Team />
       </Grid>
-      <Grid container sx={{ width: "100%" }} className="partners-wrapper">
-        <Grid sx={{ width: "100%" }}>
-          <Partners />
-        </Grid>
+      <Grid
+        container
+        className="partners-wrapper"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Partners />
       </Grid>
-      <Grid container className="transparency-wrapper"  id="transparency">
-        <Typography variant="h2" className="transparency-title" align="center">
-          Transparency
-        </Typography>
+      <Grid
+        container
+        className="transparency-wrapper"
+        id="transparency"
+        justifyContent="center"
+      >
         <Transparency />
       </Grid>
       <Grid container className="about-wrapper">
-        <Grid xs={12}>
-          <Git />
-        </Grid>
+        <Git />
       </Grid>
       <ThemeProvider theme={theme}>
         <Footer classNameProp="about-footer" />

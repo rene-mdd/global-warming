@@ -197,7 +197,9 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
             </span>
             <div className={styles.barTrack}>
               <div
-                className={`${styles.barFill} ${row.isOther ? styles.isOther : ""}`}
+                className={`${styles.barFill} ${
+                  row.isOther ? styles.isOther : ""
+                }`}
                 style={{
                   width: `${Math.max(2, (count / max) * 100)}%`,
                   background: hue,
@@ -313,7 +315,7 @@ export default function TrafficDashboard() {
     [isDark],
   );
 
-  const [rangeKey, setRangeKey] = useState("24h");
+  const [rangeKey, setRangeKey] = useState("7d");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [nonce, setNonce] = useState(0);
 
@@ -429,7 +431,11 @@ export default function TrafficDashboard() {
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
 
   return (
-    <div className={`${styles.mainTrafficWrapper} ${styles.root} ${isDark ? styles.dark : ""}`}>
+    <div
+      className={`${styles.mainTrafficWrapper} ${styles.root} ${
+        isDark ? styles.dark : ""
+      }`}
+    >
       {/* ------------------------------------------------------- header */}
       <div className={styles.header}>
         <div>
@@ -1099,6 +1105,13 @@ export default function TrafficDashboard() {
         >
           Team Settings → Drains
         </Link>
+      </Typography>
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{ display: "block", mt: 2 }}
+      >
+        For companies ESG data visit: <Link href="/esg">ESG</Link>
       </Typography>
     </div>
   );

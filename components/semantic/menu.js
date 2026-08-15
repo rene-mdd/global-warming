@@ -59,7 +59,7 @@ export default class StickySideBar extends Component {
               <Link href="/about">About</Link>
             </Container>
             <Container id="business" className="menu-item">
-              <Link href="/business">ESG</Link>
+              <Link href="/esg">ESG</Link>
             </Container>
             <Container id="news" className="menu-item">
               <Link href="/news">News</Link>
@@ -112,7 +112,7 @@ export default class StickySideBar extends Component {
                     <Link href="/about">
                       <Button className="menu">About</Button>
                     </Link>
-                    <Link href="/business">
+                    <Link href="/esg">
                       <Button className="menu">ESG</Button>
                     </Link>
                     <Link href="/news">

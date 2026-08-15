@@ -6,19 +6,18 @@ import business from "../../public/data/dummy";
 import Footer from "../../components/semantic/footer";
 
 function Business() {
-  // not ready
-  const aboutTitle = "Business environmental impact";
-  const websiteUrl = "https://www.global-warming.org/business";
+  const esgTitle = "Open ESG Data on Companies";
+  const websiteUrl = "https://www.global-warming.org/esg";
   const aboutMetaDescription =
-    "List of business and organization by their environmental impact";
+    "Explore open, evidence-based ESG data on companies, including their climate performance, environmental impact, social practices, and governance. Our mission is to make corporate information transparent and accessible to the public.";
   const aboutKeywords =
-    "Global warming, environment, impact, pollution, climate change, business";
+    "Global warming, environment, impact, pollution, climate change, business, ESG, Corporate ESG, Open ESG data";
 
   return (
     <>
       <SiteHeader
         description={aboutMetaDescription}
-        title={aboutTitle}
+        title={esgTitle}
         keywords={aboutKeywords}
         websiteUrl={websiteUrl}
       />
@@ -40,7 +39,8 @@ function Business() {
             align="center"
             gutterBottom
           >
-            Find information on companies' environmental, social and governance (ESG) impact.
+            Find information on companies' environmental, social and governance
+            (ESG) impact.
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>

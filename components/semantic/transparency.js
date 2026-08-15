@@ -7,6 +7,9 @@ export default function Transparency() {
   return (
     <>
       <Grid size={{ xs: 12, md: 6 }} className="transparency-text-wrapper">
+        <Typography variant="h2" className="transparency-title" align="center">
+          Transparency
+        </Typography>
         <Container>
           <Typography component="p" fontSize="20px" mb={5} textAlign="center">
             This project began as a side project on June 18th, 2020. After
@@ -19,25 +22,31 @@ export default function Transparency() {
             out to us.
           </Typography>
         </Container>
-        <Link href="/contact" className="link-to-contact">
-          Contact
-        </Link>
-        <Typography component="h3">Anual financial statements:</Typography>
-        <Typography
-          component="a"
-          href="/documents/climate-accountability-api-jahresabschluss.pdf"
-          download
-        >
-          Download
-        </Typography>
-        <Typography component="h3">Articles of association:</Typography>
-        <Typography
-          component="a"
-          href="/documents/articles-of-association.pdf"
-          download
-        >
-          Download
-        </Typography>
+        <Container align="center">
+          <Typography component="h3">Anual financial statements:</Typography>
+          <Typography
+            component="a"
+            href="/documents/climate-accountability-api-jahresabschluss.pdf"
+            download
+          >
+            Download
+          </Typography>
+          <Typography component="h3" mt={1}>
+            Articles of association:
+          </Typography>
+          <Typography
+            component="a"
+            href="/documents/articles-of-association.pdf"
+            download
+          >
+            Download
+          </Typography>
+        </Container>
+        <Container align="center" sx={{ marginTop: "40px" }}>
+          <Link href="/contact" className="link-to-contact">
+            Contact
+          </Link>
+        </Container>
       </Grid>
     </>
   );

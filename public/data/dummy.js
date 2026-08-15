@@ -1,6 +1,5 @@
 
-let businessData = [];
-businessData = [{
+const businessData = [{
     row: {
         attributes: {
             additional_details: {
