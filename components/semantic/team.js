@@ -52,7 +52,6 @@ export default function Team() {
   };
 
   return (
-    <Grid xs={12}>
       <section>
         <Container maxWidth="lg">
           <Box pt={8} pb={12} textAlign="center">
@@ -114,7 +113,7 @@ export default function Team() {
                   {content["02_job"]}
                 </Typography>
               </Grid>
-              <Grid xs={12} sm={6} md={3}>
+              {/* <Grid xs={12} sm={6} md={3}>
                 <Avatar
                   alt="teammate picture"
                   src={content["03_image"]}
@@ -130,7 +129,7 @@ export default function Team() {
                 >
                   {content["03_job"]}
                 </Typography>
-              </Grid>
+              </Grid> */}
 
               <Grid xs={12} sm={6} md={3}>
                 <Avatar
@@ -274,6 +273,5 @@ export default function Team() {
           </Box>
         </Container>
       </section>
-    </Grid>
   );
 }
