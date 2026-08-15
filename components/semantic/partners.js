@@ -7,128 +7,120 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import { Container } from "@mui/system";
-
-// import Grid from "@mui/material/Unstable_Grid2";
 
 export default function Partners() {
   return (
     <>
-    <Container>
-      <Typography
-        gutterBottom
-        className="partners-title"
-        variant="h2"
-        component="h2"
-        align="center"
-      >
-        Partners & Supporters
-      </Typography>
-      </Container>
-      <Grid container spacing={6} justifyContent="center" className="partners-cards-wrapper">
-        <Grid size={3}>
-          <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
-            <CardMedia
-              image="/images/eon-stiftung-logo.jpg"
-              className="supporters-image"
-              title="eon winners"
-            />
-            <CardContent sx={{ padding: "13px" }}>
-              <Typography gutterBottom variant="h5" component="div">
-                E.ON
-              </Typography>
-              <Typography variant="p" size="large">
-                Winners of E.ON European Climate Fund Competition
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                href="https://www.eon-foundation.com/en/solutions/european-climate-fund-2025/ecf-projects-2024.html"
-              >
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
+        <Typography
+          gutterBottom
+          className="partners-title"
+          variant="h2"
+          component="h2"
+          align="center"
+        >
+          Partners & Supporters
+        </Typography>
+
+        <Grid
+          container
+          spacing={6}
+          justifyContent="center"
+          className="partners-cards-wrapper"
+        >
+          <Grid size={3}>
+            <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
+              <CardMedia
+                image="/images/eon-stiftung-logo.jpg"
+                className="supporters-image"
+                title="eon winners"
+              />
+              <CardContent sx={{ padding: "13px" }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  E.ON
+                </Typography>
+                <Typography variant="p" size="large">
+                  Winners of E.ON European Climate Fund Competition
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  href="https://www.eon-foundation.com/en/solutions/european-climate-fund-2025/ecf-projects-2024.html"
+                >
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid size={3}>
+            <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
+              <CardMedia
+                image="/images/binda-consulting-logo.png"
+                className="supporters-image"
+                title="binda consulting"
+              />
+              <CardContent sx={{ padding: "13px" }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  BCI
+                </Typography>
+                <Typography variant="p" size="large">
+                  Consortium Partners for Horizon Europe Project
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" href="https://bindaconsulting.org/">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid size={3}>
+            <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
+              <CardMedia
+                image="/images/ontec-energy.png"
+                className="supporters-image"
+                title="Ontec Energy"
+                sx={{ width: "150px", margin: "auto" }}
+              />
+              <CardContent sx={{ padding: "13px" }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  Ontec Energy
+                </Typography>
+                <Typography variant="p" size="large">
+                  Supporting Climate Accountability API work
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" href="https://ontecenergy.com/">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+          <Grid size={3}>
+            <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
+              <CardMedia
+                image="/images/roi-logo.png"
+                className="supporters-image"
+                title="Roots of Impact"
+                sx={{ width: "150px", margin: "auto" }}
+              />
+              <CardContent sx={{ padding: "13px" }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  Roots of Impact
+                </Typography>
+                <Typography variant="p" size="large">
+                  Advisors and supporters of Climate Accountability API
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" href="https://roots-of-impact.org/">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
         </Grid>
-        <Grid size={3}>
-          <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
-            <CardMedia
-              image="/images/binda-consulting-logo.png"
-              className="supporters-image"
-              title="binda consulting"
-            />
-            <CardContent sx={{ padding: "13px" }}>
-              <Typography gutterBottom variant="h5" component="div">
-                BCI
-              </Typography>
-              <Typography variant="p" size="large">
-                Consortium Partners for Horizon Europe Project
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                href="https://bindaconsulting.org/"
-              >
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid size={3}>
-          <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
-            <CardMedia
-              image="/images/ontec-energy.png"
-              className="supporters-image"
-              title="Ontec Energy"
-              sx={{ width: "150px", margin: "auto" }}
-            />
-            <CardContent sx={{ padding: "13px" }}>
-              <Typography gutterBottom variant="h5" component="div">
-                Ontec Energy
-              </Typography>
-              <Typography variant="p" size="large">
-                Supporting Climate Accountability API work
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                href="https://ontecenergy.com/"
-              >
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-        <Grid size={3}>
-          <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
-            <CardMedia
-              image="/images/roi-logo.png"
-              className="supporters-image"
-              title="Roots of Impact"
-              sx={{ width: "150px", margin: "auto" }}
-            />
-            <CardContent sx={{ padding: "13px" }}>
-              <Typography gutterBottom variant="h5" component="div">
-                Roots of Impact
-              </Typography>
-              <Typography variant="p" size="large">
-                Advisors and supporters of Climate Accountability API
-              </Typography>
-            </CardContent>
-            <CardActions>
-              <Button
-                size="small"
-                href="https://roots-of-impact.org/"
-              >
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      </Grid>
     </>
   );
 }

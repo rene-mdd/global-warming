@@ -134,11 +134,10 @@ function About() {
       <Grid container>
         <Achievements />
       </Grid>
-      <Grid container className="about-wrapper">
+      <Grid className="about-wrapper">
         <Team />
       </Grid>
       <Grid
-        container
         className="partners-wrapper"
         alignItems="center"
         justifyContent="center"
