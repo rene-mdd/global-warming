@@ -128,17 +128,16 @@ function About() {
       </Grid>
       <Divider className="hide-divider" />
       <Divider name="jump-news" className="hide-divider" />
-      <Grid container className="timeline" id="project-timeline">
+      <Grid className="timeline" id="project-timeline">
         <CustomizedTimeline />
       </Grid>
       <Grid container>
         <Achievements />
       </Grid>
-      <Grid container className="about-wrapper">
+      <Grid className="about-wrapper">
         <Team />
       </Grid>
       <Grid
-        container
         className="partners-wrapper"
         alignItems="center"
         justifyContent="center"
