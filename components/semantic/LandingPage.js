@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   CardMedia,
   Typography,
@@ -6,6 +5,7 @@ import {
 } from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import * as Scroll from "react-scroll";
+import ClimateSummary from "./climateSummary";
 
 const LandingPage = () => (
   <Grid
@@ -30,7 +30,10 @@ const LandingPage = () => (
         in the atmosphere.
       </Typography>
     </Grid>
-    <Grid xs={12} align="center" sx={{ marginTop: "auto"}} mb={1}>
+    <Grid container>
+      <ClimateSummary />
+    </Grid>
+    <Grid xs={12} align="center" sx={{ marginTop: "auto", paddingTop: "50px"}} mb={1}>
       <Scroll.Link spy smooth duration={1000} to="jump-to-temperature">
         <Button className="icon-style">
           <CardMedia

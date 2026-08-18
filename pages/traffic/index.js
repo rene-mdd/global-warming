@@ -17,12 +17,12 @@ const theme = createTheme({
 });
 
 function Traffic() {
-  const donateTitle = "Climate Accountability API - Donate";
+  const donateTitle = "Climate Accountability API - Traffic";
   const donateMetaDescription =
-    "Our mission is to provide the public with information related to every organization carbon footprint";
+    "Current usage of the Climate Accountability APIs, including the number of requests and the most popular endpoints.";
   const donateKeywords =
-    "Global warming, about, carbon footprint, climate change, environment";
-  const websiteUrl = "https://www.global-warming.org/donate";
+    "Global warming, Climate APIs, carbon footprint, co2, usage";
+  const websiteUrl = "https://www.global-warming.org/traffic";
 
   return (
     <>

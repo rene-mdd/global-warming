@@ -1,44 +1,39 @@
-import { Subject } from "rxjs";
+import { ReplaySubject } from "rxjs";
 
-const temperatureSubject = new Subject({});
-const arcticSubject = new Subject({});
-const co2Subject = new Subject({});
-const methaneSubject = new Subject({});
-const nitrousSubject = new Subject({});
-const oceanSubject = new Subject({});
-
-export const temperatureService = {
-  setData: (data) => temperatureSubject.next({ value: data }),
-  clearData: () => temperatureSubject.next(),
-  getData: () => temperatureSubject.asObservable(),
+/** Is this worth pushing to subscribers? */
+const isUsable = (data) => {
+  if (data === null || data === undefined) return false;
+  if (Array.isArray(data)) return data.length > 0;
+  if (typeof data === "object") return Object.keys(data).length > 0;
+  return true;
 };
 
-export const arcticService = {
-  setData: (data) => arcticSubject.next({ value: data }),
-  clearData: () => arcticSubject.next(),
-  getData: () => arcticSubject.asObservable(),
+const createService = (name) => {
+  // Buffer of 1: late subscribers get the most recent value.
+  const subject = new ReplaySubject(1);
+
+  return {
+    setData: (data) => {
+      if (!isUsable(data)) {
+        // The component keeps its
+        // placeholder instead of throwing on a null.
+        console.warn(
+          `[dataService] ${name}: ignored an empty update (${JSON.stringify(
+            data,
+          )}). The upstream API probably failed — check /api/${name}-api.`,
+        );
+        return;
+      }
+      subject.next({ value: data });
+    },
+    clearData: () => subject.next({ value: null }),
+    getData: () => subject.asObservable(),
+  };
 };
 
-export const co2Service = {
-  setData: (data) => co2Subject.next({ value: data }),
-  clearData: () => co2Subject.next(),
-  getData: () => co2Subject.asObservable(),
-};
-
-export const methaneService = {
-  setData: (data) => methaneSubject.next({ value: data }),
-  clearData: () => methaneSubject.next(),
-  getData: () => methaneSubject.asObservable(),
-};
-
-export const nitrousService = {
-  setData: (data) => nitrousSubject.next({ value: data }),
-  clearData: () => nitrousSubject.next(),
-  getData: () => nitrousSubject.asObservable(),
-};
-
-export const oceanService = {
-  setData: (data) => oceanSubject.next({ value: data }),
-  clearData: () => oceanSubject.next(),
-  getData: () => oceanSubject.asObservable(),
-};
+export const temperatureService = createService("temperature");
+export const arcticService = createService("arctic");
+export const co2Service = createService("co2");
+export const methaneService = createService("methane");
+export const nitrousService = createService("nitrous");
+export const oceanService = createService("ocean");
