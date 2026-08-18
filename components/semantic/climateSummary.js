@@ -16,7 +16,6 @@ import ScienceIcon from "@mui/icons-material/Science";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import WavesIcon from "@mui/icons-material/Waves";
 
-const ACCENT = "#3987e5"; // validated against a dark surface
 const INK_PRIMARY = "#ffffff";
 const INK_SECONDARY = "rgba(255, 255, 255, 0.78)";
 const INK_MUTED = "rgba(255, 255, 255, 0.58)";
@@ -46,21 +45,17 @@ function comparisonText({ comparison, baselineLabel }) {
 
 function StatTile({ indicator }) {
   const Icon = ICONS[indicator.key] ?? ScienceIcon;
-  let iconColor = `${
-    indicator.key === "temperature"
-      ? "D5174E"
-      : indicator.key === "co2"
-      ? "FA4224"
-      : indicator.key === "methane"
-      ? "F9A825"
-      : indicator.key === "nitrous"
-      ? "8E24AA"
-      : indicator.key === "seaIce"
-      ? "C6FCFF"
-      : indicator.key === "ocean"
-      ? "03719C"
-      : "FFFFFF"
-  }`;
+
+  const iconColorMap = {
+    temperature: "D5174E",
+    co2: "FA4224",
+    methane: "F9A825",
+    nitrous: "8E24AA",
+    seaIce: "C6FCFF",
+    ocean: "03719C",
+  };
+
+  const iconColor = iconColorMap[indicator.key] ?? "FFFFFF";
 
   return (
     <Box
