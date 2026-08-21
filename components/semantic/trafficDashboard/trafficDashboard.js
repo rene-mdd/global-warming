@@ -315,7 +315,7 @@ export default function TrafficDashboard() {
     [isDark],
   );
 
-  const [rangeKey, setRangeKey] = useState("7d");
+  const [rangeKey, setRangeKey] = useState("24h");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [nonce, setNonce] = useState(0);
 
@@ -409,7 +409,14 @@ export default function TrafficDashboard() {
   // --- auto refresh ---
   useEffect(() => {
     if (!autoRefresh) return undefined;
-    const id = setInterval(() => setNonce((n) => n + 1), 10000);
+    // 60s, not 10s.
+    //
+    // Ten seconds made sense for a live one-hour view. On a multi-day window the
+    // numbers barely move, and each tick is two aggregation reads over the whole
+    // retention window — six times a minute, per open tab, against a database
+    // billed by bandwidth. This was the other half of the Upstash request-size
+    // problem.
+    const id = setInterval(() => setNonce((n) => n + 1), 60000);
     return () => clearInterval(id);
   }, [autoRefresh]);
 
@@ -545,6 +552,23 @@ export default function TrafficDashboard() {
               </Alert>
             )}
 
+          {/* ------------------------------------------------ geo notice */}
+          {totals.geoHeaderCoverage < 0.5 && (
+            <Alert severity="warning" className={styles.geoHint}>
+              <AlertTitle>Country data is approximate right now</AlertTitle>
+              Only {formatPercent(totals.geoHeaderCoverage, 0)} of requests in
+              this window carry true visitor geolocation. Log Drains don&apos;t
+              include the visitor&apos;s country — the drain schema only exposes
+              the Vercel <em>edge region</em> that served the request (e.g.{" "}
+              <code>fra1</code>), which this dashboard falls back to. To get
+              real country/city, call <code>logRequest(request)</code> from{" "}
+              <code>lib/log-request.js</code> in your API routes; it reads the{" "}
+              <code>x-vercel-ip-country</code> headers and logs them so they
+              arrive through the drain.
+            </Alert>
+          )}
+
+          {/* ---------------------------------------------------- tiles */}
           {publicMode && (
             <Alert severity="info" sx={{ mb: 3 }}>
               <AlertTitle>Public view</AlertTitle>
