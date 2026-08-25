@@ -417,6 +417,10 @@ export default function TrafficDashboard() {
   // only stops us rendering panels that would arrive empty.
   const publicMode = Boolean(stats?.publicMode);
   const showEmptyState = !isLoading && !hasData;
+  // Manually-refreshed estimate (DASHBOARD_TRAFFIC_COVERAGE_PERCENT) of what
+  // fraction of total traffic this Log-Drain-based view can see at all — see
+  // lib/api-read.js for why this can't just be computed live.
+  const coveragePercent = stats?.coveragePercent;
 
   const statusClassTotals = stats?.statusClasses ?? [];
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
@@ -436,7 +440,7 @@ export default function TrafficDashboard() {
           <div className={styles.headerMeta}>
             <Typography variant="body2" color="text.secondary">
               {autoRefresh ? <span className={styles.liveDot} /> : null}
-              Ingested via Vercel Log Drains
+              Ingested via Vercel Log Drains · backend requests only
             </Typography>
             {stats?.store ? (
               <Chip
@@ -476,6 +480,31 @@ export default function TrafficDashboard() {
           </Button>
         </div>
       </div>
+
+      {/* Structural, not a data-quality problem: Log Drains never see a CDN
+          cache HIT for these routes (the function doesn't run, so no log
+          line exists to ingest). Shown unconditionally, not just when data
+          is empty, since it's true of every number below. */}
+      <Alert severity="warning" sx={{ mb: 3 }}>
+        <AlertTitle>This only covers backend requests</AlertTitle>
+        Everything below comes from Vercel Log Drains, which only fire when a
+        request reaches a Function — a request served straight from
+        Vercel&apos;s CDN cache never invokes the function and leaves no log
+        line to ingest. That&apos;s most of this project&apos;s real traffic.
+        {Number.isFinite(coveragePercent) ? (
+          <>
+            {" "}
+            Measured directly against Vercel&apos;s own metrics: this
+            dashboard currently reflects roughly{" "}
+            <strong>{formatPercent(coveragePercent / 100, 0)}</strong> of
+            total requests to these API routes — the remaining ~
+            {formatPercent(1 - coveragePercent / 100, 0)} are cache hits with
+            no visibility here.
+          </>
+        ) : (
+          " Vercel's own Observability metrics are the source of truth for total traffic."
+        )}
+      </Alert>
 
       {statsError && (
         <Alert severity="error" sx={{ mb: 3 }}>
@@ -543,10 +572,12 @@ export default function TrafficDashboard() {
 
           <div className={styles.tileGrid}>
             <StatTile
-              label="Requests"
+              label="Backend requests"
               value={formatCompact(totals.requests)}
               // Requests != log entries: several entries can share a requestId.
               // Showing both makes the difference (and the billing basis) plain.
+              // "Backend" because this excludes CDN cache hits entirely — see
+              // the warning banner above.
               hint={`from ${formatNumber(totals.logEvents)} log entries${
                 totals.buildLogs
                   ? ` · ${formatNumber(totals.buildLogs)} build`

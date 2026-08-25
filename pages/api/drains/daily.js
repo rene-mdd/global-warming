@@ -9,6 +9,7 @@
 //   GET /api/drains/daily?days=30
 
 import { readDailySummaries } from "../../../lib/drain-store";
+import { coveragePercent } from "../../../lib/api-read";
 
 const DEFAULT_DAYS = 30;
 
@@ -53,6 +54,9 @@ export default async function handler(req, res) {
       days: summaries,
       totals: { requests: totalRequests, busiestDayUniqueVisitors },
       requestedDays: days,
+      // Same caveat as /api/drains/stats: these are backend (Log Drain)
+      // requests only, not total edge traffic. See lib/api-read.js.
+      coveragePercent: coveragePercent(),
     });
   } catch (err) {
     console.error("[drains/daily]", err);

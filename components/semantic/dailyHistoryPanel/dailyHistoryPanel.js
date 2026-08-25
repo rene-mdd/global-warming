@@ -108,7 +108,8 @@ export default function DailyHistoryPanel({ isDark }) {
         <div>
           <h3 className={styles.title}>Daily history</h3>
           <p className={styles.sub}>
-            One rollup per day · not limited by the ~7-day raw event window
+            One rollup per day · not limited by the ~7-day raw event window ·
+            backend requests only, not CDN cache hits
           </p>
         </div>
         <ToggleButtonGroup
@@ -149,13 +150,16 @@ export default function DailyHistoryPanel({ isDark }) {
         <>
           <div className={styles.tileRow}>
             <div className={styles.tile}>
-              <p className={styles.tileLabel}>Requests</p>
+              <p className={styles.tileLabel}>Backend requests</p>
               <div className={styles.tileValue}>
                 {formatCompact(data?.totals?.requests ?? 0)}
               </div>
               <p className={styles.tileHint}>
                 across {formatNumber(series.length)} day
                 {series.length === 1 ? "" : "s"}
+                {Number.isFinite(data?.coveragePercent)
+                  ? ` · ~${data.coveragePercent}% of real traffic (rest is cache hits)`
+                  : ""}
               </p>
             </div>
             <div className={styles.tile}>
