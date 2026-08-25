@@ -514,27 +514,6 @@ export default function TrafficDashboard() {
 
       {hasData && (
         <>
-          {/* --------------------------------- stale raw-IP notice ------
-              Anonymisation runs at ingest, so switching it on does NOT rewrite
-              what's already stored. Without this warning the tile would read
-              "Unique visitors" over a store that is still partly raw. */}
-          {stats?.privacy?.mode &&
-            stats.privacy.mode !== "off" &&
-            totals.unanonymisedRecords > 0 && (
-              <Alert severity="warning" sx={{ mb: 3 }}>
-                <AlertTitle>
-                  {formatNumber(totals.unanonymisedRecords)} stored record
-                  {totals.unanonymisedRecords === 1 ? "" : "s"} still contain
-                  raw IP addresses
-                </AlertTitle>
-                Anonymisation (<code>{stats.privacy.mode}</code>) is applied
-                when events arrive, so turning it on does not rewrite data that
-                was already stored. These records predate the setting. Clear the
-                store (<code>npm run clear</code>) and let it refill, or accept
-                that this window mixes raw and anonymised addresses.
-              </Alert>
-            )}
-
           {/* ------------------------------------------------ geo notice */}
           {totals.countryCoverage < 0.5 && (
             <Alert severity="info" className={styles.geoHint}>
