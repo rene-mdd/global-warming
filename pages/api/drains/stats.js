@@ -8,7 +8,11 @@ import { aggregate } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
 import { privacyInfo } from "../../../lib/privacy";
 import { isPublicMode, publicStats } from "../../../lib/public-mode";
-import { clampHours, setReadCacheHeaders } from "../../../lib/api-read";
+import {
+  clampHours,
+  coveragePercent,
+  setReadCacheHeaders,
+} from "../../../lib/api-read";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -52,6 +56,10 @@ export default async function handler(req, res) {
       store: await storeInfo(),
       privacy: privacyInfo(),
       hours,
+      // See lib/api-read.js: everything above only ever reflects requests
+      // that reached a Vercel Function — CDN cache hits are structurally
+      // invisible to Log Drains and never counted here.
+      coveragePercent: coveragePercent(),
     });
   } catch (err) {
     console.error("[drains/stats]", err);
