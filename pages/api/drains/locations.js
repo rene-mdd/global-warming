@@ -1,6 +1,6 @@
 // pages/api/drains/locations.js
 //
-// "Which IPs are coming from where" — a country -> city -> IP tree.
+// "Which IPs are coming from where" — a country -> IP list.
 //   GET /api/drains/locations?hours=24&countries=15&ips=25
 //
 // Separate from /stats because the payload is much larger and the dashboard only
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
       limitCountries,
       limitIpsPerCountry,
     });
-    // Withhold the per-IP arrays; keep the country/city counts.
+    // Withhold the per-IP arrays; keep the country counts.
     const data = publicMode ? publicLocations(raw) : raw;
     return res.status(200).json({ ...data, privacy: privacyInfo(), hours });
   } catch (err) {

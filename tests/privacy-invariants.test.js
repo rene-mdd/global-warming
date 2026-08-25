@@ -13,13 +13,18 @@ import {
   PRIVATE_SEARCH_FIELDS,
   searchableFields,
   publicEvent,
-  publicEvents,
   publicStats,
   publicLocations,
-  cityMinVisitors,
   publicTimeGranularity,
   coarsenTimestamp,
 } from "../lib/public-mode.js";
+import {
+  hashIp,
+  anonymizeIp,
+  anonymizeMode,
+  applyPrivacy,
+  truncateIp,
+} from "../lib/privacy.js";
 import { clampHours, setReadCacheHeaders } from "../lib/api-read.js";
 import checkApiAuth from "../lib/api-auth.js";
 import { logRequest } from "../lib/log-request.js";
@@ -39,7 +44,6 @@ function fullRecord(overrides = {}) {
     host: "www.global-warming.org",
     source: "lambda",
     country: "ES",
-    city: "Vitoria-Gasteiz",
     clientIp: SECRET_IP,
     userAgent: SECRET_UA,
     browser: "Chrome",
@@ -47,24 +51,10 @@ function fullRecord(overrides = {}) {
     referer: "https://elsewhere.example/page?token=abc",
     requestId: "req_abc123",
     traceId: "trace_abc123",
-    countryRegion: "PV",
-    latitude: "42.8467",
-    longitude: "-2.6716",
-    timezone: "Europe/Madrid",
     custom: { handler: "co2", accountId: 42 },
     message: SECRET_MSG,
     ...overrides,
   };
-}
-
-/** N distinct visitors from `city`, one request each. */
-function visitorsFrom(city, count, path = "/api/co2-api") {
-  return Array.from({ length: count }, (_, i) => ({
-    ...fullRecord(),
-    city,
-    path,
-    clientIp: `${city}-visitor-${i}`,
-  }));
 }
 
 const PUBLIC_ENV = [
@@ -73,10 +63,12 @@ const PUBLIC_ENV = [
   "DRAIN_RETENTION_HOURS",
 ];
 
+const PRIVACY_ENV = ["DRAIN_ANONYMIZE_IPS", "DRAIN_IP_SALT"];
+
 beforeEach(() => {
   // Every helper reads env at call time, so a leftover value from one test would
   // silently change another's meaning.
-  PUBLIC_ENV.forEach((key) => {
+  [...PUBLIC_ENV, ...PRIVACY_ENV].forEach((key) => {
     delete process.env[key];
   });
 });
@@ -106,15 +98,13 @@ test("no sensitive VALUE survives anywhere in a serialised public row", () => {
   // Field-name assertions miss a value that gets copied to a differently named
   // field. This checks the payload as text.
   const serialised = JSON.stringify(publicEvent(fullRecord()));
-  [SECRET_IP, SECRET_UA, "leak@example.com", "accountId", "42.8467"].forEach(
-    (needle) => {
-      assert.equal(
-        serialised.includes(needle),
-        false,
-        `public row leaked ${needle}`,
-      );
-    },
-  );
+  [SECRET_IP, SECRET_UA, "leak@example.com", "accountId"].forEach((needle) => {
+    assert.equal(
+      serialised.includes(needle),
+      false,
+      `public row leaked ${needle}`,
+    );
+  });
 });
 
 test("publicEvent keeps the fields the dashboard actually needs", () => {
@@ -143,7 +133,7 @@ test("no public search field is a per-visitor field", () => {
 });
 
 test("the operator search list still covers IP and user agent", () => {
-  ["clientIp", "userAgent", "city", "message"].forEach((field) => {
+  ["clientIp", "userAgent", "message"].forEach((field) => {
     assert.ok(PRIVATE_SEARCH_FIELDS.includes(field));
   });
   assert.deepEqual(searchableFields(true), PUBLIC_SEARCH_FIELDS);
@@ -151,88 +141,7 @@ test("the operator search list still covers IP and user agent", () => {
 });
 
 // ---------------------------------------------------------------------------
-// 3. The city k-anonymity gate
-// ---------------------------------------------------------------------------
-
-test("a city with enough distinct visitors is published", () => {
-  const records = visitorsFrom("Madrid", 6);
-  const cities = publicEvents(records, records).map((r) => r.city);
-  assert.deepEqual([...new Set(cities)], ["Madrid"]);
-});
-
-test("a city below the threshold is withheld", () => {
-  const records = visitorsFrom("Vitoria-Gasteiz", 2);
-  publicEvents(records, records).forEach((r) => {
-    assert.equal(r.city, undefined);
-  });
-});
-
-test("the threshold counts visitors, not requests", () => {
-  // 50 requests from one poller must not look like a crowd. A request-count
-  // threshold would let this straight through.
-  const records = Array.from({ length: 50 }, () => ({
-    ...fullRecord(),
-    city: "Teruel",
-    clientIp: "single-poller",
-  }));
-  publicEvents(records, records).forEach((r) => {
-    assert.equal(r.city, undefined);
-  });
-});
-
-test("records with no visitor identifier never count toward a crowd", () => {
-  const records = Array.from({ length: 9 }, () => ({
-    ...fullRecord(),
-    city: "Bilbao",
-    clientIp: undefined,
-  }));
-  publicEvents(records, records).forEach((r) => {
-    assert.equal(r.city, undefined);
-  });
-});
-
-test("the crowd is measured on the released set, not the whole store", () => {
-  // Madrid clears the threshold overall, but inside the narrowed ?q= view only
-  // one visitor remains — and that narrowed view is what gets served.
-  const wide = [
-    ...visitorsFrom("Madrid", 6, "/api/co2-api"),
-    { ...fullRecord(), city: "Madrid", clientIp: "lone", path: "/api/methane" },
-  ];
-  assert.ok(publicEvents(wide, wide).some((r) => r.city === "Madrid"));
-
-  const narrowed = wide.filter((r) => r.path === "/api/methane");
-  publicEvents(narrowed, narrowed).forEach((r) => {
-    assert.equal(r.city, undefined);
-  });
-});
-
-test("a meaningless threshold disables city publication instead of removing the gate", () => {
-  // A stray =0 must fail closed. There is deliberately no env value that keeps
-  // cities while removing the gate.
-  ["0", "1", "-5", "abc"].forEach((value) => {
-    process.env.DASHBOARD_PUBLIC_CITY_MIN_VISITORS = value;
-    assert.equal(cityMinVisitors(), 0, `threshold "${value}" should disable`);
-    const records = visitorsFrom("Madrid", 50);
-    publicEvents(records, records).forEach((r) => {
-      assert.equal(r.city, undefined);
-    });
-  });
-});
-
-test("the threshold is configurable upward and downward within reason", () => {
-  process.env.DASHBOARD_PUBLIC_CITY_MIN_VISITORS = "2";
-  assert.equal(cityMinVisitors(), 2);
-  const two = visitorsFrom("Vitoria-Gasteiz", 2);
-  assert.ok(publicEvents(two, two).some((r) => r.city === "Vitoria-Gasteiz"));
-
-  process.env.DASHBOARD_PUBLIC_CITY_MIN_VISITORS = "20";
-  assert.equal(cityMinVisitors(), 20);
-  const six = visitorsFrom("Madrid", 6);
-  publicEvents(six, six).forEach((r) => assert.equal(r.city, undefined));
-});
-
-// ---------------------------------------------------------------------------
-// 4. Timestamp precision
+// 3. Timestamp precision
 // ---------------------------------------------------------------------------
 
 test("published timestamps default to minute precision", () => {
@@ -273,7 +182,7 @@ test("coarsening passes through values it cannot parse", () => {
 });
 
 // ---------------------------------------------------------------------------
-// 5. Aggregates
+// 4. Aggregates
 // ---------------------------------------------------------------------------
 
 test("publicStats drops the per-caller breakdowns but keeps the visitor count", () => {
@@ -294,7 +203,7 @@ test("publicStats drops the per-caller breakdowns but keeps the visitor count", 
   assert.equal(JSON.stringify(stats).includes(SECRET_IP), false);
 });
 
-test("publicLocations withholds address lists and gates city names", () => {
+test("publicLocations withholds address lists but keeps country counts", () => {
   const data = publicLocations({
     countries: [
       {
@@ -302,13 +211,7 @@ test("publicLocations withholds address lists and gates city names", () => {
         requests: 59,
         errors: 1,
         uniqueIps: 9,
-        geoQuality: "accurate",
-        cities: [
-          { city: "Madrid", requests: 6, uniqueIps: 6 },
-          { city: "Vitoria-Gasteiz", requests: 2, uniqueIps: 2 },
-          { city: "Teruel", requests: 50, uniqueIps: 1 },
-        ],
-        ips: [{ ip: SECRET_IP, requests: 6, city: "Madrid" }],
+        ips: [{ ip: SECRET_IP, requests: 6 }],
       },
     ],
   });
@@ -316,38 +219,17 @@ test("publicLocations withholds address lists and gates city names", () => {
   const country = data.countries[0];
   assert.deepEqual(country.ips, []);
   assert.equal(country.ipsWithheld, true);
-  assert.deepEqual(
-    country.cities.map((c) => c.city),
-    ["Madrid"],
-  );
   assert.equal(country.uniqueIps, 9, "the count is fine to publish");
-  assert.equal(data.cityGate.withheld, 2);
-  assert.equal(data.cityGate.measurable, true);
+  assert.equal(
+    "cityGate" in data,
+    false,
+    "there is no city gate to report anymore",
+  );
   assert.equal(JSON.stringify(data).includes(SECRET_IP), false);
 });
 
-test("publicLocations reports when crowd size cannot be measured", () => {
-  // DRAIN_ANONYMIZE_IPS=drop: no identifiers, so no city can be shown to be safe.
-  const data = publicLocations({
-    countries: [
-      {
-        country: "ES",
-        requests: 3,
-        errors: 0,
-        uniqueIps: 0,
-        cities: [{ city: "Madrid", requests: 3, uniqueIps: 0 }],
-        ips: [],
-      },
-    ],
-  });
-
-  assert.deepEqual(data.countries[0].cities, []);
-  assert.equal(data.cityGate.measurable, false);
-  assert.equal(data.cityGate.withheld, 1);
-});
-
 // ---------------------------------------------------------------------------
-// 6. Read-endpoint guards
+// 5. Read-endpoint guards
 // ---------------------------------------------------------------------------
 
 test("hours is clamped to what is actually retained", () => {
@@ -389,7 +271,7 @@ test("read responses vary on Authorization so a cache cannot cross the views", (
 });
 
 // ---------------------------------------------------------------------------
-// 6b. Operator elevation
+// 5b. Operator elevation
 // ---------------------------------------------------------------------------
 
 const AUTH_ENV = [
@@ -502,7 +384,7 @@ test("the deliberate override serves anonymously without elevating", () => {
 });
 
 // ---------------------------------------------------------------------------
-// 7. Minimisation at the source
+// 6. Minimisation at the source
 // ---------------------------------------------------------------------------
 
 test("logRequest never writes an IP, user agent or referer into the log", () => {
@@ -521,7 +403,6 @@ test("logRequest never writes an IP, user agent or referer into the log", () => 
       headers: {
         "x-forwarded-for": `${SECRET_IP}, 70.41.3.18`,
         "x-vercel-ip-country": "ES",
-        "x-vercel-ip-city": "Vitoria-Gasteiz",
         "user-agent": SECRET_UA,
         referer: "https://elsewhere.example/page?token=abc",
         host: "www.global-warming.org",
@@ -563,7 +444,7 @@ test("logRequest still records the path in a Pages Router app", () => {
   assert.equal(payload.path, "/api/co2-api?limit=5");
 });
 
-test("logRequest keeps the true visitor geolocation, which is its whole purpose", () => {
+test("logRequest captures country, but never city even when the header is present", () => {
   const original = console.log;
   console.log = () => {};
   let payload;
@@ -573,7 +454,7 @@ test("logRequest keeps the true visitor geolocation, which is its whole purpose"
       url: "/api/co2-api",
       headers: {
         "x-vercel-ip-country": "ES",
-        // Vercel RFC3986-encodes city names.
+        // Vercel RFC3986-encodes city names; still must never be captured.
         "x-vercel-ip-city": "San%20Francisco",
       },
     });
@@ -581,7 +462,7 @@ test("logRequest keeps the true visitor geolocation, which is its whole purpose"
     console.log = original;
   }
   assert.equal(payload.country, "ES");
-  assert.equal(payload.city, "San Francisco");
+  assert.equal("city" in payload, false, "city must not be captured at all");
 });
 
 test("logRequest does not collect coordinates, postal code or time zone", () => {
@@ -605,4 +486,79 @@ test("logRequest does not collect coordinates, postal code or time zone", () => 
   ["latitude", "longitude", "postalCode", "timezone"].forEach((field) => {
     assert.equal(field in payload, false, `${field} must not be collected`);
   });
+});
+
+// ---------------------------------------------------------------------------
+// 7. IP anonymisation
+// ---------------------------------------------------------------------------
+
+test("hashIp is stable for the same IP and salt", () => {
+  const a = hashIp(SECRET_IP, "salt-one");
+  const b = hashIp(SECRET_IP, "salt-one");
+  assert.equal(a, b);
+  assert.equal(a.length, 16);
+  assert.match(a, /^[0-9a-f]{16}$/);
+});
+
+test("hashIp depends on the salt, not just the IP", () => {
+  const a = hashIp(SECRET_IP, "salt-one");
+  const b = hashIp(SECRET_IP, "salt-two");
+  assert.notEqual(a, b);
+});
+
+test("hashIp output never contains the original IP", () => {
+  const hashed = hashIp(SECRET_IP, "salt-one");
+  assert.equal(hashed.includes(SECRET_IP), false);
+});
+
+test("anonymizeIp in hash mode throws when no salt is configured", () => {
+  assert.throws(() => anonymizeIp(SECRET_IP, "hash"), /DRAIN_IP_SALT/);
+});
+
+test("anonymizeIp in hash mode matches hashIp when a salt is configured", () => {
+  process.env.DRAIN_IP_SALT = "test-salt";
+  assert.equal(anonymizeIp(SECRET_IP, "hash"), hashIp(SECRET_IP, "test-salt"));
+});
+
+test("anonymizeIp truncates IPv4 to /24 and IPv6 to /48", () => {
+  assert.equal(anonymizeIp("203.0.113.9", "truncate"), "203.0.113.0");
+  assert.equal(truncateIp("203.0.113.9"), "203.0.113.0");
+  assert.equal(
+    anonymizeIp("2001:db8:85a3:0:0:8a2e:370:7334", "truncate"),
+    "2001:db8:85a3::",
+  );
+});
+
+test("anonymizeIp passes through unchanged in off mode, and drops in drop mode", () => {
+  assert.equal(anonymizeIp(SECRET_IP, "off"), SECRET_IP);
+  assert.equal(anonymizeIp(SECRET_IP, "drop"), undefined);
+});
+
+test("anonymizeMode defaults to off, and falls back to off on an invalid value", () => {
+  assert.equal(anonymizeMode(), "off");
+  process.env.DRAIN_ANONYMIZE_IPS = "bogus";
+  assert.equal(anonymizeMode(), "off");
+  process.env.DRAIN_ANONYMIZE_IPS = "HASH";
+  assert.equal(anonymizeMode(), "hash");
+});
+
+test("applyPrivacy never leaves the raw IP in clientIp, custom, or the rebuilt message", () => {
+  process.env.DRAIN_IP_SALT = "test-salt";
+  const record = {
+    clientIp: SECRET_IP,
+    latitude: "42.8467",
+    longitude: "-2.6716",
+    custom: { clientIp: SECRET_IP, postalCode: "01001", accountId: 42 },
+    message: `[traffic] ${JSON.stringify({ clientIp: SECRET_IP, accountId: 42 })}`,
+  };
+
+  const scrubbed = applyPrivacy(record, "hash");
+
+  assert.notEqual(scrubbed.clientIp, SECRET_IP);
+  assert.equal("latitude" in scrubbed, false);
+  assert.equal("longitude" in scrubbed, false);
+  assert.notEqual(scrubbed.custom.clientIp, SECRET_IP);
+  assert.equal("postalCode" in scrubbed.custom, false);
+  assert.equal(scrubbed.message.includes(SECRET_IP), false);
+  assert.equal(scrubbed.privacyMode, "hash");
 });

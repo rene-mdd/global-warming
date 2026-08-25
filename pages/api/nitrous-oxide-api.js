@@ -1,3 +1,5 @@
+import { withRequestLogging } from "../../lib/log-request";
+
 const csv = require("csvtojson");
 
 // ---------------------------------------------------------------------------
@@ -112,7 +114,7 @@ const parseGas = (csvToJson) => {
   return rows;
 };
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   if (memo && Date.now() - memo.at < CACHE_TTL_MS) {
     serveMemo(res, "memo");
     return;
@@ -143,3 +145,5 @@ export default async (req, res) => {
     serveError(res, parseError);
   }
 };
+
+export default withRequestLogging(handler, { handler: "nitrous-oxide" });

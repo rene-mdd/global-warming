@@ -53,31 +53,6 @@ function countUnit(mode) {
   return "IPs";
 }
 
-/** Explains how a country's location was derived. */
-function geoQualityTitle(quality) {
-  if (quality === "approximate") {
-    return "Inferred from the Vercel edge region, not the visitor's IP — treat as approximate";
-  }
-  return "Some of these requests had true geolocation, some were inferred from the edge region";
-}
-
-/**
- * Why some city names are missing from the public view.
- *
- * Worth spelling out on screen: a shorter city list looks like missing data, and
- * the honest reading is the opposite — the requests are counted, only the label
- * is withheld.
- */
-function cityGateReason(gate) {
-  if (!gate?.minVisitors) {
-    return "city names are not published in this view.";
-  }
-  if (!gate.measurable) {
-    return "visitor addresses aren't stored, so there's no way to tell whether a city has enough visitors to name safely.";
-  }
-  return `fewer than ${gate.minVisitors} distinct visitors came from each, so naming the city could point at one person. Their requests are still counted in the country totals.`;
-}
-
 function relativeTime(ms) {
   const delta = Date.now() - Number(ms);
   if (!Number.isFinite(delta)) return "—";
@@ -141,8 +116,6 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     return all.filter((c) => {
       if (countryName(c.country).toLowerCase().includes(q)) return true;
       if (c.country.toLowerCase().includes(q)) return true;
-      if (c.cities.some((city) => city.city?.toLowerCase().includes(q)))
-        return true;
       return c.ips.some((ip) => ip.ip.toLowerCase().includes(q));
     });
   }, [data, filter]);
@@ -240,11 +213,6 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
 
                   <span className={styles.countryName}>
                     {countryName(country.country)}
-                    {country.geoQuality !== "accurate" && (
-                      <Tooltip title={geoQualityTitle(country.geoQuality)}>
-                        <span className={styles.approx}>~</span>
-                      </Tooltip>
-                    )}
                   </span>
 
                   <span className={styles.countryStats}>
@@ -287,20 +255,6 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
 
                 <Collapse in={isOpen} unmountOnExit>
                   <div className={styles.detail}>
-                    {country.cities.length > 0 && (
-                      <div className={styles.cityRow}>
-                        {country.cities.slice(0, 12).map((city) => (
-                          <Chip
-                            key={city.city}
-                            size="small"
-                            variant="outlined"
-                            label={`${city.city} · ${formatNumber(city.requests)}`}
-                            onClick={() => setFilter(city.city)}
-                          />
-                        ))}
-                      </div>
-                    )}
-
                     {ipsHidden || country.ips.length === 0 ? (
                       <Typography variant="caption" color="text.secondary">
                         {data?.publicMode
@@ -315,7 +269,6 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                               <TableCell>
                                 {addressHeading(data?.privacy?.mode)}
                               </TableCell>
-                              <TableCell>City</TableCell>
                               <TableCell align="right">Requests</TableCell>
                               <TableCell align="right">Errors</TableCell>
                               <TableCell>Top route</TableCell>
@@ -342,7 +295,6 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                                     />
                                   )}
                                 </TableCell>
-                                <TableCell>{ip.city ?? "—"}</TableCell>
                                 <TableCell align="right">
                                   {formatNumber(ip.requests)}
                                 </TableCell>
@@ -399,18 +351,6 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
             );
           })}
         </ul>
-      )}
-
-      {data?.publicMode && data?.cityGate?.withheld > 0 && (
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{ display: "block", mt: 1.5 }}
-        >
-          {formatNumber(data.cityGate.withheld)}{" "}
-          {data.cityGate.withheld === 1 ? "city name is" : "city names are"}{" "}
-          withheld: {cityGateReason(data.cityGate)}
-        </Typography>
       )}
 
       {(data?.countriesTruncated > 0 || data?.unknown?.requests > 0) && (

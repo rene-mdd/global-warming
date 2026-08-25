@@ -1,3 +1,5 @@
+import { withRequestLogging } from "../../lib/log-request";
+
 // ---------------------------------------------------------------------------
 // 12-hour in-process cache — see the note in temperature-api.js
 // ---------------------------------------------------------------------------
@@ -24,7 +26,7 @@ const setStandardHeaders = (res) => {
   res.setHeader("Cache-Control", policy);
 };
 
-export default async function fetchArcticApi(req, res) {
+async function fetchArcticApi(req, res) {
   if (memo && Date.now() - memo.at < CACHE_TTL_MS) {
     setStandardHeaders(res);
     res.setHeader("x-api-cache", "memo");
@@ -70,3 +72,5 @@ export default async function fetchArcticApi(req, res) {
     });
   }
 }
+
+export default withRequestLogging(fetchArcticApi, { handler: "arctic" });

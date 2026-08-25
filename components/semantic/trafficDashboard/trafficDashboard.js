@@ -73,11 +73,7 @@ import {
   formatNumber,
   formatPercent,
 } from "../../../lib/chart-theme";
-import {
-  countryFlag,
-  countryName,
-  regionLabel,
-} from "../../../lib/vercel-regions";
+import { countryFlag, countryName } from "../../../lib/vercel-regions";
 
 const SURFACE = { light: "#fcfcfb", dark: "#1a1a19" };
 const GRIDLINE = { light: "#e1e0d9", dark: "#2c2c2a" };
@@ -103,36 +99,24 @@ function bucketLabelFor(bucketMs) {
   return `${bucketMs / 60000} min`;
 }
 
-/** Tooltip text explaining how a record's geolocation was derived. */
-function geoSourceTitle(geoSource) {
-  if (geoSource === "headers") return "From x-vercel-ip-* headers (accurate)";
-  return "Approximated from the edge region";
-}
-
 /**
  * Subtitle for the events table.
  *
  * In public mode the rows have been altered on the way out — fields removed,
- * timestamps floored, city names gated. Saying so is not just courtesy: a table
- * captioned "every field the drain delivered" while quietly serving reduced rows
- * would misrepresent both the data and the privacy posture.
+ * timestamps floored. Saying so is not just courtesy: a table captioned
+ * "every field the drain delivered" while quietly serving reduced rows would
+ * misrepresent both the data and the privacy posture.
  */
 function eventsSubtitle(publicMode, meta) {
   if (!publicMode) return "Newest first · every field the drain delivered";
 
   const grain = meta?.timeGranularity ?? "minute";
-  const minVisitors = meta?.cityGate?.minVisitors;
 
   return [
     "Newest first",
     "public view: no addresses or user agents",
     `times rounded down to the ${grain}`,
-    minVisitors
-      ? `city shown only where ${minVisitors}+ visitors share it`
-      : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  ].join(" · ");
 }
 
 async function getJSON(url) {
@@ -393,7 +377,6 @@ export default function TrafficDashboard() {
         );
         setEventsMeta({
           timeGranularity: json.timeGranularity,
-          cityGate: json.cityGate,
         });
         setEventsError(null);
       })
@@ -553,18 +536,17 @@ export default function TrafficDashboard() {
             )}
 
           {/* ------------------------------------------------ geo notice */}
-          {totals.geoHeaderCoverage < 0.5 && (
-            <Alert severity="warning" className={styles.geoHint}>
-              <AlertTitle>Country data is approximate right now</AlertTitle>
-              Only {formatPercent(totals.geoHeaderCoverage, 0)} of requests in
-              this window carry true visitor geolocation. Log Drains don&apos;t
-              include the visitor&apos;s country — the drain schema only exposes
-              the Vercel <em>edge region</em> that served the request (e.g.{" "}
-              <code>fra1</code>), which this dashboard falls back to. To get
-              real country/city, call <code>logRequest(request)</code> from{" "}
-              <code>lib/log-request.js</code> in your API routes; it reads the{" "}
-              <code>x-vercel-ip-country</code> headers and logs them so they
-              arrive through the drain.
+          {totals.countryCoverage < 0.5 && (
+            <Alert severity="info" className={styles.geoHint}>
+              <AlertTitle>Country data only covers instrumented routes</AlertTitle>
+              Only {formatPercent(totals.countryCoverage, 0)} of requests in
+              this window carry a country. That&apos;s expected, not a data
+              quality problem: country comes only from the{" "}
+              <code>x-vercel-ip-country</code> header, and only the public
+              climate-data API routes call <code>logRequest()</code> (see{" "}
+              <code>lib/log-request.js</code>) to capture it. Traffic to other
+              routes has no country at all — there is no edge-region fallback
+              guess anymore.
             </Alert>
           )}
 
@@ -800,11 +782,7 @@ export default function TrafficDashboard() {
           <div className={styles.breakdownGrid}>
             <BreakdownPanel
               title="Countries"
-              subtitle={
-                totals.geoHeaderCoverage >= 0.5
-                  ? "From x-vercel-ip-country headers"
-                  : "Approximated from edge region — see notice above"
-              }
+              subtitle="From x-vercel-ip-country headers"
               rows={breakdowns.country}
               hue={magnitudeHue}
               formatLabel={(code) =>
@@ -818,15 +796,6 @@ export default function TrafficDashboard() {
               subtitle="Query strings stripped"
               rows={breakdowns.route}
               hue={magnitudeHue}
-            />
-            <BreakdownPanel
-              title="Edge regions"
-              subtitle="Vercel datacenter that served the request"
-              rows={breakdowns.edgeRegion}
-              hue={magnitudeHue}
-              formatLabel={(code) =>
-                code === "Other" ? "Other" : regionLabel(code)
-              }
             />
             <BreakdownPanel
               title="Browsers"
@@ -957,7 +926,6 @@ export default function TrafficDashboard() {
                 <TableCell>Location</TableCell>
                 <TableCell>Browser / OS</TableCell>
                 <TableCell>Host</TableCell>
-                <TableCell>Region</TableCell>
                 <TableCell>Source</TableCell>
                 <TableCell>Deployment</TableCell>
                 {!publicMode && <TableCell>Your fields</TableCell>}
@@ -966,7 +934,7 @@ export default function TrafficDashboard() {
             <TableBody>
               {events.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={publicMode ? 10 : 12}>
+                  <TableCell colSpan={publicMode ? 9 : 11}>
                     <Typography
                       variant="body2"
                       color="text.secondary"
@@ -1017,14 +985,9 @@ export default function TrafficDashboard() {
                       )}
                       <TableCell>
                         {event.country ? (
-                          <Tooltip title={geoSourceTitle(event.geoSource)}>
-                            <span>
-                              {countryFlag(event.country)}{" "}
-                              {event.city ? `${event.city}, ` : ""}
-                              {event.country}
-                              {event.geoSource === "edge-region" ? " ≈" : ""}
-                            </span>
-                          </Tooltip>
+                          <span>
+                            {countryFlag(event.country)} {event.country}
+                          </span>
                         ) : (
                           "—"
                         )}
@@ -1046,9 +1009,6 @@ export default function TrafficDashboard() {
                         >
                           {event.host ?? "—"}
                         </span>
-                      </TableCell>
-                      <TableCell className={styles.mono}>
-                        {event.edgeRegion ?? "—"}
                       </TableCell>
                       <TableCell>
                         <Chip
@@ -1073,22 +1033,16 @@ export default function TrafficDashboard() {
                             // be noise here, so only YOUR extra fields are listed.
                             const shownElsewhere = new Set([
                               "country",
-                              "city",
                               "clientIp",
                               "userAgent",
                               "path",
                               "method",
                               "host",
-                              "latitude",
-                              "longitude",
                               "loggedAt",
                               "referer",
                               "vercelId",
                               "deploymentUrl",
                               "continent",
-                              "countryRegion",
-                              "postalCode",
-                              "timezone",
                               "statusCode",
                             ]);
                             const text = Object.entries(event.custom)

@@ -1,3 +1,5 @@
+import { withRequestLogging } from "../../lib/log-request";
+
 // ---------------------------------------------------------------------------
 // 12-hour in-process cache — see the note in temperature-api.js
 // ---------------------------------------------------------------------------
@@ -36,7 +38,7 @@ const oceanUrl = (endYear) =>
   `https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series/globe/ocean/12/1/1850-${endYear}.json` +
   `?trend=true&trend_base=10&begtrendyear=1880&endtrendyear=${endYear}`;
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   if (memo && Date.now() - memo.at < CACHE_TTL_MS) {
     setStandardHeaders(res);
     res.setHeader("x-api-cache", "memo");
@@ -88,3 +90,5 @@ export default async (req, res) => {
     });
   }
 };
+
+export default withRequestLogging(handler, { handler: "ocean-warming" });

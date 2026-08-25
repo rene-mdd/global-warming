@@ -1,3 +1,5 @@
+import { withRequestLogging } from "../../lib/log-request";
+
 const line2Array = (line) => line.split(" ").filter((ele) => ele);
 
 const convertToObject = (valueArray2d) =>
@@ -35,7 +37,7 @@ const setStandardHeaders = (res) => {
   res.setHeader("Cache-Control", policy);
 };
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   // Fresh copy in memory: no upstream call at all.
   if (memo && Date.now() - memo.at < CACHE_TTL_MS) {
     setStandardHeaders(res);
@@ -100,3 +102,5 @@ export default async (req, res) => {
     });
   }
 };
+
+export default withRequestLogging(handler, { handler: "temperature" });
