@@ -9,7 +9,6 @@ import checkApiAuth from "../../../lib/api-auth";
 import {
   isPublicMode,
   publicEvents,
-  cityMinVisitors,
   publicTimeGranularity,
   searchableFields,
 } from "../../../lib/public-mode";
@@ -82,15 +81,7 @@ export default async function handler(req, res) {
 
     // In public mode each row loses its linkage key, so rows can't be grouped
     // back into one person's session.
-    //
-    // City names are the exception: they survive only where enough distinct
-    // visitors share the city to hide the individual. The crowd is counted over
-    // `records` — the full post-filter set — not over `page`, because `records`
-    // is what a caller can page through, and the anonymity set is whatever is
-    // actually reachable. Passing the pre-filter store here would be wrong: it
-    // would let a city cleared by a busy day leak through a narrow ?q= that
-    // matches one person.
-    const events = publicMode ? publicEvents(page, records) : page;
+    const events = publicMode ? publicEvents(page) : page;
 
     return res.status(200).json({
       events,
@@ -105,10 +96,7 @@ export default async function handler(req, res) {
       hours,
       publicMode,
       ...(publicMode
-        ? {
-            cityGate: { minVisitors: cityMinVisitors() },
-            timeGranularity: publicTimeGranularity(),
-          }
+        ? { timeGranularity: publicTimeGranularity() }
         : undefined),
     });
   } catch (err) {

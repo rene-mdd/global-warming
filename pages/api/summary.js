@@ -1,5 +1,7 @@
 // pages/api/summary.js
 
+import { withRequestLogging } from "../../lib/log-request";
+
 const UPSTREAM = {
   temperature: "/api/temperature-api",
   co2: "/api/co2-api",
@@ -335,7 +337,7 @@ async function refresh(base) {
   return buildSummary(sources);
 }
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
     return res.status(405).json({ error: "method not allowed" });
@@ -389,3 +391,5 @@ export default async function handler(req, res) {
   res.setHeader("x-summary-cache", "miss");
   return res.status(200).json(payload);
 }
+
+export default withRequestLogging(handler, { handler: "summary" });

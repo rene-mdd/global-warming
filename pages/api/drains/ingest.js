@@ -123,10 +123,25 @@ export default async function handler(req, res) {
   // 4. Minimise personal data BEFORE it touches storage, so raw IPs and precise
   //    coordinates are never written.
   const mode = anonymizeMode();
-  const records =
-    mode === "off"
-      ? parsed.records
-      : parsed.records.map((r) => applyPrivacy(r, mode));
+  let records;
+  try {
+    records =
+      mode === "off"
+        ? parsed.records
+        : parsed.records.map((r) => applyPrivacy(r, mode));
+  } catch (err) {
+    // Unlike the parse-error handler below, this does NOT return 200. A parse
+    // bug losing one delivery is acceptable; silently storing raw IPs when
+    // hashing was mandated (e.g. DRAIN_IP_SALT missing) is not — that failure
+    // must be visible, not swallowed into a 200 that looks like success.
+    console.error(
+      "[drains/ingest] anonymisation misconfigured, refusing to store:",
+      err,
+    );
+    return res
+      .status(503)
+      .json({ error: "anonymisation misconfigured; see server logs" });
+  }
 
   // 5. Store.
   let stored = 0;

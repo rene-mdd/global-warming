@@ -567,13 +567,13 @@ function PrivacyPolicy() {
           <List dense>
             {[
               "the abbreviated or pseudonymised IP address of the requesting device",
-              "the country and, where available, the city that our hosting provider derives from that IP address",
+              "the country that our hosting provider derives from that IP address for our climate-data API endpoints — no city, precise coordinates, postal code or time zone are collected",
               "the date and time of the request",
               "the requested path and the HTTP method",
               "the HTTP status code returned",
               "the referrer URL, where transmitted",
               "browser type and version and operating system, as reported in the user agent",
-              "the requested host name, the deployment identifier and the technical region of the server that processed the request",
+              "the requested host name and the deployment identifier",
             ].map((item, index) => (
               <ListItem key={index} sx={{ py: 0.5 }}>
                 <ListItemText primary={item} />
@@ -639,13 +639,15 @@ function PrivacyPolicy() {
             </Typography>
             <Typography variant="body1" paragraph>
               IP addresses are not stored in readable form. Before an entry is
-              written to our log store, the IP address is [truncated to its
-              first three octets / replaced by a salted, non-reversible hash],
-              so that a stored entry can no longer be resolved back to a
-              specific address. We deliberately do not record precise location
-              data: although our hosting provider also makes latitude,
-              longitude, postal code and time zone available, we do not collect
-              them. Only country and city are recorded.
+              written to our log store, the IP address is replaced by a
+              salted, non-reversible cryptographic hash (HMAC-SHA256,
+              truncated), so that a stored entry can no longer be resolved
+              back to a specific address. We deliberately do not record
+              precise location data: although our hosting provider also makes
+              city name, latitude, longitude, postal code and time zone
+              available, we do not collect any of them. Only the requesting
+              country (a two-letter code, e.g. "DE") is recorded, and only for
+              requests to our public climate-data API endpoints.
             </Typography>
           </Box>
           <Box mb={3}>
@@ -658,10 +660,13 @@ function PrivacyPolicy() {
               Storage duration
             </Typography>
             <Typography variant="body1" paragraph>
-              Log entries are deleted automatically [30] days after they are
-              recorded, and in any event once our log store exceeds [20,000]
-              entries, whichever occurs first. Deletion is permanent; entries
-              are not archived elsewhere.
+              Log entries are deleted automatically 30 days after they are
+              recorded, and in any event once our log store exceeds a
+              configured maximum number of entries, whichever occurs first. At
+              current traffic volumes the entry-count limit is ordinarily
+              reached well before 30 days, so the effective retention window
+              is typically a few days. Deletion is permanent; entries are not
+              archived elsewhere.
             </Typography>
           </Box>
           <Box mb={3}>
@@ -704,6 +709,8 @@ function PrivacyPolicy() {
                   Upstash, Inc., Delaware, USA
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
+                  {/* TODO: confirm the actual Upstash database region before
+                      publishing — check the Upstash console, not a guess. */}
                   operation of the [region: e.g. eu-central-1, Frankfurt]
                   database in which the log entries are stored. Upstash relies
                   on the EU-US Data Privacy Framework and, in the alternative,
@@ -750,10 +757,10 @@ function PrivacyPolicy() {
               individual addresses per country. What is published is: the number
               of requests over time, the requested paths, status codes, browser
               and operating system families, the country a request came from,
-              and the number of distinct visitors per country as a figure. City
-              names are published only where at least five distinct visitors
-              from the same city appear in the same period; below that threshold
-              the city name is withheld and only the country is shown.
+              and the number of distinct visitors per country as a figure. No
+              city names, coordinates, or Vercel edge-region/datacenter
+              identifiers are collected or published — location data is
+              limited to country level everywhere in this system.
             </Typography>
           </Box>
           <Box>
@@ -767,10 +774,17 @@ function PrivacyPolicy() {
             </Typography>
             <Typography variant="body1" paragraph>
               The source code of this website, including the logging function
-              described above, is published in a public repository at
-              [repository URL]. That repository contains program code and
-              configuration only. It contains no log entries, no access data and
-              no personal data relating to our visitors.
+              described above, is published in a public repository at{" "}
+              <Link
+                href="https://github.com/rene-mdd/global-warming"
+                target="_blank"
+                rel="noopener"
+              >
+                https://github.com/rene-mdd/global-warming
+              </Link>
+              . That repository contains program code and configuration only.
+              It contains no log entries, no access data and no personal data
+              relating to our visitors.
             </Typography>
           </Box>
           <Typography component="h3">GLS Bank</Typography>{" "}

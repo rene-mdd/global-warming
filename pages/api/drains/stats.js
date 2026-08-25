@@ -30,6 +30,19 @@ export default async function handler(req, res) {
   try {
     const records = await readRecords({ since: startTime });
     const raw = aggregate(records, { startTime, endTime });
+
+    // Anonymisation applies at ingest, not retroactively, so turning it on
+    // doesn't rewrite what's already stored. Surfaced in server logs, not the
+    // public dashboard, since it's an operator signal (misconfiguration, or a
+    // store that predates the setting) rather than something a visitor needs.
+    if (raw.totals.unanonymisedRecords > 0) {
+      console.warn(
+        `[drains/stats] ${raw.totals.unanonymisedRecords} stored record(s) in this window still contain raw IP addresses — ` +
+          "anonymisation is applied at ingest, not retroactively. Clear the store (npm run clear) to remove them, " +
+          "or this is expected if they predate DRAIN_ANONYMIZE_IPS being turned on.",
+      );
+    }
+
     // Strip the per-visitor breakdowns before they leave the server.
     const stats = publicMode ? publicStats(raw) : raw;
     // `privacy` tells the UI how to label the unique-visitor tile honestly
