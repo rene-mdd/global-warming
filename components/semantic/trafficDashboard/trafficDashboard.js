@@ -62,6 +62,7 @@ import {
 
 import styles from "./trafficDashboard.module.scss";
 import LocationsPanel from "../locationsPanel/locationsPanel";
+import DailyHistoryPanel from "../dailyHistoryPanel/dailyHistoryPanel";
 import {
   MAGNITUDE_HUE,
   STATUS_SERIES,
@@ -832,6 +833,11 @@ export default function TrafficDashboard() {
           </div>
         </>
       )}
+
+      {/* Independent of `hasData` above: this reads /api/drains/daily, not the
+          raw event window, so it can have history even when the live view
+          (or a narrow time range within it) currently doesn't. */}
+      <DailyHistoryPanel isDark={isDark} />
 
       {/* ----------------------------------------------- events table */}
       <div className={styles.panel}>

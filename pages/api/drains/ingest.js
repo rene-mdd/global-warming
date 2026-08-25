@@ -47,7 +47,7 @@ function ignorePaths() {
   if (raw === "none") return [];
   const value =
     raw ??
-    "/api/drains/ingest,/api/drains/stats,/api/drains/events,/api/drains/locations";
+    "/api/drains/ingest,/api/drains/stats,/api/drains/events,/api/drains/locations,/api/drains/rollup,/api/drains/daily";
   return value
     .split(",")
     .map((s) => s.trim())
