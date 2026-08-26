@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "node --experimental-default-type=module --import ./tests/loader.mjs --test ./tests/privacy-invariants.test.js",
+    "test": "node --experimental-default-type=module --import ./tests/loader.mjs --test ./tests/*.test.js",
     "clear": "node --experimental-default-type=module --import ./tests/loader.mjs scripts/clear-drain-store.mjs"
   },
   "dependencies": {
