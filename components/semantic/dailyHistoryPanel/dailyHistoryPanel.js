@@ -182,7 +182,7 @@ export default function DailyHistoryPanel({ isDark }) {
                 {formatCompact(data?.totals?.busiestDayUniqueVisitors ?? 0)}
               </div>
               <p className={styles.tileHint}>
-                unique visitors, single day — not summed across days
+                unique addresses, single day — not summed across days
               </p>
             </div>
           </div>
