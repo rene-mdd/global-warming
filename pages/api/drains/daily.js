@@ -50,13 +50,49 @@ export default async function handler(req, res) {
       0,
     );
 
+    // totalTrafficRequests is written separately, by
+    // pages/api/drains/traffic-total.js from Vercel's own metrics (see that
+    // file) — it isn't present for days before that pipeline existed, or on
+    // a day its GitHub Action hasn't run yet, so every rollup here is
+    // over only the days that actually have it.
+    let daysWithTraffic = 0;
+    let backendOverTrafficDays = 0;
+    const totalTrafficRequests = summaries.reduce((sum, day) => {
+      if (!Number.isFinite(day.totalTrafficRequests)) return sum;
+      daysWithTraffic += 1;
+      backendOverTrafficDays += day.requests ?? 0;
+      return sum + day.totalTrafficRequests;
+    }, 0);
+
+    const daysOut = summaries.map((day) =>
+      Number.isFinite(day.totalTrafficRequests) && day.totalTrafficRequests > 0
+        ? {
+            ...day,
+            dayCoveragePercent: Math.round(
+              ((day.requests ?? 0) / day.totalTrafficRequests) * 1000,
+            ) / 10,
+          }
+        : day,
+    );
+
     return res.status(200).json({
-      days: summaries,
-      totals: { requests: totalRequests, busiestDayUniqueVisitors },
+      days: daysOut,
+      totals: {
+        requests: totalRequests,
+        busiestDayUniqueVisitors,
+        totalTrafficRequests: daysWithTraffic ? totalTrafficRequests : null,
+      },
       requestedDays: days,
-      // Same caveat as /api/drains/stats: these are backend (Log Drain)
-      // requests only, not total edge traffic. See lib/api-read.js.
-      coveragePercent: coveragePercent(),
+      // Same caveat as /api/drains/stats: `requests` above is backend (Log
+      // Drain) requests only, not total edge traffic. Prefer the measured
+      // ratio (real per-day totals from Vercel's metrics, this range only)
+      // when any day in range has one; fall back to the manually-refreshed
+      // env estimate otherwise. See lib/api-read.js.
+      coveragePercent: daysWithTraffic
+        ? Math.round((backendOverTrafficDays / totalTrafficRequests) * 1000) /
+          10
+        : coveragePercent(),
+      measuredCoverageDays: daysWithTraffic,
     });
   } catch (err) {
     console.error("[drains/daily]", err);

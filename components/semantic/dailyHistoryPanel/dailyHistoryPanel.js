@@ -96,6 +96,7 @@ export default function DailyHistoryPanel({ isDark }) {
         s5xx: day.statusClasses?.s5xx ?? 0,
         requests: day.requests ?? 0,
         uniqueVisitors: day.uniqueVisitors ?? 0,
+        totalTrafficRequests: day.totalTrafficRequests ?? null,
       })),
     [data],
   );
@@ -109,7 +110,7 @@ export default function DailyHistoryPanel({ isDark }) {
           <h3 className={styles.title}>Daily history</h3>
           <p className={styles.sub}>
             One rollup per day · not limited by the ~7-day raw event window ·
-            backend requests only, not CDN cache hits
+            chart below is backend requests only, not CDN cache hits
           </p>
         </div>
         <ToggleButtonGroup
@@ -150,6 +151,19 @@ export default function DailyHistoryPanel({ isDark }) {
         <>
           <div className={styles.tileRow}>
             <div className={styles.tile}>
+              <p className={styles.tileLabel}>Total requests</p>
+              <div className={styles.tileValue}>
+                {Number.isFinite(data?.totals?.totalTrafficRequests)
+                  ? formatCompact(data.totals.totalTrafficRequests)
+                  : "—"}
+              </div>
+              <p className={styles.tileHint}>
+                {Number.isFinite(data?.totals?.totalTrafficRequests)
+                  ? `all edge traffic (cache hits + backend), ${formatNumber(data.measuredCoverageDays ?? 0)} day${data.measuredCoverageDays === 1 ? "" : "s"} measured`
+                  : "no Vercel metrics reported for this range yet"}
+              </p>
+            </div>
+            <div className={styles.tile}>
               <p className={styles.tileLabel}>Backend requests</p>
               <div className={styles.tileValue}>
                 {formatCompact(data?.totals?.requests ?? 0)}
@@ -158,7 +172,7 @@ export default function DailyHistoryPanel({ isDark }) {
                 across {formatNumber(series.length)} day
                 {series.length === 1 ? "" : "s"}
                 {Number.isFinite(data?.coveragePercent)
-                  ? ` · ~${data.coveragePercent}% of real traffic (rest is cache hits)`
+                  ? ` · ~${data.coveragePercent}% of real traffic (rest is cache hits)${data?.measuredCoverageDays ? "" : ", estimated"}`
                   : ""}
               </p>
             </div>
