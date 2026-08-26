@@ -48,7 +48,7 @@ jobs:
           echo "end=${DATE}T23:59:59.999Z" >> "$GITHUB_OUTPUT"
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: npm install --global vercel@58.9.1
 
       - name: Query Vercel metrics
         id: metrics
