@@ -14,36 +14,23 @@ const UPSTREAM = {
 // Pre-industrial (1750) concentrations — IPCC AR6 WGI, Annex III.
 const PREINDUSTRIAL = { co2: 278.3, methane: 729.2, nitrous: 270.1 };
 
-// GISTEMP anomalies use a 1951–1980 base period. NASA's own FAQ gives ~+0.19 °C
-// to express them against the 1850–1900 pre-industrial baseline the IPCC uses.
-// Without it the tile under-reports warming by a fifth of a degree while looking
-// precise. Revisit when NASA updates the figure.
+// Offset added to a GISTEMP anomaly (1951–1980 base period) to express it
+// against the 1850–1900 IPCC pre-industrial baseline instead.
 const GISTEMP_TO_PREINDUSTRIAL_C = 0.19;
 
-// The API exposes two temperature series, `station` and `land`. If the tile reads
-// far from the widely reported ~+1.3 °C, switch this.
+// Which of the API's two temperature series the tile reads: `station` or `land`.
 const TEMPERATURE_FIELD = "land";
 
 const UPSTREAM_TIMEOUT_MS = Number(process.env.SUMMARY_TIMEOUT_MS || 15000);
 
 // ---------------------------------------------------------------------------
-// TWO CACHES, BECAUSE THEY COVER DIFFERENT GAPS
+// CACHING
 // ---------------------------------------------------------------------------
-// `Cache-Control: s-maxage` below is a CDN instruction. In production it does the
-// heavy lifting — most visitors never reach this function at all. But it is only
-// an instruction to a shared cache, which means:
-//
-//   * `next dev` ignores it entirely (there is no CDN), so every local refresh
-//     re-runs the whole six-API fan-out
-//   * the first request after a deploy, or in each new region, is a miss
-//
-// So the route also memoises in module scope. That persists for the life of a
-// warm serverless instance and for the whole dev session, which turns local
-// refreshes into one upstream round and gives production a second line on a
-// cache miss.
-//
-// It doubles as an outage buffer: if the feeds fail but a previous good payload
-// is still held, the last good numbers are served rather than a thinner panel.
+// `Cache-Control: s-maxage` below tells the CDN how long to serve a response
+// without re-invoking this function. The route additionally memoises the built
+// payload in module scope, keyed by time: this serves local `next dev` refreshes
+// and cold/first-region requests from memory, and serves the last complete
+// payload if a later fetch produces an incomplete one.
 const CACHE_TTL_MS = Number(
   process.env.SUMMARY_TTL_MS || 24 * 60 * 60 * 1000, // 24 hours
 );
@@ -53,16 +40,13 @@ let memo = null; // { payload, at }
 // ---------------------------------------------------------------------------
 // SINGLE FLIGHT
 // ---------------------------------------------------------------------------
-// Only one fan-out may be in progress at a time; concurrent callers await the
+// At most one upstream fan-out runs at a time; concurrent callers await it.
 
 let inFlight = null;
 
 /**
- * Number() that returns null instead of NaN.
- *
- * The empty-string guard is not padding: `Number("")` is **0**, so a feed that
- * pads a row with `"trend": ""` would publish "0 ppm" as the current CO2
- * concentration. A blank is missing data and must be skipped, never shown as zero.
+ * Number() that returns null instead of NaN, and null for an empty string
+ * (`Number("")` is otherwise 0, which would be indistinguishable from missing data).
  */
 function num(value) {
   if (value === null || value === undefined) return null;
@@ -108,8 +92,7 @@ function fractionalYearLabel(raw) {
 }
 
 // ---------------------------------------------------------------------------
-// One extractor per API. Each returns a tile or null — never throws, because a
-// single upstream change must cost one tile, not the whole panel.
+// One extractor per API. Each returns a tile object or null, and never throws.
 // ---------------------------------------------------------------------------
 
 export function temperatureTile(json) {
@@ -126,7 +109,7 @@ export function temperatureTile(json) {
     value: Number((anomaly + GISTEMP_TO_PREINDUSTRIAL_C).toFixed(2)),
     unit: "°C",
     valuePrefix: "+",
-    comparison: null, // a difference, not a level — see the baseline rule
+    comparison: null, // this value is a degree difference, not a percentage
     baselineLabel: "above the 1850–1900 average",
     asOf: fractionalYearLabel(row?.time),
   };
@@ -259,13 +242,13 @@ export function oceanTile(json) {
     value: Number(departure.toFixed(2)),
     unit: "°C",
     valuePrefix: departure > 0 ? "+" : "",
-    comparison: null, // also a departure, so also no percentage
+    comparison: null, // this value is a degree departure, not a percentage
     baselineLabel: "above the 20th-century average",
     asOf: latestYear,
   };
 }
 
-/** Temperature first (the number people came for), then the gases, then effects. */
+/** Builds the indicator list in order: temperature, then the gases, then ice and ocean. */
 export function buildSummary(sources = {}) {
   const indicators = [
     temperatureTile(sources.temperature),
@@ -279,14 +262,14 @@ export function buildSummary(sources = {}) {
   return { indicators, expected: 6, complete: indicators.length === 6 };
 }
 
-/** Follows the current host, so preview deployments work unchanged. */
+/** Builds the base URL from the request's host header. */
 function baseUrl(req) {
   if (process.env.CLIMATE_API_BASE) return process.env.CLIMATE_API_BASE;
   const host = req.headers["x-forwarded-host"] || req.headers.host;
   return `${host?.startsWith("localhost") ? "http" : "https"}://${host}`;
 }
 
-/** Resolves to null on any failure — one dead feed costs one tile. */
+/** Fetches a URL and returns its parsed JSON, or null on any failure. */
 async function fetchOne(url) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), UPSTREAM_TIMEOUT_MS);
@@ -309,11 +292,9 @@ async function fetchOne(url) {
 }
 
 /**
- * 24 hours for a complete payload: none of these datasets update faster than
- * daily and most are monthly, so a shorter window buys nothing and costs
- * upstream calls. A partial payload gets 5 minutes so the panel recovers
- * quickly. `stale-while-revalidate` the CDN serve the old copy while it
- * refreshes behind the request, so nobody waits for the fan-out.
+ * Sets the CDN cache lifetime: 24 hours for a complete payload, 5 minutes for
+ * a partial one, plus `stale-while-revalidate` so a refresh happens behind the
+ * request instead of the caller waiting on it.
  */
 function setCacheHeaders(res, complete) {
   res.setHeader(
@@ -322,7 +303,7 @@ function setCacheHeaders(res, complete) {
   );
 }
 
-/** Fetch of all six and build the payload. One caller at a time — see inFlight. */
+/** Fetches all six upstream APIs and builds the payload from their results. */
 async function refresh(base) {
   const names = Object.keys(UPSTREAM);
   const results = await Promise.all(
@@ -365,9 +346,7 @@ async function handler(req, res) {
       `[api/summary] ${summary.indicators.length}/6 indicators built — an upstream API is failing or has changed shape.`,
     );
 
-    // Prefer the last good payload over a freshly-built worse one. A panel that
-    // loses two tiles for a day because a feed blipped is worse than one showing
-    // yesterday's numbers, which is what these datasets are anyway.
+    // Serve the last complete cached payload instead of this partial one, if one exists.
     if (memo?.payload?.complete) {
       setCacheHeaders(res, false);
       res.setHeader("x-summary-cache", "memo-stale");
@@ -377,9 +356,7 @@ async function handler(req, res) {
 
   const payload = { ...summary, generatedAt: new Date().toISOString() };
 
-  // Only a complete payload earns the full TTL. A partial one is held briefly so
-  // a broken feed doesn't cause a fan-out on every single request, but expires
-  // soon enough that the panel heals itself.
+  // Complete payloads get the full memo TTL; partial payloads get a short one.
   if (summary.indicators.length > 0) {
     memo = {
       payload,

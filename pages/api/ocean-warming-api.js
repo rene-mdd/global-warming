@@ -17,8 +17,7 @@ const setStandardHeaders = (res) => {
     "Access-Control-Allow-Headers",
     "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
   );
-  // 12 hours. The comma after max-age=0 was a period, which invalidated the
-  // s-maxage directive in the header Vercel gives top priority.
+  // CDN cache lifetime: 12 hours.
   const policy =
     "public, max-age=0, s-maxage=43200, stale-while-revalidate=3600, stale-if-error=86400";
   res.setHeader("Vercel-CDN-Cache-Control", policy);
@@ -26,14 +25,7 @@ const setStandardHeaders = (res) => {
   res.setHeader("Cache-Control", policy);
 };
 
-/**
- * The end year used to be hardcoded to 2024, so the series silently stopped
- * growing — by 2026 the "current" ocean figure was two years old. It is now
- * derived from the clock.
- *
- * NOAA may not have published the current year yet, so the caller falls back one
- * year on a non-OK response rather than failing.
- */
+/** Builds the NOAA ocean time-series URL ending at the given year. */
 const oceanUrl = (endYear) =>
   `https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series/globe/ocean/12/1/1850-${endYear}.json` +
   `?trend=true&trend_base=10&begtrendyear=1880&endtrendyear=${endYear}`;
@@ -51,7 +43,7 @@ const handler = async (req, res) => {
 
     let upstream = await fetch(oceanUrl(thisYear));
     if (!upstream.ok) {
-      // Early in a calendar year the current year may not exist upstream yet.
+      // Retries with the previous year if the current year isn't available yet.
       upstream = await fetch(oceanUrl(thisYear - 1));
     }
     if (!upstream.ok) {

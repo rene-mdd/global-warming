@@ -5,12 +5,8 @@ const csv = require("csvtojson");
 // ---------------------------------------------------------------------------
 // 12-hour in-process cache
 // ---------------------------------------------------------------------------
-// The CDN handles most requests, but every cache miss — cold start, new region,
-// first request after a deploy — costs a NOAA round trip plus a full CSV-to-JSON
-// parse. This holds the parsed result for the life of the instance.
-//
-// It also doubles as an outage buffer: for a dataset that updates daily at most,
-// serving yesterday's numbers beats "Data currently unavailable".
+// Holds the parsed result in memory for the life of the instance, and is also
+// served if a later upstream fetch fails.
 const CACHE_TTL_MS = Number(
   process.env.API_CACHE_TTL_MS || 12 * 60 * 60 * 1000,
 );
@@ -18,7 +14,7 @@ let memo = null; // { payload, at }
 
 const SOURCE = "https://gml.noaa.gov/aftp/products/trends/n2o/n2o_mm_gl.txt";
 
-/** CORS + cache headers. One place, so the cache directives can't drift apart. */
+/** Sets CORS and cache-control headers on the response. */
 const setStandardHeaders = (res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Content-Type", "application/json");
@@ -56,8 +52,7 @@ const serveError = (res, error) => {
   });
 };
 
-// How long NOAA gets to answer. HTTPS is fast; if this ever trips, the cause is
-// an outage rather than a slow transfer, and the memo below covers it.
+// How long the NOAA request is given to answer before it's aborted.
 const SOURCE_TIMEOUT_MS = Number(process.env.NOAA_TIMEOUT_MS || 10000);
 
 const fetchSource = async (url) => {
@@ -86,7 +81,7 @@ const fetchSource = async (url) => {
   }
 };
 
-/** Their original parse, unchanged — only lifted out of the handler. */
+/** Parses the NOAA fixed-width rows into { date, average, trend, averageUnc, trendUnc } objects. */
 const parseGas = (csvToJson) => {
   const oldKey =
     "# --------------------------------------------------------------------";

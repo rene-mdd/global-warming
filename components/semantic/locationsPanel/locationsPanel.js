@@ -225,7 +225,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                         <span className={styles.statNum}>
                           {formatNumber(country.uniqueIps)}
                         </span>
-                        {/* Match the label to what the number actually counts. */}
+                        {/* Label matches what the number counts. */}
                         <span className={styles.statLabel}>
                           {countUnit(data?.privacy?.mode)}
                         </span>
@@ -331,7 +331,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                           </TableBody>
                         </Table>
 
-                        {/* Never let a capped list look complete. */}
+                        {/* Shown when the server truncated the address list. */}
                         {country.ipsTruncated > 0 && (
                           <Typography
                             variant="caption"

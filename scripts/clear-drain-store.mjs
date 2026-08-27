@@ -1,23 +1,17 @@
 // scripts/clear-drain-store.mjs
 //
-// Deletes every stored drain record. Used by `npm run clear` — the fix for
-// the traffic dashboard's own warning banner, which already told operators to
-// run this command before the script existed.
+// Deletes every stored drain record. Run via `npm run clear`, which registers
+// tests/loader.mjs so lib/'s extensionless imports resolve under Node's ESM
+// loader.
 //
-// Needed whenever DRAIN_ANONYMIZE_IPS is turned on (or changed): anonymisation
-// applies at ingest, not retroactively, so old records stay in whatever form
-// they were stored in until the store is cleared.
-//
-// Run via `npm run clear`, which registers tests/loader.mjs — lib/ imports each
-// other without file extensions (webpack's job normally), which plain Node's
-// ESM loader can't resolve on its own.
+// Anonymisation applies at ingest, not retroactively, so this is how records
+// stored before DRAIN_ANONYMIZE_IPS was turned on or changed actually get
+// removed.
 
 import dotenv from "dotenv";
 
-// dotenv must run BEFORE lib/drain-store.js is loaded: that module decides
-// its backend (Redis vs file) from process.env at import time, and a static
-// `import` at the top of this file would be hoisted ahead of dotenv.config().
-// The dynamic import() below only evaluates once this line actually runs.
+// Sets process.env from .env.local before lib/drain-store.js is imported —
+// that module picks its backend (Redis vs file) from env vars at import time.
 dotenv.config({ path: ".env.local" });
 
 const { clearRecords, storeInfo } = await import("../lib/drain-store");

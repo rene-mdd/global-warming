@@ -35,10 +35,9 @@ export default async function handler(req, res) {
     const records = await readRecords({ since: startTime });
     const raw = aggregate(records, { startTime, endTime });
 
-    // Anonymisation applies at ingest, not retroactively, so turning it on
-    // doesn't rewrite what's already stored. Surfaced in server logs, not the
-    // public dashboard, since it's an operator signal (misconfiguration, or a
-    // store that predates the setting) rather than something a visitor needs.
+    // Logs a server-side warning (not shown on the dashboard) when stored
+    // records still carry raw IPs — anonymisation applies at ingest, not
+    // retroactively.
     if (raw.totals.unanonymisedRecords > 0) {
       console.warn(
         `[drains/stats] ${raw.totals.unanonymisedRecords} stored record(s) in this window still contain raw IP addresses — ` +

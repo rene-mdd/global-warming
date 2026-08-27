@@ -29,7 +29,7 @@ import { clampHours, setReadCacheHeaders } from "../lib/api-read.js";
 import checkApiAuth from "../lib/api-auth.js";
 import { logRequest } from "../lib/log-request.js";
 
-// Values chosen to be findable by substring search in a serialised payload.
+// Sample values that the tests below search for in serialised output.
 const SECRET_IP = "203.0.113.9";
 const SECRET_UA = "Mozilla/5.0 (VerySpecificDevice)";
 const SECRET_MSG = '[traffic] {"accountEmail":"leak@example.com"}';
@@ -66,8 +66,7 @@ const PUBLIC_ENV = [
 const PRIVACY_ENV = ["DRAIN_ANONYMIZE_IPS", "DRAIN_IP_SALT"];
 
 beforeEach(() => {
-  // Every helper reads env at call time, so a leftover value from one test would
-  // silently change another's meaning.
+  // Clears env vars used by these tests before each one runs.
   [...PUBLIC_ENV, ...PRIVACY_ENV].forEach((key) => {
     delete process.env[key];
   });
@@ -89,14 +88,12 @@ test("publicEvent removes every field listed as per-visitor", () => {
 });
 
 test("publicEvent removes the id, which encodes the millisecond timestamp", () => {
-  // `${timestamp}-${timestamp % 1e6}` in drain-parse: publishing the id would
-  // hand back the precision the coarsening removes.
+  // id format is `${timestamp}-${timestamp % 1e6}`.
   assert.equal("id" in publicEvent(fullRecord()), false);
 });
 
 test("no sensitive VALUE survives anywhere in a serialised public row", () => {
-  // Field-name assertions miss a value that gets copied to a differently named
-  // field. This checks the payload as text.
+  // Checks the full serialised payload as text, not individual field names.
   const serialised = JSON.stringify(publicEvent(fullRecord()));
   [SECRET_IP, SECRET_UA, "leak@example.com", "accountId"].forEach((needle) => {
     assert.equal(
@@ -121,8 +118,7 @@ test("publicEvent keeps the fields the dashboard actually needs", () => {
 // ---------------------------------------------------------------------------
 
 test("no public search field is a per-visitor field", () => {
-  // THE regression guard for the oracle: a filter that matches a stripped field
-  // answers questions about it one query at a time.
+  // Checks that no field in PUBLIC_SEARCH_FIELDS is also in PER_VISITOR_FIELDS.
   PUBLIC_SEARCH_FIELDS.forEach((field) => {
     assert.equal(
       PER_VISITOR_FIELDS.includes(field),
@@ -258,8 +254,7 @@ test("public responses are cacheable; authenticated ones never are", () => {
 });
 
 test("read responses vary on Authorization so a cache cannot cross the views", () => {
-  // The same URL returns two different documents depending on the token. Without
-  // Vary, a shared cache could serve an unreduced copy to an anonymous caller.
+  // The same URL returns a different document depending on the token.
   const headers = {};
   const res = {
     setHeader: (key, value) => {
@@ -388,9 +383,7 @@ test("the deliberate override serves anonymously without elevating", () => {
 // ---------------------------------------------------------------------------
 
 test("logRequest never writes an IP, user agent or referer into the log", () => {
-  // These live in Vercel's own log retention, outside this app's control and
-  // untouched by DRAIN_ANONYMIZE_IPS. Vercel's proxy line already carries all
-  // three, so logging them here duplicated personal data for no gain.
+  // IP, user agent, and referer already appear in Vercel's own proxy log line.
   const lines = [];
   const original = console.log;
   console.log = (line) => lines.push(line);
@@ -427,8 +420,7 @@ test("logRequest never writes an IP, user agent or referer into the log", () => 
 });
 
 test("logRequest still records the path in a Pages Router app", () => {
-  // req.url is RELATIVE there, and the one-argument URL constructor throws on it —
-  // which silently left every log line without a path.
+  // req.url is a relative path in the Pages Router.
   const original = console.log;
   console.log = () => {};
   let payload;
@@ -454,7 +446,7 @@ test("logRequest captures country, but never city even when the header is presen
       url: "/api/co2-api",
       headers: {
         "x-vercel-ip-country": "ES",
-        // Vercel RFC3986-encodes city names; still must never be captured.
+        // City header arrives RFC3986-encoded.
         "x-vercel-ip-city": "San%20Francisco",
       },
     });

@@ -1,14 +1,10 @@
 // pages/api/drains/rollup.js
 //
 // WRITER. Rolls up one finished UTC day's worth of `drain:events` into a
-// compact `drain:daily` summary. Invoked by Vercel Cron (GET, nightly) so
-// yesterday gets finalized before the raw event window (~7 days, see
-// lib/store-redis.js) has a chance to age it out.
+// compact `drain:daily` summary. Invoked by Vercel Cron (GET, nightly).
 //
-// Deliberately a separate endpoint from the reader (pages/api/drains/daily.js)
-// — see CLAUDE.md decision on writer/reader split: a single URL that is both
-// a publicly-cacheable read and a writer lets the CDN cache a write response,
-// or serve the scheduler a stale read.
+// Separate endpoint from the reader (pages/api/drains/daily.js): this one
+// writes, requires auth, and is not publicly cacheable.
 //
 //   GET /api/drains/rollup            -> rolls up yesterday (UTC)
 //   GET /api/drains/rollup?date=...   -> rolls up (or re-rolls) that day
@@ -20,10 +16,8 @@ import {
   dayBoundsUTC,
 } from "../../../lib/daily-rollup";
 
-/** Vercel Cron sends `Authorization: Bearer $CRON_SECRET`; the operator token
- * also works, for a manual re-run. Unlike the read endpoints, there is no
- * "public" fallback here — this endpoint writes, so anonymous access is never
- * acceptable, production or not. */
+/** Accepts `Authorization: Bearer $CRON_SECRET` (Vercel Cron) or the operator
+ * token (manual re-run). There is no public/anonymous fallback. */
 function checkRollupAuth(req) {
   const header = req.headers.authorization ?? "";
   const cronSecret = process.env.CRON_SECRET;
@@ -56,9 +50,9 @@ export default async function handler(req, res) {
 
   try {
     const { startTime, endTime } = dayBoundsUTC(dateKey);
-    // Aggregation read — the whole day, no `limit` — same pattern as
-    // pages/api/drains/stats.js. Bounded in practice because the raw store
-    // only ever holds about a week regardless of what's requested here.
+    // Aggregation read: the whole day, no `limit` (same pattern as
+    // pages/api/drains/stats.js). Bounded in practice by the raw store's
+    // ~week retention.
     const records = await readRecords({ since: startTime });
     const dayRecords = records.filter((r) => (r.timestamp ?? 0) < endTime);
 
