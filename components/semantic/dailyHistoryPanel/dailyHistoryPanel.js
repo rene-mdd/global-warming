@@ -3,13 +3,11 @@
 // components/DailyHistoryPanel.jsx
 //
 // Traffic beyond the raw event window. lib/store-redis.js / lib/store-file.js
-// only keep about a week of individual events (DRAIN_RETENTION_HOURS), so
-// anything longer-range reads /api/drains/daily instead — one ~1KB rollup per
-// calendar day (lib/daily-rollup.js), written nightly by /api/drains/rollup.
+// keep about a week of individual events (DRAIN_RETENTION_HOURS); this panel
+// reads /api/drains/daily instead — one ~1KB rollup per calendar day
+// (lib/daily-rollup.js), written nightly by /api/drains/rollup.
 //
-// No unique-visitor total is shown summed across days on purpose: a returning
-// visitor would be counted once per day they showed up, inflating a month by
-// 40-80%. "Busiest day" is the honest single-number headline instead.
+// Shows "busiest day" unique visitors rather than a total summed across days.
 
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";

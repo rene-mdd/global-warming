@@ -1,10 +1,8 @@
 // pages/api/drains/daily.js
 //
-// READER. Public, cacheable — the summaries in `drain:daily` never held
-// per-visitor fields to begin with (see lib/daily-rollup.js), so unlike
-// stats/events/locations this doesn't need lib/api-auth.js or public-mode
-// stripping. That's also why there's no `Vary: Authorization` here: the
-// response never depended on who's asking.
+// READER. Public, cacheable. The summaries in `drain:daily` hold no
+// per-visitor fields (see lib/daily-rollup.js), so this endpoint skips
+// lib/api-auth.js and public-mode stripping, and sets no `Vary: Authorization`.
 //
 //   GET /api/drains/daily?days=30
 
@@ -37,10 +35,9 @@ export default async function handler(req, res) {
   try {
     const summaries = await readDailySummaries({ days });
 
-    // Deliberately no summed "unique visitors" total across days — a
-    // returning visitor would be counted once per day, inflating a month by
-    // 40-80%. busiestDayUniqueVisitors is the honest single-number headline;
-    // per-day uniques are still there for anyone charting them properly.
+    // No summed unique-visitors total across days is returned;
+    // busiestDayUniqueVisitors is the single-day maximum instead. Per-day
+    // uniques remain available in `days` for anyone charting them.
     const busiestDayUniqueVisitors = summaries.reduce(
       (max, day) => Math.max(max, day.uniqueVisitors ?? 0),
       0,
@@ -50,11 +47,9 @@ export default async function handler(req, res) {
       0,
     );
 
-    // totalTrafficRequests is written separately, by
-    // pages/api/drains/traffic-total.js from Vercel's own metrics (see that
-    // file) — it isn't present for days before that pipeline existed, or on
-    // a day its GitHub Action hasn't run yet, so every rollup here is
-    // over only the days that actually have it.
+    // totalTrafficRequests is written separately by
+    // pages/api/drains/traffic-total.js. Not every day has one, so the totals
+    // below sum only the days that do.
     let daysWithTraffic = 0;
     let backendOverTrafficDays = 0;
     const totalTrafficRequests = summaries.reduce((sum, day) => {
@@ -83,11 +78,9 @@ export default async function handler(req, res) {
         totalTrafficRequests: daysWithTraffic ? totalTrafficRequests : null,
       },
       requestedDays: days,
-      // Same caveat as /api/drains/stats: `requests` above is backend (Log
-      // Drain) requests only, not total edge traffic. Prefer the measured
-      // ratio (real per-day totals from Vercel's metrics, this range only)
-      // when any day in range has one; fall back to the manually-refreshed
-      // env estimate otherwise. See lib/api-read.js.
+      // `requests` above is backend (Log Drain) requests only, not total
+      // edge traffic. Uses the measured ratio from real per-day totals when
+      // any day in range has one, otherwise the estimate from lib/api-read.js.
       coveragePercent: daysWithTraffic
         ? Math.round((backendOverTrafficDays / totalTrafficRequests) * 1000) /
           10

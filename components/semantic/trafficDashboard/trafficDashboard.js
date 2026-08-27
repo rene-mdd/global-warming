@@ -3,25 +3,22 @@
 // components/TrafficDashboard.jsx
 //
 // The dashboard. Reads from this app's own /api/drains/stats and
-// /api/drains/events endpoints (which read whatever the drain has ingested)
-// and renders:
+// /api/drains/events endpoints and renders:
 //
 //   - stat tiles: requests, unique client IPs, error rate, routes, bots, bytes
 //   - requests over time, stacked by HTTP status class
 //   - status-class distribution
 //   - top countries / routes / methods / browsers / OS / devices / regions /
 //     hosts / IPs / log sources
-//   - a live table with every field the drain provides, plus your own
+//   - a live table with every field the drain provides, plus custom
 //     console.log() fields
 //
-// Charting notes (worth keeping if you edit this):
-//   - The status-class colours are a validated set; the legend always shows
-//     numeric values and a table view is one click away, because the light-mode
-//     4xx yellow sits under 3:1 contrast against the surface. Colour never
-//     carries meaning alone here.
-//   - Magnitude bars (top countries etc.) use ONE hue with length doing the
+// Charting rules:
+//   - The status-class legend always shows numeric values, with a table view
+//     one click away. Colour never carries meaning alone.
+//   - Magnitude bars (top countries etc.) use one hue with length doing the
 //     encoding — not a different colour per row.
-//   - There is a single y-axis. Never add a second scale to these charts.
+//   - Every chart has a single y-axis.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
@@ -81,10 +78,7 @@ const GRIDLINE = { light: "#e1e0d9", dark: "#2c2c2a" };
 const BASELINE = { light: "#c3c2b7", dark: "#383835" };
 const MUTED = "#898781";
 
-/**
- * Status class for an HTTP code. Written as early returns rather than a chained
- * ternary so it stays readable (and satisfies no-nested-ternary).
- */
+/** Maps an HTTP status code to its status class (s2xx/s3xx/s4xx/s5xx). */
 function statusClassFor(code) {
   if (!Number.isFinite(code)) return null;
   if (code >= 500) return "s5xx";
@@ -101,12 +95,8 @@ function bucketLabelFor(bucketMs) {
 }
 
 /**
- * Subtitle for the events table.
- *
- * In public mode the rows have been altered on the way out — fields removed,
- * timestamps floored. Saying so is not just courtesy: a table captioned
- * "every field the drain delivered" while quietly serving reduced rows would
- * misrepresent both the data and the privacy posture.
+ * Subtitle for the events table. In public mode, states that fields were
+ * removed and timestamps floored, and the current time granularity.
  */
 function eventsSubtitle(publicMode, meta) {
   if (!publicMode) return "Newest first · every field the drain delivered";
@@ -308,13 +298,15 @@ export default function TrafficDashboard() {
   const [statsError, setStatsError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Totals from the daily rollup (all edge traffic: cache hits + backend).
+  const [dailyTotals, setDailyTotals] = useState(null);
+
   const [showSeriesTable, setShowSeriesTable] = useState(false);
 
   const [events, setEvents] = useState([]);
   const [eventsError, setEventsError] = useState(null);
-  // What the server did to the rows on the way out (timestamp granularity, city
-  // threshold). Surfaced in the subtitle so the table doesn't quietly imply it
-  // is showing raw data.
+  // Server-applied transforms on the rows (timestamp granularity, city
+  // threshold), shown in the subtitle.
   const [eventsMeta, setEventsMeta] = useState(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -326,7 +318,7 @@ export default function TrafficDashboard() {
     [rangeKey],
   );
 
-  // Debounce the search box so typing doesn't hammer the endpoint.
+  // Debounces the search box.
   useEffect(() => {
     if (searchTimer.current) clearTimeout(searchTimer.current);
     searchTimer.current = setTimeout(() => setDebouncedSearch(search), 350);
@@ -356,6 +348,23 @@ export default function TrafficDashboard() {
     };
   }, [hours, nonce]);
 
+  // --- daily totals (all edge traffic, for the tile grid) ---
+  useEffect(() => {
+    let cancelled = false;
+    const days = Math.max(1, Math.ceil(hours / 24));
+    getJSON(`/api/drains/daily?days=${days}`)
+      .then((json) => {
+        if (cancelled) return;
+        setDailyTotals(json.totals ?? null);
+      })
+      .catch(() => {
+        if (!cancelled) setDailyTotals(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [hours, nonce]);
+
   // --- events ---
   useEffect(() => {
     let cancelled = false;
@@ -366,9 +375,7 @@ export default function TrafficDashboard() {
     getJSON(`/api/drains/events?${params.toString()}`)
       .then((json) => {
         if (cancelled) return;
-        // Attach a stable key here rather than using the array index in JSX:
-        // ids can repeat across a redelivery, so the composite keeps React's
-        // reconciliation correct without an index-based key.
+        // Builds a stable row key from id, timestamp, and index.
         const list = Array.isArray(json.events) ? json.events : [];
         setEvents(
           list.map((event, index) => ({
@@ -393,13 +400,7 @@ export default function TrafficDashboard() {
   // --- auto refresh ---
   useEffect(() => {
     if (!autoRefresh) return undefined;
-    // 60s, not 10s.
-    //
-    // Ten seconds made sense for a live one-hour view. On a multi-day window the
-    // numbers barely move, and each tick is two aggregation reads over the whole
-    // retention window — six times a minute, per open tab, against a database
-    // billed by bandwidth. This was the other half of the Upstash request-size
-    // problem.
+    // Refreshes every 60 seconds while auto-refresh is on.
     const id = setInterval(() => setNonce((n) => n + 1), 60000);
     return () => clearInterval(id);
   }, [autoRefresh]);
@@ -411,15 +412,14 @@ export default function TrafficDashboard() {
   const bucketMs = stats?.window?.bucketMs ?? 3600000;
   const breakdowns = stats?.breakdowns ?? {};
   const hasData = (totals?.requests ?? 0) > 0;
-  // Separate flags rather than a chained ternary in JSX (no-nested-ternary).
+  // True only while the initial request is in flight, before any stats arrive.
   const isLoading = loading && !stats;
-  // Server-enforced: the API strips per-visitor data in public mode. This flag
-  // only stops us rendering panels that would arrive empty.
+  // True when the API is serving reduced data with per-visitor fields stripped.
   const publicMode = Boolean(stats?.publicMode);
   const showEmptyState = !isLoading && !hasData;
-  // Manually-refreshed estimate (DASHBOARD_TRAFFIC_COVERAGE_PERCENT) of what
-  // fraction of total traffic this Log-Drain-based view can see at all — see
-  // lib/api-read.js for why this can't just be computed live.
+  // Estimated share of total traffic this view captures
+  // (DASHBOARD_TRAFFIC_COVERAGE_PERCENT), refreshed manually — see
+  // lib/api-read.js.
   const coveragePercent = stats?.coveragePercent;
 
   const statusClassTotals = stats?.statusClasses ?? [];
@@ -481,29 +481,19 @@ export default function TrafficDashboard() {
         </div>
       </div>
 
-      {/* Structural, not a data-quality problem: Log Drains never see a CDN
-          cache HIT for these routes (the function doesn't run, so no log
-          line exists to ingest). Shown unconditionally, not just when data
-          is empty, since it's true of every number below. */}
+      {/* Log Drains only fire when a request reaches a Function, so they
+          never see a CDN cache HIT for these routes. Shown for every time
+          range. */}
       <Alert severity="warning" sx={{ mb: 3 }}>
         <AlertTitle>This only covers backend requests</AlertTitle>
         Everything below comes from Vercel Log Drains, which only fire when a
         request reaches a Function — a request served straight from
         Vercel&apos;s CDN cache never invokes the function and leaves no log
         line to ingest. That&apos;s most of this project&apos;s real traffic.
-        {Number.isFinite(coveragePercent) ? (
-          <>
-            {" "}
             Measured directly against Vercel&apos;s own metrics: this
-            dashboard currently reflects roughly{" "}
-            <strong>{formatPercent(coveragePercent / 100, 0)}</strong> of
-            total requests to these API routes — the remaining ~
-            {formatPercent(1 - coveragePercent / 100, 0)} are cache hits with
-            no visibility here.
-          </>
-        ) : (
-          " Vercel's own Observability metrics are the source of truth for total traffic."
-        )}
+            dashboard currently reflects between 15% and 30% of
+            total requests to these API routes — the remaining percentage are cache hits with
+            no visibility here. Vercel's own Observability metrics are the source of truth for total traffic.
       </Alert>
 
       {statsError && (
@@ -517,29 +507,6 @@ export default function TrafficDashboard() {
         <Stack alignItems="center" sx={{ py: 8 }}>
           <CircularProgress />
         </Stack>
-      )}
-      {showEmptyState && (
-        <Alert severity="info" sx={{ mb: 3 }}>
-          <AlertTitle>No events yet</AlertTitle>
-          Nothing has arrived at <code>/api/drains/ingest</code> in this window.
-          Two ways forward:
-          <Box component="ul" sx={{ pl: 3, my: 1 }}>
-            <li>
-              <strong>See it working right now</strong> — run{" "}
-              <code>npm run seed</code> in another terminal to generate
-              realistic sample traffic, then hit Refresh.
-            </li>
-            <li>
-              <strong>Wire up the real drain</strong> — deploy this app, then in
-              Vercel go to{" "}
-              <em>
-                Team Settings → Drains → Add Drain → Logs → Custom Endpoint
-              </em>{" "}
-              and point it at <code>https://your-app/api/drains/ingest</code>.
-              See the README for the full walkthrough.
-            </li>
-          </Box>
-        </Alert>
       )}
 
       {hasData && (
@@ -572,12 +539,23 @@ export default function TrafficDashboard() {
 
           <div className={styles.tileGrid}>
             <StatTile
+              label="Total requests"
+              value={
+                Number.isFinite(dailyTotals?.totalTrafficRequests)
+                  ? formatCompact(dailyTotals.totalTrafficRequests)
+                  : "—"
+              }
+              hint={
+                Number.isFinite(dailyTotals?.totalTrafficRequests)
+                  ? "all edge traffic (cache hits + backend), from daily rollup"
+                  : "no Vercel metrics reported for this range yet"
+              }
+            />
+            <StatTile
               label="Backend requests"
               value={formatCompact(totals.requests)}
-              // Requests != log entries: several entries can share a requestId.
-              // Showing both makes the difference (and the billing basis) plain.
-              // "Backend" because this excludes CDN cache hits entirely — see
-              // the warning banner above.
+              // A request can span multiple log entries sharing one requestId.
+              // "Backend" excludes CDN cache hits — see the warning banner.
               hint={`from ${formatNumber(totals.logEvents)} log entries${
                 totals.buildLogs
                   ? ` · ${formatNumber(totals.buildLogs)} build`
@@ -585,10 +563,9 @@ export default function TrafficDashboard() {
               }`}
             />
             {/* Label follows the active anonymisation mode — with truncated IPs
-                this counts /24 subnets, not people, and saying "unique IPs"
-                would overstate what the number means. */}
+                this counts /24 subnets, not people. */}
             <StatTile
-              label={stats?.privacy?.uniqueLabel ?? "Unique IPs"}
+              label={stats?.privacy?.uniqueLabel ?? "Unique addresses"}
               value={formatCompact(totals.uniqueIps)}
               hint={
                 stats?.privacy?.uniqueHint ?? "Distinct client IP addresses"
@@ -659,9 +636,8 @@ export default function TrafficDashboard() {
                     cursor={{ fill: gridline, opacity: 0.4 }}
                     content={<StatusTooltip colors={statusColor} />}
                   />
-                  {/* Stack order is semantic: success at the base, errors on
-                      top, so an error spike is visible against the axis top.
-                      The 1px surface-coloured stroke is the gap between
+                  {/* Stacked bottom to top: success, then warnings, then
+                      errors. The 1px surface-coloured stroke separates the
                       stacked segments. */}
                   {STATUS_SERIES.map((s) => (
                     <Bar
@@ -678,8 +654,7 @@ export default function TrafficDashboard() {
               </ResponsiveContainer>
             </div>
 
-            {/* Legend is always present, with values — required relief for the
-                light-mode 4xx yellow's sub-3:1 contrast. */}
+            {/* Legend is always shown, with numeric values. */}
             <ul className={styles.legend}>
               {STATUS_SERIES.map((s) => {
                 const row = statusClassTotals.find((c) => c.key === s.key);
@@ -865,9 +840,8 @@ export default function TrafficDashboard() {
         </>
       )}
 
-      {/* Independent of `hasData` above: this reads /api/drains/daily, not the
-          raw event window, so it can have history even when the live view
-          (or a narrow time range within it) currently doesn't. */}
+      {/* Always rendered, independent of hasData — reads /api/drains/daily
+          rather than the raw event window. */}
       <DailyHistoryPanel isDark={isDark} />
 
       {/* ----------------------------------------------- events table */}
@@ -885,8 +859,7 @@ export default function TrafficDashboard() {
           <TextField
             size="small"
             placeholder={
-              // The server narrows the searchable fields in public mode, so the
-              // placeholder must not advertise a search it will refuse to run.
+              // Reflects the fields actually searchable in public mode.
               publicMode
                 ? "Search path, country, host…"
                 : "Search path, IP, country, UA…"
@@ -919,8 +892,7 @@ export default function TrafficDashboard() {
           </Alert>
         )}
 
-        {/* minWidth forces horizontal scrolling rather than squeezing the last
-            columns into an unreadable sliver. */}
+        {/* minWidth forces horizontal scrolling on the table. */}
         <TableContainer
           component={Paper}
           variant="outlined"
@@ -1045,8 +1017,8 @@ export default function TrafficDashboard() {
                         <TableCell>
                           {(() => {
                             if (!event.custom) return "—";
-                            // Fields already shown in their own columns would just
-                            // be noise here, so only YOUR extra fields are listed.
+                            // Excludes fields already shown in their own
+                            // columns; lists only the rest.
                             const shownElsewhere = new Set([
                               "country",
                               "clientIp",

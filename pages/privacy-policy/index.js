@@ -709,8 +709,7 @@ function PrivacyPolicy() {
                   Upstash, Inc., Delaware, USA
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {/* TODO: confirm the actual Upstash database region before
-                      publishing — check the Upstash console, not a guess. */}
+                  {/* Placeholder: Upstash database region not filled in yet. */}
                   operation of the [region: e.g. eu-central-1, Frankfurt]
                   database in which the log entries are stored. Upstash relies
                   on the EU-US Data Privacy Framework and, in the alternative,

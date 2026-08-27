@@ -1,23 +1,18 @@
 // pages/api/drains/traffic-total.js
 //
-// WRITER. Records one finished UTC day's TOTAL request count — HIT + MISS +
-// STALE + BYPASS, i.e. real edge traffic, not just the compute-layer events
-// the Log Drain can see (see CLAUDE.md decision 15 and lib/api-read.js's
-// coveragePercent()). Merged into that day's pages/api/drains/rollup.js
-// record via lib/drain-store.js's writeDailySummary (shallow merge, so
-// neither writer erases the other's fields — see lib/drain-store.js).
+// WRITER. Records one finished UTC day's total request count — HIT + MISS +
+// STALE + BYPASS, i.e. real edge traffic, not just the events the Log Drain
+// can see (see lib/api-read.js's coveragePercent()). Merged into that day's
+// pages/api/drains/rollup.js record via lib/drain-store.js's
+// writeDailySummary (a shallow merge — neither writer overwrites the
+// other's fields).
 //
-// Nothing in this app can produce this number itself: a CDN cache HIT never
-// reaches the Log Drain pipeline at all. It has to come from Vercel's own
-// Observability Metrics, which isn't reachable from inside a Vercel Function
-// (see CLAUDE.md Outstanding item 2b) — so the caller here is a scheduled
-// GitHub Actions job running the real `vercel metrics` CLI, POSTing its
-// result in. See .github/workflows/traffic-total.yml.
+// Called by a scheduled GitHub Actions job running the `vercel metrics` CLI,
+// which POSTs its result here (see .github/workflows/traffic-total.yml).
 //
-// Deliberately a separate endpoint from the reader (pages/api/drains/daily.js)
-// and from the other writer (pages/api/drains/rollup.js) — same writer/reader
-// split reasoning as that endpoint: a write must never be served from cache,
-// and a scheduler must never receive a stale read.
+// Separate endpoint from the reader (pages/api/drains/daily.js) and from the
+// other writer (pages/api/drains/rollup.js): this one writes, requires auth,
+// and is not publicly cacheable.
 //
 //   POST /api/drains/traffic-total
 //   Authorization: Bearer <TRAFFIC_TOTAL_API_TOKEN | DASHBOARD_API_TOKEN>
@@ -27,17 +22,12 @@
 import { writeDailySummary } from "../../../lib/drain-store";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-// Loose upper bound, not a real traffic ceiling — just enough to reject a
-// obviously-malformed or unit-confused payload (e.g. milliseconds where a
-// count was expected) before it lands in the store.
+// Loose upper bound used to reject an obviously malformed payload.
 const MAX_PLAUSIBLE_REQUESTS = 1_000_000_000;
 
-/** Same shape as pages/api/drains/rollup.js's checkRollupAuth: a dedicated
- * token for this writer, falling back to the operator token, with the same
- * dev convenience and the same "no anonymous access, ever" stance in
- * production. A dedicated token (rather than reusing DASHBOARD_API_TOKEN
- * outright) means it can live in GitHub Actions' secret store and be
- * rotated independently of the operator's own dashboard access. */
+/** Accepts a dedicated TRAFFIC_TOTAL_API_TOKEN, falling back to the operator
+ * token (DASHBOARD_API_TOKEN). There is no public/anonymous fallback in
+ * production. */
 function checkWriterAuth(req) {
   const header = req.headers.authorization ?? "";
   const trafficToken = process.env.TRAFFIC_TOTAL_API_TOKEN;
@@ -56,8 +46,7 @@ function sanitizeBreakdown(raw) {
   const out = {};
   Object.entries(raw).forEach(([key, value]) => {
     const n = Number(value);
-    // Number("") is 0 — guard explicitly rather than let a blank field in
-    // the upstream payload silently publish a real-looking zero.
+    // Explicitly rejects blank fields — Number("") is 0.
     if (value === "" || !Number.isFinite(n) || n < 0) return;
     out[String(key).slice(0, 32)] = n;
   });

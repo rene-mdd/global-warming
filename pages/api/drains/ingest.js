@@ -10,10 +10,8 @@
 //    emails you + flags the drain if >80% fail or >50 failures in an hour)
 //  - may receive MANY log events batched into one request
 //
-// bodyParser is DISABLED below because the signature is an HMAC over the exact
-// bytes Vercel sent. If Next parsed the body into an object first, we could only
-// re-serialise it — and any difference in key order or whitespace would break
-// verification. Do not remove that config block.
+// bodyParser is disabled below, so the handler reads the raw request bytes
+// directly and verifies the HMAC signature against those exact bytes.
 
 import { verifyDrainSignature } from "../../../lib/drain-signature";
 import { parseAndNormalize } from "../../../lib/drain-parse";
@@ -22,7 +20,7 @@ import { anonymizeMode, applyPrivacy } from "../../../lib/privacy";
 
 export const config = {
   api: {
-    bodyParser: false, // required for signature verification — see above
+    bodyParser: false, // handler reads the raw body itself, see above
   },
 };
 
@@ -38,10 +36,9 @@ function readRawBody(req) {
   });
 }
 
-// Paths whose logs are discarded on arrival. Defaults to this app's own
-// endpoints so the drain's own deliveries and the dashboard's polling aren't
-// counted as your users' traffic (or feed back on themselves).
-// Override with DRAIN_IGNORE_PATHS="/a,/b"; set to "none" to keep everything.
+// Returns the path prefixes whose logs are discarded on arrival, defaulting
+// to this app's own endpoints. Override with DRAIN_IGNORE_PATHS="/a,/b"; set
+// to "none" to keep everything.
 function ignorePaths() {
   const raw = process.env.DRAIN_IGNORE_PATHS;
   if (raw === "none") return [];
@@ -62,8 +59,8 @@ function applyVerifyHeader(res) {
 export default async function handler(req, res) {
   applyVerifyHeader(res);
 
-  // Vercel (and you, while debugging) may probe the endpoint with a GET.
-  // Answering 200 makes the dashboard's "Test" button succeed.
+  // A GET request is treated as a health check: it returns 200 with the
+  // current store status instead of accepting a delivery.
   if (req.method === "GET") {
     const info = await storeInfo();
     return res.status(200).json({
@@ -114,14 +111,13 @@ export default async function handler(req, res) {
   try {
     parsed = parseAndNormalize(rawBody, { ignorePaths: ignorePaths() });
   } catch (err) {
-    // Still return 200: a parse bug on our side shouldn't make Vercel mark the
-    // drain as failing and start retrying/alerting. We log loudly instead.
+    // Logs the error and returns 200 with parseError: true, without storing anything.
     console.error("[drains/ingest] parse error (returning 200 anyway):", err);
     return res.status(200).json({ ok: true, stored: 0, parseError: true });
   }
 
-  // 4. Minimise personal data BEFORE it touches storage, so raw IPs and precise
-  //    coordinates are never written.
+  // 4. Anonymise records before storage, so raw IPs and precise coordinates
+  //    are never written.
   const mode = anonymizeMode();
   let records;
   try {
@@ -130,10 +126,7 @@ export default async function handler(req, res) {
         ? parsed.records
         : parsed.records.map((r) => applyPrivacy(r, mode));
   } catch (err) {
-    // Unlike the parse-error handler below, this does NOT return 200. A parse
-    // bug losing one delivery is acceptable; silently storing raw IPs when
-    // hashing was mandated (e.g. DRAIN_IP_SALT missing) is not — that failure
-    // must be visible, not swallowed into a 200 that looks like success.
+    // Returns a 503 (not 200) and stores nothing when anonymisation itself fails.
     console.error(
       "[drains/ingest] anonymisation misconfigured, refusing to store:",
       err,

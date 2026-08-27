@@ -1,12 +1,10 @@
 // tests/daily-rollup-merge.test.js
 //
-// Two independent writers share one day's drain:daily record:
-// pages/api/drains/rollup.js writes drain-derived fields, and
-// pages/api/drains/traffic-total.js writes totalTrafficRequests separately
-// (see lib/drain-store.js). writeDailySummary() has to merge, not replace —
-// this pins that behavior against the file backend. (Not tested against the
-// Redis backend here: that needs live Upstash credentials, which local test
-// runs must never touch — see lib/store-redis.js for the equivalent merge.)
+// Tests that writeDailySummary() merges fields written separately by
+// pages/api/drains/rollup.js and pages/api/drains/traffic-total.js into one
+// day's drain:daily record, instead of one write overwriting the other.
+// Covers the file backend (lib/store-file.js); the equivalent merge in the
+// Redis backend is in lib/store-redis.js.
 //
 // Run with: npm test
 
@@ -15,10 +13,7 @@ import assert from "node:assert/strict";
 
 process.env.DRAIN_DISABLE_PERSIST = "1"; // in-memory only, no .data/ writes
 
-// Dynamic, not a top-level `await import` — DATA_DIR/PERSIST_DISABLED are
-// read once at module load, so the env var above has to land before the
-// import runs; this project's lint parser also doesn't support top-level
-// await.
+// Imports lib/store-file.js dynamically, after the env var above is set.
 let writeDailySummary;
 let readDailySummaries;
 

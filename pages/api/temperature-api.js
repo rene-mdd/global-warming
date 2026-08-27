@@ -8,19 +8,14 @@ const convertToObject = (valueArray2d) =>
 // ---------------------------------------------------------------------------
 // 12-hour in-process cache
 // ---------------------------------------------------------------------------
-// The CDN handles most requests, but every cache miss — cold start, new region,
-// first request after a deploy — costs a full upstream fetch and re-parse. This
-// holds the parsed result for the life of the instance.
-//
-// It also doubles as an outage buffer: if NASA is unreachable, the last good
-// payload is served instead of an error. For a dataset that updates monthly,
-// yesterday's numbers beat "Data currently unavailable".
+// Holds the parsed result in memory for the life of the instance, and is also
+// served if a later upstream fetch fails.
 const CACHE_TTL_MS = Number(
   process.env.API_CACHE_TTL_MS || 12 * 60 * 60 * 1000,
 );
 let memo = null; // { payload, at }
 
-/** CORS + cache headers. One place, so the cache directives can't drift apart. */
+/** Sets CORS and cache-control headers on the response. */
 const setStandardHeaders = (res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Content-Type", "application/json");
@@ -58,8 +53,7 @@ const handler = async (req, res) => {
       },
     );
 
-    // Without this, an upstream 500 or 404 becomes an HTML error page that
-    // parses into an empty series and gets cached for 12 hours as valid data.
+    // Rejects a non-OK response instead of parsing its body as data.
     if (!response.ok) {
       throw new Error(`NASA GISTEMP returned ${response.status}`);
     }
