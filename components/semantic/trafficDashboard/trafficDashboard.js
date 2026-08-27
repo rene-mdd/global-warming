@@ -24,7 +24,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -416,11 +415,9 @@ export default function TrafficDashboard() {
   const isLoading = loading && !stats;
   // True when the API is serving reduced data with per-visitor fields stripped.
   const publicMode = Boolean(stats?.publicMode);
-  const showEmptyState = !isLoading && !hasData;
   // Estimated share of total traffic this view captures
   // (DASHBOARD_TRAFFIC_COVERAGE_PERCENT), refreshed manually — see
   // lib/api-read.js.
-  const coveragePercent = stats?.coveragePercent;
 
   const statusClassTotals = stats?.statusClasses ?? [];
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
