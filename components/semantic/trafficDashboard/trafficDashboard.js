@@ -354,7 +354,11 @@ export default function TrafficDashboard() {
     getJSON(`/api/drains/daily?days=${days}`)
       .then((json) => {
         if (cancelled) return;
-        setDailyTotals(json.totals ?? null);
+        setDailyTotals(
+          json.totals
+            ? { ...json.totals, measuredCoverageDays: json.measuredCoverageDays }
+            : null,
+        );
       })
       .catch(() => {
         if (!cancelled) setDailyTotals(null);
@@ -488,7 +492,7 @@ export default function TrafficDashboard() {
         Vercel&apos;s CDN cache never invokes the function and leaves no log
         line to ingest. That&apos;s most of this project&apos;s real traffic.
             Measured directly against Vercel&apos;s own metrics: this
-            dashboard currently reflects between 15% and 30% of
+            dashboard currently reflects between <strong>15% and 30%</strong> of
             total requests to these API routes — the remaining percentage are cache hits with
             no visibility here. Vercel's own Observability metrics are the source of truth for total traffic.
       </Alert>
@@ -544,7 +548,7 @@ export default function TrafficDashboard() {
               }
               hint={
                 Number.isFinite(dailyTotals?.totalTrafficRequests)
-                  ? "all edge traffic (cache hits + backend), from daily rollup"
+                  ? `all edge traffic (cache hits + backend), ${formatNumber(dailyTotals.measuredCoverageDays ?? 0)} day${dailyTotals.measuredCoverageDays === 1 ? "" : "s"} measured`
                   : "no Vercel metrics reported for this range yet"
               }
             />
