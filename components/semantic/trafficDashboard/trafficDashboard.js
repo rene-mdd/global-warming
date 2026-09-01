@@ -118,12 +118,19 @@ async function getJSON(url) {
 
 /* ------------------------------------------------------------------ tiles */
 
-function StatTile({ label, value, hint }) {
+function StatTile({ label, value, hint, loading }) {
   return (
-    <div className={styles.tile}>
+    <div className={`${styles.tile} ${loading ? styles.tileRefreshing : ""}`}>
       <p className={styles.tileLabel}>{label}</p>
       <div className={styles.tileValue}>{value}</div>
       {hint ? <div className={styles.tileHint}>{hint}</div> : null}
+      {loading && (
+        <CircularProgress
+          size={14}
+          thickness={5}
+          className={styles.tileSpinner}
+        />
+      )}
     </div>
   );
 }
@@ -132,9 +139,10 @@ StatTile.propTypes = {
   label: PropTypes.node.isRequired,
   value: PropTypes.node.isRequired,
   hint: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
-StatTile.defaultProps = { hint: null };
+StatTile.defaultProps = { hint: null, loading: false };
 
 /* ------------------------------------------------------- magnitude bars */
 
@@ -296,9 +304,14 @@ export default function TrafficDashboard() {
   const [stats, setStats] = useState(null);
   const [statsError, setStatsError] = useState(null);
   const [loading, setLoading] = useState(true);
+  // Mirrors `loading` for the auto-refresh interval below, whose closure
+  // otherwise only ever sees the `loading` value from when it was created.
+  const loadingRef = useRef(loading);
 
   // Totals from the daily rollup (all edge traffic: cache hits + backend).
   const [dailyTotals, setDailyTotals] = useState(null);
+  const [dailyLoading, setDailyLoading] = useState(true);
+  const dailyLoadingRef = useRef(dailyLoading);
 
   const [showSeriesTable, setShowSeriesTable] = useState(false);
 
@@ -329,6 +342,7 @@ export default function TrafficDashboard() {
   // --- stats ---
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
     getJSON(`/api/drains/stats?hours=${hours}`)
       .then((json) => {
         if (cancelled) return;
@@ -350,6 +364,7 @@ export default function TrafficDashboard() {
   // --- daily totals (all edge traffic, for the tile grid) ---
   useEffect(() => {
     let cancelled = false;
+    setDailyLoading(true);
     const days = Math.max(1, Math.ceil(hours / 24));
     getJSON(`/api/drains/daily?days=${days}`)
       .then((json) => {
@@ -362,6 +377,9 @@ export default function TrafficDashboard() {
       })
       .catch(() => {
         if (!cancelled) setDailyTotals(null);
+      })
+      .finally(() => {
+        if (!cancelled) setDailyLoading(false);
       });
     return () => {
       cancelled = true;
@@ -400,11 +418,23 @@ export default function TrafficDashboard() {
     };
   }, [hours, nonce, debouncedSearch, statusFilter]);
 
+  useEffect(() => {
+    loadingRef.current = loading;
+  }, [loading]);
+  useEffect(() => {
+    dailyLoadingRef.current = dailyLoading;
+  }, [dailyLoading]);
+
   // --- auto refresh ---
   useEffect(() => {
     if (!autoRefresh) return undefined;
-    // Refreshes every 60 seconds while auto-refresh is on.
-    const id = setInterval(() => setNonce((n) => n + 1), 60000);
+    // Skips a tick while either fetch is still in flight — bumping nonce
+    // anyway would cancel it without aborting the request, so a slow range
+    // could miss every tick forever and never clear its loading state.
+    const id = setInterval(() => {
+      if (loadingRef.current || dailyLoadingRef.current) return;
+      setNonce((n) => n + 1);
+    }, 60000);
     return () => clearInterval(id);
   }, [autoRefresh]);
 
@@ -417,6 +447,12 @@ export default function TrafficDashboard() {
   const hasData = (totals?.requests ?? 0) > 0;
   // True only while the initial request is in flight, before any stats arrive.
   const isLoading = loading && !stats;
+  // True while a later request (e.g. a range switch) is in flight but stale
+  // stats from the previous range are still on screen — the full-page
+  // spinner above only covers the first case, so tiles need their own cue.
+  const refreshing = loading && Boolean(stats);
+  // Same idea, for the separate /api/drains/daily fetch behind "Total requests".
+  const dailyRefreshing = dailyLoading && Boolean(dailyTotals);
   // True when the API is serving reduced data with per-visitor fields stripped.
   const publicMode = Boolean(stats?.publicMode);
   // Estimated share of total traffic this view captures
@@ -551,6 +587,7 @@ export default function TrafficDashboard() {
                   ? `all edge traffic (cache hits + backend), ${formatNumber(dailyTotals.measuredCoverageDays ?? 0)} day${dailyTotals.measuredCoverageDays === 1 ? "" : "s"} measured`
                   : "no Vercel metrics reported for this range yet"
               }
+              loading={dailyRefreshing}
             />
             <StatTile
               label="Backend requests"
@@ -562,6 +599,7 @@ export default function TrafficDashboard() {
                   ? ` · ${formatNumber(totals.buildLogs)} build`
                   : ""
               }`}
+              loading={refreshing}
             />
             {/* Label follows the active anonymisation mode — with truncated IPs
                 this counts /24 subnets, not people. */}
@@ -571,6 +609,7 @@ export default function TrafficDashboard() {
               hint={
                 stats?.privacy?.uniqueHint ?? "Distinct client IP addresses"
               }
+              loading={refreshing}
             />
             <StatTile
               label="Error rate"
@@ -578,11 +617,13 @@ export default function TrafficDashboard() {
               hint={`${formatNumber(totals.errors)} 4xx+ · ${formatNumber(
                 totals.serverErrors,
               )} 5xx`}
+              loading={refreshing}
             />
             <StatTile
               label="Routes"
               value={formatCompact(totals.uniqueRoutes)}
               hint="Distinct paths hit"
+              loading={refreshing}
             />
             <StatTile
               label="Bot traffic"
@@ -591,11 +632,13 @@ export default function TrafficDashboard() {
                 0,
               )}
               hint={`${formatNumber(totals.botRequests)} requests`}
+              loading={refreshing}
             />
             <StatTile
               label="Response bytes"
               value={formatBytes(totals.bytes)}
               hint="Sum of proxy.responseByteSize"
+              loading={refreshing}
             />
           </div>
 

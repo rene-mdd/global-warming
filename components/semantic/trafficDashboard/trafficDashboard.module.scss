@@ -138,10 +138,25 @@ $bar-radius: 4px; // rounded data-end on magnitude bars
 }
 
 .tile {
+  position: relative;
   background: var(--dash-surface);
   border: 1px solid var(--dash-border);
   border-radius: $radius;
   padding: $gap-md;
+}
+
+.tileRefreshing {
+  // Old value keeps showing while the new range loads — dim it so the
+  // spinner reads as "updating", not "wrong number".
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+
+.tileSpinner {
+  position: absolute;
+  top: $gap-md;
+  right: $gap-md;
+  color: var(--dash-text-muted);
 }
 
 .tileLabel {
