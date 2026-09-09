@@ -371,7 +371,10 @@ export default function TrafficDashboard() {
         if (cancelled) return;
         setDailyTotals(
           json.totals
-            ? { ...json.totals, measuredCoverageDays: json.measuredCoverageDays }
+            ? {
+                ...json.totals,
+                measuredCoverageDays: json.measuredCoverageDays,
+              }
             : null,
         );
       })
@@ -523,14 +526,9 @@ export default function TrafficDashboard() {
           range. */}
       <Alert severity="warning" sx={{ mb: 3 }}>
         <AlertTitle>This only covers backend requests</AlertTitle>
-        Everything below comes from Vercel Log Drains, which only fire when a
-        request reaches a Function — a request served straight from
-        Vercel&apos;s CDN cache never invokes the function and leaves no log
-        line to ingest. That&apos;s most of this project&apos;s real traffic.
-            Measured directly against Vercel&apos;s own metrics: this
-            dashboard currently reflects between <strong>15% and 30%</strong> of
-            total requests to these API routes — the remaining percentage are cache hits with
-            no visibility here. Vercel's own Observability metrics are the source of truth for total traffic.
+        Log Drains fire only on Function invocations, so CDN cache hits (most of
+        the traffic) are invisible here. This is roughly 15% to 30% of real
+        requests. Vercel Observability has the totals.
       </Alert>
 
       {statsError && (
@@ -551,7 +549,9 @@ export default function TrafficDashboard() {
           {/* ------------------------------------------------ geo notice */}
           {totals.countryCoverage < 0.5 && (
             <Alert severity="info" className={styles.geoHint}>
-              <AlertTitle>Country data only covers instrumented routes</AlertTitle>
+              <AlertTitle>
+                Country data only covers instrumented routes
+              </AlertTitle>
               Only {formatPercent(totals.countryCoverage, 0)} of requests in
               this window carry a country. That&apos;s expected, not a data
               quality problem: country comes only from the{" "}
@@ -569,8 +569,8 @@ export default function TrafficDashboard() {
               <AlertTitle>Public view</AlertTitle>
               This dashboard is published openly, so per-visitor detail is
               withheld: individual addresses, user agents, referrers and
-              application fields are removed server-side. Aggregate figures —
-              including the unique-visitor count — are shown in full.
+              application fields are removed server-side. Aggregate figures are
+              shown in full.
             </Alert>
           )}
 
@@ -584,7 +584,11 @@ export default function TrafficDashboard() {
               }
               hint={
                 Number.isFinite(dailyTotals?.totalTrafficRequests)
-                  ? `all edge traffic (cache hits + backend), ${formatNumber(dailyTotals.measuredCoverageDays ?? 0)} day${dailyTotals.measuredCoverageDays === 1 ? "" : "s"} measured`
+                  ? `all edge traffic (cache hits + backend), ${formatNumber(
+                      dailyTotals.measuredCoverageDays ?? 0,
+                    )} day${
+                      dailyTotals.measuredCoverageDays === 1 ? "" : "s"
+                    } measured`
                   : "no Vercel metrics reported for this range yet"
               }
               loading={dailyRefreshing}
@@ -603,14 +607,14 @@ export default function TrafficDashboard() {
             />
             {/* Label follows the active anonymisation mode — with truncated IPs
                 this counts /24 subnets, not people. */}
-            <StatTile
+            {/* <StatTile
               label={stats?.privacy?.uniqueLabel ?? "Unique addresses"}
               value={formatCompact(totals.uniqueIps)}
               hint={
                 stats?.privacy?.uniqueHint ?? "Distinct client IP addresses"
               }
               loading={refreshing}
-            />
+            /> */}
             <StatTile
               label="Error rate"
               value={formatPercent(totals.errorRate)}
@@ -811,7 +815,7 @@ export default function TrafficDashboard() {
           {/* ----------------------------------------------- breakdowns */}
           <div className={styles.breakdownGrid}>
             <BreakdownPanel
-              title="Countries"
+              title="Top countries"
               subtitle="From x-vercel-ip-country headers"
               rows={breakdowns.country}
               hue={magnitudeHue}
@@ -1106,7 +1110,7 @@ export default function TrafficDashboard() {
         color="text.secondary"
         sx={{ display: "block", mt: 2 }}
       >
-        Drain endpoint: <code>/api/drains/ingest</code> · Configure in Vercel
+        Drain endpoint: <code>/api/drains/ingest</code> · Configured in Vercel
         under{" "}
         <Link
           href="https://vercel.com/docs/drains/using-drains"
