@@ -136,7 +136,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     <div className={styles.panel}>
       <div className={styles.head}>
         <div>
-          <h3 className={styles.title}>IPs by location</h3>
+          <h3 className={styles.title}>Top IPs by location</h3>
           <p className={styles.sub}>
             Click a country to see the individual addresses
             {data?.privacy?.mode && data.privacy.mode !== "off"
