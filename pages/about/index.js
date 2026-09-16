@@ -134,7 +134,7 @@ function About() {
       <Grid container>
         <Achievements />
       </Grid>
-      <Grid className="about-wrapper">
+      <Grid className="about-wrapper" id="team">
         <Team />
       </Grid>
       <Grid
