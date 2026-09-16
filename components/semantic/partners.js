@@ -27,7 +27,7 @@ export default function Partners() {
           justifyContent="center"
           className="partners-cards-wrapper"
         >
-          <Grid size={3}>
+          <Grid >
             <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
               <CardMedia
                 image="/images/eon-stiftung-logo.jpg"
@@ -39,7 +39,7 @@ export default function Partners() {
                   E.ON
                 </Typography>
                 <Typography variant="p" size="large">
-                  Winners of E.ON European Climate Fund Competition
+                  Winners of E.ON European Climate Fund competition
                 </Typography>
               </CardContent>
               <CardActions>
@@ -52,7 +52,7 @@ export default function Partners() {
               </CardActions>
             </Card>
           </Grid>
-          <Grid size={3}>
+          <Grid >
             <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
               <CardMedia
                 image="/images/binda-consulting-logo.png"
@@ -64,7 +64,7 @@ export default function Partners() {
                   BCI
                 </Typography>
                 <Typography variant="p" size="large">
-                  Consortium Partners for Horizon Europe Project
+                  Consortium partners for Horizon Europe project
                 </Typography>
               </CardContent>
               <CardActions>
@@ -74,7 +74,7 @@ export default function Partners() {
               </CardActions>
             </Card>
           </Grid>
-          <Grid size={3}>
+          <Grid >
             <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
               <CardMedia
                 image="/images/ontec-energy.png"
@@ -97,7 +97,7 @@ export default function Partners() {
               </CardActions>
             </Card>
           </Grid>
-          <Grid size={3}>
+          <Grid >
             <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
               <CardMedia
                 image="/images/roi-logo.png"
@@ -115,6 +115,29 @@ export default function Partners() {
               </CardContent>
               <CardActions>
                 <Button size="small" href="https://roots-of-impact.org/">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+                  <Grid>
+            <Card sx={{ paddingLeft: 1, paddingRight: 1, maxWidth: "230px" }}>
+              <CardMedia
+                image="/images/upf.webp"
+                className="supporters-image"
+                title="Roots of Impact"
+                sx={{ width: "150px", margin: "auto" }}
+              />
+              <CardContent sx={{ padding: "13px" }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  Pompeu Fabra University (UPF)
+                </Typography>
+                <Typography variant="p" size="large">
+                  Consortium partners for LIFE Programme project
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" href="https://www.upf.edu/en/">
                   Learn More
                 </Button>
               </CardActions>
