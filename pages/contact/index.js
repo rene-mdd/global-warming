@@ -74,7 +74,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
 
     try {
       // This is the URL of our own Static Forms API endpoint
-      const response = await fetch("https://api.staticforms.xyz/submit", {
+      const response = await fetch("https://api.staticforms.dev/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -264,7 +264,7 @@ Contact.propTypes = {
 
 export async function getServerSideProps({ res }) {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "";
-  const secretKey = process.env.RECAPTCHA_API_KEY || "";
+  const secretKey = process.env.STATIC_FORMS_TOKEN || "";
   res.setHeader(
     "Cache-Control",
     "maxage=43200, s-maxage=43200, stale-while-revalidate"
