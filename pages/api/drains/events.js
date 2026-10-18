@@ -9,7 +9,6 @@ import checkApiAuth from "../../../lib/api-auth";
 import {
   isPublicMode,
   publicEvents,
-  cityMinVisitors,
   publicTimeGranularity,
   searchableFields,
 } from "../../../lib/public-mode";
@@ -30,17 +29,10 @@ export default async function handler(req, res) {
 
   const limit = Math.min(500, Math.max(1, Number(req.query.limit) || 100));
 
-  // How many records to pull out of the store before filtering.
-  //
-  // This endpoint displays at most a few hundred rows, but it used to read the
-  // ENTIRE window to do it — at DRAIN_MAX_EVENTS=20000 that is a 20–60MB Redis
-  // operation, which is what tripped Upstash's 10MB per-request limit and made a
-  // polling dashboard move tens of gigabytes a day.
-  //
-  // Ten times the page size gives filters room to work while keeping the read
-  // bounded by construction. The consequence is honest and reported below:
-  // ?q= and ?status= search the most recent SCAN_LIMIT records, not all of
-  // history. A search that silently covered less than it claimed would be worse.
+  // How many records to pull out of the store before filtering: ten times the
+  // page size, capped between 1000 and 5000. `?q=` and `?status=` therefore
+  // search only the most recent SCAN_LIMIT records, not all of history — that
+  // boundary is reported below as `scanned`/`scanLimit`/`truncatedScan`.
   const SCAN_LIMIT = Math.min(5000, Math.max(limit * 10, 1000));
   const hours = clampHours(req.query.hours);
   const query = String(req.query.q || "")
@@ -61,11 +53,9 @@ export default async function handler(req, res) {
       records = records.filter((r) => statusClass(r.statusCode) === wanted);
     }
 
-    // Which fields ?q= may match is a privacy control in public mode, not a
-    // convenience list — see the reasoning in lib/public-mode.js, which owns
-    // both this list and the list of fields stripped from responses. Keeping
-    // them in one file is the point: when they lived apart they disagreed, and
-    // the filter answered questions about fields the response hid.
+    // Which fields ?q= may match in public mode. lib/public-mode.js owns this
+    // list together with the list of fields stripped from responses, so the
+    // two stay in sync.
     const fields = searchableFields(publicMode);
 
     if (query) {
@@ -82,21 +72,11 @@ export default async function handler(req, res) {
 
     // In public mode each row loses its linkage key, so rows can't be grouped
     // back into one person's session.
-    //
-    // City names are the exception: they survive only where enough distinct
-    // visitors share the city to hide the individual. The crowd is counted over
-    // `records` — the full post-filter set — not over `page`, because `records`
-    // is what a caller can page through, and the anonymity set is whatever is
-    // actually reachable. Passing the pre-filter store here would be wrong: it
-    // would let a city cleared by a busy day leak through a narrow ?q= that
-    // matches one person.
-    const events = publicMode ? publicEvents(page, records) : page;
+    const events = publicMode ? publicEvents(page) : page;
 
     return res.status(200).json({
       events,
-      // `total` counts matches within the scanned slice, not within all history —
-      // `scanned` and `scanLimit` are reported so that distinction is visible
-      // rather than implied.
+      // `total` counts matches within the scanned slice, not within all history.
       total: records.length,
       scanned,
       scanLimit: SCAN_LIMIT,
@@ -105,10 +85,7 @@ export default async function handler(req, res) {
       hours,
       publicMode,
       ...(publicMode
-        ? {
-            cityGate: { minVisitors: cityMinVisitors() },
-            timeGranularity: publicTimeGranularity(),
-          }
+        ? { timeGranularity: publicTimeGranularity() }
         : undefined),
     });
   } catch (err) {

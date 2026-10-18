@@ -1,3 +1,5 @@
+import { withRequestLogging } from "../../lib/log-request";
+
 // ---------------------------------------------------------------------------
 // 12-hour in-process cache — see the note in temperature-api.js
 // ---------------------------------------------------------------------------
@@ -15,8 +17,7 @@ const setStandardHeaders = (res) => {
     "Access-Control-Allow-Headers",
     "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
   );
-  // 12 hours. The comma after max-age=0 was a period, which invalidated the
-  // s-maxage directive in the header Vercel gives top priority.
+  // CDN cache lifetime: 12 hours.
   const policy =
     "public, max-age=0, s-maxage=43200, stale-while-revalidate=3600, stale-if-error=86400";
   res.setHeader("Vercel-CDN-Cache-Control", policy);
@@ -24,7 +25,7 @@ const setStandardHeaders = (res) => {
   res.setHeader("Cache-Control", policy);
 };
 
-export default async function fetchArcticApi(req, res) {
+async function fetchArcticApi(req, res) {
   if (memo && Date.now() - memo.at < CACHE_TTL_MS) {
     setStandardHeaders(res);
     res.setHeader("x-api-cache", "memo");
@@ -37,7 +38,7 @@ export default async function fetchArcticApi(req, res) {
       "https://www.ncei.noaa.gov/access/monitoring/snow-and-ice-extent/sea-ice/G/0/data.json",
     );
 
-    // An upstream error page would otherwise be cached for 12 hours as data.
+    // Rejects a non-OK response instead of caching it as data.
     if (!data.ok) {
       throw new Error(`NOAA sea ice returned ${data.status}`);
     }
@@ -70,3 +71,5 @@ export default async function fetchArcticApi(req, res) {
     });
   }
 }
+
+export default withRequestLogging(fetchArcticApi, { handler: "arctic" });

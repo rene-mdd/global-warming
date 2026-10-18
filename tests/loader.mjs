@@ -1,12 +1,9 @@
 // tests/loader.mjs — test-only module resolution shim
 //
-// The lib/ files import each other without file extensions ("./drain-parse"),
-// which webpack resolves for you and Node's ESM loader does not. Rather than
-// rewrite every import in lib/ — which would fight airbnb's import/extensions
-// rule and touch production code purely to satisfy a test runner — the test run
-// registers this resolver.
+// Registers a resolver hook so extensionless imports in lib/ (e.g.
+// "./drain-parse") resolve under Node's ESM loader.
 //
-// Nothing here ships. It is loaded only via the --import flag in `npm test`.
+// Loaded only via the --import flag in `npm test`; nothing here ships.
 
 import { register } from "node:module";
 

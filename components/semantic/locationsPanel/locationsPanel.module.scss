@@ -95,15 +95,6 @@ $bar-radius: 4px;
   white-space: nowrap;
 }
 
-// Marks a country whose location came from the edge region rather than the
-// visitor's IP. Not decorative — it's a precision caveat.
-.approx {
-  color: var(--dash-text-muted, #898781);
-  margin-left: 5px;
-  font-weight: 400;
-  cursor: help;
-}
-
 .countryStats {
   display: flex;
   align-items: baseline;
@@ -159,13 +150,6 @@ $bar-radius: 4px;
 
 .detail {
   padding: 0 0 $gap-md 30px;
-}
-
-.cityRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: $gap-sm;
 }
 
 .tableWrap {

@@ -1,3 +1,5 @@
+import { withRequestLogging } from "../../lib/log-request";
+
 const csv = require("csvtojson");
 
 // ---------------------------------------------------------------------------
@@ -10,7 +12,7 @@ let memo = null; // { payload, at }
 
 const SOURCE = "https://gml.noaa.gov/aftp/products/trends/co2/co2_trend_gl.csv";
 
-/** CORS + cache headers. One place, so the cache directives can't drift apart. */
+/** Sets CORS and cache-control headers on the response. */
 const setStandardHeaders = (res) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Content-Type", "application/json");
@@ -48,8 +50,7 @@ const serveError = (res, error) => {
   });
 };
 
-// How long NOAA gets to answer. HTTPS is fast; if this ever trips, the cause is
-// an outage rather than a slow transfer, and the memo below covers it.
+// How long the NOAA request is given to answer before it's aborted.
 const SOURCE_TIMEOUT_MS = Number(process.env.NOAA_TIMEOUT_MS || 10000);
 
 const fetchSource = async (url) => {
@@ -78,7 +79,7 @@ const fetchSource = async (url) => {
   }
 };
 
-/** Their original parse, unchanged — only lifted out of the handler. */
+/** Parses the NOAA CSV rows into { year, month, day, cycle, trend } objects. */
 const parseCo2 = (csvToJson) => {
   const oldKey =
     "# --------------------------------------------------------------------";
@@ -105,7 +106,7 @@ const parseCo2 = (csvToJson) => {
   return co2;
 };
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   if (memo && Date.now() - memo.at < CACHE_TTL_MS) {
     serveMemo(res, "memo");
     return;
@@ -136,3 +137,5 @@ export default async (req, res) => {
     serveError(res, parseError);
   }
 };
+
+export default withRequestLogging(handler, { handler: "co2" });

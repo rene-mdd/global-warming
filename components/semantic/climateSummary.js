@@ -82,8 +82,7 @@ function StatTile({ indicator }) {
           minHeight: { xs: 34, sm: 20 },
         }}
       >
-        {/* Decorative: the label carries the meaning, so it's hidden from
-            screen readers rather than announced as "thermostat". */}
+        {/* Decorative icon, hidden from screen readers. */}
         <Icon
           aria-hidden="true"
           sx={{
@@ -166,7 +165,7 @@ function ClimateSummary({ initialData }) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    // Already served with the page (getStaticProps): nothing to fetch.
+    // Data already provided via getStaticProps; nothing to fetch.
     if (initialData) return undefined;
 
     let cancelled = false;
@@ -200,8 +199,7 @@ function ClimateSummary({ initialData }) {
     };
   }, [initialData]);
 
-  // A hero section is the wrong place for an error message. If the payload never
-  // arrives, the panel simply isn't there — the page still reads as designed.
+  // Renders nothing if the fetch ultimately fails.
   if (failed) return null;
 
   const indicators = data?.indicators ?? [];
@@ -223,14 +221,13 @@ function ClimateSummary({ initialData }) {
       aria-label="Current climate indicators"
     >
       {loading
-        ? // Six placeholders at the tiles' real height, so the hero doesn't jump
-          // when the numbers land.
+        ? // Six placeholders matching the tiles' rendered height.
           Array.from({ length: 6 }, (_, i) => (
             <Grid key={`skeleton-${i}`} xs={6} sm={4}>
               <Skeleton
                 variant="rounded"
-                // Matched to the measured tile heights so the hero does not jump
-                // when the numbers land: 157px at two-up, 126px at three-up.
+                // Matches the tiles' measured height: 157px at two-up, 126px
+                // at three-up.
                 sx={{
                   bgcolor: "rgba(255,255,255,0.09)",
                   height: { xs: 157, sm: 126 },

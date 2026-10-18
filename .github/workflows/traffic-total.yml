@@ -1,0 +1,133 @@
+name: Daily traffic total
+
+# Pulls total edge request counts (cache HITs included) from Vercel's own
+# Observability Metrics for a rolling window of recent UTC days and POSTs
+# each to this app's pages/api/drains/traffic-total.js, which merges it into
+# that day's drain:daily rollup — see that file and lib/drain-store.js for
+# why this has to be a separate pipeline: a Vercel Function can't reach this
+# data itself (CLAUDE.md Outstanding item 2b), so `vercel metrics` (a
+# stable, versioned CLI, not the underlying HTTP endpoint) is run here
+# instead, in CI, where the broadly-scoped token this needs never has to
+# touch the app's own production runtime.
+#
+# Self-healing: the scheduled run re-reports the last BACKFILL_DAYS days,
+# not just yesterday, every night. writeDailySummary() merges rather than
+# replaces, so re-reporting an already-correct day is a no-op in effect —
+# a single failed run (rate limit, transient network error, momentary
+# token/API hiccup) is automatically repaired by the next night's run, with
+# no monitoring or manual re-dispatch required. This does NOT cover an
+# outage longer than BACKFILL_DAYS nights (e.g. an expired token) — that
+# still needs a human to notice and fix the credential, then optionally
+# backfill further back than the window with `workflow_dispatch`.
+#
+# Runs after the drain rollup cron (00:10 UTC, see vercel.json) so a same-day
+# "which ran first" isn't a concern in practice, though the merge in
+# writeDailySummary() tolerates either order.
+#
+# Required repo secrets:
+#   VERCEL_TOKEN            token with metrics access on this project
+#   VERCEL_ORG_ID            team/org id `vercel metrics` needs to scope to
+#   VERCEL_PROJECT_ID       this project's id
+#   TRAFFIC_TOTAL_API_TOKEN  matches TRAFFIC_TOTAL_API_TOKEN in Vercel's env
+# Optional repo variable:
+#   SITE_URL                 defaults to https://www.global-warming.org
+
+on:
+  schedule:
+    - cron: "25 0 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "UTC day to (re-)report, YYYY-MM-DD. Defaults to the last BACKFILL_DAYS days."
+        required: false
+
+env:
+  # How many trailing UTC days the scheduled run re-reports each night. Must
+  # stay comfortably above 1 for the self-healing behavior above to survive
+  # a single missed night; raise it if failures ever cluster longer than this.
+  BACKFILL_DAYS: 3
+
+jobs:
+  report-traffic-total:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve target days
+        id: days
+        run: |
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            DATES_JSON=$(jq -cn --arg d "${{ github.event.inputs.date }}" '[$d]')
+          else
+            DATES=()
+            for i in $(seq 1 "$BACKFILL_DAYS"); do
+              DATES+=("$(date -u -d "$i days ago" +%Y-%m-%d)")
+            done
+            DATES_JSON=$(printf '%s\n' "${DATES[@]}" | jq -R . | jq -sc .)
+          fi
+          echo "resolved days: $DATES_JSON"
+          echo "dates=$DATES_JSON" >> "$GITHUB_OUTPUT"
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@58.9.1
+
+      - name: Query metrics and report, per day
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          TRAFFIC_TOTAL_API_TOKEN: ${{ secrets.TRAFFIC_TOTAL_API_TOKEN }}
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          FAILED=()
+
+          for DATE in $(echo '${{ steps.days.outputs.dates }}' | jq -r '.[]'); do
+            echo "::group::$DATE"
+            START="${DATE}T00:00:00.000Z"
+            END="${DATE}T23:59:59.999Z"
+
+            if ! vercel metrics vercel.request.count \
+              --prod \
+              -f "contains(request_path, '/api')" \
+              --group-by cache_result \
+              --since "$START" \
+              --until "$END" \
+              --json \
+              --token "$VERCEL_TOKEN" \
+              --scope "${{ secrets.VERCEL_ORG_ID }}" \
+              -p "${{ secrets.VERCEL_PROJECT_ID }}" \
+              > metrics.json; then
+              echo "vercel metrics query failed for $DATE"
+              FAILED+=("$DATE")
+              echo "::endgroup::"
+              continue
+            fi
+            cat metrics.json
+
+            TOTAL=$(jq '[.summary[].vercel_request_count_sum] | add // 0' metrics.json)
+            BREAKDOWN=$(jq -c '
+              [ .summary[] | { (if .cache_result == "" then "UNSET" else .cache_result end): .vercel_request_count_sum } ]
+              | add // {}
+            ' metrics.json)
+
+            BODY=$(jq -n \
+              --arg date "$DATE" \
+              --argjson totalRequests "$TOTAL" \
+              --argjson breakdown "$BREAKDOWN" \
+              '{date: $date, totalRequests: $totalRequests, breakdown: $breakdown}')
+
+            URL="${SITE_URL:-https://www.global-warming.org}/api/drains/traffic-total"
+            HTTP_CODE=$(curl -sS -o response.json -w "%{http_code}" \
+              -X POST "$URL" \
+              -H "Authorization: Bearer $TRAFFIC_TOTAL_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d "$BODY")
+            cat response.json
+
+            if [ "$HTTP_CODE" -ge 300 ]; then
+              echo "traffic-total POST failed for $DATE with HTTP $HTTP_CODE"
+              FAILED+=("$DATE")
+            fi
+            echo "::endgroup::"
+          done
+
+          if [ "${#FAILED[@]}" -gt 0 ]; then
+            echo "Failed day(s): ${FAILED[*]}"
+            exit 1
+          fi

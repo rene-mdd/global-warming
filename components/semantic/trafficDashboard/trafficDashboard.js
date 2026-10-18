@@ -3,31 +3,27 @@
 // components/TrafficDashboard.jsx
 //
 // The dashboard. Reads from this app's own /api/drains/stats and
-// /api/drains/events endpoints (which read whatever the drain has ingested)
-// and renders:
+// /api/drains/events endpoints and renders:
 //
 //   - stat tiles: requests, unique client IPs, error rate, routes, bots, bytes
 //   - requests over time, stacked by HTTP status class
 //   - status-class distribution
 //   - top countries / routes / methods / browsers / OS / devices / regions /
 //     hosts / IPs / log sources
-//   - a live table with every field the drain provides, plus your own
+//   - a live table with every field the drain provides, plus custom
 //     console.log() fields
 //
-// Charting notes (worth keeping if you edit this):
-//   - The status-class colours are a validated set; the legend always shows
-//     numeric values and a table view is one click away, because the light-mode
-//     4xx yellow sits under 3:1 contrast against the surface. Colour never
-//     carries meaning alone here.
-//   - Magnitude bars (top countries etc.) use ONE hue with length doing the
+// Charting rules:
+//   - The status-class legend always shows numeric values, with a table view
+//     one click away. Colour never carries meaning alone.
+//   - Magnitude bars (top countries etc.) use one hue with length doing the
 //     encoding — not a different colour per row.
-//   - There is a single y-axis. Never add a second scale to these charts.
+//   - Every chart has a single y-axis.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -62,6 +58,7 @@ import {
 
 import styles from "./trafficDashboard.module.scss";
 import LocationsPanel from "../locationsPanel/locationsPanel";
+import DailyHistoryPanel from "../dailyHistoryPanel/dailyHistoryPanel";
 import {
   MAGNITUDE_HUE,
   STATUS_SERIES,
@@ -73,21 +70,14 @@ import {
   formatNumber,
   formatPercent,
 } from "../../../lib/chart-theme";
-import {
-  countryFlag,
-  countryName,
-  regionLabel,
-} from "../../../lib/vercel-regions";
+import { countryFlag, countryName } from "../../../lib/vercel-regions";
 
 const SURFACE = { light: "#fcfcfb", dark: "#1a1a19" };
 const GRIDLINE = { light: "#e1e0d9", dark: "#2c2c2a" };
 const BASELINE = { light: "#c3c2b7", dark: "#383835" };
 const MUTED = "#898781";
 
-/**
- * Status class for an HTTP code. Written as early returns rather than a chained
- * ternary so it stays readable (and satisfies no-nested-ternary).
- */
+/** Maps an HTTP status code to its status class (s2xx/s3xx/s4xx/s5xx). */
 function statusClassFor(code) {
   if (!Number.isFinite(code)) return null;
   if (code >= 500) return "s5xx";
@@ -103,36 +93,20 @@ function bucketLabelFor(bucketMs) {
   return `${bucketMs / 60000} min`;
 }
 
-/** Tooltip text explaining how a record's geolocation was derived. */
-function geoSourceTitle(geoSource) {
-  if (geoSource === "headers") return "From x-vercel-ip-* headers (accurate)";
-  return "Approximated from the edge region";
-}
-
 /**
- * Subtitle for the events table.
- *
- * In public mode the rows have been altered on the way out — fields removed,
- * timestamps floored, city names gated. Saying so is not just courtesy: a table
- * captioned "every field the drain delivered" while quietly serving reduced rows
- * would misrepresent both the data and the privacy posture.
+ * Subtitle for the events table. In public mode, states that fields were
+ * removed and timestamps floored, and the current time granularity.
  */
 function eventsSubtitle(publicMode, meta) {
   if (!publicMode) return "Newest first · every field the drain delivered";
 
   const grain = meta?.timeGranularity ?? "minute";
-  const minVisitors = meta?.cityGate?.minVisitors;
 
   return [
     "Newest first",
     "public view: no addresses or user agents",
     `times rounded down to the ${grain}`,
-    minVisitors
-      ? `city shown only where ${minVisitors}+ visitors share it`
-      : null,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  ].join(" · ");
 }
 
 async function getJSON(url) {
@@ -144,12 +118,19 @@ async function getJSON(url) {
 
 /* ------------------------------------------------------------------ tiles */
 
-function StatTile({ label, value, hint }) {
+function StatTile({ label, value, hint, loading }) {
   return (
-    <div className={styles.tile}>
+    <div className={`${styles.tile} ${loading ? styles.tileRefreshing : ""}`}>
       <p className={styles.tileLabel}>{label}</p>
       <div className={styles.tileValue}>{value}</div>
       {hint ? <div className={styles.tileHint}>{hint}</div> : null}
+      {loading && (
+        <CircularProgress
+          size={14}
+          thickness={5}
+          className={styles.tileSpinner}
+        />
+      )}
     </div>
   );
 }
@@ -158,9 +139,10 @@ StatTile.propTypes = {
   label: PropTypes.node.isRequired,
   value: PropTypes.node.isRequired,
   hint: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
-StatTile.defaultProps = { hint: null };
+StatTile.defaultProps = { hint: null, loading: false };
 
 /* ------------------------------------------------------- magnitude bars */
 
@@ -322,14 +304,21 @@ export default function TrafficDashboard() {
   const [stats, setStats] = useState(null);
   const [statsError, setStatsError] = useState(null);
   const [loading, setLoading] = useState(true);
+  // Mirrors `loading` for the auto-refresh interval below, whose closure
+  // otherwise only ever sees the `loading` value from when it was created.
+  const loadingRef = useRef(loading);
+
+  // Totals from the daily rollup (all edge traffic: cache hits + backend).
+  const [dailyTotals, setDailyTotals] = useState(null);
+  const [dailyLoading, setDailyLoading] = useState(true);
+  const dailyLoadingRef = useRef(dailyLoading);
 
   const [showSeriesTable, setShowSeriesTable] = useState(false);
 
   const [events, setEvents] = useState([]);
   const [eventsError, setEventsError] = useState(null);
-  // What the server did to the rows on the way out (timestamp granularity, city
-  // threshold). Surfaced in the subtitle so the table doesn't quietly imply it
-  // is showing raw data.
+  // Server-applied transforms on the rows (timestamp granularity, city
+  // threshold), shown in the subtitle.
   const [eventsMeta, setEventsMeta] = useState(null);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
@@ -341,7 +330,7 @@ export default function TrafficDashboard() {
     [rangeKey],
   );
 
-  // Debounce the search box so typing doesn't hammer the endpoint.
+  // Debounces the search box.
   useEffect(() => {
     if (searchTimer.current) clearTimeout(searchTimer.current);
     searchTimer.current = setTimeout(() => setDebouncedSearch(search), 350);
@@ -353,6 +342,7 @@ export default function TrafficDashboard() {
   // --- stats ---
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
     getJSON(`/api/drains/stats?hours=${hours}`)
       .then((json) => {
         if (cancelled) return;
@@ -371,6 +361,34 @@ export default function TrafficDashboard() {
     };
   }, [hours, nonce]);
 
+  // --- daily totals (all edge traffic, for the tile grid) ---
+  useEffect(() => {
+    let cancelled = false;
+    setDailyLoading(true);
+    const days = Math.max(1, Math.ceil(hours / 24));
+    getJSON(`/api/drains/daily?days=${days}`)
+      .then((json) => {
+        if (cancelled) return;
+        setDailyTotals(
+          json.totals
+            ? {
+                ...json.totals,
+                measuredCoverageDays: json.measuredCoverageDays,
+              }
+            : null,
+        );
+      })
+      .catch(() => {
+        if (!cancelled) setDailyTotals(null);
+      })
+      .finally(() => {
+        if (!cancelled) setDailyLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [hours, nonce]);
+
   // --- events ---
   useEffect(() => {
     let cancelled = false;
@@ -381,9 +399,7 @@ export default function TrafficDashboard() {
     getJSON(`/api/drains/events?${params.toString()}`)
       .then((json) => {
         if (cancelled) return;
-        // Attach a stable key here rather than using the array index in JSX:
-        // ids can repeat across a redelivery, so the composite keeps React's
-        // reconciliation correct without an index-based key.
+        // Builds a stable row key from id, timestamp, and index.
         const list = Array.isArray(json.events) ? json.events : [];
         setEvents(
           list.map((event, index) => ({
@@ -393,7 +409,6 @@ export default function TrafficDashboard() {
         );
         setEventsMeta({
           timeGranularity: json.timeGranularity,
-          cityGate: json.cityGate,
         });
         setEventsError(null);
       })
@@ -406,17 +421,23 @@ export default function TrafficDashboard() {
     };
   }, [hours, nonce, debouncedSearch, statusFilter]);
 
+  useEffect(() => {
+    loadingRef.current = loading;
+  }, [loading]);
+  useEffect(() => {
+    dailyLoadingRef.current = dailyLoading;
+  }, [dailyLoading]);
+
   // --- auto refresh ---
   useEffect(() => {
     if (!autoRefresh) return undefined;
-    // 60s, not 10s.
-    //
-    // Ten seconds made sense for a live one-hour view. On a multi-day window the
-    // numbers barely move, and each tick is two aggregation reads over the whole
-    // retention window — six times a minute, per open tab, against a database
-    // billed by bandwidth. This was the other half of the Upstash request-size
-    // problem.
-    const id = setInterval(() => setNonce((n) => n + 1), 60000);
+    // Skips a tick while either fetch is still in flight — bumping nonce
+    // anyway would cancel it without aborting the request, so a slow range
+    // could miss every tick forever and never clear its loading state.
+    const id = setInterval(() => {
+      if (loadingRef.current || dailyLoadingRef.current) return;
+      setNonce((n) => n + 1);
+    }, 60000);
     return () => clearInterval(id);
   }, [autoRefresh]);
 
@@ -427,12 +448,19 @@ export default function TrafficDashboard() {
   const bucketMs = stats?.window?.bucketMs ?? 3600000;
   const breakdowns = stats?.breakdowns ?? {};
   const hasData = (totals?.requests ?? 0) > 0;
-  // Separate flags rather than a chained ternary in JSX (no-nested-ternary).
+  // True only while the initial request is in flight, before any stats arrive.
   const isLoading = loading && !stats;
-  // Server-enforced: the API strips per-visitor data in public mode. This flag
-  // only stops us rendering panels that would arrive empty.
+  // True while a later request (e.g. a range switch) is in flight but stale
+  // stats from the previous range are still on screen — the full-page
+  // spinner above only covers the first case, so tiles need their own cue.
+  const refreshing = loading && Boolean(stats);
+  // Same idea, for the separate /api/drains/daily fetch behind "Total requests".
+  const dailyRefreshing = dailyLoading && Boolean(dailyTotals);
+  // True when the API is serving reduced data with per-visitor fields stripped.
   const publicMode = Boolean(stats?.publicMode);
-  const showEmptyState = !isLoading && !hasData;
+  // Estimated share of total traffic this view captures
+  // (DASHBOARD_TRAFFIC_COVERAGE_PERCENT), refreshed manually — see
+  // lib/api-read.js.
 
   const statusClassTotals = stats?.statusClasses ?? [];
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
@@ -452,7 +480,7 @@ export default function TrafficDashboard() {
           <div className={styles.headerMeta}>
             <Typography variant="body2" color="text.secondary">
               {autoRefresh ? <span className={styles.liveDot} /> : null}
-              Ingested via Vercel Log Drains
+              Ingested via Vercel Log Drains · backend requests only
             </Typography>
             {stats?.store ? (
               <Chip
@@ -493,6 +521,16 @@ export default function TrafficDashboard() {
         </div>
       </div>
 
+      {/* Log Drains only fire when a request reaches a Function, so they
+          never see a CDN cache HIT for these routes. Shown for every time
+          range. */}
+      <Alert severity="warning" sx={{ mb: 3 }}>
+        <AlertTitle>This only covers backend requests</AlertTitle>
+        Log Drains fire only on Function invocations, so CDN cache hits (most of
+        the traffic) are invisible here. This is roughly 15% to 30% of real
+        requests. Vercel Observability has the totals.
+      </Alert>
+
       {statsError && (
         <Alert severity="error" sx={{ mb: 3 }}>
           {statsError}
@@ -505,66 +543,23 @@ export default function TrafficDashboard() {
           <CircularProgress />
         </Stack>
       )}
-      {showEmptyState && (
-        <Alert severity="info" sx={{ mb: 3 }}>
-          <AlertTitle>No events yet</AlertTitle>
-          Nothing has arrived at <code>/api/drains/ingest</code> in this window.
-          Two ways forward:
-          <Box component="ul" sx={{ pl: 3, my: 1 }}>
-            <li>
-              <strong>See it working right now</strong> — run{" "}
-              <code>npm run seed</code> in another terminal to generate
-              realistic sample traffic, then hit Refresh.
-            </li>
-            <li>
-              <strong>Wire up the real drain</strong> — deploy this app, then in
-              Vercel go to{" "}
-              <em>
-                Team Settings → Drains → Add Drain → Logs → Custom Endpoint
-              </em>{" "}
-              and point it at <code>https://your-app/api/drains/ingest</code>.
-              See the README for the full walkthrough.
-            </li>
-          </Box>
-        </Alert>
-      )}
 
       {hasData && (
         <>
-          {/* --------------------------------- stale raw-IP notice ------
-              Anonymisation runs at ingest, so switching it on does NOT rewrite
-              what's already stored. Without this warning the tile would read
-              "Unique visitors" over a store that is still partly raw. */}
-          {stats?.privacy?.mode &&
-            stats.privacy.mode !== "off" &&
-            totals.unanonymisedRecords > 0 && (
-              <Alert severity="warning" sx={{ mb: 3 }}>
-                <AlertTitle>
-                  {formatNumber(totals.unanonymisedRecords)} stored record
-                  {totals.unanonymisedRecords === 1 ? "" : "s"} still contain
-                  raw IP addresses
-                </AlertTitle>
-                Anonymisation (<code>{stats.privacy.mode}</code>) is applied
-                when events arrive, so turning it on does not rewrite data that
-                was already stored. These records predate the setting. Clear the
-                store (<code>npm run clear</code>) and let it refill, or accept
-                that this window mixes raw and anonymised addresses.
-              </Alert>
-            )}
-
           {/* ------------------------------------------------ geo notice */}
-          {totals.geoHeaderCoverage < 0.5 && (
-            <Alert severity="warning" className={styles.geoHint}>
-              <AlertTitle>Country data is approximate right now</AlertTitle>
-              Only {formatPercent(totals.geoHeaderCoverage, 0)} of requests in
-              this window carry true visitor geolocation. Log Drains don&apos;t
-              include the visitor&apos;s country — the drain schema only exposes
-              the Vercel <em>edge region</em> that served the request (e.g.{" "}
-              <code>fra1</code>), which this dashboard falls back to. To get
-              real country/city, call <code>logRequest(request)</code> from{" "}
-              <code>lib/log-request.js</code> in your API routes; it reads the{" "}
-              <code>x-vercel-ip-country</code> headers and logs them so they
-              arrive through the drain.
+          {totals.countryCoverage < 0.5 && (
+            <Alert severity="info" className={styles.geoHint}>
+              <AlertTitle>
+                Country data only covers instrumented routes
+              </AlertTitle>
+              Only {formatPercent(totals.countryCoverage, 0)} of requests in
+              this window carry a country. That&apos;s expected, not a data
+              quality problem: country comes only from the{" "}
+              <code>x-vercel-ip-country</code> header, and only the public
+              climate-data API routes call <code>logRequest()</code> (see{" "}
+              <code>lib/log-request.js</code>) to capture it. Traffic to other
+              routes has no country at all — there is no edge-region fallback
+              guess anymore.
             </Alert>
           )}
 
@@ -574,44 +569,65 @@ export default function TrafficDashboard() {
               <AlertTitle>Public view</AlertTitle>
               This dashboard is published openly, so per-visitor detail is
               withheld: individual addresses, user agents, referrers and
-              application fields are removed server-side. Aggregate figures —
-              including the unique-visitor count — are shown in full.
+              application fields are removed server-side. Aggregate figures are
+              shown in full.
             </Alert>
           )}
 
           <div className={styles.tileGrid}>
             <StatTile
-              label="Requests"
+              label="Total requests"
+              value={
+                Number.isFinite(dailyTotals?.totalTrafficRequests)
+                  ? formatCompact(dailyTotals.totalTrafficRequests)
+                  : "—"
+              }
+              hint={
+                Number.isFinite(dailyTotals?.totalTrafficRequests)
+                  ? `all edge traffic (cache hits + backend), ${formatNumber(
+                      dailyTotals.measuredCoverageDays ?? 0,
+                    )} day${
+                      dailyTotals.measuredCoverageDays === 1 ? "" : "s"
+                    } measured`
+                  : "no Vercel metrics reported for this range yet"
+              }
+              loading={dailyRefreshing}
+            />
+            <StatTile
+              label="Backend requests"
               value={formatCompact(totals.requests)}
-              // Requests != log entries: several entries can share a requestId.
-              // Showing both makes the difference (and the billing basis) plain.
+              // A request can span multiple log entries sharing one requestId.
+              // "Backend" excludes CDN cache hits — see the warning banner.
               hint={`from ${formatNumber(totals.logEvents)} log entries${
                 totals.buildLogs
                   ? ` · ${formatNumber(totals.buildLogs)} build`
                   : ""
               }`}
+              loading={refreshing}
             />
             {/* Label follows the active anonymisation mode — with truncated IPs
-                this counts /24 subnets, not people, and saying "unique IPs"
-                would overstate what the number means. */}
-            <StatTile
-              label={stats?.privacy?.uniqueLabel ?? "Unique IPs"}
+                this counts /24 subnets, not people. */}
+            {/* <StatTile
+              label={stats?.privacy?.uniqueLabel ?? "Unique addresses"}
               value={formatCompact(totals.uniqueIps)}
               hint={
                 stats?.privacy?.uniqueHint ?? "Distinct client IP addresses"
               }
-            />
+              loading={refreshing}
+            /> */}
             <StatTile
               label="Error rate"
               value={formatPercent(totals.errorRate)}
               hint={`${formatNumber(totals.errors)} 4xx+ · ${formatNumber(
                 totals.serverErrors,
               )} 5xx`}
+              loading={refreshing}
             />
             <StatTile
               label="Routes"
               value={formatCompact(totals.uniqueRoutes)}
               hint="Distinct paths hit"
+              loading={refreshing}
             />
             <StatTile
               label="Bot traffic"
@@ -620,11 +636,13 @@ export default function TrafficDashboard() {
                 0,
               )}
               hint={`${formatNumber(totals.botRequests)} requests`}
+              loading={refreshing}
             />
             <StatTile
               label="Response bytes"
               value={formatBytes(totals.bytes)}
               hint="Sum of proxy.responseByteSize"
+              loading={refreshing}
             />
           </div>
 
@@ -666,9 +684,8 @@ export default function TrafficDashboard() {
                     cursor={{ fill: gridline, opacity: 0.4 }}
                     content={<StatusTooltip colors={statusColor} />}
                   />
-                  {/* Stack order is semantic: success at the base, errors on
-                      top, so an error spike is visible against the axis top.
-                      The 1px surface-coloured stroke is the gap between
+                  {/* Stacked bottom to top: success, then warnings, then
+                      errors. The 1px surface-coloured stroke separates the
                       stacked segments. */}
                   {STATUS_SERIES.map((s) => (
                     <Bar
@@ -685,8 +702,7 @@ export default function TrafficDashboard() {
               </ResponsiveContainer>
             </div>
 
-            {/* Legend is always present, with values — required relief for the
-                light-mode 4xx yellow's sub-3:1 contrast. */}
+            {/* Legend is always shown, with numeric values. */}
             <ul className={styles.legend}>
               {STATUS_SERIES.map((s) => {
                 const row = statusClassTotals.find((c) => c.key === s.key);
@@ -799,12 +815,8 @@ export default function TrafficDashboard() {
           {/* ----------------------------------------------- breakdowns */}
           <div className={styles.breakdownGrid}>
             <BreakdownPanel
-              title="Countries"
-              subtitle={
-                totals.geoHeaderCoverage >= 0.5
-                  ? "From x-vercel-ip-country headers"
-                  : "Approximated from edge region — see notice above"
-              }
+              title="Top countries"
+              subtitle="From x-vercel-ip-country headers"
               rows={breakdowns.country}
               hue={magnitudeHue}
               formatLabel={(code) =>
@@ -818,15 +830,6 @@ export default function TrafficDashboard() {
               subtitle="Query strings stripped"
               rows={breakdowns.route}
               hue={magnitudeHue}
-            />
-            <BreakdownPanel
-              title="Edge regions"
-              subtitle="Vercel datacenter that served the request"
-              rows={breakdowns.edgeRegion}
-              hue={magnitudeHue}
-              formatLabel={(code) =>
-                code === "Other" ? "Other" : regionLabel(code)
-              }
             />
             <BreakdownPanel
               title="Browsers"
@@ -885,6 +888,10 @@ export default function TrafficDashboard() {
         </>
       )}
 
+      {/* Always rendered, independent of hasData — reads /api/drains/daily
+          rather than the raw event window. */}
+      <DailyHistoryPanel isDark={isDark} />
+
       {/* ----------------------------------------------- events table */}
       <div className={styles.panel}>
         <div className={styles.panelHead}>
@@ -900,8 +907,7 @@ export default function TrafficDashboard() {
           <TextField
             size="small"
             placeholder={
-              // The server narrows the searchable fields in public mode, so the
-              // placeholder must not advertise a search it will refuse to run.
+              // Reflects the fields actually searchable in public mode.
               publicMode
                 ? "Search path, country, host…"
                 : "Search path, IP, country, UA…"
@@ -934,8 +940,7 @@ export default function TrafficDashboard() {
           </Alert>
         )}
 
-        {/* minWidth forces horizontal scrolling rather than squeezing the last
-            columns into an unreadable sliver. */}
+        {/* minWidth forces horizontal scrolling on the table. */}
         <TableContainer
           component={Paper}
           variant="outlined"
@@ -957,7 +962,6 @@ export default function TrafficDashboard() {
                 <TableCell>Location</TableCell>
                 <TableCell>Browser / OS</TableCell>
                 <TableCell>Host</TableCell>
-                <TableCell>Region</TableCell>
                 <TableCell>Source</TableCell>
                 <TableCell>Deployment</TableCell>
                 {!publicMode && <TableCell>Your fields</TableCell>}
@@ -966,7 +970,7 @@ export default function TrafficDashboard() {
             <TableBody>
               {events.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={publicMode ? 10 : 12}>
+                  <TableCell colSpan={publicMode ? 9 : 11}>
                     <Typography
                       variant="body2"
                       color="text.secondary"
@@ -1017,14 +1021,9 @@ export default function TrafficDashboard() {
                       )}
                       <TableCell>
                         {event.country ? (
-                          <Tooltip title={geoSourceTitle(event.geoSource)}>
-                            <span>
-                              {countryFlag(event.country)}{" "}
-                              {event.city ? `${event.city}, ` : ""}
-                              {event.country}
-                              {event.geoSource === "edge-region" ? " ≈" : ""}
-                            </span>
-                          </Tooltip>
+                          <span>
+                            {countryFlag(event.country)} {event.country}
+                          </span>
                         ) : (
                           "—"
                         )}
@@ -1047,9 +1046,6 @@ export default function TrafficDashboard() {
                           {event.host ?? "—"}
                         </span>
                       </TableCell>
-                      <TableCell className={styles.mono}>
-                        {event.edgeRegion ?? "—"}
-                      </TableCell>
                       <TableCell>
                         <Chip
                           size="small"
@@ -1069,26 +1065,20 @@ export default function TrafficDashboard() {
                         <TableCell>
                           {(() => {
                             if (!event.custom) return "—";
-                            // Fields already shown in their own columns would just
-                            // be noise here, so only YOUR extra fields are listed.
+                            // Excludes fields already shown in their own
+                            // columns; lists only the rest.
                             const shownElsewhere = new Set([
                               "country",
-                              "city",
                               "clientIp",
                               "userAgent",
                               "path",
                               "method",
                               "host",
-                              "latitude",
-                              "longitude",
                               "loggedAt",
                               "referer",
                               "vercelId",
                               "deploymentUrl",
                               "continent",
-                              "countryRegion",
-                              "postalCode",
-                              "timezone",
                               "statusCode",
                             ]);
                             const text = Object.entries(event.custom)
@@ -1120,7 +1110,7 @@ export default function TrafficDashboard() {
         color="text.secondary"
         sx={{ display: "block", mt: 2 }}
       >
-        Drain endpoint: <code>/api/drains/ingest</code> · Configure in Vercel
+        Drain endpoint: <code>/api/drains/ingest</code> · Configured in Vercel
         under{" "}
         <Link
           href="https://vercel.com/docs/drains/using-drains"

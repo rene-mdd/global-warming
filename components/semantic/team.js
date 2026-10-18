@@ -26,9 +26,9 @@ export default function Team() {
     "05_name": "Annalisa Ricchiuti",
     "05_job": "Legal Advisor",
 
-    "06_image": "images/yana-picture.jpeg",
-    "06_name": "Yana chistovskaya",
-    "06_job": "Fundraiser - Marketing",
+    "06_image": "images/armin.jpeg",
+    "06_name": "Armin Maddah",
+    "06_job": "Data Engineer - Data Scientist",
 
     "07_image": "images/farah.jpeg",
     "07_name": "Farah Fauth P.",

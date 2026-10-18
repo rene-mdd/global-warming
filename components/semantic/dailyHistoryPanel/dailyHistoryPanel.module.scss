@@ -1,0 +1,73 @@
+// components/DailyHistoryPanel.module.scss
+//
+// Inherits the --dash-* custom properties emitted by
+// TrafficDashboard.module.scss's .root, same as locationsPanel.module.scss.
+
+$gap-sm: 8px;
+$gap-md: 16px;
+$radius: 10px;
+
+.panel {
+  background: var(--dash-surface, #fcfcfb);
+  border: 1px solid var(--dash-border, rgba(11, 11, 11, 0.1));
+  border-radius: $radius;
+  padding: $gap-md;
+  margin-bottom: 24px;
+  min-width: 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $gap-sm;
+  margin-bottom: $gap-md;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dash-text-primary, #0b0b0b);
+  margin: 0;
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--dash-text-muted, #898781);
+  margin: 2px 0 0;
+}
+
+.tileRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap-md;
+  margin-bottom: $gap-md;
+}
+
+.tile {
+  min-width: 160px;
+}
+
+.tileLabel {
+  font-size: 12px;
+  color: var(--dash-text-muted, #898781);
+  margin: 0;
+}
+
+.tileValue {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--dash-text-primary, #0b0b0b);
+  font-variant-numeric: tabular-nums;
+}
+
+.tileHint {
+  font-size: 11px;
+  color: var(--dash-text-muted, #898781);
+  margin: 2px 0 0;
+}
+
+.chartWrap {
+  min-width: 0;
+}

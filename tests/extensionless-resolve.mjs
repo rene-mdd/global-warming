@@ -1,7 +1,7 @@
 // tests/extensionless-resolve.mjs — resolver hook, test-only. See loader.mjs.
 //
-// Try "./thing.js" when the code asked for "./thing", then fall back to Node's
-// default behaviour so real resolution errors still surface as themselves.
+// Tries "./thing.js" when the code asked for "./thing", then falls back to
+// Node's default resolution.
 
 const HAS_EXTENSION = /\.[cm]?[jt]sx?$/i;
 

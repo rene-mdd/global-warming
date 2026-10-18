@@ -8,7 +8,11 @@ import { aggregate } from "../../../lib/aggregate";
 import checkApiAuth from "../../../lib/api-auth";
 import { privacyInfo } from "../../../lib/privacy";
 import { isPublicMode, publicStats } from "../../../lib/public-mode";
-import { clampHours, setReadCacheHeaders } from "../../../lib/api-read";
+import {
+  clampHours,
+  coveragePercent,
+  setReadCacheHeaders,
+} from "../../../lib/api-read";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -30,6 +34,18 @@ export default async function handler(req, res) {
   try {
     const records = await readRecords({ since: startTime });
     const raw = aggregate(records, { startTime, endTime });
+
+    // Logs a server-side warning (not shown on the dashboard) when stored
+    // records still carry raw IPs — anonymisation applies at ingest, not
+    // retroactively.
+    if (raw.totals.unanonymisedRecords > 0) {
+      console.warn(
+        `[drains/stats] ${raw.totals.unanonymisedRecords} stored record(s) in this window still contain raw IP addresses — ` +
+          "anonymisation is applied at ingest, not retroactively. Clear the store (npm run clear) to remove them, " +
+          "or this is expected if they predate DRAIN_ANONYMIZE_IPS being turned on.",
+      );
+    }
+
     // Strip the per-visitor breakdowns before they leave the server.
     const stats = publicMode ? publicStats(raw) : raw;
     // `privacy` tells the UI how to label the unique-visitor tile honestly
@@ -39,6 +55,10 @@ export default async function handler(req, res) {
       store: await storeInfo(),
       privacy: privacyInfo(),
       hours,
+      // See lib/api-read.js: everything above only ever reflects requests
+      // that reached a Vercel Function — CDN cache hits are structurally
+      // invisible to Log Drains and never counted here.
+      coveragePercent: coveragePercent(),
     });
   } catch (err) {
     console.error("[drains/stats]", err);
