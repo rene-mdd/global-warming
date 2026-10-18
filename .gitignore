@@ -32,3 +32,8 @@ yarn-error.log*
 
 .vercel
 .env*
+
+# local docs / internal GDPR accountability records (not for the public repo)
+/CLAUDE.md
+/LEGITIMATE-INTERESTS-ASSESSMENT.md
+/ROPA-ENTRY.md
