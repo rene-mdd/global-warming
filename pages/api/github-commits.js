@@ -2,7 +2,7 @@
 //
 // The About page used to call the GitHub API from the visitor's browser,
 // which sent every visitor's IP address to GitHub. Fetching here keeps the
-// call between this server and GitHub, and lets API_GITHUB (never exposed to
+// call between this server and GitHub, and lets GITHUB_API (never exposed to
 // the browser) authenticate it.
 
 import { Octokit } from "octokit";
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "invalid page" });
   }
 
-  const octokit = new Octokit({ auth: process.env.API_GITHUB });
+  const octokit = new Octokit({ auth: process.env.GITHUB_API });
   try {
     const commits = await octokit.paginate(
       "GET /repos/{owner}/{repo}/commits",

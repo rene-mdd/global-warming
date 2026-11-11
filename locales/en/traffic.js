@@ -12,9 +12,9 @@ const traffic = {
   // title is the long sentence. Stored as rendered so the English page is
   // unchanged; locales/de/traffic.js has them the right way round.
   meta: {
-    title:
+    title: "Climate Accountability API - Traffic",
+    description:
       "Current usage of the Climate Accountability APIs, including the number of requests and the most popular endpoints.",
-    description: "Climate Accountability API - Traffic",
     keywords: "Global warming, Climate APIs, carbon footprint, co2, usage",
   },
 

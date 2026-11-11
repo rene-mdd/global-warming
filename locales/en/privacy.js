@@ -8,8 +8,9 @@
 
 const privacy = {
   meta: {
-    title: "Privacy policy: Climate Accountability API gUG. Berlin, Germany.",
-    description: "Climate Accountability API - Privacy Policy",
+    title: "Climate Accountability API - Privacy Policy",
+    description:
+      "Privacy policy of the Climate Accountability API gUG (haftungsbeschränkt), Berlin, Germany.",
     keywords:
       "Global warming, about, carbon footprint, climate change, environment",
   },
