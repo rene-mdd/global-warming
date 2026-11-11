@@ -78,7 +78,7 @@ export default function DailyHistoryPanel({ isDark }) {
         setError(null);
       })
       .catch((err) => {
-        if (!cancelled) setError(err.message);
+        if (!cancelled) setError(t.apiErrors[err.message] ?? err.message);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

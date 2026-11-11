@@ -26,6 +26,7 @@ const de = {
   },
 
   menu: {
+    linkedinAria: "Climate Accountability API auf LinkedIn",
     home: "Start",
     about: "Über uns",
     esg: "ESG",
@@ -47,6 +48,12 @@ const de = {
 
   // Shown to visitors whose browser prefers German while they're on an
   // English page, so it's written in German.
+  notFound: {
+    title: "Seite nicht gefunden – Climate Accountability API",
+    heading: "Seite nicht gefunden",
+    text: "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    home: "Zur Startseite",
+  },
   banner: {
     message: "Diese Seite gibt es auch auf Deutsch.",
     switch: "Auf Deutsch lesen",
@@ -58,11 +65,12 @@ const de = {
     hideGraph: "Grafik ausblenden",
     loadGraph: "Grafik laden",
     unavailable:
-      "Daten derzeit nicht verfügbar. Bitte später erneut versuchen. Falls das Problem bestehen bleibt, schreib uns an help@global-warming.org",
+      "Daten derzeit nicht verfügbar. Bitte später erneut versuchen. Falls das Problem bestehen bleibt, schreiben Sie uns an help@global-warming.org",
     and: "und",
   },
 
   sideMenu: {
+    toggleAria: "Abschnittsmenü ein- oder ausblenden",
     temperature: "Temperatur",
     co2: "Kohlendioxid",
     methane: "Methan",
@@ -236,8 +244,9 @@ const de = {
         "Mehr zur aktuellen Methan-Situation: ",
         {
           href: "https://www.epa.gov/ghgemissions/overview-greenhouse-gases#methane",
-          text: " EPA: Methane Emissions und ",
+          text: " EPA: Methane Emissions",
         },
+        " und ",
         {
           href: "https://earthobservatory.nasa.gov/images/146978/methane-emissions-continue-to-rise",
           text: " NASA: Methane Emissions Continue to Rise",
@@ -322,38 +331,38 @@ const de = {
   api: {
     getApi: "API abrufen",
     share: "Teilen",
-    fetchEnd: "und du erhältst die Daten im JSON-Format.",
+    fetchEnd: "und Sie erhalten die Daten im JSON-Format.",
     temperature: {
       title:
         "Monatliche Veränderung der globalen mittleren Oberflächentemperatur",
       body: [
-        "Diese API liefert monatlich die Anomalie der globalen mittleren Oberflächentemperatur von 1880.04 bis heute (in Grad Celsius). Ruf diesen Endpunkt ab",
+        "Diese API liefert monatlich die Anomalie der globalen mittleren Oberflächentemperatur von 1880.04 bis heute (in Grad Celsius). Rufen Sie diesen Endpunkt ab",
       ],
     },
     co2: {
       title: "Täglicher globaler saisonaler Zyklus und Trendwert",
       body: [
-        "Diese API liefert nahezu täglich die Menge an Kohlendioxid (CO2) in der Atmosphäre für die letzten 10 Jahre bis heute, angegeben als Stoffmengenanteil in trockener Luft in Teilen pro Million (ppm). Ruf diesen Endpunkt ab",
+        "Diese API liefert nahezu täglich die Menge an Kohlendioxid (CO2) in der Atmosphäre für die letzten 10 Jahre bis heute, angegeben als Stoffmengenanteil in trockener Luft in Teilen pro Million (ppm). Rufen Sie diesen Endpunkt ab",
       ],
     },
     methane: {
       title:
         "Global gemittelte monatliche Methankonzentration in der Atmosphäre, gemessen an marinen Oberflächenstationen",
       body: [
-        "Diese API liefert monatlich die Methanmenge in der Atmosphäre von 1983 bis heute, angegeben als Stoffmengenanteil in trockener Luft in Teilen pro Milliarde (ppb). Ruf diesen Endpunkt ab",
+        "Diese API liefert monatlich die Methanmenge in der Atmosphäre von 1983 bis heute, angegeben als Stoffmengenanteil in trockener Luft in Teilen pro Milliarde (ppb). Rufen Sie diesen Endpunkt ab",
       ],
     },
     nitrous: {
       title:
         "Global gemittelte monatliche Lachgaskonzentration in der Atmosphäre, gemessen an marinen Oberflächenstationen",
       body: [
-        "Diese API liefert monatlich die Lachgasmenge in der Atmosphäre von 2001 bis heute, angegeben als Stoffmengenanteil in trockener Luft in Teilen pro Milliarde (ppb). Ruf diesen Endpunkt ab",
+        "Diese API liefert monatlich die Lachgasmenge in der Atmosphäre von 2001 bis heute, angegeben als Stoffmengenanteil in trockener Luft in Teilen pro Milliarde (ppb). Rufen Sie diesen Endpunkt ab",
       ],
     },
     arctic: {
       title: "Ausdehnung des Meereises",
       body: [
-        "Monatliche Meereisausdehnung seit 1979 für die gesamte Erde, die Nordhalbkugel und die Südhalbkugel. Ruf diesen Endpunkt ab",
+        "Monatliche Meereisausdehnung seit 1979 für die gesamte Erde, die Nordhalbkugel und die Südhalbkugel. Rufen Sie diesen Endpunkt ab",
       ],
     },
     ocean: {
@@ -363,7 +372,7 @@ const de = {
           href: "https://journals.ametsoc.org/view/journals/bams/93/11/bams-d-11-00241.1.xml",
           text: "ICOADS",
         },
-        "). Er eignet sich für langfristige globale und regionale Studien und glättet lokale und kurzfristige Schwankungen. Ruf diesen Endpunkt ab",
+        "). Er eignet sich für langfristige globale und regionale Studien und glättet lokale und kurzfristige Schwankungen. Rufen Sie diesen Endpunkt ab",
       ],
     },
   },
@@ -381,6 +390,36 @@ const de = {
     nitrous: "Lachgas",
     extent: "Ausdehnung",
     ocean: "Ozeanerwärmung",
+    // Hinweise und Meldungen unter den Diagrammen (components/charts/*).
+    dataError:
+      "Beim Abrufen der Diagrammdaten ist ein Fehler aufgetreten. Bitte versuchen Sie es in einigen Minuten erneut. Falls der Fehler bestehen bleibt, melden Sie ihn uns bitte über unser Kontaktformular. Vielen Dank.",
+    loadError:
+      "Beim Laden des Diagramms ist ein Fehler aufgetreten. Bitte melden Sie ihn uns über unser Kontaktformular. Vielen Dank.",
+    loadErrorArctic:
+      "Beim Laden des Diagramms ist ein Fehler aufgetreten. Falls das Problem bestehen bleibt, melden Sie es uns bitte über unser Kontaktformular. Vielen Dank.",
+    months: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+    source: "Quelle:",
+    title: "Titel:",
+    basePeriod: "Referenzzeitraum:",
+    dataSource: "Datenquelle:",
+    temperatureSourceModern: "Quelle der Daten von 1880 bis heute:",
+    temperatureSourceAncient: "Quelle der Daten vom Jahr 1 bis 1979:",
+    co2LiveSource:
+      "Für die letzten 10 Jahre bis heute wird die Kohlendioxidkonzentration nahezu täglich am Mauna-Loa-Observatorium gemessen. Quelle: Ed Dlugokencky und Pieter Tans, NOAA/GML (",
+    co2RecentLiveSource:
+      "Für die letzten 10 Jahre bis heute wird die Kohlendioxidkonzentration nahezu täglich am Mauna-Loa-Observatorium gemessen. Quelle: Ed Dlugokencky und Pieter Tans, NOAA/GML (",
+    co2PrehistoricSource: "Datenquelle: vor 800.000 Jahren bis 2021",
+    methaneModernSource: "Datenquelle von 1983 bis heute:",
+    methaneAncientSource: "Datenquelle von vor 800.000 Jahren bis 1983:",
+    methaneMonthly: "Ab 1983.07 werden diese Daten monatlich erhoben",
+    nitrousAncientSource: "Datenquelle von vor 800.000 Jahren bis 2001:",
+    nitrousModernSource: "2001 bis heute:",
+    nitrousMonthly: "Ab 2001.01 werden die Daten monatlich erhoben",
+    arcticTitle: "Globale Meereisausdehnung 1979–2024 (monatlich)",
+    oceanNote:
+      "Hinweis: Globale und hemisphärische Anomalien beziehen sich auf den Durchschnitt der Jahre 1901–2000.",
+    oceanCitation:
+      "NOAA National Centers for Environmental Information, Climate at a Glance: Global Time Series, veröffentlicht im Januar 2023, abgerufen am 19. Januar 2023 von",
   },
 
   // One namespace per page, each in its own file under locales/de/.

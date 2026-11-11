@@ -8,7 +8,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
-import { useT } from "../../lib/i18n";
+import { useLocale, useT } from "../../lib/i18n";
+import { localizedPath } from "../../lib/i18n-config";
 
 function CountUp({ end, duration, showPlus, isVisible, numberLocale }) {
   const [count, setCount] = useState(0);
@@ -107,6 +108,7 @@ FactCard.defaultProps = {
 
 export default function FactsSection() {
   const t = useT().about.achievements;
+  const locale = useLocale();
   const facts = [
     { value: 80000, label: t.devices, showPlus: true },
     { value: 350000, label: t.apiRequests, showPlus: true },
@@ -160,7 +162,12 @@ export default function FactsSection() {
         </Grid>
       </Container>
       <Container align="center" sx={{ position: "relative", zIndex: 1, marginTop: "40px", marginBottom: "64px" }}>
-        <Link  underline="hover" href="/traffic" className="link-to-traffic">
+        <Link
+          underline="hover"
+          // MUI Link renders a plain <a>, which doesn't add the locale prefix.
+          href={localizedPath("/traffic", locale)}
+          className="link-to-traffic"
+        >
           {t.learnMore}
         </Link>
       </Container>

@@ -21,6 +21,10 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 import { useT } from "../../lib/i18n";
+import { proxyArticleImages } from "../../lib/news-image";
+
+const GLAD_MAP_URL =
+  "https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;";
 
 function SemanticDeforestation(props) {
   const copy = useT().deforestation;
@@ -62,7 +66,7 @@ function SemanticDeforestation(props) {
         (t) => t.description === thing.description || t.title === thing.title
       )
   );
-  const websiteUrl = "https://www.global-warming.org/deforestation";
+  const websiteUrl = "https://global-warming.org/deforestation";
 
   return (
     <>
@@ -149,16 +153,40 @@ function SemanticDeforestation(props) {
           </Typography>
           <Grid xs="auto">
             <Container>
-              <Container
-                className="deforestation-iframe"
-                component="iframe"
-                frameBorder="0"
-                src="https://glad.earthengine.app/view/global-forest-change#dl=1;old=off;bl=off;lon=20;lat=10;zoom=3;"
-                loading="lazy"
-              />
+              {/* A static capture instead of the embedded Earth Engine app:
+                  the embed sent every visitor's IP address to Google on page
+                  load. The interactive map opens on Google's site only when
+                  the visitor follows the link. */}
+              <a
+                href={GLAD_MAP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="deforestation-map-link"
+              >
+                <img
+                  src="/images/forest-loss-map.webp"
+                  alt={copy.mapAlt}
+                  width="1568"
+                  height="663"
+                  loading="lazy"
+                  className="deforestation-map-image"
+                />
+              </a>
             </Container>
             <Container align="center">
-              <span>{copy.mapCredits}</span>
+              <Button
+                variant="outlined"
+                href={GLAD_MAP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="deforestation-map-button"
+              >
+                {copy.openMap}
+              </Button>
+              <p>{copy.mapCredits}</p>
+              <p className="deforestation-map-attribution">
+                {copy.mapAttribution}
+              </p>
             </Container>
             <Container className="deforestation-text">
               {copy.mapParagraphs.map((text) => (
@@ -436,12 +464,18 @@ export async function getServerSideProps({ res, locale }) {
     axios.request("https://v3-api.newscatcherapi.com/api/search", options),
   ]);
   if (gNewsResult.status === "fulfilled") {
-    googleNewsParseJson = gNewsResult.value.data?.articles ?? [];
+    googleNewsParseJson = proxyArticleImages(
+      gNewsResult.value.data?.articles ?? [],
+      "image"
+    );
   } else {
     logFetchError("GNews", gNewsResult.reason);
   }
   if (newsCatcherResult.status === "fulfilled") {
-    newsCatcherParseJson = newsCatcherResult.value.data?.articles ?? [];
+    newsCatcherParseJson = proxyArticleImages(
+      newsCatcherResult.value.data?.articles ?? [],
+      "media"
+    );
   } else {
     logFetchError("NewsCatcher", newsCatcherResult.reason);
   }

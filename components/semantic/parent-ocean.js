@@ -5,7 +5,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Ocean from "../charts/ocean";
 import { AccordionTemp, AccordionShare, AccordionOcean } from "./accordion";
 import RichText from "./richText";
-import { useT } from "../../lib/i18n";
+import { useLocale, useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { Container, Grid, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
@@ -19,6 +20,8 @@ const theme = createTheme({
 
 function ParentOcean() {
   const t = useT();
+  const locale = useLocale();
+  const decimal = useLocalizedDecimal();
   const [todayValue, setTodayValue] = useState("0");
   const [description, setDescription] = useState({});
   const [oceanLoading, setOceanLoading] = useState(false);
@@ -60,7 +63,7 @@ function ParentOcean() {
           <Container align="center" className="today-value">
             <p>
               {t.common.todayValue}
-              <span> {todayValue ? todayValue : 0 + " °C"}</span>
+              <span> {todayValue ? decimal(todayValue) : 0 + " °C"}</span>
             </p>
           </Container>
           <Container>
@@ -79,7 +82,14 @@ function ParentOcean() {
               justifyContent="space-around"
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionOcean props={description?.title ? description?.title : t.ocean.apiTitleFallback} />
+                {/* NOAA's title is English only, so German pages use the dictionary's. */}
+                <AccordionOcean
+                  props={
+                    locale !== "de" && description?.title
+                      ? description.title
+                      : t.ocean.apiTitleFallback
+                  }
+                />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />

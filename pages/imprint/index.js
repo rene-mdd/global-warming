@@ -22,7 +22,7 @@ function Imprint() {
   const locale = useLocale();
   // MUI Link renders a plain <a>, which doesn't add the locale prefix.
   const contactHref = localizedPath("/contact", locale);
-  const websiteUrl = "https://www.global-warming.org/imprint";
+  const websiteUrl = "https://global-warming.org/imprint";
 
   return (
     <>

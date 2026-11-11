@@ -8,6 +8,8 @@ const esg = {
     title: "Offene ESG-Daten zu Unternehmen",
     description:
       "Offene, belegbare ESG-Daten zu Unternehmen: Klimabilanz, Umweltauswirkungen, soziale Praktiken und Unternehmensführung. Unser Ziel ist es, Informationen über Unternehmen transparent und öffentlich zugänglich zu machen.",
+    keywords:
+      "Erderwärmung, Umwelt, Auswirkungen, Umweltverschmutzung, Klimawandel, Unternehmen, ESG, ESG-Daten, offene ESG-Daten",
   },
   heading: "ESG-Daten von Unternehmen",
   iconAlt: "Statistik",
@@ -33,7 +35,7 @@ const esg = {
   accessData: "Zugang zu den Daten:",
   login: "Anmelden / Registrieren",
   fetchError:
-    "Beim Abrufen der Informationen ist ein Fehler aufgetreten. Falls das Problem bestehen bleibt, kontaktiere uns bitte.",
+    "Beim Abrufen der Informationen ist ein Fehler aufgetreten. Falls das Problem bestehen bleibt, kontaktieren Sie uns bitte.",
 };
 
 export default esg;

@@ -21,16 +21,14 @@ const theme = createTheme({
 
 function Donate() {
   const t = useT().donate;
-  const donateKeywords =
-    "Global warming, about, carbon footprint, climate change, environment";
-  const websiteUrl = "https://www.global-warming.org/donate";
+  const websiteUrl = "https://global-warming.org/donate";
 
   return (
     <>
       <SiteHeader
         description={t.meta.description}
         title={t.meta.title}
-        keywords={donateKeywords}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />

@@ -2,11 +2,11 @@
 //
 // Built from dummy.js rather than copied, so scores, logos, sources and
 // every other non-prose field can never drift from the English data. Only
-// `additional_details.value` differs: it's the one prose field the ESG
-// page renders (`services.value` is an unrendered placeholder, source titles
-// are URLs, `products_services` is a list of product names). Keyed by
-// company title; tests/i18n.test.js fails if a company has no translation
-// or if a translation's HTML tags differ from the English ones.
+// `additional_details.value` differs, plus `products_services` where the
+// English list is generic words rather than product names (Adidas):
+// `services.value` is an unrendered placeholder and source titles are URLs.
+// Keyed by company title; tests/i18n.test.js fails if a company has no
+// translation or if a translation's HTML tags differ from the English ones.
 
 import businessData from "./dummy";
 
@@ -24,6 +24,14 @@ export const GERMAN_DETAILS = {
     "Adidas hat sich verpflichtet, bis 2025 im eigenen Geschäftsbetrieb klimaneutral zu werden (THG – Treibhausgase) und die absoluten THG-Emissionen entlang der gesamten Wertschöpfungskette bis 2030 um 30 % gegenüber dem Basisjahr 2017 zu senken. Eine offizielle Zusage zu Netto-Null-Emissionen gibt es aber noch nicht.<br><br>Adidas gibt an, die kombinierten Nettoemissionen „kumuliert“ um 55 % gesenkt zu haben. Eine unabhängige Quelle, die das bestätigt, gibt es jedoch nicht.<br><br>Das Unternehmen bietet einen CO2-armen Laufschuh namens Futurecraft an.<br><br>Außerdem gibt es Schuhe aus recyceltem, aus dem Meer geborgenem Plastikmüll, die Parley-Schuhe.<br><br>Der Futurecraft Loop besteht zu 100 % aus recycelbarem TPU.",
 };
 
+// Brand and technology names (Boost, Primeknit, GORE-TEX) stay as they are.
+export const GERMAN_PRODUCTS = {
+  "Apple Inc.":
+    "iPhone, iPad, Mac (MacBook Air, MacBook Pro, iMac, Mac mini, Mac Studio, Mac Pro), Apple Watch, AirPods, Apple Vision Pro, Apple TV, HomePod, AirTag, Zubehör, App Store, Apple Music, Apple TV+, Apple Arcade, Apple News+, Apple Fitness+, Apple One, iCloud+, Apple Pay, Apple Card, AppleCare, iOS, iPadOS, macOS, watchOS, visionOS",
+  "Adidas AG":
+    "Schuhe, Laufschuhe, Trainingsschuhe, Lifestyle-Schuhe (Originals), sportartspezifische Schuhe (z. B. Fußball, Basketball), Bekleidung, Trainingsbekleidung (Shorts, Leggings, Oberteile), Lifestyle-Bekleidung (Hoodies, Jacken), sportartspezifische Bekleidung (z. B. Fußballtrikots, Basketballuniformen), Accessoires, Mützen, Socken, Taschen (z. B. Turnbeutel), Sportausrüstung (z. B. Bälle, Handschuhe), Kooperationen und Sonderkollektionen, Adidas by Stella McCartney, limitierte Editionen, Signature-Kollektionen von Athleten, Technologien, Boost, Primeknit, GORE-TEX.",
+};
+
 const businessDataDe = businessData.map((company) => {
   const { attributes } = company.row;
   return {
@@ -32,6 +40,8 @@ const businessDataDe = businessData.map((company) => {
       ...company.row,
       attributes: {
         ...attributes,
+        products_services:
+          GERMAN_PRODUCTS[attributes.title] ?? attributes.products_services,
         additional_details: {
           ...attributes.additional_details,
           value:

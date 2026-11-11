@@ -420,10 +420,22 @@ nav {
   display: none !important;
 }
 
-.deforestation-iframe {
+.deforestation-map-link {
+  display: block;
+}
+
+.deforestation-map-image {
+  display: block;
   width: 100%;
-  height: 600px;
-  padding: 0;
+  height: auto;
+}
+
+.deforestation-map-button {
+  margin-top: 16px !important;
+}
+
+.deforestation-map-attribution {
+  font-size: 0.75rem;
 }
 
 .landing-page-logo {

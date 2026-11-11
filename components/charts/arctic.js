@@ -27,7 +27,7 @@ function Arctic({ parentCallBack }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -112,7 +112,7 @@ function Arctic({ parentCallBack }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error trying to load the graph. If the problem persists, please refer to our contact form and report it. Thank you."
+        t.loadErrorArctic
       );
     }
   };
@@ -134,14 +134,13 @@ function Arctic({ parentCallBack }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              <span>Title:</span> Global Sea Ice Extent 1979-2024 (on a monthly
-              basis)
+              <span>{t.title}</span> {t.arcticTitle}
             </p>
             <p>
-              <span>Base period:</span> 1991-2020
+              <span>{t.basePeriod}</span> 1991-2020
             </p>
             <p>
-              <span>Data source:</span> National Centers for Environmental
+              <span>{t.dataSource}</span> National Centers for Environmental
               Information:
               <a href="https://www.ncei.noaa.gov/access/monitoring/snow-and-ice-extent/sea-ice/G/0">
                 {" "}

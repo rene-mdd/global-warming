@@ -40,10 +40,16 @@ function formatValue(value, numberLocale) {
   return value.toLocaleString(numberLocale, { maximumFractionDigits: 2 });
 }
 
-function comparisonText({ comparison, baselineLabel }) {
+// German writes a (non-breaking) space before % and a decimal comma; English
+// keeps the API's number as is.
+function comparisonText({ comparison, baselineLabel }, numberLocale) {
   if (comparison === null || comparison === undefined) return baselineLabel;
   const arrow = comparison >= 0 ? "▲" : "▼";
-  return `${arrow} ${Math.abs(comparison)}% ${baselineLabel}`;
+  const amount = Math.abs(comparison);
+  const percent = numberLocale.startsWith("de")
+    ? `${amount.toLocaleString(numberLocale, { maximumFractionDigits: 20 })}\u00a0%`
+    : `${amount}%`;
+  return `${arrow} ${percent} ${baselineLabel}`;
 }
 
 function StatTile({ indicator, numberLocale }) {
@@ -135,7 +141,7 @@ function StatTile({ indicator, numberLocale }) {
         component="p"
         sx={{ fontSize: 12.5, lineHeight: 1.35, color: INK_SECONDARY, m: 0 }}
       >
-        {comparisonText(indicator)}
+        {comparisonText(indicator, numberLocale)}
       </Typography>
 
       {indicator.asOf && (

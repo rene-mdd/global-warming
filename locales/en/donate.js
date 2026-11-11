@@ -9,6 +9,8 @@ const donate = {
     title:
       "Our mission is to provide the public with information related to every organization carbon footprint",
     description: "Climate Accountability API - Donate",
+    keywords:
+      "Global warming, about, carbon footprint, climate change, environment",
   },
   heading: "Donate",
   paragraphs: [

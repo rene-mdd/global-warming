@@ -21,7 +21,7 @@ function Home() {
       <SiteHeader
         description={t.meta.home.description}
         title={t.meta.home.title}
-        keyword={t.meta.home.keywords}
+        keywords={t.meta.home.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />

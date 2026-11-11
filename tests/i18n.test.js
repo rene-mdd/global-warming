@@ -171,10 +171,13 @@ test("summary tiles: English is returned unchanged", () => {
   assert.deepEqual(localizeIndicator(indicator, "en", en.summary), indicator);
 });
 
-// public/data/dummy.de.js: German ESG data. Only the rendered prose field
+// public/data/dummy.de.js: German ESG data. Only the rendered prose fields
 // may differ from public/data/dummy.js; every other field must match so the
 // German page shows the same scores, logos and sources.
-const TRANSLATED_ESG_FIELD = "row.attributes.additional_details.value";
+const TRANSLATED_ESG_FIELDS = new Set([
+  "row.attributes.additional_details.value",
+  "row.attributes.products_services",
+]);
 
 /** Every leaf as [dotted path, value], array indexes included. */
 function leaves(value, path = "") {
@@ -193,10 +196,10 @@ test("ESG: German data matches the English data except the translated prose", as
   assert.equal(businessDe.length, business.length);
   business.forEach((company, i) => {
     const english = leaves(company).filter(
-      ([path]) => path !== TRANSLATED_ESG_FIELD
+      ([path]) => !TRANSLATED_ESG_FIELDS.has(path)
     );
     const german = leaves(businessDe[i]).filter(
-      ([path]) => path !== TRANSLATED_ESG_FIELD
+      ([path]) => !TRANSLATED_ESG_FIELDS.has(path)
     );
     assert.deepEqual(german, english);
   });

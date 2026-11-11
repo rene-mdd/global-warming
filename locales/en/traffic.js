@@ -22,6 +22,24 @@ const traffic = {
   noData: "No data yet",
   other: "Other",
   unknownCountry: "Unknown",
+  // Values the API sends in English (lib/ua-parse.js, lib/aggregate.js,
+  // lib/drain-parse.js); anything not listed is shown as sent.
+  valueLabels: {
+    Unknown: "Unknown",
+    unknown: "unknown",
+    Other: "Other",
+    "Bot / crawler": "Bot / crawler",
+    Bot: "Bot",
+    Desktop: "Desktop",
+    Mobile: "Mobile",
+    Tablet: "Tablet",
+  },
+  // `error` strings of the /api/drains/* endpoints.
+  apiErrors: {
+    unauthorized: "unauthorized",
+    "method not allowed": "method not allowed",
+    endpoint_not_configured: "endpoint_not_configured",
+  },
 
   ranges: {
     "1h": "1 hour",

@@ -6,6 +6,7 @@ import Arctic from "../charts/arctic";
 import { AccordionArctic, AccordionShare } from "./accordion";
 import RichText from "./richText";
 import { useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { arcticService } from "../../services/dataService";
 
 const theme = createTheme({
@@ -18,6 +19,7 @@ const theme = createTheme({
 
 function ParentArctic() {
   const t = useT();
+  const decimal = useLocalizedDecimal();
   const [arctic, setArctic] = useState(false);
   const [arcticLoading, setArcticLoading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
@@ -57,7 +59,7 @@ function ParentArctic() {
           <Container align="center" className="today-value">
             <p>
               {t.common.todayValue}
-              <span style={{ color: "#2c82c9" }}> {todayValue}</span>
+              <span style={{ color: "#2c82c9" }}> {decimal(todayValue)}</span>
             </p>
           </Container>
           <Container id="scrolling-container">

@@ -6,7 +6,9 @@ const donate = {
   meta: {
     title: "Spenden – Climate Accountability API",
     description:
-      "Unterstütze die Climate Accountability API: Wir machen Informationen über den CO2-Fußabdruck von Organisationen für alle öffentlich zugänglich.",
+      "Unterstützen Sie die Climate Accountability API: Wir machen Informationen über den CO2-Fußabdruck von Organisationen für alle öffentlich zugänglich.",
+    keywords:
+      "Erderwärmung, Spenden, CO2-Fußabdruck, Klimawandel, Umwelt",
   },
   heading: "Spenden",
   paragraphs: [

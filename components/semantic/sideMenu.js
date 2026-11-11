@@ -28,10 +28,9 @@ export default function SideBar() {
     <>
       <Container className="fix">
         <Grid container columns={1}>
-          <Button onClick={() => handleClick()}>
+          <Button onClick={() => handleClick()} aria-label={t.toggleAria}>
             <CardMedia
               className="side-menu-icon"
-              alt="rotate"
               image="/images/icons8-more-than-60.png"
               id={rotate ? "rotate-right" : "rotate-left"}
             />

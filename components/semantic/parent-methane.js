@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AccordionMethane, AccordionShare } from "./accordion";
 import RichText from "./richText";
 import { useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { methaneService } from "../../services/dataService";
 import {
   Container,
@@ -23,6 +24,7 @@ const theme = createTheme({
 
 function ParentMethane() {
   const t = useT();
+  const decimal = useLocalizedDecimal();
   const [methane, setMethane] = useState(false);
   const [methaneLoading, setMethaneLoading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
@@ -62,7 +64,7 @@ function ParentMethane() {
           <Container align="center" className="today-value">
             <p>
               {t.common.todayValue}
-              <span> {todayValue}</span>
+              <span> {decimal(todayValue)}</span>
             </p>
           </Container>
           <Container>

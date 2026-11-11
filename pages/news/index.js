@@ -21,6 +21,7 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 import { useT } from "../../lib/i18n";
+import { proxyArticleImages } from "../../lib/news-image";
 
 function News(props) {
   const copy = useT().news;
@@ -63,7 +64,7 @@ function News(props) {
       )
   );
 
-  const websiteUrl = "https://www.global-warming.org/news";
+  const websiteUrl = "https://global-warming.org/news";
 
   return (
     <>
@@ -387,12 +388,18 @@ export async function getServerSideProps({ res, locale }) {
     axios.request("https://v3-api.newscatcherapi.com/api/search", options),
   ]);
   if (gNewsResult.status === "fulfilled") {
-    googleNewsParseJson = gNewsResult.value.data?.articles ?? [];
+    googleNewsParseJson = proxyArticleImages(
+      gNewsResult.value.data?.articles ?? [],
+      "image"
+    );
   } else {
     logFetchError("GNews", gNewsResult.reason);
   }
   if (newsCatcherResult.status === "fulfilled") {
-    newsCatcherParseJson = newsCatcherResult.value.data?.articles ?? [];
+    newsCatcherParseJson = proxyArticleImages(
+      newsCatcherResult.value.data?.articles ?? [],
+      "media"
+    );
   } else {
     logFetchError("NewsCatcher", newsCatcherResult.reason);
   }

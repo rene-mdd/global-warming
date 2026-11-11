@@ -31,7 +31,7 @@ function Temperature() {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -44,23 +44,23 @@ function Temperature() {
     };
   }, []);
 
-  // Helper function to get month name from month number
+  // GISTEMP encodes months as hundredths of a year ("1880.04" = January).
   const getMonthName = (monthNumber) => {
-    const monthMap = {
-      "04": "Jan",
-      "13": "Feb",
-      "21": "Mar",
-      "29": "Apr",
-      "38": "May",
-      "46": "Jun",
-      "54": "Jul",
-      "63": "Aug",
-      "71": "Sept",
-      "79": "Oct",
-      "88": "Nov",
-      "96": "Dec",
+    const monthIndex = {
+      "04": 0,
+      "13": 1,
+      "21": 2,
+      "29": 3,
+      "38": 4,
+      "46": 5,
+      "54": 6,
+      "63": 7,
+      "71": 8,
+      "79": 9,
+      "88": 10,
+      "96": 11,
     };
-    return monthMap[monthNumber] || monthNumber;
+    return t.months[monthIndex[monthNumber]] || monthNumber;
   };
 
   const displayTempGraph = (commonEraData, temperatureLiveData) => {
@@ -137,7 +137,7 @@ function Temperature() {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+        t.dataError
       );
     }
   };
@@ -158,7 +158,7 @@ function Temperature() {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              <span>Source:</span> GISTEMP Team, 2020: GISS Surface Temperature
+              <span>{t.source}</span> GISTEMP Team, 2020: GISS Surface Temperature
               Analysis (GISTEMP), version 4. NASA Goddard Institute for Space
               Studies. Dataset accessed 20YY-MM-DD at
               <a href="https://data.giss.nasa.gov/gistemp/">
@@ -167,11 +167,11 @@ function Temperature() {
               .
             </p>
             <p>
-              <span>Source data 1880 - present:</span> Lenssen, N., G. Schmidt,
+              <span>{t.temperatureSourceModern}</span> Lenssen, N., G. Schmidt,
               J. Hansen, M. Menne, A. Persin, R. Ruedy, and D. Zyss, 2019:
               Improvements in the GISTEMP uncertainty model. J. Geophys. Res.
-              Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522. Source
-              data year 1 – 1979: &nbsp;
+              Atmos., 124, no. 12, 6307-6326, doi:10.1029/2018JD029522.{" "}
+              {t.temperatureSourceAncient} &nbsp;
               <a href="https://earthdata.nasa.gov/">
                 https://earthdata.nasa.gov/
               </a>

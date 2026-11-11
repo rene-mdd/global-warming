@@ -5,6 +5,8 @@ const esg = {
     title: "Open ESG Data on Companies",
     description:
       "Explore open, evidence-based ESG data on companies, including their climate performance, environmental impact, social practices, and governance. Our mission is to make corporate information transparent and accessible to the public.",
+    keywords:
+      "Global warming, environment, impact, pollution, climate change, business, ESG, Corporate ESG, Open ESG data",
   },
   heading: "Companies ESG data",
   iconAlt: "statistic",

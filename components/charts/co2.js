@@ -42,7 +42,7 @@ function Co2({ parentCallBack }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -121,7 +121,7 @@ function Co2({ parentCallBack }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+        t.loadError
       );
     }
   };
@@ -143,16 +143,14 @@ function Co2({ parentCallBack }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              From 10 years ago to present, the measurements of carbon dioxide
-              concentrations are measured on a quasi daily basis by Mauna Loa
-              Observatory. Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (
+              {t.co2LiveSource}
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
                 <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
               </a>
               )
             </p>
             <p>
-              Data source: 800,000 years ago to 2021
+              {t.co2PrehistoricSource}
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 <em>
                   {" "}

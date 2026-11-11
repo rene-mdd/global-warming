@@ -4,37 +4,39 @@ const contact = {
   meta: {
     title: "Kontakt – Climate Accountability API",
     description:
-      "Du hast Vorschläge zu diesem Projekt über die Erderwärmung oder möchtest Ideen zu Umweltthemen besprechen? Schreib uns über dieses Kontaktformular.",
+      "Sie haben Vorschläge zu diesem Projekt über die Erderwärmung oder möchten Ideen zu Umweltthemen besprechen? Schreiben Sie uns über dieses Kontaktformular.",
+    keywords:
+      "Erderwärmung, Klimawandel, Climate Accountability, Kontakt",
   },
   heading: "Kontakt",
   imageAlt: "Bild der Erde",
-  inquiries: "Für Anfragen erreichst du uns unter",
+  inquiries: "Für Anfragen erreichen Sie uns unter",
   form: {
     name: "Name",
     email: "E-Mail",
     subject: "Betreff",
-    message: "Deine Nachricht",
+    message: "Ihre Nachricht",
     submit: "Absenden",
   },
   recaptchaConsent: {
-    text: "Zum Schutz vor Spam nutzt dieses Formular Google reCAPTCHA. Dabei werden Daten wie deine IP-Adresse an Google übermittelt. reCAPTCHA wird nur mit deiner Einwilligung geladen; Details findest du in unserer",
+    text: "Zum Schutz vor Spam nutzt dieses Formular Google reCAPTCHA. Dabei werden Daten wie Ihre IP-Adresse an Google übermittelt. reCAPTCHA wird nur mit Ihrer Einwilligung geladen; Details finden Sie in unserer",
     privacyLink: "Datenschutzerklärung",
-    alternative: "Du kannst uns auch direkt schreiben:",
+    alternative: "Sie können uns auch direkt schreiben:",
     allow: "Google reCAPTCHA erlauben",
   },
   status: {
-    sent: "Deine E-Mail wurde gesendet.",
+    sent: "Ihre E-Mail wurde gesendet.",
     thanks: "Vielen Dank!",
     errorTitle: "Leider ist ein Fehler aufgetreten",
     recaptchaMissing:
-      "reCAPTCHA wurde nicht geladen. Bitte lade die Seite neu und versuche es noch einmal.",
-    recaptchaIncomplete: "Bitte schließe die reCAPTCHA-Prüfung ab.",
+      "reCAPTCHA wurde nicht geladen. Bitte laden Sie die Seite neu und versuchen Sie es noch einmal.",
+    recaptchaIncomplete: "Bitte schließen Sie die reCAPTCHA-Prüfung ab.",
     success:
-      "Danke für deine Nachricht! Wir melden uns so bald wie möglich bei dir.",
+      "Danke für Ihre Nachricht! Wir melden uns so bald wie möglich bei Ihnen.",
     failed:
-      "Deine Nachricht konnte nicht gesendet werden. Bitte versuche es später noch einmal.",
+      "Ihre Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es später noch einmal.",
     unexpected:
-      "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es später noch einmal.",
+      "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später noch einmal.",
   },
 };
 

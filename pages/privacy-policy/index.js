@@ -27,7 +27,7 @@ function PrivacyPolicy() {
   const id = open ? "simple-popper" : undefined;
   const t = useT().privacy;
   const locale = useLocale();
-  const websiteUrl = "https://www.global-warming.org/privacy-policy";
+  const websiteUrl = "https://global-warming.org/privacy-policy";
 
   // German version: a statement-for-statement translation of this page.
   if (locale === "de") return <PrivacyPolicyDe websiteUrl={websiteUrl} />;
@@ -128,7 +128,7 @@ function PrivacyPolicy() {
             consult our Data Protection Declaration below.
           </Typography>
           <Typography component="h2" mb={4} mt={4}>
-            2. Hosting and Content Delivery Networks (CDN)
+            2. Hosting
           </Typography>
           <Typography component="p">
             We are hosting the content of our website at the following provider:
@@ -725,19 +725,19 @@ function PrivacyPolicy() {
             <Typography variant="body1" paragraph>
               We publish aggregated statistics on the use of our APIs at{" "}
               <Link
-                href="https://www.global-warming.org/traffic"
+                href="https://global-warming.org/traffic"
                 target="_blank"
                 rel="noopener"
               >
-                https://www.global-warming.org/traffic
+                https://global-warming.org/traffic
               </Link>{" "}
               (also available in German) and at{" "}
               <Link
-                href="https://www.global-warming.org/logs"
+                href="https://global-warming.org/logs"
                 target="_blank"
                 rel="noopener"
               >
-                https://www.global-warming.org/logs
+                https://global-warming.org/logs
               </Link>
               . These pages are accessible without a login, and also show the
               daily summaries described under &quot;Storage duration&quot;
@@ -1059,8 +1059,9 @@ function PrivacyPolicy() {
           </Typography>
           <Typography component="h3">Google Fonts (local embedding)</Typography>{" "}
           <Typography component="p">
-            This website uses so-called Google Fonts provided by Google to
-            ensure the uniform use of fonts on this site. These Google fonts are
+            This website uses the font &ldquo;Play&rdquo; from Google Fonts,
+            provided by Google, to ensure the uniform use of fonts on this
+            site. This font is
             locally installed so that a connection to Google&rsquo;s servers
             will not be established in conjunction with this application.
           </Typography>{" "}
@@ -1106,8 +1107,10 @@ function PrivacyPolicy() {
             a donation receipt.
           </Typography>{" "}
           <Typography component="p">
-            The processing is based on Art. 6(1)(b) GDPR (handling your
-            donation) and, where we are legally required to keep records, for
+            The connection made when the donation page loads is based on our
+            legitimate interest in offering a simple way to donate online (Art.
+            6(1)(f) GDPR). Processing your donation is based on Art. 6(1)(b)
+            GDPR (handling your donation) and, where we are legally required to keep records, for
             example for tax purposes, on Art. 6(1)(c) GDPR. For more
             information, please see twingle&rsquo;s privacy policy:{" "}
             <Link

@@ -19,7 +19,7 @@ const theme = createTheme({
 
 function Traffic() {
   const t = useT().traffic;
-  const websiteUrl = "https://www.global-warming.org/traffic";
+  const websiteUrl = "https://global-warming.org/traffic";
 
   return (
     <>

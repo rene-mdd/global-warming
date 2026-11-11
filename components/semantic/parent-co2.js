@@ -8,6 +8,7 @@ import Co2Recent from "../charts/co2Recent";
 import { AccordionCo2, AccordionShare } from "./accordion";
 import RichText from "./richText";
 import { useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { co2Service } from "../../services/dataService";
 
 const theme = createTheme({
@@ -20,6 +21,7 @@ const theme = createTheme({
 
 function ParentCo2() {
   const t = useT();
+  const decimal = useLocalizedDecimal();
   const [co2, setCo2] = useState(false);
   const [co2Prehistoric, setCo2Prehistoric] = useState(false);
   const [co2recent, setCo2Recent] = useState(false);
@@ -73,7 +75,7 @@ function ParentCo2() {
                   variant="contained"
                   sx={{ mt: 2 }}
                 >
-                  {co2Prehistoric ? t.common.hideGraph : "-800,000 - 2009"}
+                  {co2Prehistoric ? t.common.hideGraph : t.co2.prehistoricRange}
                 </LoadingButton>
               </Grid>
               <Grid
@@ -89,7 +91,7 @@ function ParentCo2() {
                   variant="contained"
                   sx={{ mt: 2 }}
                 >
-                  {co2 ? t.common.hideGraph : "-800,000 - present"}
+                  {co2 ? t.common.hideGraph : t.co2.fullRange}
                 </LoadingButton>
               </Grid>
               <Grid
@@ -117,7 +119,7 @@ function ParentCo2() {
           <Container align="center" className="today-value">
             <p>
               {t.common.todayValue}
-              <span> {todayValue}</span>
+              <span> {decimal(todayValue)}</span>
             </p>
           </Container>
           <Container>

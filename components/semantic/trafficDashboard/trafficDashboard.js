@@ -365,7 +365,7 @@ export default function TrafficDashboard() {
       })
       .catch((err) => {
         if (cancelled) return;
-        setStatsError(err.message);
+        setStatsError(t.apiErrors[err.message] ?? err.message);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -428,7 +428,7 @@ export default function TrafficDashboard() {
       })
       .catch((err) => {
         if (cancelled) return;
-        setEventsError(err.message);
+        setEventsError(t.apiErrors[err.message] ?? err.message);
       });
     return () => {
       cancelled = true;
@@ -482,6 +482,8 @@ export default function TrafficDashboard() {
     if (!code) return t.unknownCountry;
     return `${countryFlag(code)} ${localizedCountryName(code, fmt)}`.trim();
   };
+  // Browser, OS, device, source and the "Other" row arrive as English words.
+  const valueLabel = (value) => t.valueLabels[value] ?? value;
   // /esg is a plain MUI <a>, so the locale prefix is added by hand.
   const esgLocale = linkLocale("/esg", locale);
   const esgHref = esgLocale === DEFAULT_LOCALE ? "/esg" : `/${esgLocale}/esg`;
@@ -844,33 +846,39 @@ export default function TrafficDashboard() {
               subtitle={t.breakdowns.route.sub}
               rows={breakdowns.route}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             <BreakdownPanel
               title={t.breakdowns.browser.title}
               subtitle={t.breakdowns.browser.sub}
               rows={breakdowns.browser}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             <BreakdownPanel
               title={t.breakdowns.os.title}
               rows={breakdowns.os}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             <BreakdownPanel
               title={t.breakdowns.device.title}
               rows={breakdowns.device}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             <BreakdownPanel
               title={t.breakdowns.method.title}
               rows={breakdowns.method}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             <BreakdownPanel
               title={t.breakdowns.statusCode.title}
               subtitle={t.breakdowns.statusCode.sub}
               rows={breakdowns.statusCode}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             {!publicMode && (
               <BreakdownPanel
@@ -878,24 +886,28 @@ export default function TrafficDashboard() {
                 subtitle={t.breakdowns.clientIp.sub}
                 rows={breakdowns.clientIp}
                 hue={magnitudeHue}
+                formatLabel={valueLabel}
               />
             )}
             <BreakdownPanel
               title={t.breakdowns.host.title}
               rows={breakdowns.host}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             <BreakdownPanel
               title={t.breakdowns.source.title}
               subtitle={t.breakdowns.source.sub}
               rows={breakdowns.source}
               hue={magnitudeHue}
+              formatLabel={valueLabel}
             />
             {!publicMode && (
               <BreakdownPanel
                 title={t.breakdowns.referer.title}
                 rows={breakdowns.referer}
                 hue={magnitudeHue}
+                formatLabel={valueLabel}
               />
             )}
           </div>
@@ -1043,9 +1055,9 @@ export default function TrafficDashboard() {
                       <TableCell>
                         <Tooltip title={event.userAgent ?? ""} enterDelay={500}>
                           <span>
-                            {event.browser ?? "—"}
+                            {event.browser ? valueLabel(event.browser) : "—"}
                             {event.os && event.os !== "Unknown"
-                              ? ` / ${event.os}`
+                              ? ` / ${valueLabel(event.os)}`
                               : ""}
                           </span>
                         </Tooltip>
@@ -1062,7 +1074,7 @@ export default function TrafficDashboard() {
                         <Chip
                           size="small"
                           variant="outlined"
-                          label={event.source ?? "?"}
+                          label={event.source ? valueLabel(event.source) : "?"}
                         />
                       </TableCell>
                       <TableCell className={styles.mono}>

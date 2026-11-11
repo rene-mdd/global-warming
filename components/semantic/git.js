@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
-import { Octokit } from "octokit";
 import { useT } from "../../lib/i18n";
 
 const theme = createTheme({
@@ -29,12 +28,8 @@ const theme = createTheme({
 function Git() {
   const t = useT().about.git;
   function parseDate(commitDate) {
-    const year = dayjs(commitDate).get("year");
-    const month = dayjs(commitDate).get("month") + 1;
-    const day = dayjs(commitDate).get("date");
-    const hour = dayjs(commitDate).get("hour");
-    const minutes = dayjs(commitDate).get("minute");
-    return `${year}-${month}-${day} ${t.at} ${hour}:${minutes}`;
+    const date = dayjs(commitDate);
+    return `${date.format("YYYY-MM-DD")} ${t.at} ${date.format("HH:mm")}`;
   }
 
   const [commitsPages, setCommit] = useState(13);
@@ -42,30 +37,22 @@ function Git() {
   const [loadingCommits, setloadingCommits] = useState(false);
   useEffect(() => {
     async function fetchCommits() {
-      const GithubToken = process.env.API_GITHUB;
-      const octokit = new Octokit({ auth: GithubToken });
       try {
         if (commitsPages > 0) {
           setloadingCommits(true);
-          const response = await octokit.paginate(
-            "GET /repos/rene-mdd/global-warming/commits",
-            {
-              owner: "rene-mdd",
-              repo: "global-warming",
-              per_page: 30,
-              page: commitsPages,
-              headers: {
-                "X-GitHub-Api-Version": "2022-11-28",
-              },
-            }
+          // Fetched through our own API route, so the visitor's browser never
+          // contacts GitHub (see pages/api/github-commits.js).
+          const response = await fetch(
+            `/api/github-commits?page=${commitsPages}`
           );
-          if (response) {
-            setGitResp(() => [...response].reverse());
-            setloadingCommits(false);
-          }
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const commits = await response.json();
+          setGitResp(() => [...commits].reverse());
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setloadingCommits(false);
       }
     }
     fetchCommits();

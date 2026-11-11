@@ -10,16 +10,14 @@ import { useLocale, useT } from "../../lib/i18n";
 function Business() {
   const t = useT().esg;
   const companies = useLocale() === "de" ? businessDe : business;
-  const websiteUrl = "https://www.global-warming.org/esg";
-  const aboutKeywords =
-    "Global warming, environment, impact, pollution, climate change, business, ESG, Corporate ESG, Open ESG data";
+  const websiteUrl = "https://global-warming.org/esg";
 
   return (
     <>
       <SiteHeader
         description={t.meta.description}
         title={t.meta.title}
-        keywords={aboutKeywords}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />

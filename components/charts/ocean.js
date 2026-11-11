@@ -104,7 +104,7 @@ function Ocean({ parentCallBack }) {
       }
     } catch (error) {
       setGraphError(
-        "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+        t.dataError
       );
       console.error(error);
     }
@@ -123,16 +123,14 @@ function Ocean({ parentCallBack }) {
             sx={{ marginTop: "-5px" }}
           >
             <p>
-              Please note, global and hemispheric anomalies are with respect to
-              the 1901-2000 average.
+              {t.oceanNote}
             </p>
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              <span>Source: </span>NOAA National Centers for Environmental
-              information, Climate at a Glance: Global Time Series, published
-              January 2023, retrieved on January 19, 2023 from &nbsp;
+              <span>{t.source} </span>
+              {t.oceanCitation} &nbsp;
               <a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series">
                 <em>
                   https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series
@@ -140,7 +138,7 @@ function Ocean({ parentCallBack }) {
               </a>
             </p>
             <p>
-              <span>Base period: </span>1901-2000
+              <span>{t.basePeriod} </span>1901-2000
             </p>
           </Container>
         </Grid>

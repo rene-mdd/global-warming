@@ -18,8 +18,6 @@ const about = {
       after:
         " entwickeln wir offene digitale Infrastruktur für vertrauenswürdige Nachhaltigkeits- und Umweltdaten – mit Expertise in APIs, Interoperabilität, Data Governance, Metadaten, den FAIR-Prinzipien und digitalen Plattformen. Unser Ziel ist die weltweit umfassendste, transparenteste und zugänglichste Plattform für ESG- und Klimadaten.",
     },
-    co2CounterTitle: "In die Atmosphäre ausgestoßene Tonnen CO2",
-    temperatureCounterTitle: "Weltweite Durchschnittstemperatur (°C)",
     scrollAlt: "zum nächsten Abschnitt",
   },
 
@@ -71,7 +69,7 @@ const about = {
   },
 
   team: {
-    heading: "Werde Teil unserer Organisation",
+    heading: "Werden Sie Teil unserer Organisation",
     description:
       "Die sozialen und ökologischen Auswirkungen jedes Unternehmens müssen offengelegt werden.",
     pictureAlt: "Foto eines Teammitglieds",
@@ -88,7 +86,7 @@ const about = {
       "08": "Data Science",
       "09": "Fundraising / Förderanträge",
       "10": "Fundraising",
-      "11": "Mach mit",
+      "11": "Machen Sie mit",
     },
     openPosition: "Teammitglied",
   },
@@ -106,7 +104,7 @@ const about = {
 
   transparency: {
     title: "Transparenz",
-    text: "Dieses Projekt begann am 18. Juni 2020 als Nebenprojekt. Nachdem es weltweit viel Aufmerksamkeit und intensive Nutzung erfahren hatte, wurde es am 28. Juni 2023 in Berlin offiziell als juristische Person eingetragen. Auf dieser Seite kannst du verschiedene Dokumente zu unserer Rechtsform, unseren Finanzen, unseren Governance-Richtlinien und weiteren relevanten Themen einsehen und anfordern. Wenn du weitere Informationen brauchst oder konkrete Fragen hast, melde dich gern bei uns.",
+    text: "Dieses Projekt begann am 18. Juni 2020 als Nebenprojekt. Nachdem es weltweit viel Aufmerksamkeit und intensive Nutzung erfahren hatte, wurde es am 28. Juni 2023 in Berlin offiziell als juristische Person eingetragen. Auf dieser Seite können Sie verschiedene Dokumente zu unserer Rechtsform, unseren Finanzen, unseren Governance-Richtlinien und weiteren relevanten Themen einsehen und anfordern. Wenn Sie weitere Informationen brauchen oder konkrete Fragen haben, melden Sie sich gern bei uns.",
     financialStatements: "Jahresabschluss:",
     articlesOfAssociation: "Satzung:",
     download: "Herunterladen",

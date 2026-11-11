@@ -45,62 +45,63 @@ import {
 } from "react-share";
 
 import RichText from "./richText";
-import { useT } from "../../lib/i18n";
+import { useLocale, useT } from "../../lib/i18n";
 
-const share = [
-  <FacebookShareButton url="https://global-warming.org/" key="facebook">
+// Shares the home page in the language the visitor is reading.
+const shareButtons = (url) => [
+  <FacebookShareButton url={url} key="facebook">
     <FacebookIcon size={50} borderRadius={5} />
   </FacebookShareButton>,
-  <EmailShareButton url="https://global-warming.org/" key="email">
+  <EmailShareButton url={url} key="email">
     <EmailIcon size={50} borderRadius={5} />
   </EmailShareButton>,
-  <InstapaperShareButton url="https://global-warming.org/" key="instagram">
+  <InstapaperShareButton url={url} key="instagram">
     <InstapaperIcon size={50} borderRadius={5} />
   </InstapaperShareButton>,
-  <LineShareButton url="https://global-warming.org/" key="line">
+  <LineShareButton url={url} key="line">
     <LineIcon size={50} borderRadius={5} />
   </LineShareButton>,
-  <LinkedinShareButton url="https://global-warming.org/" key="linkedin">
+  <LinkedinShareButton url={url} key="linkedin">
     <LinkedinIcon size={50} borderRadius={5} />
   </LinkedinShareButton>,
-  <LivejournalShareButton url="https://global-warming.org/" key="liveJournal">
+  <LivejournalShareButton url={url} key="liveJournal">
     <LivejournalIcon size={50} borderRadius={5} />
   </LivejournalShareButton>,
-  <MailruShareButton url="https://global-warming.org/" key="mailRu">
+  <MailruShareButton url={url} key="mailRu">
     <MailruIcon size={50} borderRadius={5} />
   </MailruShareButton>,
-  <OKShareButton url="https://global-warming.org/" key="ok">
+  <OKShareButton url={url} key="ok">
     <OKIcon size={50} borderRadius={5} />
   </OKShareButton>,
   <PinterestShareButton
     media="https://global-warming.org/api/chart-img/tempChart.jpeg"
-    url="https://global-warming.org/"
+    url={url}
     key="pinterest"
   >
     <PinterestIcon size={50} borderRadius={5} />
   </PinterestShareButton>,
-  <PocketShareButton url="https://global-warming.org/" key="pocket">
+  <PocketShareButton url={url} key="pocket">
     <PocketIcon size={50} borderRadius={5} />
   </PocketShareButton>,
-  <RedditShareButton url="https://global-warming.org/" key="reddit">
+  <RedditShareButton url={url} key="reddit">
     <RedditIcon size={50} borderRadius={5} />
   </RedditShareButton>,
-  <TumblrShareButton url="https://global-warming.org/" key="tumblr">
+  <TumblrShareButton url={url} key="tumblr">
     <TumblrIcon size={50} borderRadius={5} />
   </TumblrShareButton>,
-  <TwitterShareButton url="https://global-warming.org/" key="twitter">
+  <TwitterShareButton url={url} key="twitter">
     <TwitterIcon size={50} borderRadius={5} />
   </TwitterShareButton>,
-  <ViberShareButton url="https://global-warming.org/" key="viber">
+  <ViberShareButton url={url} key="viber">
     <ViberIcon size={50} borderRadius={5} />
   </ViberShareButton>,
-  <VKShareButton url="https://global-warming.org/" key="vk">
+  <VKShareButton url={url} key="vk">
     <VKIcon size={50} borderRadius={5} />
   </VKShareButton>,
-  <WhatsappShareButton url="https://global-warming.org/" key="whatsapp">
+  <WhatsappShareButton url={url} key="whatsapp">
     <WhatsappIcon size={50} borderRadius={5} />
   </WhatsappShareButton>,
-  <TelegramShareButton url="https://global-warming.org/" key="telegram">
+  <TelegramShareButton url={url} key="telegram">
     <TelegramIcon size={50} borderRadius={5} />
   </TelegramShareButton>,
 ];
@@ -331,6 +332,9 @@ const AccordionOcean = (props) => {
 
 const AccordionShare = () => {
   const t = useT().api;
+  const locale = useLocale();
+  const url =
+    locale === "de" ? "https://global-warming.org/de" : "https://global-warming.org/";
   return (
   <Accordion>
     <AccordionSummary
@@ -341,7 +345,7 @@ const AccordionShare = () => {
       <Typography sx={{ fontSize: "22px", color: "white" }}>{t.share}</Typography>
     </AccordionSummary>
     <AccordionDetails>
-      {share.map((social) => {
+      {shareButtons(url).map((social) => {
         return social;
       })}
     </AccordionDetails>

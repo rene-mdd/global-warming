@@ -95,7 +95,7 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+        t.dataError
       );
     }
   };
@@ -117,7 +117,7 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              Data source: 800,000 years ago to 2021
+              {t.co2PrehistoricSource}
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 <em>
                   {" "}

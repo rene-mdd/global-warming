@@ -139,7 +139,7 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             der folgenden Datenschutzerklärung.
           </Typography>
           <Typography component="h2" mb={4} mt={4}>
-            2. Hosting und Content Delivery Networks (CDN)
+            2. Hosting
           </Typography>
           <Typography component="p">
             Wir hosten die Inhalte unserer Website bei folgendem Anbieter:
@@ -758,19 +758,19 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
               Aggregierte Statistiken zur Nutzung unserer APIs veröffentlichen
               wir unter{" "}
               <Link
-                href="https://www.global-warming.org/traffic"
+                href="https://global-warming.org/de/traffic"
                 target="_blank"
                 rel="noopener"
               >
-                https://www.global-warming.org/traffic
+                https://global-warming.org/de/traffic
               </Link>{" "}
-              (auch auf Deutsch verfügbar) und unter{" "}
+              (auch auf Englisch verfügbar) und unter{" "}
               <Link
-                href="https://www.global-warming.org/logs"
+                href="https://global-warming.org/logs"
                 target="_blank"
                 rel="noopener"
               >
-                https://www.global-warming.org/logs
+                https://global-warming.org/logs
               </Link>
               . Diese Seiten sind ohne Anmeldung zugänglich und zeigen auch die
               oben unter „Speicherdauer“ beschriebenen Tageszusammenfassungen.
@@ -1071,11 +1071,11 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             verhindern, indem Sie das unter dem folgenden Link verfügbare
             Browser-Plugin herunterladen und installieren:{" "}
             <Link
-              href="https://tools.google.com/dlpage/gaoptout?hl=en"
+              href="https://tools.google.com/dlpage/gaoptout?hl=de"
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://tools.google.com/dlpage/gaoptout?hl=en
+              https://tools.google.com/dlpage/gaoptout?hl=de
             </Link>
             .
           </Typography>{" "}
@@ -1083,11 +1083,11 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             Mehr Informationen zum Umgang mit Nutzerdaten bei Google Analytics
             finden Sie in der Datenschutzerklärung von Google:{" "}
             <Link
-              href="https://support.google.com/analytics/answer/6004245?hl=en"
+              href="https://support.google.com/analytics/answer/6004245?hl=de"
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://support.google.com/analytics/answer/6004245?hl=en
+              https://support.google.com/analytics/answer/6004245?hl=de
             </Link>
             .
           </Typography>
@@ -1104,8 +1104,8 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
           <Typography component="h3">Google Fonts (lokales Hosting)</Typography>{" "}
           <Typography component="p">
             Diese Website nutzt zur einheitlichen Darstellung von Schriftarten
-            so genannte Google Fonts, die von Google bereitgestellt werden. Die
-            Google Fonts sind lokal installiert, sodass dabei keine Verbindung
+            die Schriftart „Play“ aus den Google Fonts, die von Google
+            bereitgestellt werden. Die Schriftart ist lokal installiert, sodass dabei keine Verbindung
             zu Servern von Google hergestellt wird.
           </Typography>{" "}
           <Typography component="p">
@@ -1119,11 +1119,11 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             </Link>{" "}
             und in der Datenschutzerklärung von Google:{" "}
             <Link
-              href="https://policies.google.com/privacy?hl=en"
+              href="https://policies.google.com/privacy?hl=de"
               target="_blank"
               rel="noopener noreferrer"
             >
-              https://policies.google.com/privacy?hl=en
+              https://policies.google.com/privacy?hl=de
             </Link>
             .
           </Typography>
@@ -1151,8 +1151,11 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             können.
           </Typography>{" "}
           <Typography component="p">
-            Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b
-            DSGVO (Abwicklung Ihrer Spende) und, soweit wir gesetzlich zur
+            Die beim Laden der Spendenseite hergestellte Verbindung beruht auf
+            unserem berechtigten Interesse, eine einfache Möglichkeit zum
+            Online-Spenden anzubieten (Art. 6 Abs. 1 lit. f DSGVO). Die
+            Abwicklung Ihrer Spende erfolgt auf Grundlage von Art. 6 Abs. 1
+            lit. b DSGVO (Abwicklung Ihrer Spende) und, soweit wir gesetzlich zur
             Aufbewahrung verpflichtet sind, etwa aus steuerlichen Gründen, auf
             Grundlage von Art. 6 Abs. 1 lit. c DSGVO. Weitere Informationen
             finden Sie in der Datenschutzerklärung von twingle:{" "}

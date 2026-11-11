@@ -5,6 +5,8 @@ const contact = {
     title: "Climate Accountability API contact",
     description:
       "For suggestions about this global warming project, or if you want to discuss ideas related to this kind of environmental issues, use this contact section.",
+    keywords:
+      "Global warming, climate change, Climate Accountability, contact",
   },
   heading: "Contact",
   imageAlt: "earth image",

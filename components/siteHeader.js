@@ -14,7 +14,7 @@ const OG_LOCALES = { en: "en_US", de: "de_DE" };
 export default function SiteHeader({
   title,
   description,
-  keyword,
+  keywords,
   websiteUrl,
 }) {
   const { locale = DEFAULT_LOCALE, pathname } = useRouter();
@@ -58,12 +58,15 @@ export default function SiteHeader({
           ))}
         <meta property="og:url" content={canonical} />
         <meta property="og:title" content={title} />
-        <meta property="og:image" content="/images/logo-planet-image.png" />
+        <meta
+          property="og:image"
+          content="https://global-warming.org/images/logo-planet-image.png"
+        />
         <meta property="og:image:width" content="150" />
         <meta property="og:image:height" content="150" />
         <meta property="og:image:type" content="image/png" />
         <meta name="description" content={description} />
-        <meta name="keywords" content={keyword} />
+        <meta name="keywords" content={keywords} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
     </>
@@ -72,7 +75,7 @@ export default function SiteHeader({
 SiteHeader.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
-  keyword: PropTypes.string,
+  keywords: PropTypes.string,
   websiteUrl: PropTypes.string,
 };
 
@@ -80,6 +83,6 @@ SiteHeader.defaultProps = {
   title: "Global Warming API",
   description:
     "Global warming & climate change up to date APIs, data, graphs, and news. Earth's temperature, carbon dioxide (CO2), methane, nitrous oxide, melted polar ice cap or sea ice extent, and ocean warming.",
-  keyword: "Global warming, climate change, API, graphs",
-  websiteUrl: "https://www.global-warming.org/",
+  keywords: "Global warming, climate change, API, graphs",
+  websiteUrl: "https://global-warming.org/",
 };

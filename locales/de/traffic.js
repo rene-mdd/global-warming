@@ -22,6 +22,21 @@ const traffic = {
   noData: "Noch keine Daten",
   other: "Sonstige",
   unknownCountry: "Unbekannt",
+  valueLabels: {
+    Unknown: "Unbekannt",
+    unknown: "unbekannt",
+    Other: "Sonstige",
+    "Bot / crawler": "Bot / Crawler",
+    Bot: "Bot",
+    Desktop: "Desktop",
+    Mobile: "Mobilgerät",
+    Tablet: "Tablet",
+  },
+  apiErrors: {
+    unauthorized: "Nicht autorisiert",
+    "method not allowed": "Methode nicht erlaubt",
+    endpoint_not_configured: "Endpunkt nicht konfiguriert",
+  },
 
   ranges: {
     "1h": "1 Stunde",
@@ -53,7 +68,7 @@ const traffic = {
 
   backendOnly: {
     title: "Hier werden nur Backend-Anfragen erfasst",
-    body: "Log Drains werden nur bei Function-Aufrufen ausgelöst, deshalb sind CDN-Cache-Treffer (der Großteil des Traffics) hier unsichtbar. Das entspricht grob 15 % bis 30 % der tatsächlichen Anfragen. Die Gesamtzahlen findest du in Vercel Observability.",
+    body: "Log Drains werden nur bei Function-Aufrufen ausgelöst, deshalb sind CDN-Cache-Treffer (der Großteil des Traffics) hier unsichtbar. Das entspricht grob 15 % bis 30 % der tatsächlichen Anfragen. Die Gesamtzahlen finden Sie in Vercel Observability.",
   },
 
   geo: {
@@ -158,7 +173,7 @@ const traffic = {
     drainEndpoint: "Drain-Endpunkt:",
     configuredIn: "· Konfiguriert in Vercel unter",
     drainsLink: "Team Settings → Drains",
-    esg: "ESG-Daten zu Unternehmen findest du hier:",
+    esg: "ESG-Daten zu Unternehmen finden Sie hier:",
   },
 
   daily: {
@@ -186,7 +201,7 @@ const traffic = {
 
   locations: {
     title: "Top-IPs nach Standort",
-    sub: "Klick auf ein Land, um die einzelnen Adressen zu sehen",
+    sub: "Klicken Sie auf ein Land, um die einzelnen Adressen zu sehen",
     ipsAre: (word) => ` · IPs werden ${word}`,
     ipMode: {
       hash: "gehasht",

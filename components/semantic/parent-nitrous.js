@@ -5,6 +5,7 @@ import Nitrous from "../charts/nitrous";
 import { AccordionNitrous, AccordionShare } from "./accordion";
 import RichText from "./richText";
 import { useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { nitrousService } from "../../services/dataService";
 import { Container, Grid, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
@@ -19,6 +20,7 @@ const theme = createTheme({
 
 function ParentNitrous() {
   const t = useT();
+  const decimal = useLocalizedDecimal();
   const [nitrous, setNitrous] = useState(false);
   const [nitrousLoading, setNitrousLoading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
@@ -56,7 +58,7 @@ function ParentNitrous() {
           <Container align="center" className="today-value">
             <p>
               {t.common.todayValue}
-              <span> {todayValue}</span>
+              <span> {decimal(todayValue)}</span>
             </p>
           </Container>
           <Container>

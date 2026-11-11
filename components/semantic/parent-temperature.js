@@ -5,10 +5,12 @@ import Temperature from "../charts/temperature";
 import { AccordionTemp, AccordionShare } from "./accordion";
 import RichText from "./richText";
 import { useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { Container, Grid, Typography } from "@mui/material";
 
 function ParentTemperature() {
   const t = useT();
+  const decimal = useLocalizedDecimal();
   const [todayValue, setTodayValue] = useState("");
   useEffect(() => {
     const subscription = temperatureService.getData().subscribe((message) => {
@@ -31,7 +33,7 @@ function ParentTemperature() {
           <Container align="center" className="today-value">
             <p>
               {t.common.todayValue}
-              <span> {todayValue?.station ? todayValue?.station : t.common.unavailable}</span>
+              <span> {todayValue?.station ? decimal(todayValue?.station) : t.common.unavailable}</span>
             </p>
           </Container>
           <Container>

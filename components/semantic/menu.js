@@ -67,6 +67,7 @@ class StickySideBar extends Component {
         href={asPath}
         locale={target}
         hrefLang={target}
+        lang={target}
         aria-label={t.otherLanguageAria}
         onClick={() => rememberLocale(target)}
         className={className}
@@ -139,7 +140,10 @@ class StickySideBar extends Component {
               </Container>
             )}
             <Container id="social-media-container" className="menu-item">
-              <Link href="https://www.linkedin.com/company/climate-accountability-api/">
+              <Link
+                href="https://www.linkedin.com/company/climate-accountability-api/"
+                aria-label={t.linkedinAria}
+              >
                 {" "}
                 <LinkedInIcon
                   fontSize="large"
@@ -189,7 +193,10 @@ class StickySideBar extends Component {
                   </ButtonGroup>
                   <Box className="donate-contact-group">
                     <Button>
-                      <Link href="https://www.linkedin.com/company/climate-accountability-api/">
+                      <Link
+                        href="https://www.linkedin.com/company/climate-accountability-api/"
+                        aria-label={t.linkedinAria}
+                      >
                         <LinkedInIcon
                           sx={{ paddingTop: "6px", color: "#0A66C2" }}
                         />

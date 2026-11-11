@@ -22,23 +22,7 @@ import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 import { useLocale, useT } from "../../lib/i18n";
 import { localizedPath } from "../../lib/i18n-config";
-
-// consentmanager vendor ID of Google reCAPTCHA. reCAPTCHA reads device
-// information and sends the IP address to Google, so under § 25(1) TDDDG
-// its script loads only once this vendor has consent.
-const RECAPTCHA_VENDOR = "s1409";
-
-/* eslint-disable no-underscore-dangle -- __cmp is consentmanager's API */
-function cmpAvailable() {
-  return typeof window !== "undefined" && typeof window.__cmp === "function";
-}
-
-function hasRecaptchaConsent() {
-  if (!cmpAvailable()) return false;
-  const data = window.__cmp("getCMPData");
-  return Boolean(data?.vendorConsents?.[RECAPTCHA_VENDOR]);
-}
-/* eslint-enable no-underscore-dangle */
+import { VENDORS, useVendorConsent } from "../../lib/consent";
 
 function Contact({ siteKey = "", secretKey = "" }) {
   const locale = useLocale();
@@ -50,33 +34,11 @@ function Contact({ siteKey = "", secretKey = "" }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState("idle");
   const [statusMessage, setStatusMessage] = useState("");
-  // null until the consent check has run, so the server HTML has no notice.
-  const [recaptchaConsent, setRecaptchaConsent] = useState(null);
-
-  // The CMP fires "consent" when a visitor decides and also when a stored
-  // decision is found, so a choice made in the banner unlocks the form
-  // without a reload.
-  useEffect(() => {
-    const check = () => setRecaptchaConsent(hasRecaptchaConsent());
-    check();
-    if (!cmpAvailable()) return undefined;
-    /* eslint-disable no-underscore-dangle */
-    window.__cmp("addEventListener", ["consent", check, false], null);
-    return () =>
-      window.__cmp("removeEventListener", ["consent", check, false], null);
-    /* eslint-enable no-underscore-dangle */
-  }, []);
-
-  // Clicking the button after reading the notice is the consent; it is
-  // recorded in the CMP so the visitor can revoke it in the CMP settings.
-  // Without the CMP (e.g. blocked by an ad blocker) the click alone counts.
-  const allowRecaptcha = () => {
-    if (cmpAvailable()) {
-      // eslint-disable-next-line no-underscore-dangle
-      window.__cmp("setVendorConsent", [RECAPTCHA_VENDOR, 1]);
-    }
-    setRecaptchaConsent(true);
-  };
+  // reCAPTCHA reads device information and sends the IP address to Google,
+  // so its script loads only with consent (lib/consent.js).
+  const [recaptchaConsent, allowRecaptcha] = useVendorConsent(
+    VENDORS.recaptcha
+  );
 
   // Load reCAPTCHA script
   useEffect(() => {
@@ -164,16 +126,14 @@ function Contact({ siteKey = "", secretKey = "" }) {
       setIsSubmitting(false);
     }
   };
-  const contactKeywords =
-    "Global warming, climate change, Climate Accountability, contact";
-  const websiteUrl = "https://www.global-warming.org/contact";
+  const websiteUrl = "https://global-warming.org/contact";
 
   return (
     <>
       <SiteHeader
         description={t.meta.description}
         title={t.meta.title}
-        keywords={contactKeywords}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />

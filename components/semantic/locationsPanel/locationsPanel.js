@@ -88,7 +88,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
         setError(null);
       })
       .catch((err) => {
-        if (!cancelled) setError(err.message);
+        if (!cancelled) setError(tt.apiErrors[err.message] ?? err.message);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

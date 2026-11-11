@@ -19,6 +19,11 @@ const deforestation = {
   mapTitle: "Karte des globalen Waldverlusts",
   mapCredits:
     "Quelle: University of Maryland, Department of Geographical Sciences.",
+  mapAlt:
+    "Weltkarte des Waldverlusts von 2001 bis 2025 (Global Forest Change, University of Maryland)",
+  openMap: "Interaktive Karte öffnen",
+  mapAttribution:
+    "Daten: Hansen/UMD/Google/USGS/NASA, Global Forest Change (CC BY 4.0). Kartendaten ©2026 Google, INEGI.",
   mapParagraphs: [
     "Ergebnisse einer Zeitreihenanalyse von Landsat-Satellitenbildern, die Ausdehnung und Veränderung der Wälder erfassen.",
     "Als Bäume gilt Vegetation, die höher als 5 m ist. Sie wird als Prozentanteil je Rasterzelle angegeben (‘2000 Percent Tree Cover’). ‘Forest Cover Loss’ bezeichnet eine bestandsersetzende Störung, also den Übergang von Wald zu Nicht-Wald im Zeitraum 2000–2019. ‘Forest Cover Gain’ ist das Gegenteil, also ein Übergang von Nicht-Wald zu Wald vollständig im Zeitraum 2000–2012. ‘Forest Loss Year’ schlüsselt den gesamten Waldverlust (‘Forest Loss’) nach Jahren auf.",

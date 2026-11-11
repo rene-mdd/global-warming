@@ -42,7 +42,7 @@ function Nitrous({ parentCallBack }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -124,7 +124,7 @@ function Nitrous({ parentCallBack }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+        t.loadError
       );
     }
   };
@@ -146,7 +146,7 @@ function Nitrous({ parentCallBack }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              Data 800,000 ago to 2001 source: United States, Environmental
+              {t.nitrousAncientSource} United States, Environmental
               Protection Agency (EPA), (
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 [https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases](https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases)
@@ -154,14 +154,14 @@ function Nitrous({ parentCallBack }) {
               )
             </p>
             <p>
-              <span>2001 - present: </span>Ed Dlugokencky, NOAA/GML (
+              <span>{t.nitrousModernSource} </span>Ed Dlugokencky, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
                 [https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/](https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/)
               </a>
               )
             </p>
             <p>
-              <b> From 2001.01 the data is measured on a monthly basis</b>
+              <b> {t.nitrousMonthly}</b>
             </p>
           </Container>
         </Grid>

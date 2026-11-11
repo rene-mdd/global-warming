@@ -19,8 +19,6 @@ const about = {
       after:
         ", we develop open digital infrastructure for trustworthy sustainability and environmental data, with expertise in APIs, interoperability, data governance, metadata, FAIR data principles, and digital platforms. Our mission is to build the world's most comprehensive, transparent, and accessible platform for ESG and climate-related data.",
     },
-    co2CounterTitle: "Tons of CO2 emitted into the atmosphere",
-    temperatureCounterTitle: "World average temperature (°C)",
     scrollAlt: "move to next section",
   },
 
@@ -109,7 +107,7 @@ const about = {
   transparency: {
     title: "Transparency",
     text: "This project began as a side project on June 18th, 2020. After gaining significant global traction and extensive usage, it was officially registered as a legal entity in Berlin, Germany, on June 28th, 2023. On this page, you can view and request various documents related to our legal structure, financial information, governance policies, and other relevant details. If you require additional information or have specific inquiries, please feel free to reach out to us.",
-    financialStatements: "Anual financial statements:",
+    financialStatements: "Annual financial statements:",
     articlesOfAssociation: "Articles of association:",
     download: "Download",
     contact: "Contact",

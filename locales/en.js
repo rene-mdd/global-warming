@@ -27,6 +27,7 @@ const en = {
   },
 
   menu: {
+    linkedinAria: "Climate Accountability API on LinkedIn",
     home: "Home",
     about: "About",
     esg: "ESG",
@@ -49,6 +50,12 @@ const en = {
 
   // Shown to visitors whose browser prefers English while they're on a
   // German page, so it's written in English.
+  notFound: {
+    title: "Page not found - Climate Accountability API",
+    heading: "Page not found",
+    text: "The page you are looking for does not exist or has been moved.",
+    home: "Go to the home page",
+  },
   banner: {
     message: "This page is also available in English.",
     switch: "Switch to English",
@@ -65,6 +72,7 @@ const en = {
   },
 
   sideMenu: {
+    toggleAria: "Show or hide the section menu",
     temperature: "Temperature",
     co2: "Carbon Dioxide",
     methane: "Methane",
@@ -360,6 +368,36 @@ const en = {
     nitrous: "Nitrous Oxide",
     extent: "Extent",
     ocean: "Ocean warming",
+    // Footer notes and messages under the charts (components/charts/*).
+    dataError:
+      "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you.",
+    loadError:
+      "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you.",
+    loadErrorArctic:
+      "There was an error trying to load the graph. If the problem persists, please refer to our contact form and report it. Thank you.",
+    months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"],
+    source: "Source:",
+    title: "Title:",
+    basePeriod: "Base period:",
+    dataSource: "Data source:",
+    temperatureSourceModern: "Source data 1880 - present:",
+    temperatureSourceAncient: "Source data year 1 – 1979:",
+    co2LiveSource:
+      "From 10 years ago to present, the measurements of carbon dioxide concentrations are measured on a quasi daily basis by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (",
+    co2RecentLiveSource:
+      "From 10 years ago to present, the measurements of carbon dioxide concentrations are done on a quasi daily basis by Mauna Loa Observatory. Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (",
+    co2PrehistoricSource: "Data source: 800,000 years ago to 2021",
+    methaneModernSource: "Year 1983 to present data source:",
+    methaneAncientSource: "Data 800,000 years ago to 1983 source:",
+    methaneMonthly: "From 1983.07 this data is measured on a monthly basis",
+    nitrousAncientSource: "Data 800,000 ago to 2001 source:",
+    nitrousModernSource: "2001 - present:",
+    nitrousMonthly: "From 2001.01 the data is measured on a monthly basis",
+    arcticTitle: "Global Sea Ice Extent 1979-2024 (on a monthly basis)",
+    oceanNote:
+      "Please note, global and hemispheric anomalies are with respect to the 1901-2000 average.",
+    oceanCitation:
+      "NOAA National Centers for Environmental information, Climate at a Glance: Global Time Series, published January 2023, retrieved on January 19, 2023 from",
   },
 
   // One namespace per page, each in its own file under locales/en/.
