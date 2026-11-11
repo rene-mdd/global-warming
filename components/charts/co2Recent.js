@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import { co2Service } from "../../services/dataService";
 
 function Co2Recent({ parentCallBackRecent }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
-  const url = "api/co2-api";
+  const url = "/api/co2-api";
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -26,7 +28,7 @@ function Co2Recent({ parentCallBackRecent }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -66,7 +68,7 @@ function Co2Recent({ parentCallBackRecent }) {
           labels: date,
           datasets: [
             {
-              label: "Carbon Dioxide",
+              label: t.co2,
               data: amount,
               fill: false,
               borderColor: "#4984B8",
@@ -89,14 +91,14 @@ function Co2Recent({ parentCallBackRecent }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Part Per million (ppm)",
+                text: t.ppm,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
@@ -108,7 +110,7 @@ function Co2Recent({ parentCallBackRecent }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+        t.loadError
       );
     }
   };
@@ -130,9 +132,7 @@ function Co2Recent({ parentCallBackRecent }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              From 10 years ago to present, the measurements of carbon dioxide
-              concentrations are done on a quasi daily basis by Mauna Loa
-              Observatory. Source: Ed Dlugokencky and Pieter Tans, NOAA/GML (
+              {t.co2RecentLiveSource}
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends/">
                 <em> https://www.esrl.noaa.gov/gmd/ccgg/trends/</em>
               </a>

@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import localCo2Data from "../../public/data/csvjson-co2-prehistoric.json";
 
 function Co2Prehistoric({ parentCallBackPrehist }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -51,7 +53,7 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
           labels: prehistoricData.date,
           datasets: [
             {
-              label: "Carbon Dioxide",
+              label: t.co2,
               data: prehistoricData.amount,
               fill: false,
               borderColor: "#4984B8",
@@ -74,14 +76,14 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Part Per million (ppm)",
+                text: t.ppm,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
@@ -93,7 +95,7 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+        t.dataError
       );
     }
   };
@@ -115,7 +117,7 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              Data source: 800,000 years ago to 2021
+              {t.co2PrehistoricSource}
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 <em>
                   {" "}

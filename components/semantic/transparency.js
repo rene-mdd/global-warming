@@ -2,49 +2,53 @@ import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/system";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useT } from "../../lib/i18n";
+import { DEFAULT_LOCALE, linkLocale } from "../../lib/i18n-config";
 
 export default function Transparency() {
+  const t = useT().about.transparency;
+  const { locale = DEFAULT_LOCALE } = useRouter();
   return (
     <>
       <Grid size={{ xs: 12, md: 6 }} className="transparency-text-wrapper">
         <Typography variant="h2" className="transparency-title" align="center">
-          Transparency
+          {t.title}
         </Typography>
         <Container>
           <Typography component="p" fontSize="20px" mb={5} textAlign="center">
-            This project began as a side project on June 18th, 2020. After
-            gaining significant global traction and extensive usage, it was
-            officially registered as a legal entity in Berlin, Germany, on June
-            28th, 2023. On this page, you can view and request various documents
-            related to our legal structure, financial information, governance
-            policies, and other relevant details. If you require additional
-            information or have specific inquiries, please feel free to reach
-            out to us.
+            {t.text}
           </Typography>
         </Container>
         <Container align="center">
-          <Typography component="h3">Anual financial statements:</Typography>
+          <Typography component="h3">{t.financialStatements}</Typography>
           <Typography
             component="a"
             href="/documents/climate-accountability-api-jahresabschluss.pdf"
             download
           >
-            Download
+            {t.download}
           </Typography>
           <Typography component="h3" mt={1}>
-            Articles of association:
+            {t.articlesOfAssociation}
           </Typography>
           <Typography
             component="a"
             href="/documents/articles-of-association.pdf"
             download
           >
-            Download
+            {t.download}
           </Typography>
         </Container>
         <Container align="center" sx={{ marginTop: "40px" }}>
-          <Link href="/contact" className="link-to-contact">
-            Contact
+          {/* next/link keeps the current locale by default; this falls back
+              to English while /contact has no German version. */}
+          <Link
+            href="/contact"
+            locale={linkLocale("/contact", locale)}
+            className="link-to-contact"
+          >
+            {t.contact}
           </Link>
         </Container>
       </Grid>

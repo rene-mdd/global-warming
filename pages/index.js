@@ -11,19 +11,17 @@ import ParentArctic from "../components/semantic/parent-arctic";
 import SiteHeader from "../components/siteHeader";
 import Footer from "../components/semantic/footer";
 import ParentOcean from "../components/semantic/parent-ocean";
+import { useT } from "../lib/i18n";
 
 function Home() {
-  const homeTitle = "Global Warming API";
+  const t = useT();
   const websiteUrl = "https://global-warming.org";
-  const homeMetaDescription =
-    "Global warming & climate change up to date APIs, data, graphs, and news. Earth's temperature, carbon dioxide (CO2), methane, nitrous oxide, and melted polar ice cap.";
-  const homeKeywords = "Global warming, climate change, API, graphs";
   return (
     <>
       <SiteHeader
-        description={homeMetaDescription}
-        title={homeTitle}
-        keywords={homeKeywords}
+        description={t.meta.home.description}
+        title={t.meta.home.title}
+        keywords={t.meta.home.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />

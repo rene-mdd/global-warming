@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import { arcticService } from "../../services/dataService";
 
 function Arctic({ parentCallBack }) {
-  const url = "api/arctic-api";
+  const t = useT().charts;
+  const url = "/api/arctic-api";
   const [graphError, setGraphError] = useState("");
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -25,7 +27,7 @@ function Arctic({ parentCallBack }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -71,7 +73,7 @@ function Arctic({ parentCallBack }) {
           labels: year,
           datasets: [
             {
-              label: "Extent",
+              label: t.extent,
               borderColor: "rgba(44, 130, 201, 1)",
               data: amount,
               borderWidth: 1,
@@ -89,14 +91,14 @@ function Arctic({ parentCallBack }) {
               suggestedMin: 10,
               title: {
                 display: true,
-                text: "Million square km",
+                text: t.millionKm2,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
@@ -110,7 +112,7 @@ function Arctic({ parentCallBack }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error trying to load the graph. If the problem persists, please refer to our contact form and report it. Thank you."
+        t.loadErrorArctic
       );
     }
   };
@@ -132,14 +134,13 @@ function Arctic({ parentCallBack }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              <span>Title:</span> Global Sea Ice Extent 1979-2024 (on a monthly
-              basis)
+              <span>{t.title}</span> {t.arcticTitle}
             </p>
             <p>
-              <span>Base period:</span> 1991-2020
+              <span>{t.basePeriod}</span> 1991-2020
             </p>
             <p>
-              <span>Data source:</span> National Centers for Environmental
+              <span>{t.dataSource}</span> National Centers for Environmental
               Information:
               <a href="https://www.ncei.noaa.gov/access/monitoring/snow-and-ice-extent/sea-ice/G/0">
                 {" "}
@@ -161,4 +162,4 @@ Arctic.defaultProps = {
   parentCallBack: () => {},
 };
 
-export default Arctic;
+export default Arctic;

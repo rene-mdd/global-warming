@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { Chart } from "chart.js/auto";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import { oceanService } from "../../services/dataService";
 
 function Ocean({ parentCallBack }) {
-  const url = "api/ocean-warming-api";
+  const t = useT().charts;
+  const url = "/api/ocean-warming-api";
   const [graphError, setGraphError] = useState("");
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -57,7 +59,7 @@ function Ocean({ parentCallBack }) {
             labels: date,
             datasets: [
               {
-                label: "Ocean warming",
+                label: t.ocean,
                 data: temperature,
                 fill: false,
                 borderColor: "#1da2d8",
@@ -83,14 +85,14 @@ function Ocean({ parentCallBack }) {
                 stacked: true,
                 title: {
                   display: true,
-                  text: "Celsius",
+                  text: t.celsius,
                 },
               },
               x: {
                 stacked: true,
                 title: {
                   display: true,
-                  text: "Year",
+                  text: t.year,
                 },
                 ticks: {
                   maxRotation: 90,
@@ -102,7 +104,7 @@ function Ocean({ parentCallBack }) {
       }
     } catch (error) {
       setGraphError(
-        "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+        t.dataError
       );
       console.error(error);
     }
@@ -121,16 +123,14 @@ function Ocean({ parentCallBack }) {
             sx={{ marginTop: "-5px" }}
           >
             <p>
-              Please note, global and hemispheric anomalies are with respect to
-              the 1901-2000 average.
+              {t.oceanNote}
             </p>
             <p>
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              <span>Source: </span>NOAA National Centers for Environmental
-              information, Climate at a Glance: Global Time Series, published
-              January 2023, retrieved on January 19, 2023 from &nbsp;
+              <span>{t.source} </span>
+              {t.oceanCitation} &nbsp;
               <a href="https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series">
                 <em>
                   https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/global/time-series
@@ -138,7 +138,7 @@ function Ocean({ parentCallBack }) {
               </a>
             </p>
             <p>
-              <span>Base period: </span>1901-2000
+              <span>{t.basePeriod} </span>1901-2000
             </p>
           </Container>
         </Grid>

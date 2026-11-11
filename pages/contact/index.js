@@ -20,8 +20,13 @@ import PropTypes from "prop-types";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
+import { useLocale, useT } from "../../lib/i18n";
+import { localizedPath } from "../../lib/i18n-config";
+import { VENDORS, useVendorConsent } from "../../lib/consent";
 
 function Contact({ siteKey = "", secretKey = "" }) {
+  const locale = useLocale();
+  const t = useT().contact;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -29,9 +34,15 @@ function Contact({ siteKey = "", secretKey = "" }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState("idle");
   const [statusMessage, setStatusMessage] = useState("");
+  // reCAPTCHA reads device information and sends the IP address to Google,
+  // so its script loads only with consent (lib/consent.js).
+  const [recaptchaConsent, allowRecaptcha] = useVendorConsent(
+    VENDORS.recaptcha
+  );
 
   // Load reCAPTCHA script
   useEffect(() => {
+    if (!recaptchaConsent) return;
     // Avoid duplicate loading
     if (
       typeof window !== "undefined" &&
@@ -39,7 +50,10 @@ function Contact({ siteKey = "", secretKey = "" }) {
       !document.querySelector('script[src*="recaptcha/api.js"]')
     ) {
       const script = document.createElement("script");
-      script.src = `https://www.google.com/recaptcha/api.js`;
+      // hl sets the widget's language; English keeps the original URL.
+      script.src = `https://www.google.com/recaptcha/api.js${
+        locale === "en" ? "" : `?hl=${locale}`
+      }`;
       script.async = true;
       script.defer = true;
       script.onload = () => {
@@ -49,23 +63,21 @@ function Contact({ siteKey = "", secretKey = "" }) {
     } else if (typeof window !== "undefined" && window.grecaptcha) {
       setRecaptchaLoaded(true);
     }
-  }, []);
+  }, [recaptchaConsent]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Get reCAPTCHA response
     if (!window.grecaptcha) {
       setStatus("error");
-      setStatusMessage(
-        "reCAPTCHA not loaded. Please refresh the page and try again."
-      );
+      setStatusMessage(t.status.recaptchaMissing);
       return;
     }
 
     const recaptchaResponse = window.grecaptcha.getResponse();
     if (!recaptchaResponse) {
       setStatus("error");
-      setStatusMessage("Please complete the reCAPTCHA verification.");
+      setStatusMessage(t.status.recaptchaIncomplete);
       return;
     }
 
@@ -94,9 +106,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
       const data = await response.json();
       if (response.ok) {
         setStatus("success");
-        setStatusMessage(
-          "Thank you for your message! We will get back to you soon."
-        );
+        setStatusMessage(t.status.success);
         // Reset form fields
         setName("");
         setEmail("");
@@ -105,31 +115,25 @@ function Contact({ siteKey = "", secretKey = "" }) {
         window.grecaptcha.reset();
       } else {
         setStatus("error");
-        setStatusMessage(
-          data.error || "Failed to send your message. Please try again later."
-        );
+        // data.error comes from Static Forms and is always English.
+        setStatusMessage(data.error || t.status.failed);
       }
     } catch (error) {
       setStatus("error");
-      setStatusMessage("An unexpected error occurred. Please try again later.");
+      setStatusMessage(t.status.unexpected);
       console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
-  const contactMetaDescription =
-    "For suggestions about this global warming project, or if you want to discuss ideas related to this kind of environmental issues, use this contact section.";
-  const contactMetaTitle = "Climate Accountability API contact";
-  const contactKeywords =
-    "Global warming, climate change, Climate Accountability, contact";
-  const websiteUrl = "https://www.global-warming.org/contact";
+  const websiteUrl = "https://global-warming.org/contact";
 
   return (
     <>
       <SiteHeader
-        description={contactMetaDescription}
-        title={contactMetaTitle}
-        keywords={contactKeywords}
+        description={t.meta.description}
+        title={t.meta.title}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />
@@ -141,14 +145,14 @@ function Contact({ siteKey = "", secretKey = "" }) {
             component="h2"
             className="contact-title"
           >
-            Contact
+            {t.heading}
           </Typography>
           <Grid>
             <Grid justifyContent="center" container>
               <Grid item xs={12} sm={10} md={6}>
                 <CardMedia
-                  src="images/contact-image.png"
-                  alt="earth image"
+                  src="/images/contact-image.png"
+                  alt={t.imageAlt}
                   component="img"
                   className="contact-earth-logo"
                 />
@@ -160,8 +164,8 @@ function Contact({ siteKey = "", secretKey = "" }) {
               <Grid item xs={10} md={6}>
                 <Paper className="contact-info">
                   <p className="contact-segment">
-                    For inquiries, contact us at{" "}
-                    <a href="mailto:info@global-warming.org">
+                    {t.inquiries}{" "}
+                    <a href="mailto:help@global-warming.org">
                       help@global-warming.org
                     </a>
                     .
@@ -169,7 +173,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
                 </Paper>
                 <form onSubmit={handleSubmit} className="contact-form-wrapper">
                   <FormLabel htmlFor="name" required>
-                    Name
+                    {t.form.name}
                   </FormLabel>
                   <Input
                     id="name"
@@ -180,7 +184,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
                     autoFocus
                   />
                   <FormLabel htmlFor="email" required>
-                    Email
+                    {t.form.email}
                   </FormLabel>
                   <Input
                     id="email"
@@ -190,7 +194,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <FormLabel htmlFor="subject" className="hide-element">
-                    Subject
+                    {t.form.subject}
                   </FormLabel>
                   <Input
                     className="hide-element"
@@ -205,7 +209,7 @@ function Contact({ siteKey = "", secretKey = "" }) {
                     className="hide-element"
                     onChange={(e) => setName(e.target.value)}
                   />
-                  <FormLabel htmlFor="message">Your message</FormLabel>
+                  <FormLabel htmlFor="message">{t.form.message}</FormLabel>
                   <TextField
                     id="message"
                     name="message"
@@ -216,6 +220,28 @@ function Contact({ siteKey = "", secretKey = "" }) {
                     required
                     multiline
                   />
+                  {recaptchaConsent === false && (
+                    <div className="recaptcha-consent">
+                      <Typography component="p" variant="body2" mb={1}>
+                        {t.recaptchaConsent.text}{" "}
+                        <a href={localizedPath("/privacy-policy", locale)}>
+                          {t.recaptchaConsent.privacyLink}
+                        </a>
+                        . {t.recaptchaConsent.alternative}{" "}
+                        <a href="mailto:help@global-warming.org">
+                          help@global-warming.org
+                        </a>
+                        .
+                      </Typography>
+                      <Button
+                        type="button"
+                        variant="outlined"
+                        onClick={allowRecaptcha}
+                      >
+                        {t.recaptchaConsent.allow}
+                      </Button>
+                    </div>
+                  )}
                   <div
                     className="g-recaptcha"
                     id="recaptcha-container"
@@ -230,18 +256,18 @@ function Contact({ siteKey = "", secretKey = "" }) {
                     disabled={isSubmitting || !recaptchaLoaded}
                     required
                   >
-                    Submit
+                    {t.form.submit}
                   </Button>
                 </form>
                 <Alert hidden={status === "idle"} severity={status}>
                   {status === "success"
-                    ? "Your email was sent."
+                    ? t.status.sent
                     : status === "error"
-                    ? "Sorry there was an error"
+                    ? t.status.errorTitle
                     : null}
                   <AlertTitle>
                     {status === "success"
-                      ? "Thank you!"
+                      ? t.status.thanks
                       : status === "error"
                       ? statusMessage
                       : null}

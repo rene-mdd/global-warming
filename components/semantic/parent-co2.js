@@ -6,6 +6,9 @@ import Co2 from "../charts/co2";
 import Co2Prehistoric from "../charts/co2Prehistoric";
 import Co2Recent from "../charts/co2Recent";
 import { AccordionCo2, AccordionShare } from "./accordion";
+import RichText from "./richText";
+import { useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { co2Service } from "../../services/dataService";
 
 const theme = createTheme({
@@ -17,6 +20,8 @@ const theme = createTheme({
 });
 
 function ParentCo2() {
+  const t = useT();
+  const decimal = useLocalizedDecimal();
   const [co2, setCo2] = useState(false);
   const [co2Prehistoric, setCo2Prehistoric] = useState(false);
   const [co2recent, setCo2Recent] = useState(false);
@@ -36,7 +41,7 @@ function ParentCo2() {
     <Container component="section">
       <Container>
         <Typography component="h2" align="center" className="h2-general">
-          Carbon Dioxide levels from 800,000 years ago to present
+          {t.co2.title}
         </Typography>
         <Grid container mt={2}>
           {co2 ? (
@@ -70,7 +75,7 @@ function ParentCo2() {
                   variant="contained"
                   sx={{ mt: 2 }}
                 >
-                  {co2Prehistoric ? "Hide graph" : "-800,000 - 2009"}
+                  {co2Prehistoric ? t.common.hideGraph : t.co2.prehistoricRange}
                 </LoadingButton>
               </Grid>
               <Grid
@@ -86,7 +91,7 @@ function ParentCo2() {
                   variant="contained"
                   sx={{ mt: 2 }}
                 >
-                  {co2 ? "Hide graph" : "-800,000 - present"}
+                  {co2 ? t.common.hideGraph : t.co2.fullRange}
                 </LoadingButton>
               </Grid>
               <Grid
@@ -104,7 +109,7 @@ function ParentCo2() {
                   variant="contained"
                   sx={{ mt: 2 }}
                 >
-                  {co2recent ? "Hide graph" : `${new Date().getFullYear() - 10} - ${new Date().getFullYear()}`}
+                  {co2recent ? t.common.hideGraph : `${new Date().getFullYear() - 10} - ${new Date().getFullYear()}`}
                 </LoadingButton>
               </Grid>
             </ThemeProvider>
@@ -113,30 +118,17 @@ function ParentCo2() {
         <Grid>
           <Container align="center" className="today-value">
             <p>
-              Today's value:
-              <span> {todayValue}</span>
+              {t.common.todayValue}
+              <span> {decimal(todayValue)}</span>
             </p>
           </Container>
           <Container>
-            <p>
-              For thousands of years, the natural concentration of CO2 in earth
-              atmosphere was around 280 ppm. From the beginning of the
-              industrial revolution, human activities like the burning of fossil
-              fuels, deforestation, and livestock have increased this amount by
-              more than 30%.
-            </p>
-            <p>
-              For more information about prehistoric CO2 concentration, current
-              and future consequences please visit:&nbsp;
-              <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-atmospheric-carbon-dioxide">
-                <em> Climate Change: Atmospheric Carbon Dioxide </em>
-              </a>
-              <span> and </span>
-              <a href="https://climate.nasa.gov/climate_resources/24/graphic-the-relentless-rise-of-carbon-dioxide/">
-                <em>The relentless rise of carbon dioxide</em>
-              </a>
-              .
-            </p>
+            {t.co2.paragraphs.map((parts, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <p key={i}>
+                <RichText parts={parts} />
+              </p>
+            ))}
             <Grid
               container
               spacing={3}

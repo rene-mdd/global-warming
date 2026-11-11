@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import nitrousLocalData from "../../public/data/csvjson-nitrous.json";
 import { nitrousService } from "../../services/dataService";
 
 function Nitrous({ parentCallBack }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
-  const url = "api/nitrous-oxide-api";
+  const url = "/api/nitrous-oxide-api";
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -40,7 +42,7 @@ function Nitrous({ parentCallBack }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -83,7 +85,7 @@ function Nitrous({ parentCallBack }) {
           labels: cleanNitrousPrehistoricData.date.concat(date),
           datasets: [
             {
-              label: "Nitrous Oxide",
+              label: t.nitrous,
               data: cleanNitrousPrehistoricData.amount.concat(average),
               fill: false,
               borderColor: "#FDB147",
@@ -104,13 +106,13 @@ function Nitrous({ parentCallBack }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Nitrous Oxide mole fraction (ppb)",
+                text: t.nitrousAxis,
               },
             },
             x: {
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
@@ -122,7 +124,7 @@ function Nitrous({ parentCallBack }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+        t.loadError
       );
     }
   };
@@ -144,7 +146,7 @@ function Nitrous({ parentCallBack }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              Data 800,000 ago to 2001 source: United States, Environmental
+              {t.nitrousAncientSource} United States, Environmental
               Protection Agency (EPA), (
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 [https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases](https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases)
@@ -152,14 +154,14 @@ function Nitrous({ parentCallBack }) {
               )
             </p>
             <p>
-              <span>2001 - present: </span>Ed Dlugokencky, NOAA/GML (
+              <span>{t.nitrousModernSource} </span>Ed Dlugokencky, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/">
                 [https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/](https://www.esrl.noaa.gov/gmd/ccgg/trends_n2o/)
               </a>
               )
             </p>
             <p>
-              <b> From 2001.01 the data is measured on a monthly basis</b>
+              <b> {t.nitrousMonthly}</b>
             </p>
           </Container>
         </Grid>
@@ -176,4 +178,4 @@ Nitrous.defaultProps = {
   parentCallBack: () => { },
 };
 
-export default Nitrous;
+export default Nitrous;

@@ -18,6 +18,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ReactHtmlParser from "html-react-parser";
+import { useT } from "../../lib/i18n";
 
 const theme = createTheme({
   palette: {
@@ -31,6 +32,7 @@ const theme = createTheme({
 });
 
 function Row(props) {
+  const t = useT().esg.table;
   const [open, setOpen] = useState(false);
   const { included, index } = props;
   const {
@@ -41,7 +43,12 @@ function Row(props) {
   //   // return the logo with equal id
   //   return relationships.logo.data?.id == o1.id;
   // });
-  const logoUrl = attributes?.imgUrl;
+  // public/data/dummy.js stores logos as relative paths ("images/x.png"),
+  // which would resolve under /de/esg to /de/images/x.png and 404.
+  const logoUrl =
+    attributes?.imgUrl && !/^(\/|https?:)/.test(attributes.imgUrl)
+      ? `/${attributes.imgUrl}`
+      : attributes?.imgUrl;
   // const logoUrl = "";
   const logoImgUrl = "";
   const colorImpact =
@@ -56,7 +63,7 @@ function Row(props) {
         <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
           <TableCell className="sticky-column sticky-accordion">
             <IconButton
-              aria-label="expand row"
+              aria-label={t.expandRow}
               size="small"
               color="primary"
               onClick={() => setOpen(!open)}
@@ -72,23 +79,23 @@ function Row(props) {
             {attributes?.title}
           </TableCell>
           <TableCell align="right" className="tablecell-styles">
-            {attributes?.disclosure_ghg_emission ?? "No data"} /{" "}
-            {attributes?.disclosure_deforestation ?? "No data"}
+            {attributes?.disclosure_ghg_emission ?? t.noData} /{" "}
+            {attributes?.disclosure_deforestation ?? t.noData}
           </TableCell>
           <TableCell align="right" className="tablecell-styles">
-            {attributes?.commitment_status ?? "No data"}
+            {attributes?.commitment_status ?? t.noData}
           </TableCell>
           <TableCell align="right" className="tablecell-styles">
-            {attributes?.net_emission_reduction ?? "No data"}
+            {attributes?.net_emission_reduction ?? t.noData}
           </TableCell>
           <TableCell align="right" className="tablecell-styles">
-            {attributes?.climate_contribution_offset ?? "No data"}
+            {attributes?.climate_contribution_offset ?? t.noData}
           </TableCell>
           <TableCell align="right" className="tablecell-styles">
-            {attributes?.deforestation ?? "No data"}
+            {attributes?.deforestation ?? t.noData}
           </TableCell>
           <TableCell align="right" sx={{ color: colorImpact }} className="tablecell-styles bold-class ">
-            {attributes?.environmental_impact ?? "No data"}
+            {attributes?.environmental_impact ?? t.noData}
           </TableCell>
         </TableRow>
         <TableRow>
@@ -101,20 +108,20 @@ function Row(props) {
                   component="h6"
                   fontWeight="bold"
                 >
-                  Profile
+                  {t.profile}
                 </Typography>
                 <Table>
                   <TableRow>
                     <TableCell align="center" className="bold-class">
-                      logo
+                      {t.logo}
                     </TableCell>
                     <TableCell className="bold-class">
-                      Additional details
+                      {t.details}
                     </TableCell>
                     <TableCell className="bold-class">
-                      Products & services
+                      {t.products}
                     </TableCell>
-                    <TableCell className="bold-class">Sources</TableCell>
+                    <TableCell className="bold-class">{t.sources}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>
@@ -135,7 +142,7 @@ function Row(props) {
                       >
                         {ReactHtmlParser(
                           attributes?.additional_details.value
-                        ) ?? "No data"}
+                        ) ?? t.noData}
                       </Container>
                     </TableCell>
                     <TableCell align="left">
@@ -164,7 +171,7 @@ function Row(props) {
                               key={data.title + " " + index}
                             >
                               <Typography component="p">
-                                {data?.title ?? "No data"}
+                                {data?.title ?? t.noData}
                               </Typography>
                             </Typography>
                           );
@@ -183,6 +190,7 @@ function Row(props) {
 }
 
 export default function BusinessStatistics({ props }) {
+  const t = useT().esg;
   // content api data
   let businessData = [];
   // const [businessData, setBusinessData] = useState([]);
@@ -251,7 +259,7 @@ export default function BusinessStatistics({ props }) {
         ></TextField> */}
       </Container>
       <TableContainer component={Paper}>
-        <Table aria-label="collapsible table" className="position-relative">
+        <Table aria-label={t.table.ariaLabel} className="position-relative">
           <TableHead>
             <TableRow>
               <TableCell className="sticky-column sticky-accordion" />
@@ -262,37 +270,37 @@ export default function BusinessStatistics({ props }) {
                   className="white-color"
                   fontSize="large"
                 >
-                  Company
+                  {t.table.company}
                 </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="span" fontWeight="bold" fontSize="large">
-                  Disclosure: GHG Emission / Deforestation
+                  {t.table.disclosure}
                 </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="span" fontWeight="bold" fontSize="large">
-                  Commitment status
+                  {t.table.commitment}
                 </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="span" fontWeight="bold" fontSize="large">
-                  Net emission reduction
+                  {t.table.netReduction}
                 </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="span" fontWeight="bold" fontSize="large">
-                  Climate contribution / Offsetting
+                  {t.table.contribution}
                 </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="span" fontWeight="bold" fontSize="large">
-                  Deforestation
+                  {t.table.deforestation}
                 </Typography>
               </TableCell>
               <TableCell align="right">
                 <Typography variant="span" fontWeight="bold" fontSize="large">
-                  Environmental impact
+                  {t.table.impact}
                 </Typography>
               </TableCell>
             </TableRow>
@@ -311,7 +319,7 @@ export default function BusinessStatistics({ props }) {
       </TableContainer>
       <Container align="center">
         <Typography component="p" mt={3} fontSize="large">
-          Access data: <Link href="https://data.global-warming.org/">Login / Register</Link>
+          {t.accessData} <Link href="https://data.global-warming.org/">{t.login}</Link>
         </Typography>
         <LoadingButton
           loading={initialLoading}
@@ -319,7 +327,7 @@ export default function BusinessStatistics({ props }) {
           disabled
         />
         {errorMsg && (
-          <Alert severity="error">There was an error trying to fetch the information. If the problem persist, please contact us.</Alert>
+          <Alert severity="error">{t.fetchError}</Alert>
         )}
       </Container>
     </>

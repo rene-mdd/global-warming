@@ -4,6 +4,9 @@ import { LoadingButton } from "@mui/lab";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Arctic from "../charts/arctic";
 import { AccordionArctic, AccordionShare } from "./accordion";
+import RichText from "./richText";
+import { useT } from "../../lib/i18n";
+import useLocalizedDecimal from "./localizedDecimal";
 import { arcticService } from "../../services/dataService";
 
 const theme = createTheme({
@@ -15,6 +18,8 @@ const theme = createTheme({
 });
 
 function ParentArctic() {
+  const t = useT();
+  const decimal = useLocalizedDecimal();
   const [arctic, setArctic] = useState(false);
   const [arcticLoading, setArcticLoading] = useState(false);
   const [todayValue, setTodayValue] = useState("0");
@@ -32,7 +37,7 @@ function ParentArctic() {
     <Container component="section">
       <Container>
         <Typography component="h2" align="center" className="h2-general">
-          Sea ice extent
+          {t.arctic.title}
         </Typography>
         <Grid container>
           {arctic ? (
@@ -45,7 +50,7 @@ function ParentArctic() {
                 loading={arcticLoading}
                 variant="contained"
               >
-                {arctic ? "Hide graph" : "Load graph"}
+                {arctic ? t.common.hideGraph : t.common.loadGraph}
               </LoadingButton>
             </ThemeProvider>
           </Grid>
@@ -53,35 +58,17 @@ function ParentArctic() {
         <Grid>
           <Container align="center" className="today-value">
             <p>
-              Today's value:
-              <span style={{ color: "#2c82c9" }}> {todayValue}</span>
+              {t.common.todayValue}
+              <span style={{ color: "#2c82c9" }}> {decimal(todayValue)}</span>
             </p>
           </Container>
           <Container id="scrolling-container">
-            <p>
-              The arctic is warming around twice as fast as global average. Some
-              of the reasons for this are: The arctic amplification, the albedo
-              effect, and black carbon. From 1979 to 1996, we lost 2.2 – 3% of
-              the arctic ice cover. From 2010 to present we are losing 12.85%
-              per decade!
-            </p>
-
-            <p>
-              Another consequence is permafrost thawing. This is a process in
-              which large amounts of methane is released to the atmosphere,
-              fueling more the process of global warming.
-            </p>
-            <p>
-              For more details please visit:&nbsp;
-              <a href="https://www.npolar.no/en/themes/climate-change-in-the-arctic/#toggle-id-8">
-                Climate change in the Arctic
-              </a>
-              <span> and </span>
-              <a href="https://www.igsoc.org/annals/46/a46a005.pdf">
-                Recent air-temperature changes in the Arctic
-              </a>
-              .
-            </p>
+            {t.arctic.paragraphs.map((parts, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <p key={i}>
+                <RichText parts={parts} />
+              </p>
+            ))}
             <Grid
               container
               spacing={3}

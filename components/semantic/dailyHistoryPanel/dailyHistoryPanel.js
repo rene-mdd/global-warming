@@ -29,27 +29,31 @@ import {
 
 import styles from "./dailyHistoryPanel.module.scss";
 import { STATUS_SERIES, formatCompact, formatNumber } from "../../../lib/chart-theme";
+import { useFormatLocale, useT } from "../../../lib/i18n";
+import RichText from "../richText";
 
-const DAY_RANGES = [
-  { key: "7", label: "7 days" },
-  { key: "30", label: "30 days" },
-  { key: "90", label: "90 days" },
-];
+// Labels come from locales/*/traffic.js (`daily.ranges`).
+const DAY_RANGES = ["7", "30", "90"];
 
-function formatDayTick(dateKey) {
+function formatDayTick(dateKey, locale) {
   const date = new Date(`${dateKey}T00:00:00.000Z`);
   if (Number.isNaN(date.getTime())) return dateKey;
-  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  return date.toLocaleDateString(locale, { month: "short", day: "numeric" });
 }
 
-async function getJSON(url) {
+// `requestFailed` is the locale's fallback message; an `error` string from
+// the API itself is shown as sent.
+async function getJSON(url, requestFailed) {
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
+  if (!res.ok) throw new Error(json?.error || requestFailed(res.status));
   return json;
 }
 
 export default function DailyHistoryPanel({ isDark }) {
+  const t = useT().traffic;
+  const fmt = useFormatLocale();
+  const dayTick = (dateKey) => formatDayTick(dateKey, fmt);
   const [daysKey, setDaysKey] = useState("30");
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -67,14 +71,14 @@ export default function DailyHistoryPanel({ isDark }) {
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    getJSON(`/api/drains/daily?days=${daysKey}`)
+    getJSON(`/api/drains/daily?days=${daysKey}`, t.requestFailed)
       .then((json) => {
         if (cancelled) return;
         setData(json);
         setError(null);
       })
       .catch((err) => {
-        if (!cancelled) setError(err.message);
+        if (!cancelled) setError(t.apiErrors[err.message] ?? err.message);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -105,11 +109,8 @@ export default function DailyHistoryPanel({ isDark }) {
     <div className={styles.panel}>
       <div className={styles.head}>
         <div>
-          <h3 className={styles.title}>Daily history</h3>
-          <p className={styles.sub}>
-            One rollup per day · not limited by the ~7-day raw event window ·
-            chart below is backend requests only, not CDN cache hits
-          </p>
+          <h3 className={styles.title}>{t.daily.title}</h3>
+          <p className={styles.sub}>{t.daily.sub}</p>
         </div>
         <ToggleButtonGroup
           size="small"
@@ -117,9 +118,9 @@ export default function DailyHistoryPanel({ isDark }) {
           value={daysKey}
           onChange={(_e, v) => v && setDaysKey(v)}
         >
-          {DAY_RANGES.map((r) => (
-            <ToggleButton key={r.key} value={r.key}>
-              {r.label}
+          {DAY_RANGES.map((key) => (
+            <ToggleButton key={key} value={key}>
+              {t.daily.ranges[key]}
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
@@ -139,9 +140,8 @@ export default function DailyHistoryPanel({ isDark }) {
 
       {isEmpty && (
         <Alert severity="info">
-          <AlertTitle>No daily rollups yet</AlertTitle>
-          Nothing in <code>drain:daily</code> for this range. It fills in once{" "}
-          <code>/api/drains/rollup</code> has run at least once.
+          <AlertTitle>{t.daily.emptyTitle}</AlertTitle>
+          <RichText parts={t.daily.emptyBody} />
         </Alert>
       )}
 
@@ -149,39 +149,47 @@ export default function DailyHistoryPanel({ isDark }) {
         <>
           <div className={styles.tileRow}>
             <div className={styles.tile}>
-              <p className={styles.tileLabel}>Total requests</p>
+              <p className={styles.tileLabel}>{t.tiles.totalRequests}</p>
               <div className={styles.tileValue}>
                 {Number.isFinite(data?.totals?.totalTrafficRequests)
-                  ? formatCompact(data.totals.totalTrafficRequests)
+                  ? formatCompact(data.totals.totalTrafficRequests, fmt)
                   : "—"}
               </div>
               <p className={styles.tileHint}>
                 {Number.isFinite(data?.totals?.totalTrafficRequests)
-                  ? `all edge traffic (cache hits + backend), ${formatNumber(data.measuredCoverageDays ?? 0)} day${data.measuredCoverageDays === 1 ? "" : "s"} measured`
-                  : "no Vercel metrics reported for this range yet"}
+                  ? t.tiles.totalHint(
+                      formatNumber(data.measuredCoverageDays ?? 0, fmt),
+                      data.measuredCoverageDays,
+                    )
+                  : t.tiles.totalHintNone}
               </p>
             </div>
             <div className={styles.tile}>
-              <p className={styles.tileLabel}>Backend requests</p>
+              <p className={styles.tileLabel}>{t.tiles.backendRequests}</p>
               <div className={styles.tileValue}>
-                {formatCompact(data?.totals?.requests ?? 0)}
+                {formatCompact(data?.totals?.requests ?? 0, fmt)}
               </div>
               <p className={styles.tileHint}>
-                across {formatNumber(series.length)} day
-                {series.length === 1 ? "" : "s"}
+                {t.daily.backendAcross(
+                  formatNumber(series.length, fmt),
+                  series.length,
+                )}
                 {Number.isFinite(data?.coveragePercent)
-                  ? ` · ~${data.coveragePercent}% of real traffic (rest is cache hits)${data?.measuredCoverageDays ? "" : ", estimated"}`
+                  ? t.daily.coverage(
+                      fmt
+                        ? formatNumber(data.coveragePercent, fmt)
+                        : data.coveragePercent,
+                      !data?.measuredCoverageDays,
+                    )
                   : ""}
               </p>
             </div>
             <div className={styles.tile}>
-              <p className={styles.tileLabel}>Busiest day</p>
+              <p className={styles.tileLabel}>{t.daily.busiestDay}</p>
               <div className={styles.tileValue}>
-                {formatCompact(data?.totals?.busiestDayUniqueVisitors ?? 0)}
+                {formatCompact(data?.totals?.busiestDayUniqueVisitors ?? 0, fmt)}
               </div>
-              <p className={styles.tileHint}>
-                unique addresses, single day — not summed across days
-              </p>
+              <p className={styles.tileHint}>{t.daily.busiestHint}</p>
             </div>
           </div>
 
@@ -194,17 +202,17 @@ export default function DailyHistoryPanel({ isDark }) {
                 />
                 <XAxis
                   dataKey="date"
-                  tickFormatter={formatDayTick}
+                  tickFormatter={dayTick}
                   tick={{ fontSize: 12 }}
                   minTickGap={24}
                 />
                 <YAxis tick={{ fontSize: 12 }} allowDecimals={false} width={44} />
                 <RechartsTooltip
                   formatter={(value, key) => [
-                    formatNumber(value),
-                    STATUS_SERIES.find((s) => s.key === key)?.label ?? key,
+                    formatNumber(value, fmt),
+                    t.status[key] ?? key,
                   ]}
-                  labelFormatter={formatDayTick}
+                  labelFormatter={dayTick}
                 />
                 {STATUS_SERIES.map((s) => (
                   <Bar

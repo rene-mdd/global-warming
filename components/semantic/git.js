@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
-import { Octokit } from "octokit";
+import { useT } from "../../lib/i18n";
 
 const theme = createTheme({
   palette: {
@@ -26,13 +26,10 @@ const theme = createTheme({
 });
 
 function Git() {
+  const t = useT().about.git;
   function parseDate(commitDate) {
-    const year = dayjs(commitDate).get("year");
-    const month = dayjs(commitDate).get("month") + 1;
-    const day = dayjs(commitDate).get("date");
-    const hour = dayjs(commitDate).get("hour");
-    const minutes = dayjs(commitDate).get("minute");
-    return `${year}-${month}-${day} at ${hour}:${minutes}`;
+    const date = dayjs(commitDate);
+    return `${date.format("YYYY-MM-DD")} ${t.at} ${date.format("HH:mm")}`;
   }
 
   const [commitsPages, setCommit] = useState(13);
@@ -40,30 +37,22 @@ function Git() {
   const [loadingCommits, setloadingCommits] = useState(false);
   useEffect(() => {
     async function fetchCommits() {
-      const GithubToken = process.env.API_GITHUB;
-      const octokit = new Octokit({ auth: GithubToken });
       try {
         if (commitsPages > 0) {
           setloadingCommits(true);
-          const response = await octokit.paginate(
-            "GET /repos/rene-mdd/global-warming/commits",
-            {
-              owner: "rene-mdd",
-              repo: "global-warming",
-              per_page: 30,
-              page: commitsPages,
-              headers: {
-                "X-GitHub-Api-Version": "2022-11-28",
-              },
-            }
+          // Fetched through our own API route, so the visitor's browser never
+          // contacts GitHub (see pages/api/github-commits.js).
+          const response = await fetch(
+            `/api/github-commits?page=${commitsPages}`
           );
-          if (response) {
-            setGitResp(() => [...response].reverse());
-            setloadingCommits(false);
-          }
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const commits = await response.json();
+          setGitResp(() => [...commits].reverse());
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setloadingCommits(false);
       }
     }
     fetchCommits();
@@ -84,7 +73,7 @@ function Git() {
           alignItems="center"
         >
           <Typography variant="h2" textAlign="center" className="git-title">
-            Git software development updates
+            {t.title}
           </Typography>
         </Grid>
         <Grid
@@ -100,7 +89,7 @@ function Git() {
             color="white"
             borderBottom={1}
           >
-            Design / Frontend
+            {t.frontend}
           </Typography>
         </Grid>
         <Grid
@@ -114,15 +103,15 @@ function Git() {
             component={Paper}
             sx={{ minWidth: 320, maxHeight: 600 }}
           >
-            <Table aria-label="simple table">
+            <Table aria-label={t.tableLabel}>
               <TableHead>
                 <TableRow>
-                  <TableCell className="bold-class">Commit message</TableCell>
+                  <TableCell className="bold-class">{t.message}</TableCell>
                   <TableCell className="bold-class" align="right">
-                    Author
+                    {t.author}
                   </TableCell>
                   <TableCell className="bold-class" align="right">
-                    Date / Time
+                    {t.dateTime}
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -147,7 +136,7 @@ function Git() {
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell align="center">No commits.</TableCell>
+                    <TableCell align="center">{t.noCommits}</TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -171,7 +160,7 @@ function Git() {
               onClick={() => setCommit(commitsPages - 1)}
               loading={loadingCommits}
             >
-              Load more commits
+              {t.loadMore}
             </LoadingButton>
           </ThemeProvider>
         </Grid>
@@ -192,7 +181,7 @@ function Git() {
         <Grid mt={2} xs={12}>
           <Container component="footer" className="github-source">
             <Typography component="p" align="center" color="white">
-              Source:{" "}
+              {t.source}{" "}
               <a href="https://github.com/rene-mdd/global-warming">
                 https://github.com/rene-mdd/global-warming
               </a>

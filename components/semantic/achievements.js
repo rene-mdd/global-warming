@@ -8,8 +8,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
+import { useLocale, useT } from "../../lib/i18n";
+import { localizedPath } from "../../lib/i18n-config";
 
-function CountUp({ end, duration, showPlus, isVisible }) {
+function CountUp({ end, duration, showPlus, isVisible, numberLocale }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function CountUp({ end, duration, showPlus, isVisible }) {
       sx={{ fontWeight: 700, fontSize: "2rem" }}
     >
       {showPlus ? "+" : ""}
-      {count.toLocaleString("en-US")}
+      {count.toLocaleString(numberLocale)}
     </Typography>
   );
 }
@@ -48,6 +50,7 @@ CountUp.propTypes = {
   duration: PropTypes.number,
   showPlus: PropTypes.bool,
   isVisible: PropTypes.bool.isRequired,
+  numberLocale: PropTypes.string.isRequired,
 };
 
 CountUp.defaultProps = {
@@ -55,7 +58,7 @@ CountUp.defaultProps = {
   showPlus: false,
 };
 
-function FactCard({ value, label, showPlus }) {
+function FactCard({ value, label, showPlus, numberLocale }) {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -79,7 +82,12 @@ function FactCard({ value, label, showPlus }) {
       elevation={0}
       sx={{ bgcolor: "transparent", color: "white", p: 2 }}
     >
-      <CountUp end={value} showPlus={showPlus} isVisible={isVisible} />
+      <CountUp
+        end={value}
+        showPlus={showPlus}
+        isVisible={isVisible}
+        numberLocale={numberLocale}
+      />
       <Typography variant="h6" sx={{ mt: 1 }}>
         {label}
       </Typography>
@@ -91,6 +99,7 @@ FactCard.propTypes = {
   value: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
   showPlus: PropTypes.bool,
+  numberLocale: PropTypes.string.isRequired,
 };
 
 FactCard.defaultProps = {
@@ -98,10 +107,12 @@ FactCard.defaultProps = {
 };
 
 export default function FactsSection() {
+  const t = useT().about.achievements;
+  const locale = useLocale();
   const facts = [
-    { value: 80000, label: "Connected Devices", showPlus: true },
-    { value: 350000, label: "Monthly API requests", showPlus: true },
-    { value: 150000, label: "Companies", showPlus: true },
+    { value: 80000, label: t.devices, showPlus: true },
+    { value: 350000, label: t.apiRequests, showPlus: true },
+    { value: 150000, label: t.companies, showPlus: true },
   ];
 
   return (
@@ -121,7 +132,7 @@ export default function FactsSection() {
           align="center"
           className="achievements-title"
         >
-          Global Usage
+          {t.title}
         </Typography>
         <Grid container spacing={4} justifyContent="center" textAlign="center">
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -129,6 +140,7 @@ export default function FactsSection() {
               value={facts[0].value}
               label={facts[0].label}
               showPlus={facts[0].showPlus}
+              numberLocale={t.numberLocale}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -136,6 +148,7 @@ export default function FactsSection() {
               value={facts[1].value}
               label={facts[1].label}
               showPlus={facts[1].showPlus}
+              numberLocale={t.numberLocale}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 3 }}>
@@ -143,13 +156,19 @@ export default function FactsSection() {
               value={facts[2].value}
               label={facts[2].label}
               showPlus={facts[2].showPlus}
+              numberLocale={t.numberLocale}
             />
           </Grid>
         </Grid>
       </Container>
       <Container align="center" sx={{ position: "relative", zIndex: 1, marginTop: "40px", marginBottom: "64px" }}>
-        <Link  underline="hover" href="/traffic" className="link-to-traffic">
-          Learn More
+        <Link
+          underline="hover"
+          // MUI Link renders a plain <a>, which doesn't add the locale prefix.
+          href={localizedPath("/traffic", locale)}
+          className="link-to-traffic"
+        >
+          {t.learnMore}
         </Link>
       </Container>
     </Box>

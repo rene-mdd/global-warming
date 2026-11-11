@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import localMethaneData from "../../public/data/csvjson-methane.json";
 import { methaneService } from "../../services/dataService";
 
 function Methane({ parentCallBack }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
-  const url = "api/methane-api";
+  const url = "/api/methane-api";
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -35,7 +37,7 @@ function Methane({ parentCallBack }) {
       } catch (error) {
         console.error(error);
         setGraphError(
-          "There was an error while trying to retrieve the graph data. Please try again in a few minutes. If the error persists, please use our contact form to report it. Thank you."
+          t.dataError
         );
       }
     }
@@ -68,7 +70,7 @@ function Methane({ parentCallBack }) {
           labels: methPrehistoricData.date.concat(date),
           datasets: [
             {
-              label: "Methane",
+              label: t.methane,
               data: methPrehistoricData.amount.concat(average),
               fill: false,
               borderColor: "#A75E09",
@@ -89,14 +91,14 @@ function Methane({ parentCallBack }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Part Per billion (ppb)",
+                text: t.ppb,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
@@ -108,7 +110,7 @@ function Methane({ parentCallBack }) {
     } catch (error) {
       console.error(error);
       setGraphError(
-        "There was an error trying to load the graph. Please refer to our contact form and report it. Thank you."
+        t.loadError
       );
     }
   };
@@ -128,16 +130,16 @@ function Methane({ parentCallBack }) {
               <span style={{ color: "#FD4659" }}>{graphError}</span>
             </p>
             <p>
-              Year 1983 to present data source: Global Monitoring Division of
-              NOAA’s Earth System Research Laboratory Ed Dlugokencky, NOAA/GML (
+              {t.methaneModernSource} Global Monitoring Division of NOAA’s
+              Earth System Research Laboratory Ed Dlugokencky, NOAA/GML (
               <a href="https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/">
                 <em> https://www.esrl.noaa.gov/gmd/ccgg/trends_ch4/</em>
               </a>
               ).
             </p>
             <p>
-              Data 800,000 years ago to 1983 source: United States,
-              Environmental Protection Agency (EPA), (
+              {t.methaneAncientSource} United States, Environmental
+              Protection Agency (EPA), (
               <a href="https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases">
                 <em>
                   https://www.epa.gov/climate-indicators/climate-change-indicators-atmospheric-concentrations-greenhouse-gases
@@ -146,7 +148,7 @@ function Methane({ parentCallBack }) {
               )
             </p>
             <p>
-              <b>From 1983.07 this data is measured on a monthly basis</b>
+              <b>{t.methaneMonthly}</b>
             </p>
           </Container>
         </Grid>

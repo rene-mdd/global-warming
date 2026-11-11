@@ -5,24 +5,63 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://www.global-warming.org/</loc>
+    <loc>https://global-warming.org/</loc>
   </url>
   <url>
-    <loc>https://www.global-warming.org/about</loc>
+    <loc>https://global-warming.org/about</loc>
   </url>
   <url>
-    <loc>https://www.global-warming.org/business</loc>
+    <loc>https://global-warming.org/news</loc>
   </url>
   <url>
-    <loc>https://www.global-warming.org/news</loc>
+    <loc>https://global-warming.org/deforestation</loc>
   </url>
   <url>
-    <loc>https://www.global-warming.org/deforestation</loc>
+    <loc>https://global-warming.org/donate</loc>
   </url>
   <url>
-     <loc>https://www.global-warming.org/donate</loc>
+    <loc>https://global-warming.org/contact</loc>
   </url>
   <url>
-    <loc>https://www.global-warming.org/contact</loc>
+    <loc>https://global-warming.org/esg</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/traffic</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/imprint</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/privacy-policy</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/about</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/news</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/deforestation</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/donate</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/contact</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/esg</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/traffic</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/imprint</loc>
+  </url>
+  <url>
+    <loc>https://global-warming.org/de/privacy-policy</loc>
   </url>
 </urlset>

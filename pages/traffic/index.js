@@ -4,6 +4,7 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
 import TrafficDashboard from "../../components/semantic/trafficDashboard/trafficDashboard";
+import { useT } from "../../lib/i18n";
 
 const theme = createTheme({
   palette: {
@@ -17,19 +18,15 @@ const theme = createTheme({
 });
 
 function Traffic() {
-  const donateTitle = "Climate Accountability API - Traffic";
-  const donateMetaDescription =
-    "Current usage of the Climate Accountability APIs, including the number of requests and the most popular endpoints.";
-  const donateKeywords =
-    "Global warming, Climate APIs, carbon footprint, co2, usage";
-  const websiteUrl = "https://www.global-warming.org/traffic";
+  const t = useT().traffic;
+  const websiteUrl = "https://global-warming.org/traffic";
 
   return (
     <>
       <SiteHeader
-        description={donateTitle}
-        title={donateMetaDescription}
-        keywords={donateKeywords}
+        description={t.meta.description}
+        title={t.meta.title}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />

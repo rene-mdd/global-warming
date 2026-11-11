@@ -3,35 +3,34 @@ import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import BusinessStatistics from "../../components/semantic/business-statistics";
 import business from "../../public/data/dummy";
+import businessDe from "../../public/data/dummy.de";
 import Footer from "../../components/semantic/footer";
+import { useLocale, useT } from "../../lib/i18n";
 
 function Business() {
-  const esgTitle = "Open ESG Data on Companies";
-  const websiteUrl = "https://www.global-warming.org/esg";
-  const aboutMetaDescription =
-    "Explore open, evidence-based ESG data on companies, including their climate performance, environmental impact, social practices, and governance. Our mission is to make corporate information transparent and accessible to the public.";
-  const aboutKeywords =
-    "Global warming, environment, impact, pollution, climate change, business, ESG, Corporate ESG, Open ESG data";
+  const t = useT().esg;
+  const companies = useLocale() === "de" ? businessDe : business;
+  const websiteUrl = "https://global-warming.org/esg";
 
   return (
     <>
       <SiteHeader
-        description={aboutMetaDescription}
-        title={esgTitle}
-        keywords={aboutKeywords}
+        description={t.meta.description}
+        title={t.meta.title}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />
       <Grid container direction="column" className="landing-page-about">
         <Typography component="p" align="center" className="h1-business">
-          Companies ESG data
+          {t.heading}
         </Typography>
         <Grid align="center">
           <CardMedia
             component="img"
-            image="images/statistic-icon.png"
+            image="/images/statistic-icon.png"
             className="landing-page-logo"
-            alt="statistic"
+            alt={t.iconAlt}
           />
           <Typography
             component="h2"
@@ -39,13 +38,12 @@ function Business() {
             align="center"
             gutterBottom
           >
-            Find information on companies' environmental, social and governance
-            (ESG) impact.
+            {t.intro}
           </Typography>
         </Grid>
         <Grid component="div" container justifyContent="center" columns={12}>
           <Grid item xs={12} md={12} lg={8} mb={6}>
-            <BusinessStatistics props={business} />
+            <BusinessStatistics props={companies} />
           </Grid>
         </Grid>
       </Grid>
