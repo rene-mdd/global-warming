@@ -44,6 +44,9 @@ import {
   WhatsappIcon,
 } from "react-share";
 
+import RichText from "./richText";
+import { useT } from "../../lib/i18n";
+
 const share = [
   <FacebookShareButton url="https://global-warming.org/" key="facebook">
     <FacebookIcon size={50} borderRadius={5} />
@@ -137,14 +140,16 @@ const share = [
 //   },
 // }));
 
-const AccordionTemp = () => (
+const AccordionTemp = () => {
+  const t = useT().api;
+  return (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel1a-header"
       sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
     >
-      <Typography sx={{ fontSize: "22px", color: "white" }}>Get API</Typography>
+      <Typography sx={{ fontSize: "22px", color: "white" }}>{t.getApi}</Typography>
     </AccordionSummary>
     <AccordionDetails>
       <Typography
@@ -152,27 +157,28 @@ const AccordionTemp = () => (
         variant="h5"
         sx={{ color: "#215a6d", fontWeight: "bold" }}
       >
-        Global Monthly Mean Surface Temperature Change
+        {t.temperature.title}
       </Typography>
       <Typography component="p" sx={{ fontSize: "18px", color: "#276f86" }}>
-        This API provides on a monthly basis, the global mean surface
-        temperature anomaly from 1880.04 to the present (in celsius). Fetch this
-        endpoint
+        <RichText parts={t.temperature.body} />
         <b> https://global-warming.org/api/temperature-api </b>
-        and you will get the info in JSON format.
+        {t.fetchEnd}
       </Typography>
     </AccordionDetails>
   </Accordion>
-);
+  );
+};
 
-const AccordionCo2 = () => (
+const AccordionCo2 = () => {
+  const t = useT().api;
+  return (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel2a-header"
       sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
     >
-      <Typography sx={{ fontSize: "22px", color: "white" }}>Get API</Typography>
+      <Typography sx={{ fontSize: "22px", color: "white" }}>{t.getApi}</Typography>
     </AccordionSummary>
     <AccordionDetails>
       <Typography
@@ -180,28 +186,28 @@ const AccordionCo2 = () => (
         variant="h5"
         sx={{ color: "#215a6d", fontWeight: "bold" }}
       >
-        Daily global seasonal cycle and trend value
+        {t.co2.title}
       </Typography>
       <Typography component="p" sx={{ fontSize: "18px" }}>
-        This API provides on a quasi-daily basis, the amount of carbon dioxide
-        (CO2) in the atmosphere from 10 years go to the present. It is expressed
-        as a mole fraction in dry air, parts per million (ppm). Fetch this
-        endpoint
+        <RichText parts={t.co2.body} />
         <b> https://global-warming.org/api/co2-api </b>
-        and you will get the info in JSON format.
+        {t.fetchEnd}
       </Typography>
     </AccordionDetails>
   </Accordion>
-);
+  );
+};
 
-const AccordionMethane = () => (
+const AccordionMethane = () => {
+  const t = useT().api;
+  return (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel3a-header"
       sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
     >
-      <Typography sx={{ fontSize: "22px", color: "white" }}>Get API</Typography>
+      <Typography sx={{ fontSize: "22px", color: "white" }}>{t.getApi}</Typography>
     </AccordionSummary>
     <AccordionDetails>
       <Typography
@@ -209,27 +215,28 @@ const AccordionMethane = () => (
         variant="h5"
         sx={{ color: "#215a6d", fontWeight: "bold" }}
       >
-        Globally averaged, monthly mean atmospheric methane abundance determined from marine surface sites
+        {t.methane.title}
       </Typography>
       <Typography component="p" sx={{ fontSize: "18px" }}>
-        This API provides on a monthly basis, the amount of methane in the
-        atmosphere from 1983 to the present. Expressed as a mole fraction in dry
-        air, parts per billion (ppb). Fetch this endpoint
+        <RichText parts={t.methane.body} />
         <b> https://global-warming.org/api/methane-api </b>
-        and you will get the info in JSON format.
+        {t.fetchEnd}
       </Typography>
     </AccordionDetails>
   </Accordion>
-);
+  );
+};
 
-const AccordionNitrous = () => (
+const AccordionNitrous = () => {
+  const t = useT().api;
+  return (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel3a-header"
       sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
     >
-      <Typography sx={{ fontSize: "22px", color: "white" }}>Get API</Typography>
+      <Typography sx={{ fontSize: "22px", color: "white" }}>{t.getApi}</Typography>
     </AccordionSummary>
     <AccordionDetails>
       <Typography
@@ -237,27 +244,28 @@ const AccordionNitrous = () => (
         variant="h5"
         sx={{ color: "#215a6d", fontWeight: "bold" }}
       >
-        Globally-averaged, monthly mean atmospheric nitrous oxide abundance determined from marine surface sites
+        {t.nitrous.title}
       </Typography>
       <Typography component="p" sx={{ fontSize: "18px" }}>
-        This API provides on a monthly basis, the amount of nitrous oxide in the
-        atmosphere from 2001 to the present. Expressed as a mole fraction in dry
-        air, parts per billion (ppb). Fetch this endpoint
+        <RichText parts={t.nitrous.body} />
         <b> https://global-warming.org/api/nitrous-oxide-api </b>
-        and you will get the info in JSON format.
+        {t.fetchEnd}
       </Typography>
     </AccordionDetails>
   </Accordion>
-);
+  );
+};
 
-const AccordionArctic = () => (
+const AccordionArctic = () => {
+  const t = useT().api;
+  return (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel3a-header"
       sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
     >
-      <Typography sx={{ fontSize: "22px", color: "white" }}>Get API</Typography>
+      <Typography sx={{ fontSize: "22px", color: "white" }}>{t.getApi}</Typography>
     </AccordionSummary>
     <AccordionDetails>
       <Typography
@@ -265,26 +273,28 @@ const AccordionArctic = () => (
         variant="h5"
         sx={{ color: "#215a6d", fontWeight: "bold" }}
       >
-        Sea ice extent
+        {t.arctic.title}
       </Typography>
       <Typography component="p" sx={{ fontSize: "18px" }}>
-        Sea ice extent from 1979–2024 for the Globe, on a monthly basis, Northern Hemisphere, and
-        Southern Hemisphere. Fetch this endpoint
+        <RichText parts={t.arctic.body} />
         <b> https://global-warming.org/api/arctic-api </b>
-        and you will get the info in JSON format.
+        {t.fetchEnd}
       </Typography>
     </AccordionDetails>
   </Accordion>
-);
+  );
+};
 
-const AccordionOcean = (props) => (
+const AccordionOcean = (props) => {
+  const t = useT().api;
+  return (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel3a-header"
       sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
     >
-      <Typography sx={{ fontSize: "22px", color: "white" }}>Get API</Typography>
+      <Typography sx={{ fontSize: "22px", color: "white" }}>{t.getApi}</Typography>
     </AccordionSummary>
     <AccordionDetails>
       <Typography
@@ -295,20 +305,13 @@ const AccordionOcean = (props) => (
         {props.props}
       </Typography>
       <Typography component="p" sx={{ fontSize: "18px" }}>
-        The Extended Reconstructed Sea Surface Temperature (ERSST) dataset is a
-        global monthly analysis of SST data derived from the International
-        Comprehensive Ocean–Atmosphere Dataset (
-        <a href="https://journals.ametsoc.org/view/journals/bams/93/11/bams-d-11-00241.1.xml">
-          ICOADS
-        </a>
-        ). The dataset can be used for long-term global and basin-wide studies
-        and incorporates smoothed local and short-term variations. Fetch this
-        endpoint <b> https://global-warming.org/api/ocean-warming-api </b>
-        and you will get the info in JSON format.
+        <RichText parts={t.ocean.body} /> <b> https://global-warming.org/api/ocean-warming-api </b>
+        {t.fetchEnd}
       </Typography>
     </AccordionDetails>
   </Accordion>
-);
+  );
+};
 
 // const AccordionCo2 = () => (
 //   <Accordion defaultActiveIndex={1} panels={panelCo2} />
@@ -326,14 +329,16 @@ const AccordionOcean = (props) => (
 //   <Accordion defaultActiveIndex={1} panels={panelArctic} />
 // );
 
-const AccordionShare = () => (
+const AccordionShare = () => {
+  const t = useT().api;
+  return (
   <Accordion>
     <AccordionSummary
       expandIcon={<ExpandMoreIcon />}
       aria-controls="panel1a-header"
       sx={{ backgroundColor: "#12d3cf", borderRadius: "5px 5px 0 0" }}
     >
-      <Typography sx={{ fontSize: "22px", color: "white" }}>Share</Typography>
+      <Typography sx={{ fontSize: "22px", color: "white" }}>{t.share}</Typography>
     </AccordionSummary>
     <AccordionDetails>
       {share.map((social) => {
@@ -341,7 +346,8 @@ const AccordionShare = () => (
       })}
     </AccordionDetails>
   </Accordion>
-);
+  );
+};
 
 export {
   AccordionTemp,

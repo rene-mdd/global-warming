@@ -15,6 +15,8 @@ import { Container } from "@mui/system";
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
+import PrivacyPolicyDe from "../../components/semantic/privacyPolicyDe";
+import { useLocale, useT } from "../../lib/i18n";
 
 function PrivacyPolicy() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,19 +25,19 @@ function PrivacyPolicy() {
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
-  const privacyTitle = "Climate Accountability API - Privacy Policy";
-  const privacyMetaDescription =
-    "Privacy policy: Climate Accountability API gUG. Berlin, Germany.";
-  const privacyKeywords =
-    "Global warming, about, carbon footprint, climate change, environment";
+  const t = useT().privacy;
+  const locale = useLocale();
   const websiteUrl = "https://www.global-warming.org/privacy-policy";
+
+  // German version: a statement-for-statement translation of this page.
+  if (locale === "de") return <PrivacyPolicyDe websiteUrl={websiteUrl} />;
 
   return (
     <>
       <SiteHeader
-        description={privacyTitle}
-        title={privacyMetaDescription}
-        keywords={privacyKeywords}
+        description={t.meta.description}
+        title={t.meta.title}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />
@@ -140,10 +142,9 @@ function PrivacyPolicy() {
             web page access, and other data generated through a web site.
           </Typography>{" "}
           <Typography component="p">
-            The external hosting serves the purpose of fulfilling the contract
-            with our potential and existing customers (Art. 6(1)(b) GDPR) and in
-            the interest of secure, fast, and efficient provision of our online
-            services by a professional provider (Art. 6(1)(f) GDPR). If
+            The external hosting serves the interest of secure, fast, and
+            efficient provision of our online services by a professional
+            provider (Art. 6(1)(f) GDPR). If
             appropriate consent has been obtained, the processing is carried out
             exclusively on the basis of Art. 6 (1)(a) GDPR and &sect; 25 (1)
             TDDDG, insofar the consent includes the storage of cookies or the
@@ -169,67 +170,6 @@ function PrivacyPolicy() {
             You can review Vercel’s privacy policy{" "}
             <Link href="https://vercel.com/legal/privacy-policy">here</Link> for
             more information about how they handle your data.
-          </Typography>
-          <Typography component="h3">Amazon CloudFront CDN</Typography>{" "}
-          <Typography component="p">
-            We use the Content Delivery Network Amazon CloudFront CDN. The
-            provider is Amazon Web Services EMEA SARL, 38 avenue John F.
-            Kennedy, L-1855, Luxembourg (hereinafter referred to as
-            &ldquo;Amazon&rdquo;).
-          </Typography>{" "}
-          <Typography component="p">
-            Amazon CloudFront CDN is a globally distributed Content Delivery
-            Network. During these transactions, the information transfer between
-            your browser and our website is technically routed via the Content
-            Delivery Network. This enables us to boost the global availability
-            and performance capabilities of our website.
-          </Typography>{" "}
-          <Typography component="p">
-            The use of Amazon CloudFront CDN is based on our legitimate interest
-            in keeping the presentation of our web services as error free and
-            secure as possible (Art. 6(1)(f) GDPR).
-          </Typography>{" "}
-          <Typography component="p">
-            The data transfer to the United States is based on the Standard
-            Contract Clauses of the EU Commission. You can find the details
-            here:{" "}
-            <Link
-              href="https://aws.amazon.com/de/blogs/security/aws-gdpr-data-processing-addendum/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://aws.amazon.com/de/blogs/security/aws-gdpr-data-processing-addendum/
-            </Link>
-            .
-          </Typography>{" "}
-          <Typography component="p">
-            For more information on Amazon CloudFront CDN please follow this
-            link:{" "}
-            <Link
-              href="https://d1.awsstatic.com/legal/privacypolicy/AWS_Privacy_Notice__German_Translation.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://d1.awsstatic.com/legal/privacypolicy/AWS_Privacy_Notice__German_Translation.pdf
-            </Link>
-            .
-          </Typography>
-          <Typography component="p">
-            The company is certified in accordance with the &ldquo;EU-US Data
-            Privacy Framework&rdquo; (DPF). The DPF is an agreement between the
-            European Union and the US, which is intended to ensure compliance
-            with European data protection standards for data processing in the
-            US. Every company certified under the DPF is obliged to comply with
-            these data protection standards. For more information, please
-            contact the provider under the following link:{" "}
-            <Link
-              href="https://www.dataprivacyframework.gov/participant/5776"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.dataprivacyframework.gov/participant/5776
-            </Link>
-            .
           </Typography>
           <Typography component="h4">Data processing</Typography>{" "}
           <Typography component="p">
@@ -272,8 +212,8 @@ function PrivacyPolicy() {
             The data processing controller on this website is:
           </Typography>{" "}
           <Typography component="p">
-            Ren&eacute; Rodr&iacute;guez / Climate Accountability API.
-            <br /> Seestra&szlig;e 107. 13353, Berlin, Germany.
+            Climate Accountability API gUG (haftungsbeschr&auml;nkt)
+            <br /> Seestra&szlig;e 107, 13353 Berlin, Germany
           </Typography>
           <Typography component="div">
             Phone:{" "}
@@ -338,8 +278,8 @@ function PrivacyPolicy() {
             (e.g., disclosure of data to tax authorities), if we have a
             legitimate interest in the disclosure pursuant to Art. 6 (1)(f)
             GDPR, or if another legal basis permits the disclosure of this data.
-            When using processors, we only disclose personal data of our
-            customers on the basis of a valid contract on data processing. In
+            When using processors, we only disclose personal data on the basis
+            of a valid contract on data processing. In
             the case of joint processing, a joint processing agreement is
             concluded.
           </Typography>
@@ -390,6 +330,15 @@ function PrivacyPolicy() {
             work or at the place where the alleged violation occurred. The right
             to log a complaint is in effect regardless of any other
             administrative or court proceedings available as legal recourses.
+          </Typography>
+          <Typography component="p">
+            The supervisory authority competent for us is: Berliner Beauftragte
+            für Datenschutz und Informationsfreiheit (BlnBDI), Alt-Moabit 59–61,
+            10555 Berlin, Germany,{" "}
+            <a href="https://www.datenschutz-berlin.de">
+              https://www.datenschutz-berlin.de
+            </a>
+            .
           </Typography>
           <Typography component="h3">Right to data portability</Typography>{" "}
           <Typography component="p">
@@ -460,7 +409,7 @@ function PrivacyPolicy() {
           <Typography component="h3">SSL and/or TLS encryption</Typography>{" "}
           <Typography component="p">
             For security reasons and to protect the transmission of confidential
-            content, such as purchase orders or inquiries you submit to us as
+            content, such as donations or inquiries you submit to us as
             the website operator, this website uses either an SSL or a TLS
             encryption program. You can recognize an encrypted connection by
             checking whether the address line of the browser switches from
@@ -477,8 +426,8 @@ function PrivacyPolicy() {
           <Typography component="p">
             If you are under an obligation to share your payment information
             (e.g. account number if you give us the authority to debit your bank
-            account) with us after you have entered into a fee-based contract
-            with us, this information is required to process payments.
+            account) with us when you make a donation, this information is
+            required to process payments.
           </Typography>{" "}
           <Typography component="p">
             Payment transactions using common modes of paying (Visa/MasterCard,
@@ -516,14 +465,14 @@ function PrivacyPolicy() {
           <Typography component="p">
             Cookies have a variety of functions. Many cookies are technically
             essential since certain website functions would not work in the
-            absence of these cookies (e.g., the shopping cart function or the
-            display of videos). Other cookies may be used to analyze user
+            absence of these cookies (e.g., storing your consent choices).
+            Other cookies may be used to analyze user
             behavior or for promotional purposes.
           </Typography>{" "}
           <Typography component="p">
             Cookies, which are required for the performance of electronic
             communication transactions, for the provision of certain functions
-            you want to use (e.g., for the shopping cart function) or those that
+            you want to use (e.g., for your language selection) or those that
             are necessary for the optimization (required cookies) of the website
             (e.g., cookies that provide measurable insights into the web
             audience), shall be stored on the basis of Art. 6(1)(f) GDPR, unless
@@ -548,6 +497,28 @@ function PrivacyPolicy() {
           <Typography component="p">
             Which cookies and services are used on this website can be found in
             this privacy policy.
+          </Typography>
+          <Typography component="h3">Language preference cookie</Typography>{" "}
+          <Typography component="p">
+            This website is available in English and German. If you actively
+            choose a language, either with the language switcher in the menu
+            or with the language notice shown at the bottom of the page, we
+            store a first-party cookie named NEXT_LOCALE in your browser. It
+            contains only the language you chose (&quot;en&quot; or
+            &quot;de&quot;), no identifier, and is not shared with anyone. It
+            is used solely to show you the website in your chosen language on
+            later visits and expires after one year. The cookie is set only
+            when you choose a language; it is not set merely by visiting the
+            website.
+          </Typography>
+          <Typography component="p">
+            Storing this cookie is strictly necessary to provide the function
+            you expressly requested (§ 25(2) no. 2 TDDDG), so your consent is
+            not required. The legal basis for the processing is Art. 6(1)(f)
+            GDPR; our legitimate interest is showing the website in the
+            language you selected. You can delete the cookie in your browser
+            at any time; the website will then be shown in the language of the
+            address you open.
           </Typography>
           <Typography
             variant="h5"
@@ -660,13 +631,25 @@ function PrivacyPolicy() {
               Storage duration
             </Typography>
             <Typography variant="body1" paragraph>
-              Log entries are deleted automatically 30 days after they are
+              Log entries are deleted automatically 7 days after they are
               recorded, and in any event once our log store exceeds a
               configured maximum number of entries, whichever occurs first. At
-              current traffic volumes the entry-count limit is ordinarily
-              reached well before 30 days, so the effective retention window
-              is typically a few days. Deletion is permanent; entries are not
-              archived elsewhere.
+              current traffic volumes the entry-count limit is often reached
+              before 7 days, so the effective retention window can be shorter.
+              Deletion is permanent; entries are not archived elsewhere.
+            </Typography>
+            <Typography variant="body1" paragraph>
+              Once a day, we compute an aggregated summary of the previous day
+              from these entries: the number of requests, the number of
+              distinct visitors as a single figure, error counts, the data
+              volume, and the five most requested paths. We add the total
+              number of requests for that day as reported in aggregated form
+              by our hosting provider. These daily summaries contain no IP
+              addresses (neither readable nor pseudonymised), user agents,
+              referrer URLs or other information relating to individual
+              visitors, and do not allow any conclusions to be drawn about
+              individual persons. They are kept for up to 400 days to show how
+              the use of our APIs develops over time.
             </Typography>
           </Box>
           <Box mb={3}>
@@ -709,9 +692,8 @@ function PrivacyPolicy() {
                   Upstash, Inc., Delaware, USA
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {/* Placeholder: Upstash database region not filled in yet. */}
-                  operation of the [region: e.g. eu-central-1, Frankfurt]
-                  database in which the log entries are stored. Upstash relies
+                  operation of the database, located in Frankfurt am Main,
+                  Germany (AWS region eu-central-1), in which the log entries are stored. Upstash relies
                   on the EU-US Data Privacy Framework and, in the alternative,
                   on the Standard Contractual Clauses of the European
                   Commission. Further information:{" "}
@@ -743,13 +725,23 @@ function PrivacyPolicy() {
             <Typography variant="body1" paragraph>
               We publish aggregated statistics on the use of our APIs at{" "}
               <Link
+                href="https://www.global-warming.org/traffic"
+                target="_blank"
+                rel="noopener"
+              >
+                https://www.global-warming.org/traffic
+              </Link>{" "}
+              (also available in German) and at{" "}
+              <Link
                 href="https://www.global-warming.org/logs"
                 target="_blank"
                 rel="noopener"
               >
                 https://www.global-warming.org/logs
               </Link>
-              . This page is accessible without a login. The published view is
+              . These pages are accessible without a login, and also show the
+              daily summaries described under &quot;Storage duration&quot;
+              above. The published view is
               produced on our servers and deliberately does not contain IP
               addresses — neither in readable nor in pseudonymised form — nor
               user agents, referrer URLs, request identifiers or any list of
@@ -786,16 +778,69 @@ function PrivacyPolicy() {
               relating to our visitors.
             </Typography>
           </Box>
-          <Typography component="h3">GLS Bank</Typography>{" "}
+          <Typography component="h3">Contact form</Typography>{" "}
           <Typography component="p">
-            We use the GLS Bank donation tool embedded via an iframe on our
-            website. GLS Bank may use third-party services such as Twigle to
-            process data for donation purposes. For more details, please refer
-            to GLS Bank’s privacy policy:{" "}
-            <Link href="https://zukunftsstiftung-entwicklung.de/datenschutz/">
-              https://zukunftsstiftung-entwicklung.de/datenschutz/
+            If you send us a message using our contact form, the information
+            you enter (name, e-mail address and message) is transmitted to us,
+            together with the result of the reCAPTCHA check described below
+            (if you have consented to it),
+            so that we can handle your inquiry and answer any follow-up
+            questions. We do not share this information without your consent.
+          </Typography>{" "}
+          <Typography component="p">
+            The form is processed by the service Static Forms, operated by
+            Qualascend (
+            <Link
+              href="https://www.staticforms.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://www.staticforms.dev
+            </Link>
+            ). Static Forms receives your message, checks it for spam and
+            forwards it to us by e-mail. Static Forms stores form data on
+            servers of Amazon Web Services in Frankfurt am Main, Germany, and
+            deletes stored submissions after 30 days. Static Forms uses
+            further sub-processors, which are listed in its data processing
+            agreement; some of them are located outside the European Union.
+          </Typography>{" "}
+          <Typography component="p">
+            Static Forms processes your data on our behalf on the basis of its
+            data processing agreement. Any transfer to countries outside the
+            European Union is based on the Standard Contractual Clauses of
+            the European Commission, which are part of that agreement:{" "}
+            <Link
+              href="https://www.staticforms.dev/dpa"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://www.staticforms.dev/dpa
+            </Link>
+            . For more information, please see the privacy policy of Static
+            Forms:{" "}
+            <Link
+              href="https://www.staticforms.dev/privacy-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://www.staticforms.dev/privacy-policy
             </Link>
             .
+          </Typography>{" "}
+          <Typography component="p">
+            The processing is based on Art. 6(1)(b) GDPR if your inquiry is
+            related to the performance of a contract or to pre-contractual
+            measures. In all other cases, it is based on our legitimate
+            interest in handling the inquiries sent to us effectively (Art.
+            6(1)(f) GDPR).
+          </Typography>{" "}
+          <Typography component="p">
+            We keep the data you enter in the contact form until you ask us to
+            delete it or the purpose for storing it no longer applies (e.g.,
+            once your inquiry has been fully handled). Mandatory statutory
+            provisions, in particular retention periods, remain unaffected.
+            You can also write to us directly at help@global-warming.org
+            without using the form.
           </Typography>
           <Typography component="h3">Consent with ConsentManager</Typography>{" "}
           <Typography component="p">
@@ -803,8 +848,8 @@ function PrivacyPolicy() {
             your consent to the storage of certain cookies on your device or for
             the use of certain technologies and data protection legislation
             compliant documentation of the former. The party offering this
-            technology is Jaohawi AB, H&aring;ltegelv&auml;gen 1b, 72348
-            V&auml;ster&aring;s, Sweden, website:{" "}
+            technology is consentmanager AB, Torsgatan 26, 113 21 Stockholm,
+            Sweden, website:{" "}
             <Link
               href="https://www.consentmanager.de"
               target="_blank"
@@ -874,71 +919,19 @@ function PrivacyPolicy() {
             </a>
           </Typography>{" "}
           <Typography component="h4">Legal Basis</Typography>{" "}
-          <Typography mb={2} component="p">
-            The use of reCAPTCHA is based on Art. 6(1)(f) GDPR (legitimate
-            interest). We have a legitimate interest in protecting our website
-            from spam, bots, and fraudulent activities. Objection & Opt-Out
-            Users who do not wish to be analyzed by reCAPTCHA can:
-          </Typography>{" "}
-          <Typography component="ul">
-            {" "}
-            <Typography component="li">
-              <strong>Disable JavaScript</strong> in their browser (note: this
-              may affect website functionality).
-            </Typography>{" "}
-            <Typography component="li">
-              <strong>Use browser extensions</strong> that block Google
-              services.
-            </Typography>{" "}
-            <Typography component="li">
-              <strong>Exercise their rights under GDPR</strong>, such as
-              requesting access to, correction of, or deletion of their data.
-            </Typography>
-          </Typography>
-          <Typography component="h4">Data processing</Typography>{" "}
           <Typography component="p">
-            We have concluded a data processing agreement (DPA) for the use of
-            the above-mentioned service. This is a contract mandated by data
-            privacy laws that guarantees that they process personal data of our
-            website visitors only based on our instructions and in compliance
-            with the GDPR.
-          </Typography>
-          <Typography component="h2" mb={4} mt={4}>
-            5. Analysis tools and advertising
-          </Typography>
-          <Typography component="h3">Google Tag Manager</Typography>{" "}
-          <Typography component="p">
-            We use the Google Tag Manager. The provider is Google Ireland
-            Limited, Gordon House, Barrow Street, Dublin 4, Ireland
-          </Typography>{" "}
-          <Typography component="p">
-            The Google Tag Manager is a tool that allows us to integrate
-            tracking or statistical tools and other technologies on our website.
-            The Google Tag Manager itself does not create any user profiles,
-            does not store cookies, and does not carry out any independent
-            analyses. It only manages and runs the tools integrated via it.
-            However, the Google Tag Manager does collect your IP address, which
-            may also be transferred to Google&rsquo;s parent company in the
-            United States.
-          </Typography>{" "}
-          <Typography component="p">
-            The Google Tag Manager is used on the basis of Art. 6(1)(f) GDPR.
-            The website operator has a legitimate interest in the quick and
-            uncomplicated integration and administration of various tools on his
-            website. If appropriate consent has been obtained, the processing is
-            carried out exclusively on the basis of Art. 6(1)(a) GDPR and &sect;
-            25 (1) TDDDG, insofar the consent includes the storage of cookies or
-            the access to information in the user&rsquo;s end device (e.g.,
-            device fingerprinting) within the meaning of the TDDDG. This consent
-            can be revoked at any time.
+            reCAPTCHA is loaded only on our contact form page and only after
+            you have consented, either in the ConsentManager banner or with
+            the &ldquo;Allow Google reCAPTCHA&rdquo; button shown above the
+            form. The processing is based on your consent pursuant to Art.
+            6(1)(a) GDPR and &sect; 25(1) TDDDG. You can revoke your consent
+            at any time with effect for the future in the ConsentManager
+            settings. Without consent, you can still reach us by e-mail at
+            help@global-warming.org.
           </Typography>
           <Typography component="p">
-            The company is certified in accordance with the &ldquo;EU-US Data
-            Privacy Framework&rdquo; (DPF). The DPF is an agreement between the
-            European Union and the US, which is intended to ensure compliance
-            with European data protection standards for data processing in the
-            US. Every company certified under the DPF is obliged to comply with
-            these data protection standards. For more information, please
+            Google is certified in accordance with the &ldquo;EU-US Data
+            Privacy Framework&rdquo; (DPF). For more information, please
             contact the provider under the following link:{" "}
             <Link
               href="https://www.dataprivacyframework.gov/participant/5780"
@@ -948,6 +941,9 @@ function PrivacyPolicy() {
               https://www.dataprivacyframework.gov/participant/5780
             </Link>
             .
+          </Typography>
+          <Typography component="h2" mb={4} mt={4}>
+            5. Analysis tools and advertising
           </Typography>
           <Typography component="h3">Google Analytics</Typography>{" "}
           <Typography component="p">
@@ -965,8 +961,9 @@ function PrivacyPolicy() {
             device of the user. An assignment to a user-ID does not take place.
           </Typography>{" "}
           <Typography component="p">
-            Furthermore, Google Analytics allows us to record your mouse and
-            scroll movements and clicks, among other things. Google Analytics
+            Furthermore, Google Analytics records certain interactions, such as
+            scrolling and clicks on links that lead to other websites. Google
+            Analytics
             uses various modeling approaches to augment the collected data sets
             and uses machine learning technologies in data analysis.
           </Typography>
@@ -981,6 +978,12 @@ function PrivacyPolicy() {
             The use of these services occurs on the basis of your consent
             pursuant to Art. 6(1)(a) GDPR and &sect; 25(1) TDDDG. You may revoke
             your consent at any time.
+          </Typography>{" "}
+          <Typography component="p">
+            Google Analytics is loaded only after you have given your consent
+            via ConsentManager. The Google Analytics script (gtag.js) is
+            downloaded from www.googletagmanager.com; we do not use a Google
+            Tag Manager container.
           </Typography>{" "}
           <Typography component="p">
             Data transmission to the US is based on the Standard Contractual
@@ -1011,21 +1014,12 @@ function PrivacyPolicy() {
             </Link>
             .
           </Typography>
-          <Typography component="h4">IP anonymization</Typography>{" "}
+          <Typography component="h4">IP addresses</Typography>{" "}
           <Typography component="p">
-            Google Analytics IP anonymization is active. As a result, your IP
-            address will be abbreviated by Google within the member states of
-            the European Union or in other states that have ratified the
-            Convention on the European Economic Area prior to its transmission
-            to the United States. The full IP address will be transmitted to one
-            of Google&rsquo;s servers in the United States and abbreviated there
-            only in exceptional cases. On behalf of the operator of this
-            website, Google shall use this information to analyze your use of
-            this website to generate reports on website activities and to render
-            other services to the operator of this website that are related to
-            the use of the website and the Internet. The IP address transmitted
-            in conjunction with Google Analytics from your browser shall not be
-            merged with other data in Google&rsquo;s possession.
+            We use Google Analytics 4. Google Analytics 4 does not log or store
+            IP addresses. For data collected from users in the European Union,
+            Google uses the IP address only to determine an approximate
+            location and discards it before the data is logged.
           </Typography>
           <Typography component="h4">Browser plug-in</Typography>{" "}
           <Typography component="p">
@@ -1090,26 +1084,92 @@ function PrivacyPolicy() {
             .
           </Typography>
           <Typography component="h2" mb={4} mt={4}>
-            7. eCommerce and payment service providers
+            7. Donations and payment service providers
+          </Typography>
+          <Typography component="h3">Donation form (twingle)</Typography>{" "}
+          <Typography component="p">
+            Our donation page embeds the donation form of twingle GmbH, Berlin,
+            Germany (
+            <Link
+              href="https://www.twingle.de"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://www.twingle.de
+            </Link>
+            ). When the page loads, your browser connects to twingle&rsquo;s
+            servers, which receive your IP address. If you donate, the
+            information you enter in the form (e.g., name, address, e-mail
+            address, amount and the payment details required for the payment
+            method you choose) is processed by twingle to handle your donation
+            and passed on to us, so that we can manage your donation and issue
+            a donation receipt.
+          </Typography>{" "}
+          <Typography component="p">
+            The processing is based on Art. 6(1)(b) GDPR (handling your
+            donation) and, where we are legally required to keep records, for
+            example for tax purposes, on Art. 6(1)(c) GDPR. For more
+            information, please see twingle&rsquo;s privacy policy:{" "}
+            <Link
+              href="https://www.twingle.de/datenschutz/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://www.twingle.de/datenschutz/
+            </Link>
+            .
           </Typography>
           <Typography component="h3">Payment services</Typography>{" "}
           <Typography component="p">
-            We integrate payment services of third-party companies on our
-            website. When you make a purchase from us, your payment data (e.g.
-            name, payment amount, bank account details, credit card number) are
-            processed by the payment service provider for the purpose of payment
-            processing. For these transactions, the respective contractual and
-            data protection provisions of the respective providers apply. The
-            use of the payment service providers is based on Art. 6(1)(b) GDPR
-            (contract processing) and in the interest of a smooth, convenient,
-            and secure payment transaction (Art. 6(1)(f) GDPR). Insofar as your
-            consent is requested for certain actions, Art. 6(1)(a) GDPR is the
-            legal basis for data processing; consent may be revoked at any time
-            for the future.
+            The donation form offers SEPA direct debit, credit card, Google
+            Pay, PayPal and bank transfer. When you make a donation, your
+            payment data (e.g., name, payment amount, bank account details,
+            credit card number) are processed by the payment service provider
+            for the method you choose, for the purpose of payment processing.
+            For these transactions, the respective contractual and data
+            protection provisions of the respective providers apply. The use
+            of the payment service providers is based on Art. 6(1)(b) GDPR
+            (handling your donation) and in the interest of a smooth,
+            convenient, and secure payment transaction (Art. 6(1)(f) GDPR).
+            Insofar as your consent is requested for certain actions, Art.
+            6(1)(a) GDPR is the legal basis for data processing; consent may
+            be revoked at any time for the future.
           </Typography>
           <Typography component="p">
-            We use the following payment services / payment service providers
-            within the scope of this website:
+            Depending on the payment method you choose, the following
+            providers are involved:
+          </Typography>
+          <Typography component="h4">
+            Stripe (credit card and Google Pay)
+          </Typography>{" "}
+          <Typography component="p">
+            Credit card and Google Pay payments are processed by Stripe
+            Payments Europe, Limited, 1 Grand Canal Street Lower, Grand Canal
+            Dock, Dublin, D02 H210, Ireland (hereinafter &ldquo;Stripe&rdquo;).
+            Stripe may transfer data to its parent company in the United
+            States. Details can be found in Stripe&rsquo;s privacy policy:{" "}
+            <Link
+              href="https://stripe.com/de/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://stripe.com/de/privacy
+            </Link>
+            .
+          </Typography>
+          <Typography component="h4">Google Pay</Typography>{" "}
+          <Typography component="p">
+            If you pay with Google Pay, Google Ireland Limited, Gordon House,
+            Barrow Street, Dublin 4, Ireland, also processes your payment data
+            in accordance with its own privacy policy:{" "}
+            <Link
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://policies.google.com/privacy
+            </Link>
+            .
           </Typography>
           <Typography component="h4">PayPal</Typography>{" "}
           <Typography component="p">
@@ -1140,118 +1200,13 @@ function PrivacyPolicy() {
             </Link>
             .
           </Typography>
-          <Typography component="h4">instant transfer Sofort</Typography>{" "}
-          <Typography component="p">
-            The provider of this payment service is Sofort GmbH,
-            Theresienh&ouml;he 12, 80339 Munich, Germany (hereinafter
-            &ldquo;Sofort GmbH&rdquo;). With the help of the
-            &ldquo;Sofort&uuml;berweisung&rdquo; procedure, we receive a payment
-            confirmation from Sofort GmbH in real time and can immediately begin
-            to fulfill our obligations. If you have chosen the payment method
-            &ldquo;Sofort&uuml;berweisung&rdquo;, please send the PIN and a
-            valid TAN to Sofort GmbH, with which it can log into your online
-            banking account. Sofort GmbH automatically checks your account
-            balance after logging in and carries out the transfer to us with the
-            help of the TAN you have transmitted. Afterwards, it immediately
-            sends us a transaction confirmation. After you log in, your
-            turnover, the credit limit of the overdraft facility and the
-            existence of other accounts and their balances are also checked
-            automatically. In addition to the PIN and the TAN, the payment data
-            entered by you as well as personal data will be transmitted to
-            Sofort GmbH. The data about your person are first and last name,
-            address, telephone number(s), email address, IP address and possibly
-            other data required for payment processing. The transmission of this
-            data is necessary to determine your identity beyond doubt and to
-            prevent fraud attempts. For details on payment with immediate bank
-            transfer, please refer to the following link:{" "}
-            <Link
-              href="https://www.klarna.com/sofort/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.klarna.com/sofort/
-            </Link>
-            .
-          </Typography>
-          <Typography component="h4">giropay</Typography>{" "}
-          <Typography component="p">
-            The provider of this payment service is the paydirekt GmbH,
-            Stephanstra&szlig;e 14 &ndash; 16, 60313 Frankfurt am Main
-            (hereinafter referred to as &ldquo;giropay&rdquo;).
+          <Typography component="h4">
+            SEPA direct debit and bank transfer
           </Typography>{" "}
           <Typography component="p">
-            For details, please consult giropay&rsquo;s Data Privacy Policy at:{" "}
-            <Link
-              href="https://www.paydirekt.de/agb/index.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.paydirekt.de/agb/index.html
-            </Link>
-            .
-          </Typography>
-          <Typography component="h4">Mastercard</Typography>{" "}
-          <Typography component="p">
-            The provider of this payment service is the Mastercard Europe SA,
-            Chauss&eacute;e de Tervuren 198A, B-1410 Waterloo, Belgium
-            (hereinafter &ldquo;Mastercard&rdquo;).
-          </Typography>{" "}
-          <Typography component="p">
-            Mastercard may transfer data to its parent company in the US. The
-            data transfer to the US is based on Mastercard's Binding Corporate
-            Rules. Details can be found here:{" "}
-            <Link
-              href="https://www.mastercard.de/de-de/datenschutz.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.mastercard.de/de-de/datenschutz.html
-            </Link>{" "}
-            and{" "}
-            <Link
-              href="https://www.mastercard.us/content/dam/mccom/global/documents/mastercard-bcrs.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.mastercard.us/content/dam/mccom/global/documents/mastercard-bcrs.pdf
-            </Link>
-            .
-          </Typography>
-          <Typography component="h4">VISA</Typography>{" "}
-          <Typography component="p">
-            The provider of this payment service is the Visa Europe Services
-            Inc, London Branch, 1 Sheldon Square, London W2 6TT, United Kingdom
-            (hereinafter &ldquo;VISA&rdquo;).
-          </Typography>{" "}
-          <Typography component="p">
-            Great Britain is considered a secure non-EU country as far as data
-            protection legislation is concerned. This means that the data
-            protection level in Great Britain is equivalent to the data
-            protection level of the European Union.
-          </Typography>{" "}
-          <Typography component="p">
-            VISA may transfer data to its parent company in the US. The data
-            transfer to the US is based on the standard contractual clauses of
-            the EU Commission. Details can be found here:{" "}
-            <Link
-              href="https://www.visa.de/nutzungsbedingungen/visa-globale-datenschutzmitteilung/mitteilung-zu-zustandigkeitsfragen-fur-den-ewr.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.visa.de/nutzungsbedingungen/visa-globale-datenschutzmitteilung/mitteilung-zu-zustandigkeitsfragen-fur-den-ewr.html
-            </Link>
-            .
-          </Typography>{" "}
-          <Typography component="p">
-            For more information, please refer to VISA&rsquo;s privacy policy:{" "}
-            <Link
-              href="https://www.visa.de/nutzungsbedingungen/visa-privacy-center.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.visa.de/nutzungsbedingungen/visa-privacy-center.html
-            </Link>
-            .
+            For SEPA direct debit and bank transfer, your name, bank account
+            details (IBAN) and the donation amount are processed by twingle
+            and by our bank to collect or receive the payment.
           </Typography>
         </Container>
       </Grid>

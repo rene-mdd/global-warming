@@ -31,7 +31,7 @@ export default function Document() {
         }}
       />
       <Head>
-        <link rel="shortcut icon" type="image/gif" href="favicon/favicon.ico" />
+        <link rel="shortcut icon" type="image/gif" href="/favicon/favicon.ico" />
       </Head>
       <body>
         <Main />

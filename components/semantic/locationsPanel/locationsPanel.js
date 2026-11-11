@@ -30,41 +30,39 @@ import {
   formatNumber,
   formatPercent,
 } from "../../../lib/chart-theme";
-import { countryFlag, countryName } from "../../../lib/vercel-regions";
+import {
+  countryFlag,
+  localizedCountryName,
+} from "../../../lib/vercel-regions";
+import { useFormatLocale, useT } from "../../../lib/i18n";
+import RichText from "../richText";
 
-/** Verb describing what the stored IP value actually is, for the subtitle. */
-function ipModeWord(mode) {
-  if (mode === "hash") return "hashed";
-  if (mode === "truncate") return "truncated to /24";
-  return "not stored";
+/**
+ * Picks the entry for the anonymisation mode from a { hash, truncate, other }
+ * map in locales/{en,de}/traffic.js: the subtitle verb, the address column heading,
+ * and the per-country count unit all have to match what is really stored.
+ */
+function forMode(map, mode) {
+  return mode === "hash" || mode === "truncate" ? map[mode] : map.other;
 }
 
-/** Column heading for the address column, matching the anonymisation mode. */
-function addressHeading(mode) {
-  if (mode === "hash") return "Visitor (hashed)";
-  if (mode === "truncate") return "Subnet";
-  return "IP address";
-}
-
-/** Unit label for the per-country count, matching what it really counts. */
-function countUnit(mode) {
-  if (mode === "truncate") return "subnets";
-  if (mode === "hash") return "visitors";
-  return "IPs";
-}
-
-function relativeTime(ms) {
+function relativeTime(ms, t) {
   const delta = Date.now() - Number(ms);
   if (!Number.isFinite(delta)) return "—";
   const mins = Math.round(delta / 60000);
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins}m ago`;
+  if (mins < 1) return t.justNow;
+  if (mins < 60) return t.minutes(mins);
   const hours = Math.round(mins / 60);
-  if (hours < 24) return `${hours}h ago`;
-  return `${Math.round(hours / 24)}d ago`;
+  if (hours < 24) return t.hours(hours);
+  return t.days(Math.round(hours / 24));
 }
 
 export default function LocationsPanel({ hours, nonce, isDark, hue }) {
+  const t = useT().traffic.locations;
+  const tt = useT().traffic;
+  const fmt = useFormatLocale();
+  const countryName = (code) =>
+    code ? localizedCountryName(code, fmt) : tt.unknownCountry;
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -81,7 +79,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
       .then(async (res) => {
         const json = await res.json().catch(() => ({}));
         if (!res.ok)
-          throw new Error(json?.error || `Request failed (${res.status})`);
+          throw new Error(json?.error || tt.requestFailed(res.status));
         return json;
       })
       .then((json) => {
@@ -114,11 +112,12 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     const q = filter.trim().toLowerCase();
     if (!q) return all;
     return all.filter((c) => {
-      if (countryName(c.country).toLowerCase().includes(q)) return true;
+      const name = localizedCountryName(c.country, fmt);
+      if (name.toLowerCase().includes(q)) return true;
       if (c.country.toLowerCase().includes(q)) return true;
       return c.ips.some((ip) => ip.ip.toLowerCase().includes(q));
     });
-  }, [data, filter]);
+  }, [data, filter, fmt]);
 
   const maxRequests = useMemo(
     () => Math.max(1, ...(data?.countries ?? []).map((c) => c.requests)),
@@ -136,17 +135,17 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
     <div className={styles.panel}>
       <div className={styles.head}>
         <div>
-          <h3 className={styles.title}>Top IPs by location</h3>
+          <h3 className={styles.title}>{t.title}</h3>
           <p className={styles.sub}>
-            Click a country to see the individual addresses
+            {t.sub}
             {data?.privacy?.mode && data.privacy.mode !== "off"
-              ? ` · IPs are ${ipModeWord(data.privacy.mode)}`
+              ? t.ipsAre(forMode(t.ipMode, data.privacy.mode))
               : ""}
           </p>
         </div>
         <TextField
           size="small"
-          placeholder="Filter country, city or IP…"
+          placeholder={t.filter}
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           sx={{ minWidth: 220 }}
@@ -161,8 +160,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
 
       {ipsHidden && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          <code>DRAIN_ANONYMIZE_IPS=drop</code> is set, so no addresses are
-          stored — locations and counts only.
+          <RichText parts={t.dropNotice} />
         </Alert>
       )}
 
@@ -173,9 +171,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
       )}
       {isEmpty && (
         <Typography variant="body2" color="text.secondary" sx={{ py: 3 }}>
-          {filter
-            ? "Nothing matches that filter."
-            : "No location data in this window yet."}
+          {filter ? t.noMatch : t.noData}
         </Typography>
       )}
       {showList && (
@@ -217,26 +213,26 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
 
                   <span className={styles.countryStats}>
                     <span className={styles.statNum}>
-                      {formatNumber(country.requests)}
+                      {formatNumber(country.requests, fmt)}
                     </span>
-                    <span className={styles.statLabel}>req</span>
+                    <span className={styles.statLabel}>{t.req}</span>
                     {!ipsHidden && (
                       <>
                         <span className={styles.statNum}>
-                          {formatNumber(country.uniqueIps)}
+                          {formatNumber(country.uniqueIps, fmt)}
                         </span>
                         {/* Label matches what the number counts. */}
                         <span className={styles.statLabel}>
-                          {countUnit(data?.privacy?.mode)}
+                          {forMode(t.countUnit, data?.privacy?.mode)}
                         </span>
                       </>
                     )}
                     {country.errors > 0 && (
                       <Tooltip
-                        title={`${formatNumber(country.errors)} responses were 4xx or 5xx`}
+                        title={t.errTooltip(formatNumber(country.errors, fmt))}
                       >
                         <span className={styles.errBadge}>
-                          {formatPercent(errorRate, 0)} err
+                          {t.err(formatPercent(errorRate, 0, fmt))}
                         </span>
                       </Tooltip>
                     )}
@@ -257,9 +253,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                   <div className={styles.detail}>
                     {ipsHidden || country.ips.length === 0 ? (
                       <Typography variant="caption" color="text.secondary">
-                        {data?.publicMode
-                          ? "Individual addresses are withheld in the public view."
-                          : "IP storage is disabled."}
+                        {data?.publicMode ? t.withheld : t.disabled}
                       </Typography>
                     ) : (
                       <Box className={styles.tableWrap}>
@@ -267,14 +261,18 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                           <TableHead>
                             <TableRow>
                               <TableCell>
-                                {addressHeading(data?.privacy?.mode)}
+                                {forMode(t.addressHeading, data?.privacy?.mode)}
                               </TableCell>
-                              <TableCell align="right">Requests</TableCell>
-                              <TableCell align="right">Errors</TableCell>
-                              <TableCell>Top route</TableCell>
-                              <TableCell>Client</TableCell>
-                              <TableCell>First seen</TableCell>
-                              <TableCell>Last seen</TableCell>
+                              <TableCell align="right">
+                                {t.columns.requests}
+                              </TableCell>
+                              <TableCell align="right">
+                                {t.columns.errors}
+                              </TableCell>
+                              <TableCell>{t.columns.topRoute}</TableCell>
+                              <TableCell>{t.columns.client}</TableCell>
+                              <TableCell>{t.columns.firstSeen}</TableCell>
+                              <TableCell>{t.columns.lastSeen}</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -285,7 +283,7 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                                   {ip.isBot && (
                                     <Chip
                                       size="small"
-                                      label="bot"
+                                      label={t.bot}
                                       variant="outlined"
                                       sx={{
                                         ml: 0.75,
@@ -296,10 +294,10 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                                   )}
                                 </TableCell>
                                 <TableCell align="right">
-                                  {formatNumber(ip.requests)}
+                                  {formatNumber(ip.requests, fmt)}
                                 </TableCell>
                                 <TableCell align="right">
-                                  {ip.errors ? formatNumber(ip.errors) : "—"}
+                                  {ip.errors ? formatNumber(ip.errors, fmt) : "—"}
                                 </TableCell>
                                 <TableCell className={styles.mono}>
                                   <span className={styles.truncate}>
@@ -314,16 +312,20 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                                 </TableCell>
                                 <TableCell>
                                   <Tooltip
-                                    title={formatFullTimestamp(ip.firstSeen)}
+                                    title={formatFullTimestamp(ip.firstSeen, fmt)}
                                   >
-                                    <span>{relativeTime(ip.firstSeen)}</span>
+                                    <span>
+                                      {relativeTime(ip.firstSeen, t.relative)}
+                                    </span>
                                   </Tooltip>
                                 </TableCell>
                                 <TableCell>
                                   <Tooltip
-                                    title={formatFullTimestamp(ip.lastSeen)}
+                                    title={formatFullTimestamp(ip.lastSeen, fmt)}
                                   >
-                                    <span>{relativeTime(ip.lastSeen)}</span>
+                                    <span>
+                                      {relativeTime(ip.lastSeen, t.relative)}
+                                    </span>
                                   </Tooltip>
                                 </TableCell>
                               </TableRow>
@@ -338,9 +340,11 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
                             color="text.secondary"
                             sx={{ display: "block", p: 1 }}
                           >
-                            + {formatNumber(country.ipsTruncated)} more
-                            addresses not shown (raise with <code>?ips=</code>{" "}
-                            on /api/drains/locations)
+                            <RichText
+                              parts={t.moreAddresses(
+                                formatNumber(country.ipsTruncated, fmt),
+                              )}
+                            />
                           </Typography>
                         )}
                       </Box>
@@ -360,9 +364,13 @@ export default function LocationsPanel({ hours, nonce, isDark, hue }) {
           sx={{ display: "block", mt: 1.5 }}
         >
           {data.countriesTruncated > 0 &&
-            `+${data.countriesTruncated} more countries not shown. `}
+            t.moreCountries(
+              fmt
+                ? formatNumber(data.countriesTruncated, fmt)
+                : data.countriesTruncated,
+            )}
           {data.unknown?.requests > 0 &&
-            `${formatNumber(data.unknown.requests)} requests had no location at all (static assets and build logs often don't).`}
+            t.noLocation(formatNumber(data.unknown.requests, fmt))}
         </Typography>
       )}
     </div>

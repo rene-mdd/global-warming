@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import nitrousLocalData from "../../public/data/csvjson-nitrous.json";
 import { nitrousService } from "../../services/dataService";
 
 function Nitrous({ parentCallBack }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
-  const url = "api/nitrous-oxide-api";
+  const url = "/api/nitrous-oxide-api";
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -83,7 +85,7 @@ function Nitrous({ parentCallBack }) {
           labels: cleanNitrousPrehistoricData.date.concat(date),
           datasets: [
             {
-              label: "Nitrous Oxide",
+              label: t.nitrous,
               data: cleanNitrousPrehistoricData.amount.concat(average),
               fill: false,
               borderColor: "#FDB147",
@@ -104,13 +106,13 @@ function Nitrous({ parentCallBack }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Nitrous Oxide mole fraction (ppb)",
+                text: t.nitrousAxis,
               },
             },
             x: {
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
@@ -176,4 +178,4 @@ Nitrous.defaultProps = {
   parentCallBack: () => { },
 };
 
-export default Nitrous;
+export default Nitrous;

@@ -70,7 +70,10 @@ import {
   formatNumber,
   formatPercent,
 } from "../../../lib/chart-theme";
-import { countryFlag, countryName } from "../../../lib/vercel-regions";
+import { countryFlag, localizedCountryName } from "../../../lib/vercel-regions";
+import { useFormatLocale, useLocale, useT } from "../../../lib/i18n";
+import { DEFAULT_LOCALE, linkLocale } from "../../../lib/i18n-config";
+import RichText from "../richText";
 
 const SURFACE = { light: "#fcfcfb", dark: "#1a1a19" };
 const GRIDLINE = { light: "#e1e0d9", dark: "#2c2c2a" };
@@ -87,32 +90,32 @@ function statusClassFor(code) {
 }
 
 /** Human label for the chart's time-bucket width. */
-function bucketLabelFor(bucketMs) {
-  if (bucketMs >= 86400000) return "1 day";
-  if (bucketMs >= 3600000) return "1 hour";
-  return `${bucketMs / 60000} min`;
+function bucketLabelFor(bucketMs, t) {
+  if (bucketMs >= 86400000) return t.bucket.day;
+  if (bucketMs >= 3600000) return t.bucket.hour;
+  return t.bucket.minutes(bucketMs / 60000);
 }
 
 /**
  * Subtitle for the events table. In public mode, states that fields were
  * removed and timestamps floored, and the current time granularity.
  */
-function eventsSubtitle(publicMode, meta) {
-  if (!publicMode) return "Newest first · every field the drain delivered";
+function eventsSubtitle(publicMode, meta, t) {
+  if (!publicMode) return t.live.subtitlePrivate;
 
   const grain = meta?.timeGranularity ?? "minute";
 
-  return [
-    "Newest first",
-    "public view: no addresses or user agents",
-    `times rounded down to the ${grain}`,
-  ].join(" · ");
+  return [t.live.newestFirst, t.live.publicView, t.live.roundedDown(grain)].join(
+    " · ",
+  );
 }
 
-async function getJSON(url) {
+// `requestFailed` is the locale's fallback message; an `error` string from
+// the API itself is shown as sent.
+async function getJSON(url, requestFailed) {
   const res = await fetch(url, { cache: "no-store" });
   const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(json?.error || `Request failed (${res.status})`);
+  if (!res.ok) throw new Error(json?.error || requestFailed(res.status));
   return json;
 }
 
@@ -146,7 +149,9 @@ StatTile.defaultProps = { hint: null, loading: false };
 
 /* ------------------------------------------------------- magnitude bars */
 
-function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
+function MagnitudeBars({ rows, hue, formatLabel, emptyText }) {
+  const t = useT().traffic;
+  const fmt = useFormatLocale();
   const max = useMemo(
     () => Math.max(1, ...rows.map((r) => Number(r.count) || 0)),
     [rows],
@@ -156,7 +161,9 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
     [rows],
   );
 
-  if (!rows.length) return <div className={styles.emptyBars}>{emptyText}</div>;
+  if (!rows.length) {
+    return <div className={styles.emptyBars}>{emptyText ?? t.noData}</div>;
+  }
 
   return (
     <ul className={styles.barList}>
@@ -174,8 +181,10 @@ function MagnitudeBars({ rows, hue, formatLabel, emptyText = "No data yet" }) {
               <span className={styles.barLabel}>{label}</span>
             </Tooltip>
             <span className={styles.barValue}>
-              {formatNumber(count)}
-              <span className={styles.barShare}>{formatPercent(share, 0)}</span>
+              {formatNumber(count, fmt)}
+              <span className={styles.barShare}>
+                {formatPercent(share, 0, fmt)}
+              </span>
             </span>
             <div className={styles.barTrack}>
               <div
@@ -208,7 +217,7 @@ MagnitudeBars.propTypes = {
   emptyText: PropTypes.string,
 };
 
-MagnitudeBars.defaultProps = { formatLabel: null, emptyText: "No data yet" };
+MagnitudeBars.defaultProps = { formatLabel: null, emptyText: null };
 
 function BreakdownPanel({ title, subtitle, rows, hue, formatLabel }) {
   return (
@@ -237,12 +246,14 @@ BreakdownPanel.defaultProps = { subtitle: null, rows: [], formatLabel: null };
 /* ------------------------------------------------------------- tooltip */
 
 function StatusTooltip({ active, payload, label, colors }) {
+  const t = useT().traffic;
+  const fmt = useFormatLocale();
   if (!active || !payload?.length) return null;
   const total = payload.reduce((sum, p) => sum + (Number(p.value) || 0), 0);
 
   return (
     <div className={styles.tooltip}>
-      <p className={styles.tooltipTitle}>{formatFullTimestamp(label)}</p>
+      <p className={styles.tooltipTitle}>{formatFullTimestamp(label, fmt)}</p>
       {STATUS_SERIES.map((series) => {
         const entry = payload.find((p) => p.dataKey === series.key);
         const value = Number(entry?.value) || 0;
@@ -254,15 +265,15 @@ function StatusTooltip({ active, payload, label, colors }) {
                 className={styles.legendSwatch}
                 style={{ background: colors[series.key] }}
               />
-              {series.label}
+              {t.status[series.key]}
             </span>
-            <span>{formatNumber(value)}</span>
+            <span>{formatNumber(value, fmt)}</span>
           </div>
         );
       })}
       <div className={`${styles.tooltipRow} ${styles.tooltipTotal}`}>
-        <span>Total</span>
-        <span>{formatNumber(total)}</span>
+        <span>{t.overTime.total}</span>
+        <span>{formatNumber(total, fmt)}</span>
       </div>
     </div>
   );
@@ -281,6 +292,9 @@ StatusTooltip.defaultProps = { active: false, payload: [], label: null };
 /* ============================================================ dashboard */
 
 export default function TrafficDashboard() {
+  const t = useT().traffic;
+  const locale = useLocale();
+  const fmt = useFormatLocale();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
@@ -343,7 +357,7 @@ export default function TrafficDashboard() {
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
-    getJSON(`/api/drains/stats?hours=${hours}`)
+    getJSON(`/api/drains/stats?hours=${hours}`, t.requestFailed)
       .then((json) => {
         if (cancelled) return;
         setStats(json);
@@ -366,7 +380,7 @@ export default function TrafficDashboard() {
     let cancelled = false;
     setDailyLoading(true);
     const days = Math.max(1, Math.ceil(hours / 24));
-    getJSON(`/api/drains/daily?days=${days}`)
+    getJSON(`/api/drains/daily?days=${days}`, t.requestFailed)
       .then((json) => {
         if (cancelled) return;
         setDailyTotals(
@@ -396,7 +410,7 @@ export default function TrafficDashboard() {
     if (debouncedSearch) params.set("q", debouncedSearch);
     if (statusFilter) params.set("status", statusFilter);
 
-    getJSON(`/api/drains/events?${params.toString()}`)
+    getJSON(`/api/drains/events?${params.toString()}`, t.requestFailed)
       .then((json) => {
         if (cancelled) return;
         // Builds a stable row key from id, timestamp, and index.
@@ -462,6 +476,16 @@ export default function TrafficDashboard() {
   // (DASHBOARD_TRAFFIC_COVERAGE_PERCENT), refreshed manually — see
   // lib/api-read.js.
 
+  // Country names come from ISO codes, so they follow the page locale.
+  const countryLabel = (code) => {
+    if (code === "Other") return t.other;
+    if (!code) return t.unknownCountry;
+    return `${countryFlag(code)} ${localizedCountryName(code, fmt)}`.trim();
+  };
+  // /esg is a plain MUI <a>, so the locale prefix is added by hand.
+  const esgLocale = linkLocale("/esg", locale);
+  const esgHref = esgLocale === DEFAULT_LOCALE ? "/esg" : `/${esgLocale}/esg`;
+
   const statusClassTotals = stats?.statusClasses ?? [];
   const statusGrandTotal = statusClassTotals.reduce((s, c) => s + c.count, 0);
 
@@ -475,18 +499,18 @@ export default function TrafficDashboard() {
       <div className={styles.header}>
         <div>
           <Typography variant="h5" fontWeight={600}>
-            Traffic &amp; API usage
+            {t.header.title}
           </Typography>
           <div className={styles.headerMeta}>
             <Typography variant="body2" color="text.secondary">
               {autoRefresh ? <span className={styles.liveDot} /> : null}
-              Ingested via Vercel Log Drains · backend requests only
+              {t.header.source}
             </Typography>
             {stats?.store ? (
               <Chip
                 size="small"
                 variant="outlined"
-                label={`${formatNumber(stats.store.count)} events stored`}
+                label={t.header.eventsStored(formatNumber(stats.store.count, fmt))}
               />
             ) : null}
           </div>
@@ -501,7 +525,7 @@ export default function TrafficDashboard() {
           >
             {TIME_RANGES.map((r) => (
               <ToggleButton key={r.key} value={r.key}>
-                {r.label}
+                {t.ranges[r.key] ?? r.label}
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
@@ -513,10 +537,10 @@ export default function TrafficDashboard() {
                 onChange={(e) => setAutoRefresh(e.target.checked)}
               />
             }
-            label={<Typography variant="body2">Auto</Typography>}
+            label={<Typography variant="body2">{t.header.auto}</Typography>}
           />
           <Button size="small" variant="outlined" onClick={refresh}>
-            Refresh
+            {t.header.refresh}
           </Button>
         </div>
       </div>
@@ -525,10 +549,8 @@ export default function TrafficDashboard() {
           never see a CDN cache HIT for these routes. Shown for every time
           range. */}
       <Alert severity="warning" sx={{ mb: 3 }}>
-        <AlertTitle>This only covers backend requests</AlertTitle>
-        Log Drains fire only on Function invocations, so CDN cache hits (most of
-        the traffic) are invisible here. This is roughly 15% to 30% of real
-        requests. Vercel Observability has the totals.
+        <AlertTitle>{t.backendOnly.title}</AlertTitle>
+        {t.backendOnly.body}
       </Alert>
 
       {statsError && (
@@ -549,60 +571,50 @@ export default function TrafficDashboard() {
           {/* ------------------------------------------------ geo notice */}
           {totals.countryCoverage < 0.5 && (
             <Alert severity="info" className={styles.geoHint}>
-              <AlertTitle>
-                Country data only covers instrumented routes
-              </AlertTitle>
-              Only {formatPercent(totals.countryCoverage, 0)} of requests in
-              this window carry a country. That&apos;s expected, not a data
-              quality problem: country comes only from the{" "}
-              <code>x-vercel-ip-country</code> header, and only the public
-              climate-data API routes call <code>logRequest()</code> (see{" "}
-              <code>lib/log-request.js</code>) to capture it. Traffic to other
-              routes has no country at all — there is no edge-region fallback
-              guess anymore.
+              <AlertTitle>{t.geo.title}</AlertTitle>
+              <RichText
+                parts={t.geo.body(
+                  formatPercent(totals.countryCoverage, 0, fmt),
+                )}
+              />
             </Alert>
           )}
 
           {/* ---------------------------------------------------- tiles */}
           {publicMode && (
             <Alert severity="info" sx={{ mb: 3 }}>
-              <AlertTitle>Public view</AlertTitle>
-              This dashboard is published openly, so per-visitor detail is
-              withheld: individual addresses, user agents, referrers and
-              application fields are removed server-side. Aggregate figures are
-              shown in full.
+              <AlertTitle>{t.publicView.title}</AlertTitle>
+              {t.publicView.body}
             </Alert>
           )}
 
           <div className={styles.tileGrid}>
             <StatTile
-              label="Total requests"
+              label={t.tiles.totalRequests}
               value={
                 Number.isFinite(dailyTotals?.totalTrafficRequests)
-                  ? formatCompact(dailyTotals.totalTrafficRequests)
+                  ? formatCompact(dailyTotals.totalTrafficRequests, fmt)
                   : "—"
               }
               hint={
                 Number.isFinite(dailyTotals?.totalTrafficRequests)
-                  ? `all edge traffic (cache hits + backend), ${formatNumber(
-                      dailyTotals.measuredCoverageDays ?? 0,
-                    )} day${
-                      dailyTotals.measuredCoverageDays === 1 ? "" : "s"
-                    } measured`
-                  : "no Vercel metrics reported for this range yet"
+                  ? t.tiles.totalHint(
+                      formatNumber(dailyTotals.measuredCoverageDays ?? 0, fmt),
+                      dailyTotals.measuredCoverageDays,
+                    )
+                  : t.tiles.totalHintNone
               }
               loading={dailyRefreshing}
             />
             <StatTile
-              label="Backend requests"
-              value={formatCompact(totals.requests)}
+              label={t.tiles.backendRequests}
+              value={formatCompact(totals.requests, fmt)}
               // A request can span multiple log entries sharing one requestId.
               // "Backend" excludes CDN cache hits — see the warning banner.
-              hint={`from ${formatNumber(totals.logEvents)} log entries${
-                totals.buildLogs
-                  ? ` · ${formatNumber(totals.buildLogs)} build`
-                  : ""
-              }`}
+              hint={t.tiles.backendHint(
+                formatNumber(totals.logEvents, fmt),
+                totals.buildLogs ? formatNumber(totals.buildLogs, fmt) : null,
+              )}
               loading={refreshing}
             />
             {/* Label follows the active anonymisation mode — with truncated IPs
@@ -616,32 +628,34 @@ export default function TrafficDashboard() {
               loading={refreshing}
             /> */}
             <StatTile
-              label="Error rate"
-              value={formatPercent(totals.errorRate)}
-              hint={`${formatNumber(totals.errors)} 4xx+ · ${formatNumber(
-                totals.serverErrors,
-              )} 5xx`}
+              label={t.tiles.errorRate}
+              value={formatPercent(totals.errorRate, 1, fmt)}
+              hint={t.tiles.errorHint(
+                formatNumber(totals.errors, fmt),
+                formatNumber(totals.serverErrors, fmt),
+              )}
               loading={refreshing}
             />
             <StatTile
-              label="Routes"
-              value={formatCompact(totals.uniqueRoutes)}
-              hint="Distinct paths hit"
+              label={t.tiles.routes}
+              value={formatCompact(totals.uniqueRoutes, fmt)}
+              hint={t.tiles.routesHint}
               loading={refreshing}
             />
             <StatTile
-              label="Bot traffic"
+              label={t.tiles.bots}
               value={formatPercent(
                 totals.requests ? totals.botRequests / totals.requests : 0,
                 0,
+                fmt,
               )}
-              hint={`${formatNumber(totals.botRequests)} requests`}
+              hint={t.tiles.botsHint(formatNumber(totals.botRequests, fmt))}
               loading={refreshing}
             />
             <StatTile
-              label="Response bytes"
-              value={formatBytes(totals.bytes)}
-              hint="Sum of proxy.responseByteSize"
+              label={t.tiles.bytes}
+              value={formatBytes(totals.bytes, fmt)}
+              hint={t.tiles.bytesHint}
               loading={refreshing}
             />
           </div>
@@ -650,16 +664,16 @@ export default function TrafficDashboard() {
           <div className={styles.panel}>
             <div className={styles.panelHead}>
               <div>
-                <h3 className={styles.panelTitle}>Requests over time</h3>
+                <h3 className={styles.panelTitle}>{t.overTime.title}</h3>
                 <p className={styles.panelSub}>
-                  Stacked by status class · {bucketLabelFor(bucketMs)} buckets
+                  {t.overTime.sub(bucketLabelFor(bucketMs, t))}
                 </p>
               </div>
               <Button
                 size="small"
                 onClick={() => setShowSeriesTable((v) => !v)}
               >
-                {showSeriesTable ? "Hide table" : "Show table"}
+                {showSeriesTable ? t.overTime.hideTable : t.overTime.showTable}
               </Button>
             </div>
 
@@ -669,7 +683,7 @@ export default function TrafficDashboard() {
                   <CartesianGrid stroke={gridline} vertical={false} />
                   <XAxis
                     dataKey="t"
-                    tickFormatter={(v) => formatBucketTick(v, bucketMs)}
+                    tickFormatter={(v) => formatBucketTick(v, bucketMs, fmt)}
                     stroke={baseline}
                     tick={{ fill: MUTED, fontSize: 12 }}
                     minTickGap={24}
@@ -712,9 +726,9 @@ export default function TrafficDashboard() {
                       className={styles.legendSwatch}
                       style={{ background: statusColor[s.key] }}
                     />
-                    {s.label}
+                    {t.status[s.key]}
                     <span className={styles.legendValue}>
-                      {formatNumber(row?.count ?? 0)}
+                      {formatNumber(row?.count ?? 0, fmt)}
                     </span>
                   </li>
                 );
@@ -730,13 +744,13 @@ export default function TrafficDashboard() {
                 <Table size="small" stickyHeader>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Bucket</TableCell>
+                      <TableCell>{t.overTime.bucketColumn}</TableCell>
                       {STATUS_SERIES.map((s) => (
                         <TableCell key={s.key} align="right">
-                          {s.label}
+                          {t.status[s.key]}
                         </TableCell>
                       ))}
-                      <TableCell align="right">Total</TableCell>
+                      <TableCell align="right">{t.overTime.total}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -744,14 +758,16 @@ export default function TrafficDashboard() {
                       .filter((b) => b.total > 0)
                       .map((bucket) => (
                         <TableRow key={bucket.t}>
-                          <TableCell>{formatFullTimestamp(bucket.t)}</TableCell>
+                          <TableCell>
+                            {formatFullTimestamp(bucket.t, fmt)}
+                          </TableCell>
                           {STATUS_SERIES.map((s) => (
                             <TableCell key={s.key} align="right">
-                              {formatNumber(bucket[s.key])}
+                              {formatNumber(bucket[s.key], fmt)}
                             </TableCell>
                           ))}
                           <TableCell align="right">
-                            <strong>{formatNumber(bucket.total)}</strong>
+                            <strong>{formatNumber(bucket.total, fmt)}</strong>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -765,10 +781,8 @@ export default function TrafficDashboard() {
           <div className={styles.panel}>
             <div className={styles.panelHead}>
               <div>
-                <h3 className={styles.panelTitle}>Status classes</h3>
-                <p className={styles.panelSub}>
-                  Every bar is labelled, so the colours are reinforcement only
-                </p>
+                <h3 className={styles.panelTitle}>{t.statusClasses.title}</h3>
+                <p className={styles.panelSub}>{t.statusClasses.sub}</p>
               </div>
             </div>
             <ul className={styles.barList}>
@@ -782,11 +796,15 @@ export default function TrafficDashboard() {
                   : 0;
                 return (
                   <li key={row.key} className={styles.barRow}>
-                    <span className={styles.barLabel}>{row.label}</span>
+                    {/* The API's label is English; the key picks this
+                        locale's. */}
+                    <span className={styles.barLabel}>
+                      {t.status[row.key] ?? row.label}
+                    </span>
                     <span className={styles.barValue}>
-                      {formatNumber(row.count)}
+                      {formatNumber(row.count, fmt)}
                       <span className={styles.barShare}>
-                        {formatPercent(share, 0)}
+                        {formatPercent(share, 0, fmt)}
                       </span>
                     </span>
                     <div className={styles.barTrack}>
@@ -815,71 +833,67 @@ export default function TrafficDashboard() {
           {/* ----------------------------------------------- breakdowns */}
           <div className={styles.breakdownGrid}>
             <BreakdownPanel
-              title="Top countries"
-              subtitle="From x-vercel-ip-country headers"
+              title={t.breakdowns.country.title}
+              subtitle={t.breakdowns.country.sub}
               rows={breakdowns.country}
               hue={magnitudeHue}
-              formatLabel={(code) =>
-                code === "Other"
-                  ? "Other"
-                  : `${countryFlag(code)} ${countryName(code)}`.trim()
-              }
+              formatLabel={countryLabel}
             />
             <BreakdownPanel
-              title="Top routes"
-              subtitle="Query strings stripped"
+              title={t.breakdowns.route.title}
+              subtitle={t.breakdowns.route.sub}
               rows={breakdowns.route}
               hue={magnitudeHue}
             />
             <BreakdownPanel
-              title="Browsers"
-              subtitle="Parsed from User-Agent"
+              title={t.breakdowns.browser.title}
+              subtitle={t.breakdowns.browser.sub}
               rows={breakdowns.browser}
               hue={magnitudeHue}
             />
             <BreakdownPanel
-              title="Operating systems"
+              title={t.breakdowns.os.title}
               rows={breakdowns.os}
               hue={magnitudeHue}
             />
             <BreakdownPanel
-              title="Device types"
+              title={t.breakdowns.device.title}
               rows={breakdowns.device}
               hue={magnitudeHue}
             />
             <BreakdownPanel
-              title="HTTP methods"
+              title={t.breakdowns.method.title}
               rows={breakdowns.method}
               hue={magnitudeHue}
             />
             <BreakdownPanel
-              title="Status codes"
-              subtitle="Exact codes, not classes"
+              title={t.breakdowns.statusCode.title}
+              subtitle={t.breakdowns.statusCode.sub}
               rows={breakdowns.statusCode}
               hue={magnitudeHue}
             />
             {!publicMode && (
               <BreakdownPanel
-                title="Top client IPs"
-                subtitle="Most active callers"
+                title={t.breakdowns.clientIp.title}
+                subtitle={t.breakdowns.clientIp.sub}
                 rows={breakdowns.clientIp}
                 hue={magnitudeHue}
               />
             )}
             <BreakdownPanel
-              title="Hostnames"
+              title={t.breakdowns.host.title}
               rows={breakdowns.host}
               hue={magnitudeHue}
             />
             <BreakdownPanel
-              title="Log sources"
-              subtitle="lambda = functions · edge = middleware/edge runtime"
+              title={t.breakdowns.source.title}
+              subtitle={t.breakdowns.source.sub}
               rows={breakdowns.source}
               hue={magnitudeHue}
             />
             {!publicMode && (
               <BreakdownPanel
-                title="Referrers"
+                title={t.breakdowns.referer.title}
                 rows={breakdowns.referer}
                 hue={magnitudeHue}
               />
@@ -896,9 +910,9 @@ export default function TrafficDashboard() {
       <div className={styles.panel}>
         <div className={styles.panelHead}>
           <div>
-            <h3 className={styles.panelTitle}>Live events</h3>
+            <h3 className={styles.panelTitle}>{t.live.title}</h3>
             <p className={styles.panelSub}>
-              {eventsSubtitle(publicMode, eventsMeta)}
+              {eventsSubtitle(publicMode, eventsMeta, t)}
             </p>
           </div>
         </div>
@@ -908,9 +922,7 @@ export default function TrafficDashboard() {
             size="small"
             placeholder={
               // Reflects the fields actually searchable in public mode.
-              publicMode
-                ? "Search path, country, host…"
-                : "Search path, IP, country, UA…"
+              publicMode ? t.live.searchPublic : t.live.searchPrivate
             }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -923,14 +935,15 @@ export default function TrafficDashboard() {
             onChange={(e) => setStatusFilter(e.target.value)}
             sx={{ minWidth: 140 }}
           >
-            <MenuItem value="">All statuses</MenuItem>
-            <MenuItem value="2xx">2xx only</MenuItem>
-            <MenuItem value="3xx">3xx only</MenuItem>
-            <MenuItem value="4xx">4xx only</MenuItem>
-            <MenuItem value="5xx">5xx only</MenuItem>
+            <MenuItem value="">{t.live.allStatuses}</MenuItem>
+            {["2xx", "3xx", "4xx", "5xx"].map((cls) => (
+              <MenuItem key={cls} value={cls}>
+                {t.live.statusOnly(cls)}
+              </MenuItem>
+            ))}
           </Select>
           <Typography variant="caption" color="text.secondary">
-            {formatNumber(events.length)} shown
+            {t.live.shown(formatNumber(events.length, fmt))}
           </Typography>
         </div>
 
@@ -954,17 +967,17 @@ export default function TrafficDashboard() {
           >
             <TableHead>
               <TableRow>
-                <TableCell>Time</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Method</TableCell>
-                <TableCell>Path</TableCell>
-                {!publicMode && <TableCell>Client IP</TableCell>}
-                <TableCell>Location</TableCell>
-                <TableCell>Browser / OS</TableCell>
-                <TableCell>Host</TableCell>
-                <TableCell>Source</TableCell>
-                <TableCell>Deployment</TableCell>
-                {!publicMode && <TableCell>Your fields</TableCell>}
+                <TableCell>{t.live.columns.time}</TableCell>
+                <TableCell>{t.live.columns.status}</TableCell>
+                <TableCell>{t.live.columns.method}</TableCell>
+                <TableCell>{t.live.columns.path}</TableCell>
+                {!publicMode && <TableCell>{t.live.columns.clientIp}</TableCell>}
+                <TableCell>{t.live.columns.location}</TableCell>
+                <TableCell>{t.live.columns.browserOs}</TableCell>
+                <TableCell>{t.live.columns.host}</TableCell>
+                <TableCell>{t.live.columns.source}</TableCell>
+                <TableCell>{t.live.columns.deployment}</TableCell>
+                {!publicMode && <TableCell>{t.live.columns.yourFields}</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -976,8 +989,7 @@ export default function TrafficDashboard() {
                       color="text.secondary"
                       sx={{ py: 2 }}
                     >
-                      No events match. Try widening the time range or clearing
-                      the search.
+                      {t.live.empty}
                     </Typography>
                   </TableCell>
                 </TableRow>
@@ -988,7 +1000,7 @@ export default function TrafficDashboard() {
                   return (
                     <TableRow key={event.rowKey} hover>
                       <TableCell className={styles.mono}>
-                        {formatFullTimestamp(event.timestamp)}
+                        {formatFullTimestamp(event.timestamp, fmt)}
                       </TableCell>
                       <TableCell>
                         {cls ? (
@@ -1110,14 +1122,14 @@ export default function TrafficDashboard() {
         color="text.secondary"
         sx={{ display: "block", mt: 2 }}
       >
-        Drain endpoint: <code>/api/drains/ingest</code> · Configured in Vercel
-        under{" "}
+        {t.footer.drainEndpoint} <code>/api/drains/ingest</code>{" "}
+        {t.footer.configuredIn}{" "}
         <Link
           href="https://vercel.com/docs/drains/using-drains"
           target="_blank"
           rel="noreferrer"
         >
-          Team Settings → Drains
+          {t.footer.drainsLink}
         </Link>
       </Typography>
       <Typography
@@ -1125,7 +1137,7 @@ export default function TrafficDashboard() {
         color="text.secondary"
         sx={{ display: "block", mt: 2 }}
       >
-        For companies ESG data visit: <Link href="/esg">ESG</Link>
+        {t.footer.esg} <Link href={esgHref}>ESG</Link>
       </Typography>
     </div>
   );

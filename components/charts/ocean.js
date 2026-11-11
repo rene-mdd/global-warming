@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { Chart } from "chart.js/auto";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import { oceanService } from "../../services/dataService";
 
 function Ocean({ parentCallBack }) {
-  const url = "api/ocean-warming-api";
+  const t = useT().charts;
+  const url = "/api/ocean-warming-api";
   const [graphError, setGraphError] = useState("");
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -57,7 +59,7 @@ function Ocean({ parentCallBack }) {
             labels: date,
             datasets: [
               {
-                label: "Ocean warming",
+                label: t.ocean,
                 data: temperature,
                 fill: false,
                 borderColor: "#1da2d8",
@@ -83,14 +85,14 @@ function Ocean({ parentCallBack }) {
                 stacked: true,
                 title: {
                   display: true,
-                  text: "Celsius",
+                  text: t.celsius,
                 },
               },
               x: {
                 stacked: true,
                 title: {
                   display: true,
-                  text: "Year",
+                  text: t.year,
                 },
                 ticks: {
                   maxRotation: 90,

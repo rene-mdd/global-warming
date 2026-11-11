@@ -2,11 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import { co2Service } from "../../services/dataService";
 
 function Co2Recent({ parentCallBackRecent }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
-  const url = "api/co2-api";
+  const url = "/api/co2-api";
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -66,7 +68,7 @@ function Co2Recent({ parentCallBackRecent }) {
           labels: date,
           datasets: [
             {
-              label: "Carbon Dioxide",
+              label: t.co2,
               data: amount,
               fill: false,
               borderColor: "#4984B8",
@@ -89,14 +91,14 @@ function Co2Recent({ parentCallBackRecent }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Part Per million (ppm)",
+                text: t.ppm,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,

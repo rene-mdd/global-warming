@@ -4,6 +4,8 @@ import { oceanService } from "../../services/dataService";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Ocean from "../charts/ocean";
 import { AccordionTemp, AccordionShare, AccordionOcean } from "./accordion";
+import RichText from "./richText";
+import { useT } from "../../lib/i18n";
 import { Container, Grid, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
@@ -16,6 +18,7 @@ const theme = createTheme({
 });
 
 function ParentOcean() {
+  const t = useT();
   const [todayValue, setTodayValue] = useState("0");
   const [description, setDescription] = useState({});
   const [oceanLoading, setOceanLoading] = useState(false);
@@ -35,7 +38,7 @@ function ParentOcean() {
     <Container component="section" className="temperature-background">
       <Container>
         <Typography component="h2" align="center" className="h2-general">
-          Global Ocean Temperature Anomalies, January-December
+          {t.ocean.title}
         </Typography>
         <Grid container>
           {ocean ? (
@@ -48,7 +51,7 @@ function ParentOcean() {
                 loading={oceanLoading ? true : false}
                 variant="contained"
               >
-                {ocean ? "Hide graph" : "Load graph"}
+                {ocean ? t.common.hideGraph : t.common.loadGraph}
               </LoadingButton>
             </ThemeProvider>
           </Grid>
@@ -56,24 +59,17 @@ function ParentOcean() {
         <Grid sx={{ marginTop: "7vh" }}>
           <Container align="center" className="today-value">
             <p>
-              Today's value:
+              {t.common.todayValue}
               <span> {todayValue ? todayValue : 0 + " °C"}</span>
             </p>
           </Container>
           <Container>
-            <p>
-              The Co2 we produce is absorbed and dissolved into the ocean,
-              making it more acidic. The ocean is also suffering from
-              deoxygenation, due to contamination and global warming, making it
-              less habitable for marine organism.
-            </p>
-            <p>
-              The ocean modulates earth temperature. It takes up most of the
-              excess heat that we humans produce, making it warmer, and as
-              result, less able to absorb heat. Without the ocean temperature
-              regulatory effect, the global average temperature would be around
-              50 degrees Celsius instead of 15.
-            </p>
+            {t.ocean.paragraphs.map((parts, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <p key={i}>
+                <RichText parts={parts} />
+              </p>
+            ))}
             <Grid
               container
               spacing={3}
@@ -83,7 +79,7 @@ function ParentOcean() {
               justifyContent="space-around"
             >
               <Grid item xs sx={{ minWidth: "250px" }}>
-                <AccordionOcean props={description?.title ? description?.title : `Global Ocean February - January Average Temperature Anomalies`} />
+                <AccordionOcean props={description?.title ? description?.title : t.ocean.apiTitleFallback} />
               </Grid>
               <Grid item xs sx={{ minWidth: "250px" }}>
                 <AccordionShare />

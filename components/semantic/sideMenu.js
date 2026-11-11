@@ -9,8 +9,10 @@ import {
   Button,
 } from "@mui/material";
 import * as Scroll from "react-scroll";
+import { useT } from "../../lib/i18n";
 
 export default function SideBar() {
+  const t = useT().sideMenu;
   const [activeItem, setActiveItem] = useState("");
   // const [menuVisible, setMenuVisible] = useState(true);
   const [rotate, setRotate] = useState(false);
@@ -30,7 +32,7 @@ export default function SideBar() {
             <CardMedia
               className="side-menu-icon"
               alt="rotate"
-              image="images/icons8-more-than-60.png"
+              image="/images/icons8-more-than-60.png"
               id={rotate ? "rotate-right" : "rotate-left"}
             />
           </Button>
@@ -52,7 +54,7 @@ export default function SideBar() {
                   onClick={() => setActiveItem("temperature")}
                   className="white-color"
                 >
-                  Temperature
+                  {t.temperature}
                 </MenuItem>
               </Scroll.Link>
               <Scroll.Link
@@ -68,7 +70,7 @@ export default function SideBar() {
                   onClick={() => setActiveItem("co2")}
                   className="white-color"
                 >
-                  Carbon Dioxide
+                  {t.co2}
                 </MenuItem>
               </Scroll.Link>
               <Scroll.Link
@@ -84,7 +86,7 @@ export default function SideBar() {
                   onClick={() => setActiveItem("methane")}
                   className="white-color"
                 >
-                  Methane
+                  {t.methane}
                 </MenuItem>
               </Scroll.Link>
               <Scroll.Link
@@ -100,7 +102,7 @@ export default function SideBar() {
                   onClick={() => setActiveItem("nitrous")}
                   className="white-color"
                 >
-                  Nitrous Oxide
+                  {t.nitrous}
                 </MenuItem>
               </Scroll.Link>
               <Scroll.Link
@@ -116,7 +118,7 @@ export default function SideBar() {
                   onClick={() => setActiveItem("arctic")}
                   className="white-color"
                 >
-                  Polar Ice
+                  {t.arctic}
                 </MenuItem>
               </Scroll.Link>
               <Scroll.Link
@@ -132,7 +134,7 @@ export default function SideBar() {
                   onClick={() => setActiveItem("ocean")}
                   className="white-color"
                 >
-                  Ocean warming
+                  {t.ocean}
                 </MenuItem>
               </Scroll.Link>
             </MenuList>

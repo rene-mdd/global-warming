@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Grid } from "@mui/material";
 import { Chart } from "chart.js/auto";
+import { useT } from "../../lib/i18n";
 import localTemperatureData from "../../public/data/csvjson-temperature.json";
 import { temperatureService } from "../../services/dataService";
 
 function Temperature() {
-  const url = "api/temperature-api";
+  const t = useT().charts;
+  const url = "/api/temperature-api";
   const [graphError, setGraphError] = useState("");
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -88,7 +90,7 @@ function Temperature() {
           labels: commonEraData.date.concat(date),
           datasets: [
             {
-              label: "Temperature",
+              label: t.temperature,
               data: commonEraData.amount.concat(station),
               fill: false,
               borderColor: "#FF073A",
@@ -115,14 +117,14 @@ function Temperature() {
               stacked: false,
               title: {
                 display: true,
-                text: "Celsius",
+                text: t.celsius,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,

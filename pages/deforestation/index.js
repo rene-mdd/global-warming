@@ -20,8 +20,10 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
+import { useT } from "../../lib/i18n";
 
 function SemanticDeforestation(props) {
+  const copy = useT().deforestation;
   const [isOpen, setToggle] = useState("");
   const [intersecting, setIntersecting] = useState(false);
   const handleChange = (title) => {
@@ -60,19 +62,14 @@ function SemanticDeforestation(props) {
         (t) => t.description === thing.description || t.title === thing.title
       )
   );
-  const deforestationTitle = "Deforestation news";
-  const deforestationMetaDescription =
-    "Live news about worldwide deforestation and map builder to check on global forest loss.";
-  const deforestationKeywords =
-    "Deforestation, global warming, climate change, environment";
   const websiteUrl = "https://www.global-warming.org/deforestation";
 
   return (
     <>
       <SiteHeader
-        description={deforestationMetaDescription}
-        title={deforestationTitle}
-        keywords={deforestationKeywords}
+        description={copy.meta.description}
+        title={copy.meta.title}
+        keywords={copy.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />
@@ -84,7 +81,7 @@ function SemanticDeforestation(props) {
           alignItems="center"
         >
           <Typography component="h2" textAlign="center" className="h1-landing">
-            Global Deforestation
+            {copy.h1}
           </Typography>
         </Grid>
         <Grid
@@ -96,19 +93,16 @@ function SemanticDeforestation(props) {
         >
           <CardMedia
             component="img"
-            image="images/forest.png"
+            image="/images/forest.png"
             className="landing-page-logo"
-            alt="forest logo"
+            alt={copy.logoAlt}
           />
           <Typography
             align="center"
             component="h2"
             className="h2-deforestation"
           >
-            This section is intended to collect data on the current status of
-            global deforestation. This is accomplished through the utilization
-            of APIs, databases, news sources, MapBuilders, and academic
-            journals.
+            {copy.intro}
           </Typography>
         </Grid>
         {/* <Container component="div" align="center" maxWidth={false}>
@@ -134,7 +128,7 @@ function SemanticDeforestation(props) {
                 image="/images/icons-double-down-white.png"
                 component="img"
                 className="down-arrow-icon"
-                alt="move to next section"
+                alt={copy.scrollAlt}
               />
             </Button>
           </Scroll.Link>
@@ -151,7 +145,7 @@ function SemanticDeforestation(props) {
           className="temperature-background"
         >
           <Typography component="h2" className="h2-general" align="center">
-            Global forest loss map
+            {copy.mapTitle}
           </Typography>
           <Grid xs="auto">
             <Container>
@@ -164,33 +158,12 @@ function SemanticDeforestation(props) {
               />
             </Container>
             <Container align="center">
-              <span>
-                Credits: University of Maryland, department of geographical
-                sciences.
-              </span>
+              <span>{copy.mapCredits}</span>
             </Container>
             <Container className="deforestation-text">
-              <>
-                <p>
-                  Results from time-series analysis of Landsat images
-                  characterizing forest extent and change.
-                </p>
-                <p>
-                  Trees are defined as vegetation taller than 5m in height and
-                  are expressed as a percentage per output grid cell as ‘2000
-                  Percent Tree Cover’. ‘Forest Cover Loss’ is defined as a
-                  stand-replacement disturbance, or a change from a forest to
-                  non-forest state, during the period 2000–2019. ‘Forest Cover
-                  Gain’ is defined as the inverse of loss, or a non-forest to
-                  forest change entirely within the period 2000–2012. ‘Forest
-                  Loss Year’ is a disaggregation of total ‘Forest Loss’ to
-                  annual time scales.
-                </p>
-                <p>
-                  Reference 2000 and 2019 imagery are median observations from a
-                  set of quality assessment-passed growing season observations.
-                </p>
-              </>
+              {copy.mapParagraphs.map((text) => (
+                <p key={text}>{text}</p>
+              ))}
             </Container>
           </Grid>
           <Divider sx={{ margin: "30px" }} />
@@ -198,7 +171,7 @@ function SemanticDeforestation(props) {
       </Grid>
       <Container disableGutters className="news-wrapper">
         <Typography component="h3" className="news-title" align="center">
-          News List
+          {copy.listTitle}
         </Typography>
         <Grid
           container
@@ -223,7 +196,7 @@ function SemanticDeforestation(props) {
                       component="img"
                       height="262px"
                       image={obj?.image ?? "/images/breaking-news.png"}
-                      alt="News image"
+                      alt={copy.imageAlt}
                       onError={checkifImg}
                       loading="lazy"
                     />
@@ -273,7 +246,7 @@ function SemanticDeforestation(props) {
                       endIcon={<PublicIcon />}
                       className="new-source"
                     >
-                      <span>{obj?.source?.name ?? "News"}</span>
+                      <span>{obj?.source?.name ?? copy.sourceFallback}</span>
                     </Button>
                     <Button
                       variant="contained"
@@ -282,8 +255,8 @@ function SemanticDeforestation(props) {
                       ml={1}
                     >
                       {isOpen.titleText === obj?.title
-                        ? "Read less"
-                        : "Read more"}
+                        ? copy.readLess
+                        : copy.readMore}
                     </Button>
                   </CardActions>
                 </Card>
@@ -306,7 +279,7 @@ function SemanticDeforestation(props) {
                       component="img"
                       height="262px"
                       image={obj?.media ?? "/images/breaking-news.png"}
-                      alt="news image"
+                      alt={copy.imageAltCatcher}
                       onError={checkifImg}
                       loading="lazy"
                     />
@@ -358,7 +331,7 @@ function SemanticDeforestation(props) {
                       endIcon={<PublicIcon />}
                       className="new-source"
                     >
-                      <span>{obj?.author ? obj?.author : "News"}</span>
+                      <span>{obj?.author ? obj?.author : copy.sourceFallback}</span>
                     </Button>
                     <Button
                       variant="contained"
@@ -367,8 +340,8 @@ function SemanticDeforestation(props) {
                       ml={1}
                     >
                       {isOpen.titleText === obj?.title
-                        ? "Read less"
-                        : "Read more"}
+                        ? copy.readLess
+                        : copy.readMore}
                     </Button>
                   </CardActions>
                 </Card>
@@ -379,7 +352,7 @@ function SemanticDeforestation(props) {
       </Container>
       <Container>
         <Typography my={2} align="center">
-          News API sources:{" "}
+          {copy.sources}{" "}
           <a href="https://www.newscatcherapi.com/?utm_source=free-user&utm_medium=referral&utm_campaign=global-warming">
             NewsCatcher
           </a>{" "}
@@ -418,35 +391,59 @@ SemanticDeforestation.defaultProps = {
   googleNewsParseJson: [],
   newsCatcherParseJson: [],
 };
-export async function getServerSideProps({ res }) {
+// Logs only source, HTTP status and message. The full axios error carries the
+// request config, which holds the GNews token (in the URL) and the
+// NewsCatcher x-api-token header.
+function logFetchError(source, error) {
+  console.error(
+    `${source} request failed:`,
+    error?.response?.status ?? "no response",
+    error?.response?.data?.message ?? error?.message
+  );
+}
+
+// Article searches per locale. /de asks both APIs for German-language
+// articles so the German page isn't mostly English text; every other locale
+// sends exactly the English request it always has.
+const NEWS_QUERIES = {
+  en: { gNews: '"deforestation"', newsCatcher: "deforestation" },
+  de: { gNews: "Abholzung OR Entwaldung", newsCatcher: "Abholzung OR Entwaldung" },
+};
+
+export async function getServerSideProps({ res, locale }) {
+  const lang = locale === "de" ? "de" : "en";
+  const query = NEWS_QUERIES[lang];
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const newsCatcherApi = process.env.API_CATCHER_NEWS;
   let googleNewsParseJson = [];
   let newsCatcherParseJson = [];
   const options = {
     method: "GET",
-    params: { q: "deforestation", lang: "en", sort_by: "relevancy" },
+    params: { q: query.newsCatcher, lang, sort_by: "relevancy" },
     headers: {
       "x-api-token": newsCatcherApi,
     },
   };
 
-  try {
-    const gNewsResp = await axios.get(
-      `https://gnews.io/api/v4/search?q=%22deforestation%22&lang=en&image=required&token=${gNewsVariable}`
-    );
-    const newsCatcherResp = await axios.request(
-      "https://v3-api.newscatcherapi.com/api/search",
-      options
-    );
-    if (gNewsResp) {
-      googleNewsParseJson = gNewsResp.data.articles;
-    }
-    if (newsCatcherResp) {
-      newsCatcherParseJson = newsCatcherResp.data.articles;
-    }
-  } catch (error) {
-    console.error(error);
+  // Each source is independent: one failing (quota, bad key, outage) still
+  // leaves the other's articles on the page.
+  const [gNewsResult, newsCatcherResult] = await Promise.allSettled([
+    axios.get(
+      `https://gnews.io/api/v4/search?q=${encodeURIComponent(
+        query.gNews
+      )}&lang=${lang}&image=required&token=${gNewsVariable}`
+    ),
+    axios.request("https://v3-api.newscatcherapi.com/api/search", options),
+  ]);
+  if (gNewsResult.status === "fulfilled") {
+    googleNewsParseJson = gNewsResult.value.data?.articles ?? [];
+  } else {
+    logFetchError("GNews", gNewsResult.reason);
+  }
+  if (newsCatcherResult.status === "fulfilled") {
+    newsCatcherParseJson = newsCatcherResult.value.data?.articles ?? [];
+  } else {
+    logFetchError("NewsCatcher", newsCatcherResult.reason);
   }
   res.setHeader(
     "Cache-Control",

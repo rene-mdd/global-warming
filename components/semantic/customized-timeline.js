@@ -13,12 +13,15 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import CodeIcon from "@mui/icons-material/Code";
+import { useT } from "../../lib/i18n";
 
 export default function CustomizedTimeline() {
+  const t = useT().about.timeline;
+  const [start, legal, kickOff, fundraising, development, launch] = t.items;
   return (
     <>
       <Typography variant="h2" className="timeline-title">
-        Project Timeline
+        {t.title}
       </Typography>
       <Grid className="vision-mission-wrapper">
         <Grid className="mission">
@@ -28,22 +31,18 @@ export default function CustomizedTimeline() {
             align="center"
             size={{ xs: 12, md: 6 }}
           >
-            Mission
+            {t.mission.title}
           </Typography>
           <Typography component="p" align="center">
-            To make climate and companies' ESG data free, open, and practical
-            for everyday use. Empowering people everywhere to make informed and
-            sustainable decisions. Accelerating the transition to a greener
-            future.
+            {t.mission.text}
           </Typography>
         </Grid>
         <Grid className="vision" size={{ xs: 12, md: 6 }}>
           <Typography mb={5} component="h2" align="center">
-            Vision
+            {t.vision.title}
           </Typography>
           <Typography component="p" align="center">
-            A world where environmental accountability is the norm, not the
-            exception. With transparency at the heart of everything we do.
+            {t.vision.text}
           </Typography>
         </Grid>
       </Grid>
@@ -66,11 +65,10 @@ export default function CustomizedTimeline() {
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
             <Typography variant="h6" component="span" color="white">
-              Start
+              {start.title}
             </Typography>
             <Typography color="white">
-              Development of the first public API exposing atmospheric
-              greenhouse gas concentration.
+              {start.text}
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -96,10 +94,10 @@ export default function CustomizedTimeline() {
             className="timeline-content"
           >
             <Typography variant="h6" component="span" color="white">
-              Legal
+              {legal.title}
             </Typography>
             <Typography color="white">
-              Registration and paperwork of the nonprofit.
+              {legal.text}
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -121,10 +119,10 @@ export default function CustomizedTimeline() {
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
             <Typography variant="h6" component="span" color="white">
-              Kick off
+              {kickOff.title}
             </Typography>
             <Typography color="white">
-              Development of web app additional features.
+              {kickOff.text}
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -147,10 +145,10 @@ export default function CustomizedTimeline() {
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
             <Typography variant="h6" component="span" color="white">
-              Fundraising
+              {fundraising.title}
             </Typography>
             <Typography color="white">
-              Start of fundraising campaign.
+              {fundraising.text}
             </Typography>
           </TimelineContent>
         </TimelineItem>
@@ -172,9 +170,9 @@ export default function CustomizedTimeline() {
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
             <Typography variant="h6" component="span" color="white">
-              Development
+              {development.title}
             </Typography>
-            <Typography color="white">Development of prototype.</Typography>
+            <Typography color="white">{development.text}</Typography>
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
@@ -196,10 +194,10 @@ export default function CustomizedTimeline() {
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
             <Typography variant="h6" component="span" color="white">
-              Launch
+              {launch.title}
             </Typography>
             <Typography color="white">
-              Launch of the fully-fledged platform to a global audience.
+              {launch.text}
             </Typography>
           </TimelineContent>
         </TimelineItem>

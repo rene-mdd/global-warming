@@ -20,8 +20,10 @@ import {
 import StickyMenu from "../../components/semantic/menu";
 import SiteHeader from "../../components/siteHeader";
 import Footer from "../../components/semantic/footer";
+import { useT } from "../../lib/i18n";
 
 function News(props) {
+  const copy = useT().news;
   const [isOpen, setToggle] = useState("");
   const [intersecting, setIntersecting] = useState(false);
 
@@ -61,19 +63,14 @@ function News(props) {
       )
   );
 
-  const newsMetaTitle = "Global warming & climate change news.";
-  const newsMetaDescription =
-    "Live worldwide news about global warming and climate change.";
-  const newsKeywords =
-    "Global warming, climate change, news, environment, green house gases";
   const websiteUrl = "https://www.global-warming.org/news";
 
   return (
     <>
       <SiteHeader
-        description={newsMetaDescription}
-        title={newsMetaTitle}
-        keywords={newsKeywords}
+        description={copy.meta.description}
+        title={copy.meta.title}
+        keywords={copy.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />
@@ -85,7 +82,7 @@ function News(props) {
           alignItems="center"
         >
           <Typography component="h2" textAlign="center" className="h1-landing">
-            Global Warming & Climate Change World News
+            {copy.h1}
           </Typography>
         </Grid>
         <Grid
@@ -99,10 +96,10 @@ function News(props) {
             component="img"
             image="/images/icons8-news-256.png"
             className="landing-page-logo"
-            alt="news logo"
+            alt={copy.logoAlt}
           />
           <Typography component="h2" className="h2-landing">
-            Up to date worldwide news about global warming and climate change.
+            {copy.intro}
           </Typography>
         </Grid>
         <Grid
@@ -119,7 +116,7 @@ function News(props) {
                 component="img"
                 image="/images/icons-double-down-white.png"
                 className="down-arrow-icon"
-                alt="move to next section"
+                alt={copy.scrollAlt}
               />
             </Button>
           </Scroll.Link>
@@ -128,7 +125,7 @@ function News(props) {
       <Divider name="jump-to-news" className="hide-news-divider" />
       <Container disableGutters className="news-wrapper">
         <Typography component="h3" className="news-title" align="center">
-          News List
+          {copy.listTitle}
         </Typography>
         <Grid container spacing={2} justifyContent="center">
           {duplicateRemovalGNews &&
@@ -148,7 +145,7 @@ function News(props) {
                       component="img"
                       height="262px"
                       image={obj?.image ?? "/images/breaking-news.webp"}
-                      alt="News image"
+                      alt={copy.imageAlt}
                       onError={checkifImg}
                       loading="lazy"
                     />
@@ -198,7 +195,7 @@ function News(props) {
                       endIcon={<PublicIcon />}
                       className="new-source"
                     >
-                      <span>{obj?.source?.name ?? "News"}</span>
+                      <span>{obj?.source?.name ?? copy.sourceFallback}</span>
                     </Button>
                     <Button
                       variant="contained"
@@ -207,8 +204,8 @@ function News(props) {
                       ml={1}
                     >
                       {isOpen.titleText === obj?.title
-                        ? "Read less"
-                        : "Read more"}
+                        ? copy.readLess
+                        : copy.readMore}
                     </Button>
                   </CardActions>
                 </Card>
@@ -231,7 +228,7 @@ function News(props) {
                       component="img"
                       height="262px"
                       image={obj?.media ?? "/images/breaking-news.png"}
-                      alt="news image"
+                      alt={copy.imageAltCatcher}
                       onError={checkifImg}
                       loading="lazy"
                     />
@@ -283,7 +280,7 @@ function News(props) {
                       endIcon={<PublicIcon />}
                       className="new-source"
                     >
-                      <span>{obj?.author ? obj?.author : "News"}</span>
+                      <span>{obj?.author ? obj?.author : copy.sourceFallback}</span>
                     </Button>
                     <Button
                       variant="contained"
@@ -292,8 +289,8 @@ function News(props) {
                       ml={1}
                     >
                       {isOpen.titleText === obj?.title
-                        ? "Read less"
-                        : "Read more"}
+                        ? copy.readLess
+                        : copy.readMore}
                     </Button>
                   </CardActions>
                 </Card>
@@ -304,7 +301,7 @@ function News(props) {
       </Container>
       <Container>
         <Typography my={2} align="center">
-          News API sources:{" "}
+          {copy.sources}{" "}
           <a href="https://www.newscatcherapi.com/?utm_source=free-user&utm_medium=referral&utm_campaign=global-warming">
             NewsCatcher
           </a>{" "}
@@ -342,7 +339,28 @@ News.defaultProps = {
   newsCatcherParseJson: [],
 };
 
-export async function getServerSideProps({ res }) {
+// Logs only source, HTTP status and message. The full axios error carries the
+// request config, which holds the GNews token (in the URL) and the
+// NewsCatcher x-api-token header.
+function logFetchError(source, error) {
+  console.error(
+    `${source} request failed:`,
+    error?.response?.status ?? "no response",
+    error?.response?.data?.message ?? error?.message
+  );
+}
+
+// Article searches per locale. /de asks both APIs for German-language
+// articles so the German page isn't mostly English text; every other locale
+// sends exactly the English request it always has.
+const NEWS_QUERIES = {
+  en: { gNews: '"global warming"', newsCatcher: "climate change" },
+  de: { gNews: '"Erderwärmung" OR "Klimawandel"', newsCatcher: "Klimawandel" },
+};
+
+export async function getServerSideProps({ res, locale }) {
+  const lang = locale === "de" ? "de" : "en";
+  const query = NEWS_QUERIES[lang];
   const gNewsVariable = process.env.API_KEY_GOOGLE;
   const newsCatcherApi = process.env.API_CATCHER_NEWS;
   let googleNewsParseJson = [];
@@ -350,30 +368,33 @@ export async function getServerSideProps({ res }) {
   const options = {
     method: "GET",
     params: {
-      q: "climate change",
-      lang: "en",
+      q: query.newsCatcher,
+      lang,
       sort_by: "relevancy",
     },
     headers: {
       "x-api-token": newsCatcherApi,
     },
   };
-  try {
-    const gNewsResp = await axios.get(
-      `https://gnews.io/api/v4/search?q=%22global%20warming%22&lang=en&image=required&token=${gNewsVariable}`
-    );
-    const newsCatcherResp = await axios.request(
-      "https://v3-api.newscatcherapi.com/api/search",
-      options
-    );
-    if (gNewsResp) {
-      googleNewsParseJson = gNewsResp.data.articles;
-    }
-    if (newsCatcherResp) {
-      newsCatcherParseJson = newsCatcherResp.data.articles;
-    }
-  } catch (error) {
-    console.error(error);
+  // Each source is independent: one failing (quota, bad key, outage) still
+  // leaves the other's articles on the page.
+  const [gNewsResult, newsCatcherResult] = await Promise.allSettled([
+    axios.get(
+      `https://gnews.io/api/v4/search?q=${encodeURIComponent(
+        query.gNews
+      )}&lang=${lang}&image=required&token=${gNewsVariable}`
+    ),
+    axios.request("https://v3-api.newscatcherapi.com/api/search", options),
+  ]);
+  if (gNewsResult.status === "fulfilled") {
+    googleNewsParseJson = gNewsResult.value.data?.articles ?? [];
+  } else {
+    logFetchError("GNews", gNewsResult.reason);
+  }
+  if (newsCatcherResult.status === "fulfilled") {
+    newsCatcherParseJson = newsCatcherResult.value.data?.articles ?? [];
+  } else {
+    logFetchError("NewsCatcher", newsCatcherResult.reason);
   }
   res.setHeader(
     "Cache-Control",

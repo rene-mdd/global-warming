@@ -1,6 +1,15 @@
 import Head from "next/head";
 import PropTypes from "prop-types";
+import { useRouter } from "next/router";
+import {
+  DEFAULT_LOCALE,
+  LOCALES,
+  isTranslated,
+  localizedUrl,
+} from "../lib/i18n-config";
 // import { metadata } from "../pages/about";
+
+const OG_LOCALES = { en: "en_US", de: "de_DE" };
 
 export default function SiteHeader({
   title,
@@ -8,12 +17,46 @@ export default function SiteHeader({
   keyword,
   websiteUrl,
 }) {
+  const { locale = DEFAULT_LOCALE, pathname } = useRouter();
+  const translated = isTranslated(pathname);
+  // `websiteUrl` is the English canonical and is emitted unchanged for
+  // English, so existing English URLs keep every ranking signal.
+  const canonical = localizedUrl(websiteUrl, pathname, locale);
+
   return (
     <>
       <Head>
         <title>{title}</title>
-        <link rel="canonical" href={websiteUrl} />
-        <meta property="og:url" content={websiteUrl} />
+        <link rel="canonical" href={canonical} />
+        {/* A /de page that isn't translated yet would be English content
+            competing with the English original. */}
+        {locale !== DEFAULT_LOCALE && !translated && (
+          <meta name="robots" content="noindex, follow" />
+        )}
+        {translated &&
+          LOCALES.map((alt) => (
+            <link
+              key={`hreflang-${alt}`}
+              rel="alternate"
+              hrefLang={alt}
+              href={localizedUrl(websiteUrl, pathname, alt)}
+            />
+          ))}
+        {translated && (
+          <link rel="alternate" hrefLang="x-default" href={websiteUrl} />
+        )}
+        {translated && (
+          <meta property="og:locale" content={OG_LOCALES[locale]} />
+        )}
+        {translated &&
+          LOCALES.filter((alt) => alt !== locale).map((alt) => (
+            <meta
+              key={`og-locale-${alt}`}
+              property="og:locale:alternate"
+              content={OG_LOCALES[alt]}
+            />
+          ))}
+        <meta property="og:url" content={canonical} />
         <meta property="og:title" content={title} />
         <meta property="og:image" content="/images/logo-planet-image.png" />
         <meta property="og:image:width" content="150" />
@@ -26,7 +69,6 @@ export default function SiteHeader({
     </>
   );
 }
-
 SiteHeader.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,

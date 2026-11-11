@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import localMethaneData from "../../public/data/csvjson-methane.json";
 import { methaneService } from "../../services/dataService";
 
 function Methane({ parentCallBack }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
-  const url = "api/methane-api";
+  const url = "/api/methane-api";
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -68,7 +70,7 @@ function Methane({ parentCallBack }) {
           labels: methPrehistoricData.date.concat(date),
           datasets: [
             {
-              label: "Methane",
+              label: t.methane,
               data: methPrehistoricData.amount.concat(average),
               fill: false,
               borderColor: "#A75E09",
@@ -89,14 +91,14 @@ function Methane({ parentCallBack }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Part Per billion (ppb)",
+                text: t.ppb,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,

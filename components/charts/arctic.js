@@ -2,10 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import { arcticService } from "../../services/dataService";
 
 function Arctic({ parentCallBack }) {
-  const url = "api/arctic-api";
+  const t = useT().charts;
+  const url = "/api/arctic-api";
   const [graphError, setGraphError] = useState("");
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -71,7 +73,7 @@ function Arctic({ parentCallBack }) {
           labels: year,
           datasets: [
             {
-              label: "Extent",
+              label: t.extent,
               borderColor: "rgba(44, 130, 201, 1)",
               data: amount,
               borderWidth: 1,
@@ -89,14 +91,14 @@ function Arctic({ parentCallBack }) {
               suggestedMin: 10,
               title: {
                 display: true,
-                text: "Million square km",
+                text: t.millionKm2,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
@@ -161,4 +163,4 @@ Arctic.defaultProps = {
   parentCallBack: () => {},
 };
 
-export default Arctic;
+export default Arctic;

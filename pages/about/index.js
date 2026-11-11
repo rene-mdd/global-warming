@@ -11,6 +11,7 @@ import Footer from "../../components/semantic/footer";
 import Transparency from "../../components/semantic/transparency";
 import Partners from "../../components/semantic/partners";
 import Achievements from "../../components/semantic/achievements";
+import { useT } from "../../lib/i18n";
 
 const theme = createTheme({
   palette: {
@@ -24,18 +25,14 @@ const theme = createTheme({
 });
 
 function About() {
-  const aboutTitle = "Climate Accountability API - About Us";
+  const t = useT().about;
   const websiteUrl = "https://www.global-warming.org/about";
-  const aboutMetaDescription =
-    "Our mission is to provide the public with open information on climate data and companies’ social and environmental impacts (ESG)";
-  const aboutKeywords =
-    "Global warming, about, carbon footprint, climate change, environment";
   return (
     <>
       <SiteHeader
-        description={aboutMetaDescription}
-        title={aboutTitle}
-        keywords={aboutKeywords}
+        description={t.meta.description}
+        title={t.meta.title}
+        keywords={t.meta.keywords}
         websiteUrl={websiteUrl}
       />
       <StickyMenu />
@@ -46,14 +43,14 @@ function About() {
         className="landing-page-about"
       >
         <Typography component="p" align="center" className="about-title ">
-          About Us
+          {t.hero.title}
         </Typography>
         <Grid size="grow" align="center">
           <CardMedia
             component="img"
-            image="images/logo-planet-image.png"
+            image="/images/logo-planet-image.png"
             className="landing-page-logo"
-            alt="planet dying logo"
+            alt={t.hero.logoAlt}
           />
           <Typography
             component="h1"
@@ -61,12 +58,9 @@ function About() {
             align="center"
             gutterBottom
           >
-            At <strong>Climate Accountability API</strong>, we develop open
-            digital infrastructure for trustworthy sustainability and
-            environmental data, with expertise in APIs, interoperability, data
-            governance, metadata, FAIR data principles, and digital platforms.
-            Our mission is to build the world's most comprehensive, transparent,
-            and accessible platform for ESG and climate-related data.
+            {t.hero.intro.before}
+            <strong>{t.hero.intro.name}</strong>
+            {t.hero.intro.after}
           </Typography>
         </Grid>
         <Grid
@@ -85,7 +79,7 @@ function About() {
               }}
             >
               <iframe
-                title="Tons of CO2 emitted into the atmosphere"
+                title={t.hero.co2CounterTitle}
                 src="https://www.theworldcounts.com/embed/challenges/23?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
                 style={{ border: "none", width: "100%" }}
                 height="125"
@@ -103,7 +97,7 @@ function About() {
               }}
             >
               <iframe
-                title="World average temperature (°C)"
+                title={t.hero.temperatureCounterTitle}
                 src="https://www.theworldcounts.com/embed/challenges/21?background_color=#ffffff&color=black&font_family=%22Helvetica+Neue%22%2C+Arial%2C+sans-serif&font_size=14"
                 style={{ border: "none", width: "100%" }}
                 height="125"
@@ -120,7 +114,7 @@ function About() {
                 image="/images/icons-double-down.png"
                 component="img"
                 className="down-icon"
-                alt="move to next section"
+                alt={t.hero.scrollAlt}
               />
             </Button>
           </Scroll.Link>

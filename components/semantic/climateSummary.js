@@ -16,6 +16,9 @@ import ScienceIcon from "@mui/icons-material/Science";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import WavesIcon from "@mui/icons-material/Waves";
 
+import { useLocale, useT } from "../../lib/i18n";
+import localizeIndicator from "../../lib/summary-i18n";
+
 const INK_PRIMARY = "#ffffff";
 const INK_SECONDARY = "rgba(255, 255, 255, 0.78)";
 const INK_MUTED = "rgba(255, 255, 255, 0.58)";
@@ -32,9 +35,9 @@ const ICONS = {
 };
 
 /** Thousands separators, at most two decimals. */
-function formatValue(value) {
+function formatValue(value, numberLocale) {
   if (typeof value !== "number" || !Number.isFinite(value)) return "—";
-  return value.toLocaleString("en-US", { maximumFractionDigits: 2 });
+  return value.toLocaleString(numberLocale, { maximumFractionDigits: 2 });
 }
 
 function comparisonText({ comparison, baselineLabel }) {
@@ -43,7 +46,7 @@ function comparisonText({ comparison, baselineLabel }) {
   return `${arrow} ${Math.abs(comparison)}% ${baselineLabel}`;
 }
 
-function StatTile({ indicator }) {
+function StatTile({ indicator, numberLocale }) {
   const Icon = ICONS[indicator.key] ?? ScienceIcon;
 
   const iconColorMap = {
@@ -118,7 +121,7 @@ function StatTile({ indicator }) {
           }}
         >
           {indicator.valuePrefix ?? ""}
-          {formatValue(indicator.value)}
+          {formatValue(indicator.value, numberLocale)}
         </Typography>
         <Typography
           component="span"
@@ -158,9 +161,12 @@ StatTile.propTypes = {
     baselineLabel: PropTypes.string,
     asOf: PropTypes.string,
   }).isRequired,
+  numberLocale: PropTypes.string.isRequired,
 };
 
 function ClimateSummary({ initialData }) {
+  const locale = useLocale();
+  const t = useT().summary;
   const [data, setData] = useState(initialData);
   const [failed, setFailed] = useState(false);
 
@@ -218,7 +224,7 @@ function ClimateSummary({ initialData }) {
         mt: { xs: 3, md: 4 },
       }}
       component="section"
-      aria-label="Current climate indicators"
+      aria-label={t.ariaLabel}
     >
       {loading
         ? // Six placeholders matching the tiles' rendered height.
@@ -238,7 +244,10 @@ function ClimateSummary({ initialData }) {
         : indicators.map((indicator) => (
             <Grid key={indicator.key} mt={4} xs={6} sm={4} md={4}>
               {console.log(indicator)}
-              <StatTile indicator={indicator} />
+              <StatTile
+                indicator={localizeIndicator(indicator, locale, t)}
+                numberLocale={t.numberLocale}
+              />
             </Grid>
           ))}
     </Grid>

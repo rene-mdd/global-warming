@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Chart } from "chart.js/auto";
 import { Container, Grid } from "@mui/material";
 import PropTypes from "prop-types";
+import { useT } from "../../lib/i18n";
 import localCo2Data from "../../public/data/csvjson-co2-prehistoric.json";
 
 function Co2Prehistoric({ parentCallBackPrehist }) {
+  const t = useT().charts;
   const [graphError, setGraphError] = useState("");
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
@@ -51,7 +53,7 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
           labels: prehistoricData.date,
           datasets: [
             {
-              label: "Carbon Dioxide",
+              label: t.co2,
               data: prehistoricData.amount,
               fill: false,
               borderColor: "#4984B8",
@@ -74,14 +76,14 @@ function Co2Prehistoric({ parentCallBackPrehist }) {
               stacked: false,
               title: {
                 display: true,
-                text: "Part Per million (ppm)",
+                text: t.ppm,
               },
             },
             x: {
               stacked: false,
               title: {
                 display: true,
-                text: "Year",
+                text: t.year,
               },
               ticks: {
                 maxRotation: 90,
