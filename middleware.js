@@ -16,17 +16,26 @@ import {
 
 export function middleware(request) {
   const { locale, pathname } = request.nextUrl;
+  // Client-side navigations and link prefetches carry x-nextjs-data. The
+  // cookie redirect skips them: the router caches a prefetch's redirect, so a
+  // prefetch made while the cookie still held the old language sent the
+  // switcher's click back to the page it came from, and from there forth
+  // again, freezing the tab. Links inside the site already point at the right
+  // locale, so only full page loads need the cookie.
+  const clientNavigation = request.headers.has("x-nextjs-data");
   const target =
     untranslatedRedirectLocale({
       locale,
       pathname,
       preview: process.env.NODE_ENV === "development",
     }) ??
-    cookieRedirectLocale({
-      cookie: request.cookies.get(LOCALE_COOKIE)?.value,
-      locale,
-      pathname,
-    });
+    (clientNavigation
+      ? null
+      : cookieRedirectLocale({
+          cookie: request.cookies.get(LOCALE_COOKIE)?.value,
+          locale,
+          pathname,
+        }));
   if (!target) return undefined;
 
   const url = request.nextUrl.clone();
