@@ -1,8 +1,4 @@
 // locales/en/donate.js — Donate page strings (shape: see locales/en.js)
-//
-// meta.title and meta.description hold what the English page renders
-// today: pages/donate/index.js passes them to SiteHeader swapped, so the
-// <title> is the mission sentence and the description is the short name.
 
 const donate = {
   meta: {

@@ -8,9 +8,6 @@
 // inline code are segment arrays for components/semantic/richText.js.
 
 const traffic = {
-  // pages/traffic/index.js passes these to SiteHeader swapped — the page
-  // title is the long sentence. Stored as rendered so the English page is
-  // unchanged; locales/de/traffic.js has them the right way round.
   meta: {
     title: "Climate Accountability API - Traffic",
     description:
