@@ -11,13 +11,17 @@ import Link from "@mui/material/Link";
 import { useLocale, useT } from "../../lib/i18n";
 import { localizedPath } from "../../lib/i18n-config";
 
-function CountUp({ end, duration, showPlus, isVisible, numberLocale }) {
-  const [count, setCount] = useState(0);
+// Starts at the real number: it is what the server renders, so the page HTML
+// that search engines and other crawlers read carries the figures instead of
+// 0. The count-up from 0 runs only once `animate` is set.
+function CountUp({ end, duration, showPlus, animate, numberLocale }) {
+  const [count, setCount] = useState(end);
 
   useEffect(() => {
-    if (!isVisible) return undefined;
+    if (!animate) return undefined;
 
     let start = 0;
+    setCount(0);
     const increment = end / (duration / 16);
 
     const timer = setInterval(() => {
@@ -31,7 +35,7 @@ function CountUp({ end, duration, showPlus, isVisible, numberLocale }) {
     }, 16);
 
     return () => clearInterval(timer);
-  }, [end, duration, isVisible]);
+  }, [end, duration, animate]);
 
   return (
     <Typography
@@ -49,7 +53,7 @@ CountUp.propTypes = {
   end: PropTypes.number.isRequired,
   duration: PropTypes.number,
   showPlus: PropTypes.bool,
-  isVisible: PropTypes.bool.isRequired,
+  animate: PropTypes.bool.isRequired,
   numberLocale: PropTypes.string.isRequired,
 };
 
@@ -60,18 +64,30 @@ CountUp.defaultProps = {
 
 function FactCard({ value, label, showPlus, numberLocale }) {
   const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
+    // Counts up only when the visitor scrolls the card into view. Crawlers
+    // don't scroll (Google renders with a viewport stretched to the page
+    // height instead), so they keep seeing the real number.
+    let scrolled = false;
+    const onScroll = () => {
+      scrolled = true;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) setIsVisible(true);
+      if (entry.isIntersecting && scrolled) {
+        setAnimate(true);
+        observer.disconnect();
+      }
     }, { threshold: 0.5 });
 
     const el = ref.current;
     if (el) observer.observe(el);
 
     return () => {
-      if (el) observer.unobserve(el);
+      window.removeEventListener("scroll", onScroll);
       observer.disconnect();
     };
   }, []);
@@ -85,7 +101,7 @@ function FactCard({ value, label, showPlus, numberLocale }) {
       <CountUp
         end={value}
         showPlus={showPlus}
-        isVisible={isVisible}
+        animate={animate}
         numberLocale={numberLocale}
       />
       <Typography variant="h6" sx={{ mt: 1 }}>
@@ -112,7 +128,7 @@ export default function FactsSection() {
   const facts = [
     { value: 80000, label: t.devices, showPlus: true },
     { value: 350000, label: t.apiRequests, showPlus: true },
-    { value: 150000, label: t.companies, showPlus: true },
+    { value: 149000, label: t.companies, showPlus: true },
   ];
 
   return (
