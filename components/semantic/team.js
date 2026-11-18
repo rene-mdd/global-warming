@@ -56,6 +56,10 @@ export default function Team() {
     "10_name": "Veronica Marotta",
     "10_job": t.jobs["10"],
 
+    "12_image": "/images/agnese.jpeg",
+    "12_name": "Agnese Corradi",
+    "12_job": t.jobs["12"],
+
     "11_image": "/images/empty-profile.jpeg",
     "11_name": t.openPosition,
     "11_job": t.jobs["11"],
@@ -224,6 +228,23 @@ export default function Team() {
                   component="span"
                 >
                   {content["08_job"]}
+                </Typography>
+              </Grid>
+              <Grid xs={12} sm={6} md={3}>
+                <Avatar
+                  alt={t.pictureAlt}
+                  src={content["12_image"]}
+                  className="team-picture"
+                />
+                <Typography variant="h6" component="h6" gutterBottom>
+                  {content["12_name"]}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="textSecondary"
+                  component="span"
+                >
+                  {content["12_job"]}
                 </Typography>
               </Grid>
               {/* <Grid xs={12} sm={6} md={3}>
