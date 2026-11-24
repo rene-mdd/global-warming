@@ -229,7 +229,7 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
           </Typography>{" "}
           <Typography component="p">
             Climate Accountability API gUG (haftungsbeschränkt)
-            <br /> Seestraße 107, 13353 Berlin, Deutschland
+            <br /> Kollwitzstr. 76, 10435 Berlin, Deutschland
           </Typography>
           <Typography component="div">
             Telefon:{" "}
@@ -431,6 +431,25 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             Rechte einer anderen natürlichen oder juristischen Person oder aus
             Gründen eines wichtigen öffentlichen Interesses der Europäischen
             Union oder eines Mitgliedstaats verarbeitet werden.
+          </Typography>
+          <Typography component="h3">
+            Automatisierte Entscheidungsfindung und Profiling
+          </Typography>{" "}
+          <Typography component="p">
+            Wir setzen keine automatisierte Entscheidungsfindung einschließlich
+            Profiling im Sinne von Art. 22 Abs. 1 und 4 DSGVO ein. Einige der
+            von uns genutzten Dienste werten Daten automatisiert aus: Google
+            reCAPTCHA prüft, ob eine Einsendung über das Kontaktformular von
+            einem Menschen stammt (siehe unten „Google reCAPTCHA“), die an
+            Spenden beteiligten Zahlungsdienstleister führen automatisierte
+            Betrugsprüfungen durch, und Google Analytics modelliert
+            Nutzungsstatistiken in aggregierter Form, ohne Entscheidungen über
+            einzelne Besucher zu treffen. Eine solche Prüfung kann höchstens
+            eine einzelne Formulareinsendung oder Zahlung verhindern. Sie
+            entfaltet Ihnen gegenüber keine rechtliche Wirkung und
+            beeinträchtigt Sie nicht in ähnlicher Weise erheblich; Sie können
+            uns jederzeit per E-Mail schreiben oder eine andere Zahlungsart
+            wählen.
           </Typography>
           <Typography component="h3">SSL- bzw. TLS-Verschlüsselung</Typography>{" "}
           <Typography component="p">
@@ -721,7 +740,8 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
 
               <Box>
                 <Typography variant="body1" fontWeight="medium">
-                  Upstash, Inc., Delaware, USA
+                  Upstash, Inc. (Gesellschaft nach dem Recht von Delaware),
+                  Kalifornien, USA, privacy@upstash.com
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Betrieb der Datenbank mit Standort Frankfurt am Main,
@@ -837,8 +857,12 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             ). Static Forms nimmt Ihre Nachricht entgegen, prüft sie auf Spam
             und leitet sie per E-Mail an uns weiter. Static Forms speichert
             Formulardaten auf Servern von Amazon Web Services in Frankfurt am
-            Main, Deutschland, und löscht gespeicherte Einsendungen nach 30 Tagen. Static
-            Forms setzt weitere Unterauftragsverarbeiter ein, die in seinem
+            Main, Deutschland, und löscht gespeicherte Einsendungen nach 30
+            Tagen. Die E-Mail, mit der Ihre Nachricht an uns weitergeleitet
+            wird, wird über Amazon Web Services (Amazon SES) aus den USA
+            versendet, ersatzweise aus Singapur; Ihre Nachricht wird daher in
+            diese Länder übermittelt. Static Forms setzt weitere
+            Unterauftragsverarbeiter ein, die in seinem
             Vertrag zur Auftragsverarbeitung aufgeführt sind; einige davon
             haben ihren Sitz außerhalb der Europäischen Union.
           </Typography>{" "}
@@ -907,9 +931,13 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
           <Typography component="p">
             Zudem speichert ConsentManager ein Cookie in Ihrem Browser, um Ihnen
             die erteilten Einwilligungen bzw. deren Widerruf zuordnen zu können.
-            Die so erfassten Daten werden gespeichert, bis Sie uns zur Löschung
-            auffordern, das ConsentManager-Cookie selbst löschen oder der Zweck
-            für die Datenspeicherung entfällt. Zwingende gesetzliche
+            Haben Sie zugestimmt, fragen wir Ihre Einwilligung nach 12 Monaten
+            erneut ab; haben Sie abgelehnt oder eine individuelle Auswahl
+            getroffen, nach 14 Tagen. Löschen Sie das Cookie vorher, fragen wir
+            bei Ihrem nächsten Besuch erneut. Um die Erteilung einer
+            Einwilligung nachweisen zu können (Art. 7 Abs. 1 DSGVO), wird ein
+            Protokoll Ihrer Einwilligungserklärungen 13 Monate lang gespeichert
+            und danach gelöscht. Zwingende gesetzliche
             Aufbewahrungsfristen bleiben unberührt.
           </Typography>{" "}
           <Typography component="p">
@@ -950,6 +978,14 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
           <Typography component="p">
             Diese Daten werden an Server von Google übermittelt und können in
             den USA gespeichert werden.
+          </Typography>{" "}
+          <Typography component="p">
+            Google verarbeitet diese Daten als eigenständiger Verantwortlicher
+            nach seiner eigenen Datenschutzerklärung, nicht als unser
+            Auftragsverarbeiter. Abgesehen vom Ergebnis der Prüfung, das mit
+            Ihrer Nachricht übermittelt wird (siehe oben „Kontaktformular“),
+            speichern wir selbst keine reCAPTCHA-Daten. Wie lange Google die
+            Daten speichert, bestimmt Google; darauf haben wir keinen Einfluss.
           </Typography>{" "}
           <Typography component="p">
             Weitere Informationen dazu, wie Google personenbezogene Daten
@@ -1019,7 +1055,18 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
           <Typography component="p">
             Die Nutzung dieser Dienste erfolgt auf Grundlage Ihrer Einwilligung
             nach Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die
-            Einwilligung ist jederzeit widerrufbar.
+            Einwilligung ist jederzeit mit Wirkung für die Zukunft in den
+            Einstellungen von ConsentManager widerrufbar.
+          </Typography>{" "}
+          <Typography component="h4">Speicherdauer</Typography>{" "}
+          <Typography component="p">
+            Google löscht Daten, die mit Cookies oder anderen Kennungen
+            verknüpft sind, 2 Monate nach ihrer Erhebung (Einstellung zur
+            Datenaufbewahrung in unserer Google-Analytics-Property).
+            Aggregierte Berichte, die nicht mit Ihnen verknüpft werden können,
+            sind davon nicht betroffen. Die Google-Analytics-Cookies (_ga und
+            _ga_&lt;ID&gt;) laufen nach 2 Jahren ab, sofern Sie sie nicht
+            vorher löschen.
           </Typography>{" "}
           <Typography component="p">
             Google Analytics wird erst geladen, nachdem Sie über ConsentManager
@@ -1133,7 +1180,7 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
           <Typography component="h3">Spendenformular (twingle)</Typography>{" "}
           <Typography component="p">
             Auf unserer Spendenseite ist das Spendenformular der twingle GmbH,
-            Berlin, Deutschland, eingebunden (
+            Prinzenallee 74, 13357 Berlin, Deutschland, eingebunden (
             <Link
               href="https://www.twingle.de"
               target="_blank"
@@ -1149,6 +1196,20 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
             Abwicklung Ihrer Spende verarbeitet und an uns weitergegeben, damit
             wir Ihre Spende verwalten und eine Zuwendungsbestätigung ausstellen
             können.
+          </Typography>{" "}
+          <Typography component="p">
+            twingle verarbeitet diese Daten in unserem Auftrag als
+            Auftragsverarbeiter auf Grundlage eines Vertrags über
+            Auftragsverarbeitung nach Art. 28 DSGVO.
+          </Typography>{" "}
+          <Typography component="p">
+            Unterlagen zu Ihrer Spende und Kopien von Zuwendungsbestätigungen
+            bewahren wir für die gesetzlichen Aufbewahrungsfristen nach § 147
+            AO und § 257 HGB auf (je nach Art der Unterlage zwischen sechs und
+            zehn Jahren) und löschen sie anschließend. twingle speichert die
+            Daten in unserem twingle-Konto in unserem Auftrag, solange wir sie
+            für diese Zwecke benötigen, und löscht sie bei Beendigung unseres
+            Vertrags mit twingle.
           </Typography>{" "}
           <Typography component="p">
             Die beim Laden der Spendenseite hergestellte Verbindung beruht auf

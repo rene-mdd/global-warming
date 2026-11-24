@@ -46,8 +46,8 @@ function Imprint() {
           <Typography component="p" mb={4}>
             Climate Accountability API gUG (haftungsbeschränkt)
           </Typography>
-          <Typography component="p">Seestraße 107</Typography>
-          <Typography component="p">13353 Berlin</Typography>
+          <Typography component="p">Kollwitzstr. 76</Typography>
+          <Typography component="p">10435 Berlin</Typography>
           <Typography component="p" mb={4}>
             {t.country}
           </Typography>

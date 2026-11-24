@@ -213,7 +213,7 @@ function PrivacyPolicy() {
           </Typography>{" "}
           <Typography component="p">
             Climate Accountability API gUG (haftungsbeschr&auml;nkt)
-            <br /> Seestra&szlig;e 107, 13353 Berlin, Germany
+            <br /> Kollwitzstr. 76, 10435 Berlin, Germany
           </Typography>
           <Typography component="div">
             Phone:{" "}
@@ -405,6 +405,22 @@ function PrivacyPolicy() {
             defend legal entitlements or to protect the rights of other natural
             persons or legal entities or for important public interest reasons
             cited by the European Union or a member state of the EU.
+          </Typography>
+          <Typography component="h3">
+            Automated decision-making and profiling
+          </Typography>{" "}
+          <Typography component="p">
+            We do not use automated decision-making, including profiling,
+            within the meaning of Art. 22(1) and (4) GDPR. Some services we use
+            evaluate data automatically: Google reCAPTCHA assesses whether a
+            contact form submission comes from a human (see &ldquo;Google
+            reCAPTCHA&rdquo; below), the payment service providers involved in
+            donations carry out automated fraud checks, and Google Analytics
+            models usage statistics in aggregated form without making decisions
+            about individual visitors. Such a check can at most prevent a single
+            form submission or payment. It has no legal effect on you and does
+            not similarly significantly affect you; you can always write to us
+            by e-mail or choose another payment method instead.
           </Typography>
           <Typography component="h3">SSL and/or TLS encryption</Typography>{" "}
           <Typography component="p">
@@ -689,7 +705,8 @@ function PrivacyPolicy() {
 
               <Box>
                 <Typography variant="body1" fontWeight="medium">
-                  Upstash, Inc., Delaware, USA
+                  Upstash, Inc. (a Delaware corporation), California, USA,
+                  privacy@upstash.com
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   operation of the database, located in Frankfurt am Main,
@@ -800,9 +817,12 @@ function PrivacyPolicy() {
             ). Static Forms receives your message, checks it for spam and
             forwards it to us by e-mail. Static Forms stores form data on
             servers of Amazon Web Services in Frankfurt am Main, Germany, and
-            deletes stored submissions after 30 days. Static Forms uses
-            further sub-processors, which are listed in its data processing
-            agreement; some of them are located outside the European Union.
+            deletes stored submissions after 30 days. The e-mail that forwards
+            your message to us is sent via Amazon Web Services (Amazon SES) from
+            the United States, with a fallback in Singapore, so your message
+            is transferred to these countries. Static Forms uses further
+            sub-processors, which are listed in its data processing agreement;
+            some of them are located outside the European Union.
           </Typography>{" "}
           <Typography component="p">
             Static Forms processes your data on our behalf on the basis of its
@@ -865,12 +885,15 @@ function PrivacyPolicy() {
             consent and other declarations regarding the use of cookies.
           </Typography>{" "}
           <Typography component="p">
-            Moreover, ConsentManager shall store a cookie in your browser to be
-            able to allocate your declaration(s) of consent or any revocations
-            of the former. The data that are recorded in this manner shall be
-            stored until you ask us to eradicate them, delete the ConsentManager
-            cookie or until the purpose for archiving the data no longer exists.
-            This shall be without prejudice to any mandatory legal retention
+            Moreover, ConsentManager stores a cookie in your browser to be able
+            to allocate your declaration(s) of consent or any revocations of
+            the former. If you accepted, we ask for your consent again after 12
+            months; if you rejected or made a custom choice, we ask again after
+            14 days. If you delete the cookie earlier, we ask at your next
+            visit. To be able to prove that consent was given (Art. 7(1) GDPR),
+            a record of your consent declarations is kept for 13 months and
+            then deleted. This
+            shall be without prejudice to any mandatory legal retention
             periods.
           </Typography>{" "}
           <Typography component="p">
@@ -910,6 +933,14 @@ function PrivacyPolicy() {
           <Typography component="p">
             This data is transmitted to Google servers and may be stored in the
             USA.
+          </Typography>{" "}
+          <Typography component="p">
+            Google processes this data as an independent controller under its
+            own privacy policy, not as our processor. Apart from the result of
+            the check, which is sent with your message (see &ldquo;Contact
+            form&rdquo; above), we do not store any reCAPTCHA data ourselves.
+            How long Google keeps the data is determined by Google; we have no
+            influence on it.
           </Typography>{" "}
           <Typography component="p">
             For more information on how Google processes personal data, please
@@ -977,7 +1008,17 @@ function PrivacyPolicy() {
           <Typography component="p">
             The use of these services occurs on the basis of your consent
             pursuant to Art. 6(1)(a) GDPR and &sect; 25(1) TDDDG. You may revoke
-            your consent at any time.
+            your consent at any time with effect for the future in the
+            ConsentManager settings.
+          </Typography>{" "}
+          <Typography component="h4">Storage duration</Typography>{" "}
+          <Typography component="p">
+            Google deletes data linked to cookies or other identifiers 2 months
+            after collection (the data retention setting of our Google
+            Analytics property). Aggregated reports that cannot be linked to
+            you are not affected. The Google Analytics cookies (_ga and
+            _ga_&lt;ID&gt;) expire after 2 years unless you delete them
+            earlier.
           </Typography>{" "}
           <Typography component="p">
             Google Analytics is loaded only after you have given your consent
@@ -1089,8 +1130,8 @@ function PrivacyPolicy() {
           </Typography>
           <Typography component="h3">Donation form (twingle)</Typography>{" "}
           <Typography component="p">
-            Our donation page embeds the donation form of twingle GmbH, Berlin,
-            Germany (
+            Our donation page embeds the donation form of twingle GmbH,
+            Prinzenallee 74, 13357 Berlin, Germany (
             <Link
               href="https://www.twingle.de"
               target="_blank"
@@ -1105,6 +1146,18 @@ function PrivacyPolicy() {
             method you choose) is processed by twingle to handle your donation
             and passed on to us, so that we can manage your donation and issue
             a donation receipt.
+          </Typography>{" "}
+          <Typography component="p">
+            twingle processes these data on our behalf as our processor, on the
+            basis of a data processing agreement pursuant to Art. 28 GDPR.
+          </Typography>{" "}
+          <Typography component="p">
+            We keep records of your donation and copies of donation receipts
+            for the statutory retention periods under &sect; 147 AO and &sect;
+            257 HGB (between six and ten years, depending on the type of
+            document) and delete them afterwards. twingle keeps the data in our
+            twingle account on our behalf for as long as we need it for these
+            purposes and deletes it when our contract with twingle ends.
           </Typography>{" "}
           <Typography component="p">
             The connection made when the donation page loads is based on our

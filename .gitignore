@@ -37,3 +37,6 @@ yarn-error.log*
 CLAUDE.md
 ROPA-ENTRY.md
 LEGITIMATE-INTERESTS-ASSESSMENT.md
+
+# Internal legal documents (lawyer redlines) - never commit
+/legal-documents/
