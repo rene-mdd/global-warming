@@ -213,7 +213,7 @@ function PrivacyPolicy() {
           </Typography>{" "}
           <Typography component="p">
             Climate Accountability API gUG (haftungsbeschr&auml;nkt)
-            <br /> Seestra&szlig;e 107, 13353 Berlin, Germany
+            <br /> Kollwitzstr. 76, 10435 Berlin, Germany
           </Typography>
           <Typography component="div">
             Phone:{" "}

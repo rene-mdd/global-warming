@@ -229,7 +229,7 @@ export default function PrivacyPolicyDe({ websiteUrl }) {
           </Typography>{" "}
           <Typography component="p">
             Climate Accountability API gUG (haftungsbeschränkt)
-            <br /> Seestraße 107, 13353 Berlin, Deutschland
+            <br /> Kollwitzstr. 76, 10435 Berlin, Deutschland
           </Typography>
           <Typography component="div">
             Telefon:{" "}
